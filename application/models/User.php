@@ -4,7 +4,8 @@ class User extends Model
     function User()
     {
         parent::Model();
-    }
+		$this->load->database(get_database_configuration($this->config));    
+	}
 
 	/*
 	Attempts to login user and set session. Returns boolean based on outcome.
@@ -35,6 +36,40 @@ class User extends Model
 	function is_logged_in()
 	{
 		return $this->session->userdata('user_id')!=false;
+	}
+	
+	/*
+	Gets information about the currently logged in user.
+	*/
+	function get_logged_in_user_info()
+	{
+		if($this->is_logged_in())
+		{
+			$query = $this->db->get_where('users', array('id' => $this->session->userdata('user_id')), 1);
+			return $query->row();
+		}
+		
+		return false;
+	}
+	
+	/*
+	Determins whether the user logged in permission for a particular module
+	*/
+	function has_permission($module_id)
+	{
+		if($module_id==null)
+		{
+			return true;
+		}
+		
+		$user_info=$this->get_logged_in_user_info();
+		if($user_info!=false)
+		{
+			$query = $this->db->get_where('permissions', array('user_id' => $user_info->id,'module_id'=>$module_id), 1);
+			return $query->num_rows() == 1;
+		}
+		
+		return false;
 	}
 }
 ?>

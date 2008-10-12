@@ -39,7 +39,7 @@
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database','session','validation','session');
+$autoload['libraries'] = array('session','validation','session');
 
 
 /*
@@ -51,7 +51,7 @@ $autoload['libraries'] = array('database','session','validation','session');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('form','url');
+$autoload['helper'] = array('form','url','database_config');
 
 
 /*
@@ -79,7 +79,7 @@ $autoload['plugin'] = array();
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = array('config_phppos.php');
 
 
 /*
@@ -95,7 +95,7 @@ $autoload['config'] = array();
 |
 */
 
-$autoload['language'] = array('login');
+$autoload['language'] = array('login','module','common','error');
 
 
 /*
@@ -124,4 +124,4 @@ $autoload['model'] = array();
 
 
 /* End of file autoload.php */
-/* Location: ./system/application/config/autoload.php */
+/* Location: ./application/config/autoload.php */

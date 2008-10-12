@@ -41,8 +41,10 @@
 */
 
 $route['default_controller'] = "login";
+$route['no_access/(:any)'] = "no_access/index/$1";
+
 $route['scaffolding_trigger'] = "";
 
 
 /* End of file routes.php */
-/* Location: ./system/application/config/routes.php */
+/* Location: ./application/config/routes.php */

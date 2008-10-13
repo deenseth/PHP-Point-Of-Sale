@@ -33,7 +33,9 @@ class Module extends Model
 	
 	function get_all_modules()
 	{
-		$modules=array();
+		//The home module is allowed by all users, this is NOT stored in database
+		$modules=array('home');
+		
 		$this->db->from('modules');
 		$this->db->order_by("sort", "asc");
 		$query = $this->db->get();		

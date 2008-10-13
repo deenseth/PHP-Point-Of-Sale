@@ -22,11 +22,12 @@ class User extends Model
 	}
 	
 	/*
-	Logs out a user by destorying all session data
+	Logs out a user by destorying all session data and redirect to login
 	*/
 	function logout_user()
 	{
 		$this->session->sess_destroy();
+		redirect('login');
 	}
 	
 	/*
@@ -56,7 +57,8 @@ class User extends Model
 	*/
 	function has_permission($module_id)
 	{
-		if($module_id==null)
+		//if no module_id is specified or of the module_id is home, allow access
+		if($module_id==null or $module_id=='home')
 		{
 			return true;
 		}

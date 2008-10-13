@@ -4,6 +4,13 @@
 <link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/login.css" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>PHP Point Of Sale <?php echo $this->lang->line('login_login'); ?></title>
+<script src="<?php echo base_url();?>js/jquery-1.2.6.min.js" type="text/javascript" language="javascript"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#login_form input:first").focus();
+});
+</script>
 </head>
 <body>
 <?php echo form_open('login') ?>

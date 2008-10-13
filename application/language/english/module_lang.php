@@ -1,8 +1,10 @@
 <?php
+$lang['module_home']='Home';
+
 $lang['module_customers']='Customers';
 $lang['module_customers_desc']='Add, Update, Delete, and Search customers';
 
-$lang['module_users']='Customers';
+$lang['module_users']='Users';
 $lang['module_users_desc']='Add, Update, Delete, and Search users';
 
 $lang['module_sales']='Sales';

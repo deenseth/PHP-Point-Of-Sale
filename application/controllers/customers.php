@@ -8,6 +8,7 @@ class Customers extends Secure_Area
 	
 	function index()
 	{
+		$this->load->view('customers');
 	}
 }
 ?>

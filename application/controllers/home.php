@@ -3,13 +3,11 @@ class Home extends Secure_Area
 {
 	function Home()
 	{
-		//parent::Secure_Area('customers');	
-		parent::Controller();
+		parent::Secure_Area();	
 	}
 	
 	function index()
 	{
-		get_database_configuration($this->config);
 	}
 }
 ?>

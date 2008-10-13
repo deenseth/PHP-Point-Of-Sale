@@ -4,7 +4,6 @@ class Module extends Model
     function Module()
     {
         parent::Model();
-  		$this->load->database(get_database_configuration($this->config));      
     }
 	
 	function get_module_name($module_id)

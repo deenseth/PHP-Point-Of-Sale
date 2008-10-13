@@ -4,7 +4,6 @@ class User extends Model
     function User()
     {
         parent::Model();
-		$this->load->database(get_database_configuration($this->config));    
 	}
 
 	/*

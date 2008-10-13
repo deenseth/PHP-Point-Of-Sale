@@ -1,0 +1,83 @@
+body
+{
+	margin:0px;
+	padding:0px;
+}
+
+
+/*Menubar Stuff*/
+#menubar
+{
+	position:relative;
+	margin:0px;
+	background-image: url("../images/menubar/menubar_bg.gif"); 
+	background-repeat: repeat-x;
+	width:100%;
+	height:100px;
+	color:#FFFFFF;
+	background-color:red;
+	text-align:left;
+}
+
+.menuItem
+{
+	float:left;
+	width:65px;
+	height:100%;
+	text-align:center;	
+}
+
+
+#menubar a:link, #menubar a:visited
+{
+	color:#FFFFFF;
+}
+
+#menubar a:hover
+{
+	color:#CCCCCC;
+}
+
+.menuItem
+{
+	font-size:8pt;
+}
+
+#menubarCompanyInfo
+{
+	position:absolute;
+	left:8px;
+	top:18px;
+	width:250px;
+	height:55%;
+}
+
+#companyTitle
+{
+	font-size:14pt;
+	font-weight:bold;
+}
+
+#menubarNavigation
+{
+	position:absolute;
+	left:275px;
+	top:28px;
+	width:475px;
+	height:45%;
+
+}
+
+#menubarFooter
+{
+	position:absolute;
+	top:80px;
+	left:8px;
+	height:17%;
+	width:750px;
+	padding-top:3px;
+	font-size:8pt;
+	font-weight:bold;
+}
+
+/*End Menubar Stuff*/

@@ -3,9 +3,9 @@
 function init_table_sorting()
 {
 	//Only init if there are rows
-	if($('.tablesorter tbody tr').length >0)
+	if($('#sortable_table tbody tr').length >0)
 	{
-		$(".tablesorter").tablesorter(
+		$("#sortable_table").tablesorter(
 		{ 
 			sortList: [[1,0]], 
 			headers: 
@@ -44,7 +44,7 @@ $(document).ready(function()
 		<li class="float_left"><span><a href="#" id="email"><?php echo $this->lang->line("common_email");?></a></span></li>
 		<li class="float_right">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
-		<form method='post' id='search_form' action='<?php echo site_url("customers/search"); ?>'>
+		<?php echo form_open('customers/search',array('id'=>'search_form')); ?>
 		<input type="text" name ='search' id='search'/>
 		</form>
 		</li>

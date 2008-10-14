@@ -23,7 +23,7 @@ class Customers extends Secure_Area
 	
 	function add()
 	{
-		$this->edit(-1);
+		$this->edit('');
 	}
 	
 	function edit($customer_id)

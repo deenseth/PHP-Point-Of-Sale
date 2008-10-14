@@ -5,7 +5,7 @@ Gets the sortable table template that is required.
 function get_sortable_table_template()
 {
 	$tmpl = array (
-	'table_open'          => '<table class="tablesorter">',
+	'table_open'          => '<table class="tablesorter" id="sortable_table">',
 	'heading_row_start'   => '<thead><tr>',
 	'heading_row_end'     => '</tr></thead><tbody>',
 	'table_close'         => '</body></table>'

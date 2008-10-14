@@ -5,7 +5,7 @@ class Login extends Controller
 	function Login()
 	{
 		parent::Controller();	
-			}
+	}
 	
 	function index()
 	{

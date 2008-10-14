@@ -79,9 +79,13 @@ class Customer extends Model
 		$query = $this->db->get_where('customers', array('id' => $customer_id), 1);
 		
 		if($query->num_rows()==1)
+		{
 			return $query->row();
-			
-		return false;
+		}
+		else
+		{
+		
+		}
 	}
 	
 	/*

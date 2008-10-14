@@ -1,4 +1,3 @@
-
 function enable_search()
 {
 	$('#search').click(function()
@@ -19,14 +18,12 @@ function do_search()
 	$('#table_holder').load($('#search_form').attr('action'),{'search':$('#search').val()},function()
 	{
 		$('#spinner').hide();
-		tb_init('.tablesorter a.thickbox');
+		tb_init('#sortable_table a.thickbox');
 		select_all_enable();
 		init_table_sorting();
 		enable_email();
 	});
 }
-
-
 
 function enable_email(email_url)
 {
@@ -37,10 +34,19 @@ function enable_email(email_url)
 	}
 	
 	do_email(enable_email.url);
-	$('#select_all,.tablesorter tbody :checkbox').click(function()
+	$('#select_all, #sortable_table tbody :checkbox').click(function()
 	{
 		do_email(enable_email.url);
 	});
+}
+
+function do_email(url)
+{
+	$.post(url, { 'ids[]': get_selected_values() },function(response)
+	{
+		$('#email').attr('href',response);
+	});
+
 }
 
 function enable_delete(confirm_message)
@@ -64,29 +70,20 @@ function do_delete(url)
 	});
 }
 
-function do_email(url)
-{
-	$.post(url, { 'ids[]': get_selected_values() },function(response)
-	{
-		$('#email').attr('href',response);
-	});
-
-}
-
 function select_all_enable()
 {
 	$('#select_all').click(function()
 	{
 		if($(this).attr('checked'))
 		{	
-			$(".tablesorter tbody :checkbox").each(function()
+			$("#sortable_table tbody :checkbox").each(function()
 			{
 				$(this).attr('checked',true)
 			});
 		}
 		else
 		{
-			$(".tablesorter tbody :checkbox").each(function()
+			$("#sortable_table tbody :checkbox").each(function()
 			{
 				$(this).attr('checked',false)
 			});    	
@@ -97,7 +94,7 @@ function select_all_enable()
 function get_selected_values()
 {
 	var selected_values = new Array();
-	$(".tablesorter tbody :checkbox:checked").each(function()
+	$("#sortable_table tbody :checkbox:checked").each(function()
 	{
 		selected_values.push($(this).val());
 	});

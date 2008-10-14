@@ -231,6 +231,13 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	background-color: #8dbdd8;
 }
 
+#spinner
+{
+	position:absolute;
+	display:none;
+	right:21%;
+	top:5px;
+}
 .big_button
 {
 	position:relative;
@@ -249,14 +256,6 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	font-size:13px;
 	font-weight:bold;
 	text-align:center;
-}
-
-#spinner
-{
-	position:absolute;
-	display:none;
-	right:21%;
-	top:5px;
 }
 
 .float_left
@@ -278,6 +277,20 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	border:1px solid #fff4aa;
 	font-weight:bold;
 }
+
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+.clearfix { display: inline-block; }
+html[xmlns] .clearfix {	display: block; }
+* html .clearfix { height: 1%; }
+
 
 #footer
 {

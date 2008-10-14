@@ -1,3 +1,4 @@
+
 function enable_search()
 {
 	$('#search').click(function()
@@ -21,15 +22,24 @@ function do_search()
 		tb_init('.tablesorter a.thickbox');
 		select_all_enable();
 		init_table_sorting();
+		enable_email();
 	});
 }
 
-function enable_email(url)
+
+
+function enable_email(email_url)
 {
-	do_email(url);
+	//store in function cache
+	if(enable_email.url==undefined)
+	{
+		enable_email.url=email_url;
+	}
+	
+	do_email(enable_email.url);
 	$('#select_all,.tablesorter tbody :checkbox').click(function()
 	{
-		do_email(url);
+		do_email(enable_email.url);
 	});
 }
 

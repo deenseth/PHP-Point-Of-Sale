@@ -1,30 +1,30 @@
 <?php $this->load->view("partial/header"); ?>
 <script type="text/javascript">
+function init_table_sorting()
+{
+	//Only init if there are rows
+	if($('.tablesorter tbody tr').length >0)
+	{
+		$(".tablesorter").tablesorter(
+		{ 
+			sortList: [[1,0]], 
+			headers: 
+			{ 
+				0: { sorter: false}, 
+				5: { sorter: false} 
+			} 
+	
+		}); 
+	}
+}
+
 $(document).ready(function() 
 { 
-	function init_table_sorting()
-	{
-		//Only init if there are rows
-		if($('.tablesorter tbody tr').length >0)
-		{
-			$(".tablesorter").tablesorter(
-			{ 
-				sortList: [[1,0]], 
-    		    headers: 
-    		    { 
-    		        0: { sorter: false}, 
-    		        5: { sorter: false} 
-    		    } 
-        
-    		}); 
-    	}
-    }
     init_table_sorting();
     select_all_enable();
     enable_search();
     enable_delete("<?php echo $this->lang->line('customer_confirm_delete')?>");
     enable_email("<?php echo site_url('customers/email')?>");
-    
 }); 
 </script>
 

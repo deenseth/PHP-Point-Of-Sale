@@ -25,6 +25,30 @@ class Customer extends Model
 	}
 	
 	/*
+	Get customers with specific ids
+	*/
+	function get_customers_with_ids($customer_ids)
+	{
+		if(!is_array($customer_ids))
+		{
+			return array();
+		}
+		
+		$this->db->from('customers');
+		$this->db->where_in('id',$customer_ids);
+		$this->db->order_by("last_name", "asc");
+		$query = $this->db->get();
+		
+		$customers = array();
+		foreach ($query->result() as $row)	
+		{
+			$customers[]=$row;
+		}
+		
+		return $customers;
+	}
+	
+	/*
 	Returns customers based on a search
 	*/
 	function get_customers($search)

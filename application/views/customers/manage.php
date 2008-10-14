@@ -23,6 +23,7 @@ $(document).ready(function()
     select_all_enable();
     enable_search();
     enable_delete("<?php echo $this->lang->line('customer_confirm_delete')?>");
+    enable_email("<?php echo site_url('customers/email')?>");
     
 }); 
 </script>
@@ -40,6 +41,7 @@ $(document).ready(function()
 <div id="table_action_header">
 	<ul>
 		<li class="float_left"><span><?php echo anchor('customers/delete',$this->lang->line("common_delete"),array('id'=>'delete')); ?></a></span></li>
+		<li class="float_left"><span><a href="#" id="email"><?php echo $this->lang->line("common_email");?></a></span></li>
 		<li class="float_right">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
 		<form method='post' id='search_form' action='<?php echo site_url("customers/search"); ?>'>

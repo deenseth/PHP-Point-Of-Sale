@@ -32,10 +32,36 @@ class Customers extends Secure_Area
 		$this->load->view("customers/form",$data);
 	}
 	
+	/*
+	This deletes customers (that can be deleted) from the customers table
+	*/
 	function delete()
 	{
 		$customers_to_delete=$this->input->post('ids');
 		$this->Customer->delete_customers($customers_to_delete);
+	}
+	
+	/*
+	This returns a mailto link for customers with a certain id. This is called with AJAX.
+	*/
+	function email()
+	{
+		$customers_to_email=$this->input->post('ids');
+		
+		if($customers_to_email!=false)
+		{
+			$mailto_url='mailto:';
+			foreach($this->Customer->get_customers_with_ids($customers_to_email) as $customer)
+			{
+				$mailto_url.=$customer->email.',';	
+			}
+			//remove last comma
+			$mailto_url=substr($mailto_url,0,strlen($mailto_url)-1);
+			
+			echo $mailto_url;
+			exit;
+		}
+		echo '#';
 	}
 }
 ?>

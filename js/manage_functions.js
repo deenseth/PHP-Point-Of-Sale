@@ -24,6 +24,15 @@ function do_search()
 	});
 }
 
+function enable_email(url)
+{
+	do_email(url);
+	$('#select_all,.tablesorter tbody :checkbox').click(function()
+	{
+		do_email(url);
+	});
+}
+
 function enable_delete(confirm_message)
 {
 	$('#delete').click(function()
@@ -43,6 +52,15 @@ function do_delete(url)
 	{
 		do_search();
 	});
+}
+
+function do_email(url)
+{
+	$.post(url, { 'ids[]': get_selected_values() },function(response)
+	{
+		$('#email').attr('href',response);
+	});
+
 }
 
 function select_all_enable()

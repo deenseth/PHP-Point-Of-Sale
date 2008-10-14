@@ -33,7 +33,8 @@ class Customer extends Model
 		$this->db->like('first_name', $search);
 		$this->db->or_like('last_name', $search); 
 		$this->db->or_like('email', $search); 
-		$this->db->or_like('phone_number', $search); 
+		$this->db->or_like('phone_number', $search);
+		$this->db->or_like("CONCAT(`first_name`,' ',`last_name`)",$search);
 		$this->db->order_by("last_name", "asc");
 		$query = $this->db->get();
 		

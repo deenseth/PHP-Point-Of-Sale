@@ -16,7 +16,7 @@ function get_customer_manage_table($customers)
 	
 	foreach($customers as $customer)
 	{
-		$checkbox = "<input type='checkbox' onclick='doIt();' id='customer_$customer->id' value='$customer->id'/>";
+		$checkbox = "<input type='checkbox' id='customer_$customer->id' value='$customer->id'/>";
 		$CI->table->add_row($checkbox,$customer->first_name,$customer->last_name,
 		$customer->email,$customer->phone_number,
 		anchor("customers/edit/$customer->id", $CI->lang->line('common_edit'),array('class'=>'thickbox')));
@@ -25,6 +25,10 @@ function get_customer_manage_table($customers)
 	$output = $CI->table->generate();
 	$CI->table->clear();
 	
+	if(count($customers)==0)
+	{
+		$output.="<div class='warning_message' style='text-align:center;'>".$CI->lang->line('customers_no_customers_to_display')."</div>";
+	}
 	return $output;
 }
 ?>

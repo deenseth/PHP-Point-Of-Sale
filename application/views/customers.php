@@ -4,16 +4,20 @@ $(document).ready(function()
 { 
 	function init_table_sorting()
 	{
-		$(".tablesorter").tablesorter(
-		{ 
-			sortList: [[1,0]], 
-    	    headers: 
-    	    { 
-    	        0: { sorter: false}, 
-    	        5: { sorter: false} 
-    	    } 
+		//Only init if there are rows
+		if($('.tablesorter tbody tr').length >0)
+		{
+			$(".tablesorter").tablesorter(
+			{ 
+				sortList: [[1,0]], 
+    		    headers: 
+    		    { 
+    		        0: { sorter: false}, 
+    		        5: { sorter: false} 
+    		    } 
         
-    	}); 
+    		}); 
+    	}
     }
     init_table_sorting();
     
@@ -34,6 +38,7 @@ $(document).ready(function()
      	$('#table_holder').load($(this).attr('action'),{'search':$('#search').val()},function()
      	{
      	    $('#spinner').hide();
+     	    tb_init('.tablesorter a.thickbox');
      		init_table_sorting();
      	});
      	

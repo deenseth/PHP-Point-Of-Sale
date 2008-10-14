@@ -268,6 +268,16 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	float:right;
 }
 
+.warning_message
+{
+	position:relative;
+	top:3px;
+	padding:7px;
+	background-color:#fffcdd;
+	border:1px solid #fff4aa;
+	font-weight:bold;
+}
+
 #footer
 {
 	margin-top:25px;

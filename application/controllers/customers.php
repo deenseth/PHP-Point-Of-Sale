@@ -10,7 +10,7 @@ class Customers extends Secure_Area
 	{
 		$data['manage_table']=get_customer_manage_table(
 		$this->Customer->get_all_customers());
-		$this->load->view('customers',$data);
+		$this->load->view('customers/manage',$data);
 	}
 	
 	/*

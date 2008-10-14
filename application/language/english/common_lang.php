@@ -12,4 +12,8 @@ $lang['common_edit']='Edit';
 $lang['common_search']='Search';
 $lang['common_delete']='Delete';
 $lang['common_view_recent_sales']='View Recent Sales';
+$lang['common_you_are_using_phppos']='You are using PHP Point Of Sale Version';
+$lang['common_please_visit_my']='Please visit my';
+$lang['website']='website';
+$lang['learn_about_project']='to learn the lastest information about the project';
 ?>

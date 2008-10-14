@@ -1,6 +1,6 @@
 </div>
 </div>
-<div id="footer">You are using PHP Point Of Sale Version <?php echo $this->config->item('version');?>.
-Please visit my <a href="http://www.phppointofsale.com" target="_blank">website</a> to learn the lastest information about the project.</div>
+<div id="footer"> <?php echo $this->lang->line('common_you_are_using_phppos').' '.$this->config->item('version');?>.
+<?php echo $this->lang->line('common_please_visit_my'); ?> <a href="http://www.phppointofsale.com" target="_blank"><?php echo $this->lang->line('website'); ?></a> <?php echo $this->lang->line('learn_about_project'); ?>.</div>
 </body>
 </html>

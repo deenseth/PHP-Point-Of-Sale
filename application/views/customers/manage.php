@@ -22,6 +22,8 @@ $(document).ready(function()
     init_table_sorting();
     select_all_enable();
     enable_search();
+    enable_delete("<?php echo $this->lang->line('customer_confirm_delete')?>");
+    
 }); 
 </script>
 
@@ -37,12 +39,11 @@ $(document).ready(function()
 
 <div id="table_action_header">
 	<ul>
-		<li class="float_left"><span><?php echo $this->lang->line("common_delete"); ?></span></li>
-		<li class="float_left"><span><?php echo $this->lang->line("common_email"); ?></span></li>
+		<li class="float_left"><span><?php echo anchor('customers/delete',$this->lang->line("common_delete"),array('id'=>'delete')); ?></a></span></li>
 		<li class="float_right">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
 		<form method='post' id='search_form' action='<?php echo site_url("customers/search"); ?>'>
-		<input type="text" value="Search" name ='search' id='search'/>
+		<input type="text" name ='search' id='search'/>
 		</form>
 		</li>
 	</ul>

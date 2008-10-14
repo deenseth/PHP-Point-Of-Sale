@@ -17,11 +17,7 @@ class Customers extends Secure_Area
 	function search()
 	{
 		$search=$this->input->post('search');
-		$selected_customer_ids=$this->input->post('selected_customer_ids');
-
-		$manage_table=get_customer_manage_table(
-		$this->Customer->get_customers($search),$selected_customer_ids);
-		
+		$manage_table=get_customer_manage_table($this->Customer->get_customers($search));
 		echo $manage_table;
 	}
 	
@@ -38,8 +34,8 @@ class Customers extends Secure_Area
 	
 	function delete()
 	{
-		$customers_to_delete=$this->input->post('customers_to_delete');
-		$this->Customers->delete_customers($customers_to_delete);
+		$customers_to_delete=$this->input->post('ids');
+		$this->Customer->delete_customers($customers_to_delete);
 	}
 }
 ?>

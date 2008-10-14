@@ -42,7 +42,7 @@ function get_customer_manage_table($customers)
 	
 	if(count($customers)==0)
 	{
-		$output.="<div class='warning_message' style='text-align:center;'>".$CI->lang->line('customers_no_customers_to_display')."</div>";
+		$output.="<div class='warning_message' style='text-align:center;'>".$CI->lang->line('customer_no_customers_to_display')."</div>";
 	}
 	return $output;
 }

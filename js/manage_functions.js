@@ -7,17 +7,42 @@ function enable_search()
         
      $('#search_form').submit(function()
      {
-     	$('#spinner').show();
-     	$('#table_holder').load($(this).attr('action'),{'search':$('#search').val()},function()
-     	{
-     	    $('#spinner').hide();
-     	    tb_init('.tablesorter a.thickbox');
-     	    select_all_enable();
-     		init_table_sorting();
-     	});
-     	
+     	do_search();
      	return false;
      });
+}
+
+function do_search()
+{
+	$('#spinner').show();
+	$('#table_holder').load($('#search_form').attr('action'),{'search':$('#search').val()},function()
+	{
+		$('#spinner').hide();
+		tb_init('.tablesorter a.thickbox');
+		select_all_enable();
+		init_table_sorting();
+	});
+}
+
+function enable_delete(confirm_message)
+{
+	$('#delete').click(function()
+	{
+		if(confirm(confirm_message))
+		{
+			do_delete($("#delete").attr('href'));
+		}
+		
+		return false;
+	});
+}
+
+function do_delete(url)
+{
+	$.post(url, { 'ids[]': get_selected_values() },function()
+	{
+		do_search();
+	});
 }
 
 function select_all_enable()
@@ -48,6 +73,5 @@ function get_selected_values()
 	{
 		selected_values.push($(this).val());
 	});
-	console.log(selected_values);
 	return selected_values;
 }

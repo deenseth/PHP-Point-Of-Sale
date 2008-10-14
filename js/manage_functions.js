@@ -5,10 +5,10 @@ function enable_search()
     	$(this).attr('value','');
     });
         
-     $('#search_form').submit(function()
+     $('#search_form').submit(function(event)
      {
+     	event.preventDefault();
      	do_search();
-     	return false;
      });
 }
 
@@ -18,6 +18,8 @@ function do_search()
 	$('#table_holder').load($('#search_form').attr('action'),{'search':$('#search').val()},function()
 	{
 		$('#spinner').hide();
+		
+		//re-init elements in new table, as table was replaced
 		tb_init('#sortable_table a.thickbox');
 		select_all_enable();
 		init_table_sorting();
@@ -27,7 +29,7 @@ function do_search()
 
 function enable_email(email_url)
 {
-	//store in function cache
+	//store url in function cache
 	if(enable_email.url==undefined)
 	{
 		enable_email.url=email_url;

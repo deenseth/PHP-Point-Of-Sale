@@ -18,6 +18,20 @@ function init_table_sorting()
 	}
 }
 
+function post_save_customer()
+{
+	$('#customers_form').submit(function(event)
+	{
+		event.preventDefault();
+		
+		$.post($(this).attr('action'), $(this).serializeArray(),function()
+		{
+			tb_remove();
+			do_search();	
+		});
+ 	});
+}
+
 $(document).ready(function() 
 { 
     init_table_sorting();

@@ -1,19 +1,3 @@
-<script type='text/javascript'>
-$(document).ready(function()
-{	
-	$('#customers_form').submit(function(event)
-	{
-		event.preventDefault();
-		
-		$.post($(this).attr('action'), $(this).serializeArray(),function()
-		{
-			tb_remove();
-			do_search();	
-		});
- 	});
-});
-</script>
-
 <?php
 if($customer_info->id!='')
 {
@@ -65,3 +49,6 @@ echo form_submit(array(
 );
 echo form_close();
 ?>
+<script type='text/javascript'>
+post_save_customer();
+</script>

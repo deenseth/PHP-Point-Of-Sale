@@ -8,7 +8,7 @@ function get_sortable_table_template()
 	'table_open'          => '<table class="tablesorter" id="sortable_table">',
 	'heading_row_start'   => '<thead><tr>',
 	'heading_row_end'     => '</tr></thead><tbody>',
-	'table_close'         => '</body></table>'
+	'table_close'         => '</tbody></table>'
 	);
 	
 	return $tmpl;

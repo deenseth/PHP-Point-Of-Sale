@@ -1,6 +1,21 @@
 <?php
 /*
-Gets the html table to manage customers.
+Gets the sortable table template that is required.
+*/
+function get_sortable_table_template()
+{
+	$tmpl = array (
+	'table_open'          => '<table class="tablesorter">',
+	'heading_row_start'   => '<thead><tr>',
+	'heading_row_end'     => '</tr></thead><tbody>',
+	'table_close'         => '</body></table>'
+	);
+	
+	return $tmpl;
+}	
+
+/*
+Gets the html table to manage customers based on an array of customer objects.
 */
 function get_customer_manage_table($customers)
 {

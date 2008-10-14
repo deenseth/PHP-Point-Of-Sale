@@ -20,48 +20,8 @@ $(document).ready(function()
     	}
     }
     init_table_sorting();
-    
-    
-    $('#search').click(function()
-    {
-    	$(this).attr('value','');
-    });
-    
-    $('#search').blur(function()
-    {
-    	$(this).attr('value','<?php echo $this->lang->line("common_search"); ?>');
-    });
-    
-     $('#search_form').submit(function()
-     {
-     	$('#spinner').show();
-     	$('#table_holder').load($(this).attr('action'),{'search':$('#search').val()},function()
-     	{
-     	    $('#spinner').hide();
-     	    tb_init('.tablesorter a.thickbox');
-     		init_table_sorting();
-     	});
-     	
-     	return false;
-     });
-     
-     $('#select_all').click(function()
-     {
-     	if($(this).attr('checked'))
-     	{	
-     		$(".tablesorter tbody :checkbox").each(function()
-     		{
-				$(this).attr('checked',true)
-			});
-     	}
-    	else
-    	{
-     		$(".tablesorter tbody :checkbox").each(function()
-     		{
-				$(this).attr('checked',false)
-			});    	
-    	}
-     })	
+    select_all_enable();
+    enable_search();
 }); 
 </script>
 
@@ -79,7 +39,6 @@ $(document).ready(function()
 	<ul>
 		<li class="float_left"><span><?php echo $this->lang->line("common_delete"); ?></span></li>
 		<li class="float_left"><span><?php echo $this->lang->line("common_email"); ?></span></li>
-		<li class="float_left"><span><?php echo $this->lang->line("common_view_recent_sales"); ?></span></li>
 		<li class="float_right">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
 		<form method='post' id='search_form' action='<?php echo site_url("customers/search"); ?>'>
@@ -89,7 +48,7 @@ $(document).ready(function()
 	</ul>
 </div>
 <div id="table_holder">
-<?php echo $manage_table; ?>
+<?php echo get_customer_manage_table($this->Customer->get_all_customers()); ?>
 </div>
 <br /><br /><br />
 <?php $this->load->view("partial/footer"); ?>

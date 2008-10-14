@@ -48,6 +48,19 @@ class Customer extends Model
 	}
 	
 	/*
+	Gets information about a customer.
+	*/
+	function get_customer_info($customer_id)
+	{
+		$query = $this->db->get_where('customers', array('id' => $customer_id), 1);
+		
+		if($query->num_rows()==1)
+			return $query->row();
+			
+		return false;
+	}
+	
+	/*
 	Deletes a list of customers (if allowed)
 	*/
 	function delete_customers($customer_ids)

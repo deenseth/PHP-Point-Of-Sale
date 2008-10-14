@@ -8,9 +8,7 @@ class Customers extends Secure_Area
 	
 	function index()
 	{
-		$data['manage_table']=get_customer_manage_table(
-		$this->Customer->get_all_customers());
-		$this->load->view('customers/manage',$data);
+		$this->load->view('customers/manage');
 	}
 	
 	/*
@@ -34,7 +32,8 @@ class Customers extends Secure_Area
 	
 	function edit($customer_id)
 	{
-		echo $customer_id;
+		$data['customer_info']=$this->Customer->get_customer_info($customer_id);
+		$this->load->view("customers/form",$data);
 	}
 	
 	function delete()

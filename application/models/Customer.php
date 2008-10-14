@@ -72,7 +72,7 @@ class Customer extends Model
 	}
 	
 	/*
-	Gets information about a customer.
+	Gets information about a customer as an array.
 	*/
 	function get_customer_info($customer_id)
 	{
@@ -84,7 +84,40 @@ class Customer extends Model
 		}
 		else
 		{
+			//create object with empty properties.
+			$fields = $this->db->list_fields('customers');
+			$customer_obj = new stdClass;
+			
+			foreach ($fields as $field)
+			{
+				$customer_obj->$field='';
+			}
+			
+			return $customer_obj;
+		}
+	}
+	
+	/*
+	Inserts or updates a customer
+	*/
+	function save_customer($customer_id, $first_name, $last_name, $email, $phone_number, $comments)
+	{
+		$this->db->set(array(
+		'first_name'=>$first_name,
+		'last_name'=>$last_name,
+		'email'=>$email,
+		'phone_number'=>$phone_number,
+		'comments'=>$comments
+		));
 		
+		if ($customer_id=='-1')
+		{
+			$this->db->insert('customers');
+		}
+		else
+		{
+			$this->db->where('id', $customer_id);
+			$this->db->update('customers');		
 		}
 	}
 	

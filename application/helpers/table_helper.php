@@ -34,7 +34,7 @@ function get_customer_manage_table($customers)
 		$checkbox = "<input type='checkbox' id='customer_$customer->id' value='$customer->id'/>";
 		$CI->table->add_row($checkbox,$customer->last_name,$customer->first_name,
 		mailto($customer->email),$customer->phone_number,
-		anchor("customers/edit/$customer->id", $CI->lang->line('common_edit'),array('class'=>'thickbox')));
+		anchor("customers/view/$customer->id", $CI->lang->line('common_edit'),array('class'=>'thickbox')));
 	}
 	
 	$output = $CI->table->generate();

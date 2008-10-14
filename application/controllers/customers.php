@@ -21,15 +21,22 @@ class Customers extends Secure_Area
 		echo $manage_table;
 	}
 	
-	function add()
-	{
-		$this->edit('');
-	}
-	
-	function edit($customer_id)
+	function view($customer_id=-1)
 	{
 		$data['customer_info']=$this->Customer->get_customer_info($customer_id);
 		$this->load->view("customers/form",$data);
+	}
+	
+	
+	function save($customer_id=-1)
+	{
+		$first_name=$this->input->post('first_name');
+		$last_name=$this->input->post('last_name');
+		$email=$this->input->post('email');
+		$phone_number=$this->input->post('phone_number');
+		$comments=$this->input->post('comments');
+		
+		$this->Customer->save_customer($customer_id,$first_name,$last_name,$email,$phone_number,$comments);
 	}
 	
 	/*

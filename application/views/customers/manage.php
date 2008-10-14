@@ -31,7 +31,7 @@ $(document).ready(function()
 <div id="title_bar">
 	<div id="title" class="float_left"><?php echo $this->lang->line('common_list_of').' '.$this->lang->line('module_customers'); ?></div>
 	<div class="float_right">
-		<?php echo anchor('customers/add',
+		<?php echo anchor('customers/view',
 		"<div class='big_button'><span>".$this->lang->line('customer_new_customer')."</span></div>",
 		array('class'=>'thickbox none'));
 		?>

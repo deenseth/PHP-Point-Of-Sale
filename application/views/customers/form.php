@@ -1,25 +1,67 @@
+<script type='text/javascript'>
+$(document).ready(function()
+{	
+	$('#customers_form').submit(function(event)
+	{
+		event.preventDefault();
+		
+		$.post($(this).attr('action'), $(this).serializeArray(),function()
+		{
+			tb_remove();
+			do_search();	
+		});
+ 	});
+});
+</script>
+
 <?php
-if($customer_info->id!=-1)
+if($customer_info->id!='')
 {
 	echo '<h2>'.$this->lang->line('customer_update_customer').'</h2>';
-	echo form_open('customers/update/'.$customer_info->id);
 }
 else
 {
 	echo '<h2>'.$this->lang->line('customer_new_customer').'</h2>';
-	echo form_open('customers/add');
 }
+echo form_open('customers/save/'.$customer_info->id,array('id'=>'customers_form'));
 ?>
 
-<div class="form_row clearfix">
-	<div class="form_label">
-		<label style="line-height:2.4;">Login ID:</label>
-	</div>
-	<div class="form_field">
-		<input type="text" name="first_name" id="first_name" class="fValidate['required']" value="<?php echo $userInfo->loginId; ?>"/>
-	</div>
-</div>
+First Name: 
+<?php echo form_input(array(
+	'name'=>'first_name',
+	'value'=>$customer_info->first_name)
+);?>
+<br /><br />
+Last Name:
+<?php echo form_input(array(
+	'name'=>'last_name',
+	'value'=>$customer_info->last_name)
+);?>
+<br /><br />
+Email:
+<?php echo form_input(array(
+	'name'=>'email',
+	'value'=>$customer_info->email)
+);?>
+<br /><br />
+Phone Number:
+<?php echo form_input(array(
+	'name'=>'phone_number',
+	'value'=>$customer_info->phone_number)
+);?>
+<br /><br />
+Comments:
+<?php echo form_input(array(
+	'name'=>'comments',
+	'value'=>$customer_info->comments)
+);?>
+
+<br /><br />
 
 <?php 
+echo form_submit(array(
+	'name'=>'submit',
+	'value'=>'Submit')
+);
 echo form_close();
 ?>

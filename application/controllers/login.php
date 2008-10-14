@@ -15,9 +15,6 @@ class Login extends Controller
 		}
 		else
 		{
-			$username=$this->input->post('username');
-			$password=$this->input->post('password');
-			
 			$rules['username']  = "callback_login_check";
         	$this->validation->set_rules($rules);
         	$fields['username'] = $this->lang->line('login_username');

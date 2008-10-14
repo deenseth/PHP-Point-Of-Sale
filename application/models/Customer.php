@@ -27,7 +27,6 @@ class Customer extends Model
 	/*
 	Returns customers based on a search
 	*/
-
 	function get_customers($search)
 	{
 		$this->db->from('customers');
@@ -45,33 +44,6 @@ class Customer extends Model
 		}
 		
 		return $customers;
-	}
-	
-	/*
-	Gets the table html table to manage customers.
-	*/
-	function get_manage_table($customers)
-	{
-		$this->table->set_template(get_sortable_table_template());
-		$this->table->set_heading('<input type="checkbox" id="select_all" />', 
-		$this->lang->line('common_last_name'),
-		$this->lang->line('common_first_name'),
-		$this->lang->line('common_email'),
-		$this->lang->line('common_phone_number'),
-		'&nbsp');
-		
-		foreach($customers as $customer)
-		{
-			$checkbox = "<input type='checkbox' onclick='doIt();' id='customer_$customer->id' value='$customer->id'/>";
-			$this->table->add_row($checkbox,$customer->first_name,$customer->last_name,
-			$customer->email,$customer->phone_number,
-			anchor("customers/edit/$customer->id", $this->lang->line('common_edit'),array('class'=>'thickbox')));
-		}
-		
-		$output = $this->table->generate();
-		$this->table->clear();
-		
-		return $output;
 	}
 	
 	/*

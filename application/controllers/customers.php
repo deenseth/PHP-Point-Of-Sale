@@ -8,7 +8,7 @@ class Customers extends Secure_Area
 	
 	function index()
 	{
-		$data['manage_table']=$this->Customer->get_manage_table(
+		$data['manage_table']=get_customer_manage_table(
 		$this->Customer->get_all_customers());
 		$this->load->view('customers',$data);
 	}
@@ -21,7 +21,7 @@ class Customers extends Secure_Area
 		$search=$this->input->post('search');
 		$selected_customer_ids=$this->input->post('selected_customer_ids');
 
-		$manage_table=$this->Customer->get_manage_table(
+		$manage_table=get_customer_manage_table(
 		$this->Customer->get_customers($search),$selected_customer_ids);
 		
 		echo $manage_table;

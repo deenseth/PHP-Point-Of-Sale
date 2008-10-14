@@ -39,6 +39,24 @@ $(document).ready(function()
      	
      	return false;
      });
+     
+     $('#select_all').click(function()
+     {
+     	if($(this).attr('checked'))
+     	{	
+     		$(".tablesorter tbody :checkbox").each(function()
+     		{
+				$(this).attr('checked',true)
+			});
+     	}
+    	else
+    	{
+     		$(".tablesorter tbody :checkbox").each(function()
+     		{
+				$(this).attr('checked',false)
+			});    	
+    	}
+     })	
 }); 
 </script>
 

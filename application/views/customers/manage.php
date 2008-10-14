@@ -35,7 +35,7 @@ $(document).ready(function()
 	</div>
 </div>
 
-<div class="table_action_header">
+<div id="table_action_header">
 	<ul>
 		<li class="float_left"><span><?php echo $this->lang->line("common_delete"); ?></span></li>
 		<li class="float_left"><span><?php echo $this->lang->line("common_email"); ?></span></li>

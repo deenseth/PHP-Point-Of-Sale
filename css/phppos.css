@@ -140,7 +140,7 @@ a.none
 	color:#000000;
 }	
 
-.table_action_header
+#table_action_header
 {
 	position:relative;
 	width:757px;
@@ -153,21 +153,22 @@ a.none
 	padding:3px 0px 3px 15px;
 }
 
-.table_action_header ul
+#table_action_header ul
 {
 	list-style:none;
 	padding:0px;
 	margin:0px;
 	margin-left:15px;
 }
-.table_action_header ul li
+
+#table_action_header ul li
 {
 	margin-left:8px;
 	margin-right:4px;
 	
 }
 
-.table_action_header ul li span
+#table_action_header ul li span
 {
 	background-color:#FFFFFF;
 	border:1px solid #CCCCCC;

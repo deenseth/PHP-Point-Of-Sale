@@ -8,8 +8,7 @@ class Secure_Area extends Controller
 	function Secure_Area($module_id=null)
 	{
 		parent::Controller();	
-		$this->load->model('User');
-		$this->load->model('Module');
+		
 		if(!$this->User->is_logged_in())
 		{
 			redirect('login');

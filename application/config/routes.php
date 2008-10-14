@@ -42,7 +42,6 @@
 
 $route['default_controller'] = "login";
 $route['no_access/(:any)'] = "no_access/index/$1";
-
 $route['scaffolding_trigger'] = "";
 
 

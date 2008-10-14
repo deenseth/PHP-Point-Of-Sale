@@ -49,7 +49,6 @@ class Module extends Model
 	
 	function get_allowed_modules()
 	{
-		$this->load->model("User");
 		$allowed_modules=array();
 		foreach($this->get_all_modules() as $module_id)
 		{

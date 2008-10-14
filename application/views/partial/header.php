@@ -7,7 +7,9 @@
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/thickbox.css" />
 	<script src="<?php echo base_url();?>js/jquery-1.2.6.min.js" type="text/javascript" language="javascript"></script>
 	<script src="<?php echo base_url();?>js/jquery.tablesorter.min.js" type="text/javascript" language="javascript"></script>
-	<script src="<?php echo base_url();?>js/thickbox-compressed.js" type="text/javascript" language="javascript"></script>
+	<script src="<?php echo base_url();?>js/thickbox.js" type="text/javascript" language="javascript"></script>
+	<script src="<?php echo base_url();?>js/functions.js" type="text/javascript" language="javascript"></script>
+
 </head>
 <body>
 <div id="menubar">

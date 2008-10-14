@@ -5,8 +5,7 @@ class Login extends Controller
 	function Login()
 	{
 		parent::Controller();	
-		$this->load->model("User");		
-	}
+			}
 	
 	function index()
 	{

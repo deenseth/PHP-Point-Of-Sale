@@ -133,7 +133,7 @@ a.none
 #title
 {
 	position:relative;
-	padding-top:14px;
+	padding-top:8px;
 	font-size:30px;
 	font-weight:bold;
 	margin-right:10px;
@@ -248,6 +248,14 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	font-size:13px;
 	font-weight:bold;
 	text-align:center;
+}
+
+#spinner
+{
+	position:absolute;
+	display:none;
+	right:21%;
+	top:5px;
 }
 
 .float_left

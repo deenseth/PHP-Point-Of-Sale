@@ -5,7 +5,6 @@ class No_Access extends Controller
 	function No_Access()
 	{
 		parent::Controller();
-		$this->load->model("Module");
 	}
 	
 	function index($module_id='')

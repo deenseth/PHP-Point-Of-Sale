@@ -27,21 +27,20 @@ function init_table_sorting()
 	}
 }
 
-function post_customer_form_load()
+function customer_form_submit(form)
 {
-	$('#customers_form').submit(function(event)
-	{
-		event.preventDefault();
-		
-		$.post($(this).attr('action'), $(this).serializeArray(),function(response)
+	$(form).ajaxSubmit({
+		success:function(response)
 		{
 			tb_remove();
-			do_search(false,function()
+			do_search(true,function()
 			{
 				set_feedback(response.text,response.class_name,response.keep_displayed);	
 			});	
-		},"json");
- 	});
+		},
+		dataType:'json'
+	});
+
 }
 
 </script>

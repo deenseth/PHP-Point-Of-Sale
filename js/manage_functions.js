@@ -76,7 +76,7 @@ function do_delete(url)
 {
 	$.post(url, { 'ids[]': get_selected_values() },function(response)
 	{
-		do_search(false,function()
+		do_search(true,function()
 		{
 			set_feedback(response.text,response.class_name,response.keep_displayed);
 		});

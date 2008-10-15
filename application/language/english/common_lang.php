@@ -17,4 +17,7 @@ $lang['common_please_visit_my']='Please visit my';
 $lang['common_website']='website';
 $lang['common_learn_about_project']='to learn the lastest information about the project';
 $lang['common_searched_for']='Searched for';
+$lang['common_first_name_required']='common_first_name_required';
+$lang['common_last_name_required']='common_last_name_required';
+$lang['common_email_invalid_format']='common_email_invalid_format';
 ?>

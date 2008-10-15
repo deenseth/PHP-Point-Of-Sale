@@ -20,4 +20,5 @@ $lang['common_searched_for']='Searched for';
 $lang['common_first_name_required']='common_first_name_required';
 $lang['common_last_name_required']='common_last_name_required';
 $lang['common_email_invalid_format']='common_email_invalid_format';
+$lang['common_confirm_search']='You have selected one or more rows, these will no longer be selected after your search. Are you sure you want to submit this search?';
 ?>

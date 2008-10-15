@@ -1,4 +1,4 @@
-function enable_search(suggest_url)
+function enable_search(suggest_url,confirm_search_message)
 {	
 	$('#search').click(function()
     {
@@ -14,6 +14,12 @@ function enable_search(suggest_url)
 	$('#search_form').submit(function(event)
 	{
 		event.preventDefault();
+
+		if(get_selected_values().length >0)
+		{
+			if(!confirm(confirm_search_message))
+				return;
+		}
 		do_search(true);
 	});
 }
@@ -31,7 +37,11 @@ function do_search(show_feedback,on_complete)
 		$('#spinner').hide();
 		//re-init elements in new table, as table tbody children were replaced
 		tb_init('#sortable_table a.thickbox');
+		
+		//let tablesorter know we changed <tbody> and then triger a resort
 		$("#sortable_table").trigger("update");
+		var sorting = $("#sortable_table")[0].config.sortList; 		
+		$("#sortable_table").trigger("sorton",[sorting]);
 		enable_email();
 	});
 }

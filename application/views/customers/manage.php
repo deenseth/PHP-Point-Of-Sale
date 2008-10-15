@@ -4,9 +4,9 @@ $(document).ready(function()
 { 
     init_table_sorting();
     select_all_enable();
-    enable_search("<?php echo site_url('customers/suggest')?>");
+    enable_search("<?php echo site_url('customers/suggest')?>","<?php echo $this->lang->line('common_confirm_search')?>");
     enable_email("<?php echo site_url('customers/email')?>");
-    enable_delete("<?php echo $this->lang->line('customer_confirm_delete')?>");
+    //enable_delete("<?php echo $this->lang->line('customer_confirm_delete')?>");
 }); 
 
 function init_table_sorting()
@@ -42,7 +42,6 @@ function customer_form_submit(form)
 	});
 
 }
-
 </script>
 
 <div id="title_bar">

@@ -1,5 +1,10 @@
 function enable_search(suggest_url)
-{
+{	
+	$('#search').click(function()
+    {
+    	$(this).attr('value','');
+    });
+
     $("#search").autocomplete(suggest_url,{max:100});
     $("#search").result(function(event, data, formatted)
     {

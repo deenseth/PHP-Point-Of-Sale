@@ -1,5 +1,15 @@
 <?php $this->load->view("partial/header"); ?>
 <script type="text/javascript">
+
+$(document).ready(function() 
+{ 
+    init_table_sorting();
+    select_all_enable();
+    enable_search();
+    enable_delete("<?php echo $this->lang->line('customer_confirm_delete')?>");
+    enable_email("<?php echo site_url('customers/email')?>");
+}); 
+
 function init_table_sorting()
 {
 	$("#sortable_table").tablesorter(
@@ -28,14 +38,6 @@ function post_save_customer()
  	});
 }
 
-$(document).ready(function() 
-{ 
-    init_table_sorting();
-    select_all_enable();
-    enable_search();
-    enable_delete("<?php echo $this->lang->line('customer_confirm_delete')?>");
-    enable_email("<?php echo site_url('customers/email')?>");
-}); 
 </script>
 
 <div id="title_bar">

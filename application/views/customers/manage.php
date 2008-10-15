@@ -2,20 +2,16 @@
 <script type="text/javascript">
 function init_table_sorting()
 {
-	//Only init if there are rows
-	if($('#sortable_table tbody tr').length >0)
-	{
-		$("#sortable_table").tablesorter(
+	$("#sortable_table").tablesorter(
+	{ 
+		sortList: [[1,0]], 
+		headers: 
 		{ 
-			sortList: [[1,0]], 
-			headers: 
-			{ 
-				0: { sorter: false}, 
-				5: { sorter: false} 
-			} 
-	
-		}); 
-	}
+			0: { sorter: false}, 
+			5: { sorter: false} 
+		} 
+
+	}); 
 }
 
 function post_save_customer()

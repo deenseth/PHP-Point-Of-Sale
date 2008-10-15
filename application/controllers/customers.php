@@ -12,13 +12,13 @@ class Customers extends Secure_Area
 	}
 	
 	/*
-	Returns a manage table based on a search. This will be called with AJAX.
+	Returns customer table data rows. This will be called with AJAX.
 	*/
 	function search()
 	{
 		$search=$this->input->post('search');
-		$manage_table=get_customer_manage_table($this->Customer->get_customers($search));
-		echo $manage_table;
+		$data_rows=get_customer_manage_table_data_rows($this->Customer->get_customers($search));
+		echo $data_rows;
 	}
 	
 	function view($customer_id=-1)

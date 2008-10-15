@@ -15,14 +15,13 @@ function enable_search()
 function do_search()
 {
 	$('#spinner').show();
-	$('#table_holder').load($('#search_form').attr('action'),{'search':$('#search').val()},function()
+	$('#sortable_table tbody').load($('#search_form').attr('action'),{'search':$('#search').val()},function()
 	{
 		$('#spinner').hide();
 		
-		//re-init elements in new table, as table was replaced
+		//re-init elements in new table, as table tbody children were replaced
 		tb_init('#sortable_table a.thickbox');
-		select_all_enable();
-		init_table_sorting();
+		$("#sortable_table").trigger("update");
 		enable_email();
 	});
 }

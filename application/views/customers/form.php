@@ -50,5 +50,5 @@ echo form_submit(array(
 echo form_close();
 ?>
 <script type='text/javascript'>
-post_save_customer();
+post_customer_form_load();
 </script>

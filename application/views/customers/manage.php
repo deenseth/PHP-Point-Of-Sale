@@ -24,7 +24,7 @@ function init_table_sorting()
 	}); 
 }
 
-function post_save_customer()
+function post_customer_form_load()
 {
 	$('#customers_form').submit(function(event)
 	{

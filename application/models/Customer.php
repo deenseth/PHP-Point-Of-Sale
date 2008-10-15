@@ -29,7 +29,8 @@ class Customer extends Model
 		$suggestions = array();
 		
 		$this->db->from('customers');
-		$this->db->like("CONCAT(`first_name`,' ',`last_name`)",$search);
+		$this->db->like('first_name', $search); 
+		$this->db->or_like('last_name', $search); 		
 		$this->db->order_by("last_name", "asc");		
 		$by_name = $this->db->get();
 		foreach($by_name->result() as $row)
@@ -55,12 +56,13 @@ class Customer extends Model
 			$suggestions[]=$row->phone_number;		
 		}
 		
-		
+		/*		
 		//only return 20 suggestions
 		if(count($suggestions > 20))
 		{
 			$suggestions = array_slice($suggestions, 0,20);
 		}
+		*/
 		return $suggestions;
 	
 	}

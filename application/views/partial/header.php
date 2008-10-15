@@ -9,6 +9,7 @@
 	<script src="<?php echo base_url();?>js/jquery.tablesorter.min.js" type="text/javascript" language="javascript"></script>
 	<script src="<?php echo base_url();?>js/thickbox.js" type="text/javascript" language="javascript"></script>
 	<script src="<?php echo base_url();?>js/manage_functions.js" type="text/javascript" language="javascript"></script>
+	<script src="<?php echo base_url();?>js/lang.js.php" type="text/javascript" language="javascript"></script>
 
 </head>
 <body>

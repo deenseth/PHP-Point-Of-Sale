@@ -133,12 +133,18 @@ a.none
 #title
 {
 	position:relative;
-	padding-top:8px;
+	padding-top:18px;
 	font-size:30px;
 	font-weight:bold;
 	margin-right:10px;
 	color:#000000;
 }	
+
+#new_button
+{
+	position:relative;
+	padding-top:8px;
+}
 
 #table_action_header
 {
@@ -268,13 +274,38 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	float:right;
 }
 
-.warning_message
+#feedback_bar
 {
 	position:relative;
-	top:3px;
-	padding:7px;
+	padding:5px;
+	margin:0 auto;
+	margin-bottom:8px;
+	width:60%;
+	opacity: 0;
+	filter: alpha(opacity=0);
+
+}
+.warning_message
+{
+	text-align:center;
 	background-color:#fffcdd;
 	border:1px solid #fff4aa;
+	font-weight:bold;
+}
+
+.error_message
+{
+	text-align:center;
+	background-color:#f68383;
+	border:1px solid #da3232;
+	font-weight:bold;
+}
+
+.success_message
+{
+	text-align:center;
+	background-color:#e1ffdd;
+	border:1px solid #2ca71c;
 	font-weight:bold;
 }
 

@@ -12,16 +12,20 @@ $(document).ready(function()
 
 function init_table_sorting()
 {
-	$("#sortable_table").tablesorter(
-	{ 
-		sortList: [[1,0]], 
-		headers: 
+	//Only init if there are rows
+	if($('.tablesorter tbody tr td:first').attr('colspan')==undefined)
+	{
+		$("#sortable_table").tablesorter(
 		{ 
-			0: { sorter: false}, 
-			5: { sorter: false} 
-		} 
+			sortList: [[1,0]], 
+			headers: 
+			{ 
+				0: { sorter: false}, 
+				5: { sorter: false} 
+			} 
 
-	}); 
+		}); 
+	}
 }
 
 function post_customer_form_load()
@@ -33,7 +37,7 @@ function post_customer_form_load()
 		$.post($(this).attr('action'), $(this).serializeArray(),function()
 		{
 			tb_remove();
-			do_search();	
+			do_search(false);	
 		});
  	});
 }
@@ -42,14 +46,16 @@ function post_customer_form_load()
 
 <div id="title_bar">
 	<div id="title" class="float_left"><?php echo $this->lang->line('common_list_of').' '.$this->lang->line('module_customers'); ?></div>
-	<div class="float_right">
+	<div id="new_button" class="float_right">
 		<?php echo anchor('customers/view',
 		"<div class='big_button'><span>".$this->lang->line('customer_new_customer')."</span></div>",
 		array('class'=>'thickbox none'));
 		?>
 	</div>
 </div>
-
+<div id="feedback_bar" class="warning_message">
+You have successfully added customer ABC
+</div>
 <div id="table_action_header">
 	<ul>
 		<li class="float_left"><span><?php echo anchor('customers/delete',$this->lang->line("common_delete"),array('id'=>'delete')); ?></a></span></li>

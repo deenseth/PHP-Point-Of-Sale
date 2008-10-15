@@ -5,7 +5,7 @@ Gets the html table to manage customers based on an array of customer objects.
 function get_customer_manage_table($customers)
 {
 	$CI =& get_instance();
-	$table='<table class="tablesorter" id="sortable_table"><thead>';
+	$table='<table class="tablesorter" id="sortable_table">';
 	
 	$headers = array('<input type="checkbox" id="select_all" />', 
 	$CI->lang->line('common_last_name'),
@@ -14,7 +14,7 @@ function get_customer_manage_table($customers)
 	$CI->lang->line('common_phone_number'),
 	'&nbsp');
 	
-	$table.='<thread><tr>';
+	$table.='<thead><tr>';
 	foreach($headers as $header)
 	{
 		$table.="<th>$header</th>";
@@ -47,7 +47,7 @@ function get_customer_manage_table_data_rows($customers)
 	
 	if(count($customers)==0)
 	{
-		$table_data_rows.="<tr><td colspan='6'><div class='warning_message' style='text-align:center;'>".$CI->lang->line('customer_no_customers_to_display')."</div></tr></tr>";
+		$table_data_rows.="<tr><td colspan='6'><div class='warning_message' style='padding:7px;'>".$CI->lang->line('customer_no_customers_to_display')."</div></tr></tr>";
 	}
 	
 	return $table_data_rows;

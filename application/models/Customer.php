@@ -24,13 +24,14 @@ class Customer extends Model
 		return $customers;
 	}
 	
-	function get_customer_suggestions($search)
+	function get_customer_suggestions($search,$limit)
 	{
 		$suggestions = array();
 		
 		$this->db->from('customers');
 		$this->db->like('first_name', $search); 
-		$this->db->or_like('last_name', $search); 		
+		$this->db->or_like('last_name', $search);
+		$this->db->or_like("CONCAT(`first_name`,' ',`last_name`)",$search);		
 		$this->db->order_by("last_name", "asc");		
 		$by_name = $this->db->get();
 		foreach($by_name->result() as $row)
@@ -56,13 +57,12 @@ class Customer extends Model
 			$suggestions[]=$row->phone_number;		
 		}
 		
-		/*		
-		//only return 20 suggestions
-		if(count($suggestions > 20))
+		
+		//only return $limit suggestions
+		if(count($suggestions > $limit))
 		{
-			$suggestions = array_slice($suggestions, 0,20);
+			$suggestions = array_slice($suggestions, 0,$limit);
 		}
-		*/
 		return $suggestions;
 	
 	}

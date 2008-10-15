@@ -9,9 +9,12 @@
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/thickbox.css" />
 	<script src="<?php echo base_url();?>js/jquery-1.2.6.min.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
 	<script src="<?php echo base_url();?>js/jquery.tablesorter.min.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
+	<script src="<?php echo base_url();?>js/jquery.ajax_queue.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
+	<script src="<?php echo base_url();?>js/jquery.bgiframe.min.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
+	<script src="<?php echo base_url();?>js/jquery.autocomplete.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
+
 	<script src="<?php echo base_url();?>js/thickbox.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
 	<script src="<?php echo base_url();?>js/manage_functions.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
-	<script src="<?php echo base_url();?>js/autocomplete.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
 </head>
 <body>
 <div id="menubar">

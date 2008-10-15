@@ -23,7 +23,7 @@ class Customers extends Secure_Area
 	
 	function suggest()
 	{
-		$suggestions = $this->Customer->get_customer_suggestions($this->input->post('search'));
+		$suggestions = $this->Customer->get_customer_suggestions($this->input->post('q'),$this->input->post('limit'));
 		echo implode("\n",$suggestions);
 	}
 	

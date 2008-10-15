@@ -1,11 +1,9 @@
 function enable_search(suggest_url)
 {
-    $("#search").autocomplete(suggest_url,{
-    	
-    	'onItemSelect':function(selectItem) 
-    	{
-    		do_search(true);
-    	}
+    $("#search").autocomplete(suggest_url,{max:100});
+    $("#search").result(function(event, data, formatted)
+    {
+		do_search(true);
     });
     
 	$('#search_form').submit(function(event)

@@ -24,7 +24,7 @@ CREATE TABLE `phppos_customers` (
   `comments` blob NOT NULL,
   `id` int(10) NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Customer Info.' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Customer Info.' AUTO_INCREMENT=1 ;
 
 -- 
 -- Dumping data for table `phppos_customers`
@@ -51,7 +51,7 @@ CREATE TABLE `phppos_items` (
   `reorder_level` int(10) NOT NULL default '0',
   `id` int(10) NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Item Info.' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Item Info.' AUTO_INCREMENT=1 ;
 
 -- 
 -- Dumping data for table `phppos_items`
@@ -72,7 +72,7 @@ CREATE TABLE `phppos_modules` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `desc_lang_key` (`desc_lang_key`),
   UNIQUE KEY `name_lang_key` (`name_lang_key`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phppos_modules`
@@ -95,7 +95,7 @@ CREATE TABLE `phppos_permissions` (
   `module_id` varchar(255) NOT NULL,
   `user_id` int(10) NOT NULL,
   PRIMARY KEY  (`module_id`,`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phppos_permissions`
@@ -121,7 +121,7 @@ CREATE TABLE `phppos_sales` (
   `comment` varchar(255) NOT NULL,
   `id` int(10) NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Contains overall sale details' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Contains overall sale details' AUTO_INCREMENT=1 ;
 
 -- 
 -- Dumping data for table `phppos_sales`
@@ -143,7 +143,7 @@ CREATE TABLE `phppos_sales_items` (
   `item_tax_percent` decimal(4,2) NOT NULL,
   `id` int(10) NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Table that holds item information for sales' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table that holds item information for sales' AUTO_INCREMENT=1 ;
 
 -- 
 -- Dumping data for table `phppos_sales_items`
@@ -162,7 +162,7 @@ CREATE TABLE `phppos_sessions` (
   `user_agent` varchar(50) NOT NULL,
   `last_activity` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`session_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phppos_sessions`
@@ -183,7 +183,7 @@ CREATE TABLE `phppos_users` (
   `id` int(10) NOT NULL auto_increment,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='User info. that the program needs' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='User info. that the program needs' AUTO_INCREMENT=2 ;
 
 -- 
 -- Dumping data for table `phppos_users`

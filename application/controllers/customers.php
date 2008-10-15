@@ -21,6 +21,12 @@ class Customers extends Secure_Area
 		echo $data_rows;
 	}
 	
+	function suggest()
+	{
+		$suggestions = $this->Customer->get_customer_suggestions($this->input->post('search'));
+		echo implode("\n",$suggestions);
+	}
+	
 	function view($customer_id=-1)
 	{
 		$data['customer_info']=$this->Customer->get_customer_info($customer_id);
@@ -36,16 +42,47 @@ class Customers extends Secure_Area
 		$phone_number=$this->input->post('phone_number');
 		$comments=$this->input->post('comments');
 		
-		$this->Customer->save_customer($customer_id,$first_name,$last_name,$email,$phone_number,$comments);
+		$success = $this->Customer->save_customer($customer_id,$first_name,$last_name,$email,$phone_number,$comments);
+		
+		if($success)
+		{
+			//New customer
+			if($customer_id==-1)
+			{
+				echo json_encode(array('text'=>$this->lang->line('customer_successful_adding_customer').' '.
+				$first_name.' '.$last_name,'class_name'=>'success_message','keep_displayed'=>false));
+			}
+			else //previous customer
+			{
+				echo json_encode(array('text'=>$this->lang->line('customer_successful_updating_customer').' '.
+				$first_name.' '.$last_name,'class_name'=>'success_message','keep_displayed'=>false));
+			}
+		}
+		else//failure
+		{
+			echo json_encode(array('text'=>$this->lang->line('customer_error_adding_updating_customer').' '.
+			$first_name.' '.$last_name,'class_name'=>'error_message','keep_displayed'=>true));
+		}
 	}
 	
 	/*
-	This deletes customers (that can be deleted) from the customers table
+	This deletes customers from the customers table
 	*/
 	function delete()
 	{
 		$customers_to_delete=$this->input->post('ids');
-		$this->Customer->delete_customers($customers_to_delete);
+		$success = $this->Customer->delete_customers($customers_to_delete);
+		
+		if($success)
+		{
+			echo json_encode(array('text'=>$this->lang->line('customer_successful_deleted').' '.
+			count($customers_to_delete).' '.$this->lang->line('customer_customer(s)'),'class_name'=>'success_message','keep_displayed'=>false));
+		}
+		else
+		{
+			echo json_encode(array('text'=>$this->lang->line('customer_cannot_be_deleted'),
+			'class_name'=>'error_message','keep_displayed'=>true));
+		}
 	}
 	
 	/*

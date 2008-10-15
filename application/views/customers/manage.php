@@ -1,13 +1,12 @@
 <?php $this->load->view("partial/header"); ?>
 <script type="text/javascript">
-
 $(document).ready(function() 
 { 
     init_table_sorting();
     select_all_enable();
-    enable_search();
-    enable_delete("<?php echo $this->lang->line('customer_confirm_delete')?>");
+    enable_search("<?php echo site_url('customers/suggest')?>");
     enable_email("<?php echo site_url('customers/email')?>");
+    enable_delete("<?php echo $this->lang->line('customer_confirm_delete')?>");
 }); 
 
 function init_table_sorting()
@@ -34,11 +33,14 @@ function post_customer_form_load()
 	{
 		event.preventDefault();
 		
-		$.post($(this).attr('action'), $(this).serializeArray(),function()
+		$.post($(this).attr('action'), $(this).serializeArray(),function(response)
 		{
 			tb_remove();
-			do_search(false);	
-		});
+			do_search(false,function()
+			{
+				set_feedback(response.text,response.class_name,response.keep_displayed);	
+			});	
+		},"json");
  	});
 }
 
@@ -53,9 +55,7 @@ function post_customer_form_load()
 		?>
 	</div>
 </div>
-<div id="feedback_bar" class="warning_message">
-You have successfully added customer ABC
-</div>
+<div id="feedback_bar"></div>
 <div id="table_action_header">
 	<ul>
 		<li class="float_left"><span><?php echo anchor('customers/delete',$this->lang->line("common_delete"),array('id'=>'delete')); ?></a></span></li>
@@ -71,5 +71,4 @@ You have successfully added customer ABC
 <div id="table_holder">
 <?php echo get_customer_manage_table($this->Customer->get_all_customers()); ?>
 </div>
-<br /><br /><br />
 <?php $this->load->view("partial/footer"); ?>

@@ -143,7 +143,7 @@ a.none
 #new_button
 {
 	position:relative;
-	padding-top:8px;
+	padding-top:12px;
 }
 
 #table_action_header
@@ -182,6 +182,13 @@ a.none
 	padding:0px 5px 0px 5px;
 	
 }
+
+#table_holder
+{
+	position:relative;
+	margin-bottom:50px;
+}
+
 
 /* tables */
 table.tablesorter 
@@ -281,6 +288,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	margin:0 auto;
 	margin-bottom:8px;
 	width:60%;
+	height:15px;
 	opacity: 0;
 	filter: alpha(opacity=0);
 
@@ -322,11 +330,58 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 html[xmlns] .clearfix {	display: block; }
 * html .clearfix { height: 1%; }
 
+.ac_results {
+	padding: 0px;
+	border: 1px solid WindowFrame;
+	background-color: Window;
+	overflow: hidden;
+}
 
+.ac_results ul {
+	width: 100%;
+	list-style-position: outside;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.ac_results iframe {
+	display:none;/*sorry for IE5*/
+	display/**/:block;/*sorry for IE5*/
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:-1;
+	filter:mask();
+	width:3000px;
+	height:3000px;
+}
+
+.ac_results li {
+	margin: 0px;
+	padding: 2px 5px;
+	cursor: pointer;
+	display: block;
+	width: 100%;
+	font: menu;
+	font-size: 12px;
+	overflow: hidden;
+}
+
+.ac_loading {
+	background : Window url('./indicator.gif') right center no-repeat;
+}
+
+.ac_over {
+	background-color: Highlight;
+	color: HighlightText;
+}
 #footer
 {
 	margin-top:25px;
+	margin-bottom:15px;	
 	text-align:center;
 	font-size:11px;
 	color:#777777;
+	
 }

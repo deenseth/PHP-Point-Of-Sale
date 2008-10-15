@@ -24,6 +24,47 @@ class Customer extends Model
 		return $customers;
 	}
 	
+	function get_customer_suggestions($search)
+	{
+		$suggestions = array();
+		
+		$this->db->from('customers');
+		$this->db->like("CONCAT(`first_name`,' ',`last_name`)",$search);
+		$this->db->order_by("last_name", "asc");		
+		$by_name = $this->db->get();
+		foreach($by_name->result() as $row)
+		{
+			$suggestions[]=$row->first_name.' '.$row->last_name;		
+		}
+		
+		$this->db->from('customers');
+		$this->db->like("email",$search);
+		$this->db->order_by("email", "asc");		
+		$by_email = $this->db->get();
+		foreach($by_email->result() as $row)
+		{
+			$suggestions[]=$row->email;		
+		}
+
+		$this->db->from('customers');
+		$this->db->like("phone_number",$search);
+		$this->db->order_by("phone_number", "asc");		
+		$by_phone = $this->db->get();
+		foreach($by_phone->result() as $row)
+		{
+			$suggestions[]=$row->phone_number;		
+		}
+		
+		
+		//only return 20 suggestions
+		if(count($suggestions > 20))
+		{
+			$suggestions = array_slice($suggestions, 0,20);
+		}
+		return $suggestions;
+	
+	}
+	
 	/*
 	Get customers with specific ids
 	*/
@@ -112,28 +153,38 @@ class Customer extends Model
 		
 		if ($customer_id=='-1')
 		{
-			$this->db->insert('customers');
+			return $this->db->insert('customers');
 		}
-		else
-		{
-			$this->db->where('id', $customer_id);
-			$this->db->update('customers');		
-		}
+		
+		$this->db->where('id', $customer_id);
+		return $this->db->update('customers');		
+		
 	}
 	
 	/*
 	Deletes a list of customers (if allowed)
 	*/
 	function delete_customers($customer_ids)
-	{
+	{	
+		//Delete ALL customers or NONE, so we run as transaction
+		$this->db->trans_begin();
+		
 		$all_successful = true;
 		foreach($customer_ids as $customer_id)
 		{
 			$all_successful = $this->delete_customer($customer_id);
 		}
+		if($all_successful)
+		{
+			//commit transaction
+			$this->db->trans_commit();
+			return true;
+		}
 		
-		return $all_successful;
-	}
+		//rollback
+ 		$this->db->trans_rollback();
+ 		return false;
+ }
 	
 	/*
 	Deletes one customer

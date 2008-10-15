@@ -1,27 +1,30 @@
-function enable_search()
+function enable_search(suggest_url)
 {
-	$('#search').click(function()
-    {
-    	$(this).attr('value','');
+    $("#search").autocomplete(suggest_url,{
+    	
+    	'onItemSelect':function(selectItem) 
+    	{
+    		do_search(true);
+    	}
     });
-        
-     $('#search_form').submit(function(event)
-     {
-     	event.preventDefault();
-     	do_search(true);
-     });
+    
+	$('#search_form').submit(function(event)
+	{
+		event.preventDefault();
+		do_search(true);
+	});
 }
 
-function do_search(show_feedback)
-{
+function do_search(show_feedback,on_complete)
+{	
 	if(show_feedback)
-	{
 		$('#spinner').show();
-		set_feedback($('#search').val(),'success_message',false);
-	}
-	
+		
 	$('#sortable_table tbody').load($('#search_form').attr('action'),{'search':$('#search').val()},function()
 	{
+		if(typeof on_complete=='function')
+			on_complete();
+				
 		$('#spinner').hide();
 		//re-init elements in new table, as table tbody children were replaced
 		tb_init('#sortable_table a.thickbox');
@@ -33,12 +36,11 @@ function do_search(show_feedback)
 function enable_email(email_url)
 {
 	//store url in function cache
-	if(enable_email.url==undefined)
+	if(typeof enable_email.url=='undefined')
 	{
 		enable_email.url=email_url;
 	}
 	
-	do_email(enable_email.url);
 	$('#select_all, #sortable_table tbody :checkbox').click(function()
 	{
 		do_email(enable_email.url);
@@ -56,23 +58,26 @@ function do_email(url)
 
 function enable_delete(confirm_message)
 {
-	$('#delete').click(function()
+	$('#delete').click(function(event)
 	{
+		event.preventDefault();
+		
 		if(confirm(confirm_message))
 		{
 			do_delete($("#delete").attr('href'));
 		}
-		
-		return false;
 	});
 }
 
 function do_delete(url)
 {
-	$.post(url, { 'ids[]': get_selected_values() },function()
+	$.post(url, { 'ids[]': get_selected_values() },function(response)
 	{
-		do_search(false);
-	});
+		do_search(false,function()
+		{
+			set_feedback(response.text,response.class_name,response.keep_displayed);
+		});
+	},"json");
 }
 
 function select_all_enable()
@@ -108,14 +113,21 @@ function get_selected_values()
 
 function set_feedback(text, classname, keep_displayed)
 {
-	$('#feedback_bar').css('class',classname);
-	$('#feedback_bar').text(text);
-	$('#feedback_bar').fadeTo("slow",1,function()
+	if(text!='')
 	{
+		$('#feedback_bar').removeClass();
+		$('#feedback_bar').addClass(classname);
+		$('#feedback_bar').text(text);
+		$('#feedback_bar').css('opacity','1');
+
 		if(!keep_displayed)
 		{
 			$('#feedback_bar').fadeTo(5000, 1);
 			$('#feedback_bar').fadeTo("fast",0);
 		}
-	});
+	}
+	else
+	{
+		$('#feedback_bar').css('opacity','0');
+	}
 }

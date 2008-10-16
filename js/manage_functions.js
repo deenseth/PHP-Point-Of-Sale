@@ -43,6 +43,7 @@ function do_search(show_feedback,on_complete)
 		var sorting = $("#sortable_table")[0].config.sortList; 		
 		$("#sortable_table").trigger("sorton",[sorting]);
 		enable_email();
+		$("#select_all").attr('checked',false);
 	});
 }
 
@@ -101,14 +102,14 @@ function select_all_enable()
 		{	
 			$("#sortable_table tbody :checkbox").each(function()
 			{
-				$(this).attr('checked',true)
+				$(this).attr('checked',true);
 			});
 		}
 		else
 		{
 			$("#sortable_table tbody :checkbox").each(function()
 			{
-				$(this).attr('checked',false)
+				$(this).attr('checked',false);
 			});    	
 		}
 	 });	

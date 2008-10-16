@@ -6,13 +6,13 @@ $(document).ready(function()
     select_all_enable();
     enable_search("<?php echo site_url('customers/suggest')?>","<?php echo $this->lang->line('common_confirm_search')?>");
     enable_email("<?php echo site_url('customers/email')?>");
-    //enable_delete("<?php echo $this->lang->line('customer_confirm_delete')?>");
+    enable_delete("<?php echo $this->lang->line('customer_confirm_delete')?>");
 }); 
 
 function init_table_sorting()
 {
-	//Only init if there are rows
-	if($('.tablesorter tbody tr td:first').attr('colspan')==undefined)
+	//Only init if there is more than one row
+	if($('.tablesorter tbody tr').length >1)
 	{
 		$("#sortable_table").tablesorter(
 		{ 

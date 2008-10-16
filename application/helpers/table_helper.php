@@ -36,12 +36,12 @@ function get_customer_manage_table_data_rows($customers)
 	foreach($customers as $customer)
 	{
 		$table_data_rows.='<tr>';
-		$table_data_rows.="<td><input type='checkbox' id='customer_$customer->id' value='".$customer->id."'/></td>";
-		$table_data_rows.="<td>$customer->last_name</td>";
-		$table_data_rows.="<td>$customer->first_name</td>";
-		$table_data_rows.='<td>'.mailto($customer->email).'</td>';
-		$table_data_rows.='<td>'.$customer->phone_number.'</td>';		
-		$table_data_rows.='<td>'.anchor("customers/view/$customer->id", $CI->lang->line('common_edit'),array('class'=>'thickbox')).'</td>';		
+		$table_data_rows.="<td width='5'><input type='checkbox' id='customer_$customer->id' value='".$customer->id."'/></td>";
+		$table_data_rows.='<td width="20%">'.character_limiter($customer->last_name,13).'</td>';
+		$table_data_rows.='<td width="20%">'.character_limiter($customer->first_name,13).'</td>';
+		$table_data_rows.='<td width="30%">'.mailto($customer->email,character_limiter($customer->email,22)).'</td>';
+		$table_data_rows.='<td width="20%">'.character_limiter($customer->phone_number,13).'</td>';		
+		$table_data_rows.='<td width="5%">'.anchor("customers/view/$customer->id", $CI->lang->line('common_edit'),array('class'=>'thickbox')).'</td>';		
 		$table_data_rows.='</tr>';
 	}
 	

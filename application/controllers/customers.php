@@ -42,7 +42,15 @@ class Customers extends Secure_Area
 		$phone_number=$this->input->post('phone_number');
 		$comments=$this->input->post('comments');
 		
-		$success = $this->Customer->save_customer($customer_id,$first_name,$last_name,$email,$phone_number,$comments);
+		$customer_data = array(
+		'first_name'=>$first_name,
+		'last_name'=>$last_name,
+		'email'=>$email,
+		'phone_number'=>$phone_number,
+		'comments'=>$comments
+		);
+		
+		$success = $this->Customer->save_customer($customer_id,$customer_data);
 		
 		if($success)
 		{

@@ -143,15 +143,9 @@ class Customer extends Model
 	/*
 	Inserts or updates a customer
 	*/
-	function save_customer($customer_id, $first_name, $last_name, $email, $phone_number, $comments)
+	function save_customer($customer_id, $customer_data)
 	{
-		$this->db->set(array(
-		'first_name'=>$first_name,
-		'last_name'=>$last_name,
-		'email'=>$email,
-		'phone_number'=>$phone_number,
-		'comments'=>$comments
-		));
+		$this->db->set($customer_data);
 		
 		if ($customer_id=='-1')
 		{

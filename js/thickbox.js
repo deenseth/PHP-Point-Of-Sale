@@ -181,9 +181,7 @@ function tb_show(caption, url, imageGroup) {//function called when the user clic
 			imgPreloader.src = url;
 		}else{//code to show html
 			
-			var queryString = url.replace(/^[^\?]+\??/,'');
-			var params = tb_parseQuery( queryString );
-
+			var params = tb_parseUrl(url);
 			TB_WIDTH = (params['width']*1) + 30 || 500; //defaults to 500 if no paramaters were added to URL
 			TB_HEIGHT = (params['height']*1) + 40 || 350; //defaults to 350 if no paramaters were added to URL
 			ajaxContentW = TB_WIDTH - 30;
@@ -231,7 +229,7 @@ function tb_show(caption, url, imageGroup) {//function called when the user clic
 						$("#TB_window").css({display:"block"});
 					}
 				}else{
-					$("#TB_ajaxContent").load(url += "/random" + (new Date().getTime()),function(){//to do a post change this load method
+					$("#TB_ajaxContent").load(url += "/random:" + (new Date().getTime()),function(){//to do a post change this load method
 						tb_position();
 						$("#TB_load").remove();
 						tb_init("#TB_ajaxContent a.thickbox");
@@ -299,6 +297,24 @@ function tb_parseQuery ( query ) {
       Params[key] = val;
    }
    return Params;
+}
+
+function tb_parseUrl( url ) {
+	var Params = {}
+	if( !url) {return Params;}
+	
+	var Pairs = url.match(/[a-z 0-9~%.:_\-]+:[a-z 0-9~%.:_\-]+/ig);
+	console.log(Pairs);
+   	for ( var i = 0; i < Pairs.length; i++ ) {
+      var KeyVal = Pairs[i].split(':');
+      if ( ! KeyVal || KeyVal.length != 2 ) {continue;}
+      var key = unescape( KeyVal[0] );
+      var val = unescape( KeyVal[1] );
+      val = val.replace(/\+/g, ' ');
+      Params[key] = val;
+   }
+   return Params;
+
 }
 
 function tb_getPageSize(){

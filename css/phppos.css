@@ -259,6 +259,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	right:21%;
 	top:5px;
 }
+
 .big_button
 {
 	position:relative;
@@ -275,6 +276,26 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	top:35%;
 	color:#FFF;
 	font-size:13px;
+	font-weight:bold;
+	text-align:center;
+}
+
+.small_button
+{
+	position:relative;
+	width:95px;
+	height:30px;
+	background-image: url(../images/small_action_button);
+	background-repeat:no-repeat;
+	cursor:pointer;
+}
+.small_button span
+{
+	position:absolute;
+	width:100%;
+	top:35%;
+	color:#FFF;
+	font-size:11px;
 	font-weight:bold;
 	text-align:center;
 }
@@ -326,6 +347,39 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	font-weight:bold;
 }
 
+.field_row 
+{
+	margin: 0 0 10px 0;
+}
+ 
+.field_row label 
+{
+ 	float:left;
+ 	width:100px;
+ 	text-align:left;
+ 	line-height:2.3;
+ }
+ 
+.form_field
+{
+ 	float:left;
+ 	padding: 3px;
+ 	background-color: #f2f2f2;
+ }
+  
+.form_field input, .form_field textarea 
+{
+ 	border: 1px solid #ccc;
+ 	padding: 4px;
+ }
+ 
+.submit_button 
+{
+	padding: 5px;
+	color: #444;
+	background-color: #f2f2f2;
+	border: 2px solid #ddd;
+}
 
 .clearfix:after {
 	content: ".";

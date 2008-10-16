@@ -41,7 +41,7 @@ function get_customer_manage_table_data_rows($customers)
 		$table_data_rows.='<td width="20%">'.character_limiter($customer->first_name,13).'</td>';
 		$table_data_rows.='<td width="30%">'.mailto($customer->email,character_limiter($customer->email,22)).'</td>';
 		$table_data_rows.='<td width="20%">'.character_limiter($customer->phone_number,13).'</td>';		
-		$table_data_rows.='<td width="5%">'.anchor("customers/view/$customer->id", $CI->lang->line('common_edit'),array('class'=>'thickbox')).'</td>';		
+		$table_data_rows.='<td width="5%">'.anchor("customers/view/$customer->id/width:300/height:275", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line('customer_update_customer'))).'</td>';		
 		$table_data_rows.='</tr>';
 	}
 	
@@ -51,7 +51,5 @@ function get_customer_manage_table_data_rows($customers)
 	}
 	
 	return $table_data_rows;
-
-
 }
 ?>

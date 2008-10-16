@@ -179,11 +179,17 @@ a.none
 
 #table_action_header ul li span
 {
-	background-color:#FFFFFF;
-	border:1px solid #CCCCCC;
+	background-color:#0a6184;
+	border:2px solid #DDDDDD;
 	font-size:14px;
-	padding:0px 5px 0px 5px;
+	padding:2px 5px 2px 5px;
 	
+}
+
+#table_action_header a
+{
+	text-decoration:none;
+	color:#FFF;	
 }
 
 #table_holder
@@ -347,18 +353,32 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	font-weight:bold;
 }
 
+#required_fields_message
+{
+	position: relative;
+	width: 100%;
+	text-align: center;
+	margin-bottom: 3px;
+	font-style: italic;
+}
+
 .field_row 
 {
 	margin: 0 0 10px 0;
 }
- 
+
 .field_row label 
 {
- 	float:left;
- 	width:100px;
- 	text-align:left;
- 	line-height:2.3;
- }
+	float:left;
+	width:100px;
+	text-align:left;
+	line-height:2.3;
+}
+
+.field_row label.required
+{
+	color:red;
+}
  
 .form_field
 {
@@ -371,13 +391,22 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 {
  	border: 1px solid #ccc;
  	padding: 4px;
- }
- 
+}
+
+#error_message_box
+{
+	position:relative;
+	margin-bottom:7px;
+	margin-left:20px;
+	color:red;
+	
+}
+
 .submit_button 
 {
 	padding: 5px;
-	color: #444;
-	background-color: #f2f2f2;
+	color: #fff;
+	background-color: #0a6184;
 	border: 2px solid #ddd;
 }
 

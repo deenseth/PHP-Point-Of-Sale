@@ -47,7 +47,7 @@ function customer_form_submit(form)
 <div id="title_bar">
 	<div id="title" class="float_left"><?php echo $this->lang->line('common_list_of').' '.$this->lang->line('module_customers'); ?></div>
 	<div id="new_button" class="float_right">
-		<?php echo anchor('customers/view/-1/width:300/height:275',
+		<?php echo anchor('customers/view/-1/width:300/height:550',
 		"<div class='big_button'><span>".$this->lang->line('customer_new_customer')."</span></div>",
 		array('class'=>'thickbox none','title'=>$this->lang->line('customer_new_customer')));
 		?>

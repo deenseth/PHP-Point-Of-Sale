@@ -36,18 +36,18 @@ class Customers extends Secure_Area
 	
 	function save($customer_id=-1)
 	{
-		$first_name=$this->input->post('first_name');
-		$last_name=$this->input->post('last_name');
-		$email=$this->input->post('email');
-		$phone_number=$this->input->post('phone_number');
-		$comments=$this->input->post('comments');
-		
 		$customer_data = array(
-		'first_name'=>$first_name,
-		'last_name'=>$last_name,
-		'email'=>$email,
-		'phone_number'=>$phone_number,
-		'comments'=>$comments
+		'first_name'=>$this->input->post('first_name'),
+		'last_name'=>$this->input->post('last_name'),
+		'email'=>$this->input->post('email'),
+		'phone_number'=>$this->input->post('phone_number'),
+		'address_1'=>$this->input->post('address_1'),
+		'address_2'=>$this->input->post('address_2'),
+		'city'=>$this->input->post('city'),
+		'state'=>$this->input->post('state'),
+		'zip'=>$this->input->post('zip'),
+		'country'=>$this->input->post('country'),
+		'comments'=>$this->input->post('comments')
 		);
 		
 		$success = $this->Customer->save_customer($customer_id,$customer_data);
@@ -58,18 +58,18 @@ class Customers extends Secure_Area
 			if($customer_id==-1)
 			{
 				echo json_encode(array('text'=>$this->lang->line('customer_successful_adding_customer').' '.
-				$first_name.' '.$last_name,'class_name'=>'success_message','keep_displayed'=>false));
+				$customer_data['first_name'].' '.$customer_data['last_name'],'class_name'=>'success_message','keep_displayed'=>false));
 			}
 			else //previous customer
 			{
 				echo json_encode(array('text'=>$this->lang->line('customer_successful_updating_customer').' '.
-				$first_name.' '.$last_name,'class_name'=>'success_message','keep_displayed'=>false));
+				$customer_data['first_name'].' '.$customer_data['last_name'],'class_name'=>'success_message','keep_displayed'=>false));
 			}
 		}
 		else//failure
 		{
 			echo json_encode(array('text'=>$this->lang->line('customer_error_adding_updating_customer').' '.
-			$first_name.' '.$last_name,'class_name'=>'error_message','keep_displayed'=>true));
+			$customer_data['first_name'].' '.$customer_data['last_name'],'class_name'=>'error_message','keep_displayed'=>true));
 		}
 	}
 	

@@ -100,6 +100,8 @@ margin-top: expression(0 - parseInt(this.offsetHeight / 2) + (TBWindowMargin = d
 
 #TB_title{
 	background-color:#e8e8e8;
+	font-size:1.25em;
+	font-weight:bold;
 	height:27px;
 }
 

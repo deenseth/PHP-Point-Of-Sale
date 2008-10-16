@@ -302,9 +302,7 @@ function tb_parseQuery ( query ) {
 function tb_parseUrl( url ) {
 	var Params = {}
 	if( !url) {return Params;}
-	
 	var Pairs = url.match(/[a-z 0-9~%.:_\-]+:[a-z 0-9~%.:_\-]+/ig);
-	console.log(Pairs);
    	for ( var i = 0; i < Pairs.length; i++ ) {
       var KeyVal = Pairs[i].split(':');
       if ( ! KeyVal || KeyVal.length != 2 ) {continue;}

@@ -36,7 +36,7 @@ class Login extends Controller
 	
 	function login_check($username)
 	{
-		$password = md5($this->validation->password);	
+		$password = $this->validation->password;	
 		
 		if(!$this->User->login_user($username,$password))
 		{

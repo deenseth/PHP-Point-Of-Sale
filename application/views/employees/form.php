@@ -3,6 +3,8 @@ echo form_open('employees/save/'.$employee_info->person_id,array('id'=>'employee
 ?>
 <div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
 <ul id="error_message_box"></ul>
+<fieldset id="employee_basic_info">
+<legend><?php echo $this->lang->line("employees_basic_information"); ?></legend>
 <div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('common_first_name').':', 'first_name',array('class'=>'required')); ?>
 	<div class='form_field'>
@@ -106,6 +108,22 @@ echo form_open('employees/save/'.$employee_info->person_id,array('id'=>'employee
 </div>
 
 <div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('common_comments').':', 'comments'); ?>
+	<div class='form_field'>
+	<?php echo form_textarea(array(
+		'name'=>'comments',
+		'id'=>'comments',
+		'value'=>$employee_info->comments,
+		'rows'=>'5',
+		'cols'=>'17')		
+	);?>
+	</div>
+</div>
+</fieldset>
+
+<fieldset id="employee_login_info">
+<legend><?php echo $this->lang->line("employees_login_info"); ?></legend>
+<div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('employees_username').':', 'username',array('class'=>'required')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
@@ -139,19 +157,27 @@ $password_label_attributes = $employee_info->person_id == "" ? array('class'=>'r
 	));?>
 	</div>
 </div>
+</fieldset>
 
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('common_comments').':', 'comments'); ?>
-	<div class='form_field'>
-	<?php echo form_textarea(array(
-		'name'=>'comments',
-		'id'=>'comments',
-		'value'=>$employee_info->comments,
-		'rows'=>'5',
-		'cols'=>'17')		
-	);?>
-	</div>
-</div>
+<fieldset id="employee_permission_info">
+<legend><?php echo $this->lang->line("employees_permission_info"); ?></legend>
+<p><?php echo $this->lang->line("employees_permission_desc"); ?></p>
+
+<ul id="permission_list">
+<?php
+foreach($all_modules->result() as $module)
+{
+?>
+<li>	
+<?php echo form_checkbox("permissions[]",$module->module_id,$this->Employee->has_permission($module->module_id,$employee_info->person_id)); ?>
+<span class="medium"><?php echo $this->lang->line('module_'.$module->module_id);?>:</span>
+<span class="small"><?php echo $this->lang->line('module_'.$module->module_id.'_desc');?></span>
+</li>
+<?php
+}
+?>
+</ul>
+</fieldset>
 <?php 
 echo form_submit(array(
 	'name'=>'submit',
@@ -216,7 +242,7 @@ $(document).ready(function()
      		username:
      		{
      			required: "<?php echo $this->lang->line('employees_username_required'); ?>",
-     			minlength: "<?php echo $this->lang->line('employees_username_minlength'); ?>",
+     			minlength: "<?php echo $this->lang->line('employees_username_minlength'); ?>"
      		},
      		
 			password:

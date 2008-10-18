@@ -388,6 +388,66 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
  	padding: 4px;
 }
 
+#customer_basic_info
+{
+	padding:5px;
+
+}
+#employee_basic_info
+{
+	float:left;
+	width:45%;
+	padding:5px;
+}
+
+#employee_login_info
+{
+	float:left;
+	width:45%;
+	margin-left:5px;
+	padding:5px;
+}
+
+#permission_list
+{
+	list-style:none;
+}
+
+#permission_list li
+{
+	padding:5px;	
+}
+
+#permission_list input
+{
+	position:relative;
+	top:3px;
+}
+
+#employee_permission_info
+{
+	float:left;
+	width:45%;
+	margin-left:5px;
+	padding:5px;
+}
+#employee_permission_info p
+{
+	font-weight:bold;
+}
+
+#employee_permission_info span.medium
+{
+	
+}
+
+
+#employee_permission_info span.small
+{
+	font-style:italic;
+	font-size:80%;
+}
+
 #error_message_box
 {
 	position:relative;

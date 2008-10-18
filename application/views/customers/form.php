@@ -3,6 +3,8 @@ echo form_open('customers/save/'.$customer_info->person_id,array('id'=>'customer
 ?>
 <div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
 <ul id="error_message_box"></ul>
+<fieldset id="customer_basic_info">
+<legend><?php echo $this->lang->line("customers_basic_information"); ?></legend>
 <div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('common_first_name').':', 'first_name',array('class'=>'required')); ?>
 	<div class='form_field'>
@@ -117,6 +119,7 @@ echo form_open('customers/save/'.$customer_info->person_id,array('id'=>'customer
 	);?>
 	</div>
 </div>
+</fieldset>
 <?php 
 echo form_submit(array(
 	'name'=>'submit',

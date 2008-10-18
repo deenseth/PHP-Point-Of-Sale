@@ -17,4 +17,8 @@ $lang['employees_username_minlength']='The username must be at least 5 character
 $lang['employees_password_required']='Password is required';
 $lang['employees_password_minlength']='Passwords must be at least 8 characters';
 $lang['employees_password_must_match']='Passwords do not match';
+$lang['employees_basic_information']='Employee Basic Information';
+$lang['employees_login_info']='Employee Login Info';
+$lang['employees_permission_info']='Employee Permissions and Access';
+$lang['employees_permission_desc']='Check the boxes below to grant access to modules';
 ?>

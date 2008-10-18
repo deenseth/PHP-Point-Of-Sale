@@ -1,5 +1,6 @@
 <?php
-class Customers extends Secure_Area implements iPersonController
+require_once("iPerson_Controller.php");
+class Customers extends Secure_Area implements iPerson_Controller
 {
 	function __construct()
 	{
@@ -64,8 +65,7 @@ class Customers extends Secure_Area implements iPersonController
 		'comments'=>$this->input->post('comments')
 		);
 		$customer_data=array();
-		$success = $this->Customer->save($person_data,$customer_data,$customer_id);
-		if($success)
+		if($this->Customer->save($person_data,$customer_data,$customer_id))
 		{
 			//New customer
 			if($customer_id==-1)
@@ -92,9 +92,8 @@ class Customers extends Secure_Area implements iPersonController
 	function delete()
 	{
 		$customers_to_delete=$this->input->post('ids');
-		$success = $this->Customer->delete_list($customers_to_delete);
 		
-		if($success)
+		if($this->Customer->delete_list($customers_to_delete))
 		{
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('customers_successful_deleted').' '.
 			count($customers_to_delete).' '.$this->lang->line('customers_one_or_multiple')));
@@ -132,7 +131,7 @@ class Customers extends Secure_Area implements iPersonController
 	get the width for the add/edit form
 	*/
 	function _get_form_width()
-	{
+	{			
 		return 300;
 	}
 	
@@ -141,6 +140,9 @@ class Customers extends Secure_Area implements iPersonController
 	*/
 	function _get_form_height()
 	{
+		if($this->agent->browser()=="Internet Explorer")
+			return 645;
+		
 		return 600;
 	}
 }

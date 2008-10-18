@@ -40,15 +40,15 @@ class Customer extends Person
 	/*
 	Inserts or updates a customer
 	*/
-	function save(&$person_data, &$customer_data,$person_id=false)
+	function save(&$person_data, &$customer_data,$customer_id=false)
 	{
 		$success=false;
 		//Run these queries as a transaction, we want to make sure we do all or nothing
 		$this->db->trans_start();
-		if(parent::save($person_data,$person_id))
+		if(parent::save($person_data,$customer_id))
 		{
 		
-			if (!$person_id or $person_id < 0)
+			if (!$customer_id or $customer_id < 0)
 			{
 				$customer_data['person_id']=$this->db->insert_id();
 				$this->db->set($customer_data);
@@ -61,7 +61,7 @@ class Customer extends Person
 				
 				/*
 				$this->db->set($customer_data);
-				$this->db->where('person_id', $person_id);
+				$this->db->where('person_id', $customer_id);
 				$success = $this->db->update('customers');
 				*/
 			}

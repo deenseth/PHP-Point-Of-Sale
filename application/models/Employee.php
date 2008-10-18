@@ -79,27 +79,47 @@ class Employee extends Person
 	/*
 	Inserts or updates an employee
 	*/
-	function save(&$person_data, &$employee_data,$person_id=false)
+	function save(&$person_data, &$employee_data,&$permission_data,$employee_id=false)
 	{
 		$success=false;
 		
 		//Run these queries as a transaction, we want to make sure we do all or nothing
 		$this->db->trans_start();
 			
-		if(parent::save($person_data,$person_id))
+		if(parent::save($person_data,$employee_id))
 		{
 		
-			if (!$person_id or $person_id < 0)
+			if (!$employee_id or $employee_id < 0)
 			{
-				$employee_data['person_id']=$this->db->insert_id();
+				$employee_id=$this->db->insert_id();
+				$employee_data['person_id']=$employee_id;
 				$this->db->set($employee_data);
 				$success = $this->db->insert('employees');
 			}
 			else
 			{
 				$this->db->set($employee_data);
-				$this->db->where('person_id', $person_id);
+				$this->db->where('person_id', $employee_id);
 				$success = $this->db->update('employees');		
+			}
+			
+			//We have either inserted or updated a new employee, now lets set permissions. 
+			if($success)
+			{
+				//First lets clear out any permissions the employee currently has.
+				$success=$this->db->delete('permissions', array('person_id' => $employee_id));
+				
+				//Now insert the new permissions
+				if($success)
+				{
+					foreach($permission_data as $allowed_module)
+					{
+						$success = $this->db->insert('permissions',
+						array(
+						'module_id'=>$allowed_module,
+						'person_id'=>$employee_id));
+					}
+				}
 			}
 			
 		}
@@ -290,22 +310,19 @@ class Employee extends Person
 	}
 	
 	/*
-	Determins whether the employee logged in has permission for a particular module
+	Determins whether the employee specified employee has access the specific module.
 	*/
-	function has_permission($module_id)
+	function has_permission($module_id,$person_id)
 	{
-		//if no module_id is specified or of the module_id is home, allow access
-		if($module_id==null or $module_id=='home')
+		//if no module_id is null, allow access
+		if($module_id==null)
 		{
 			return true;
 		}
 		
-		$employee_info=$this->get_logged_in_employee_info();
-		if($employee_info!=false)
-		{
-			$query = $this->db->get_where('permissions', array('person_id' => $employee_info->person_id,'module_id'=>$module_id), 1);
-			return $query->num_rows() == 1;
-		}
+		$query = $this->db->get_where('permissions', array('person_id' => $person_id,'module_id'=>$module_id), 1);
+		return $query->num_rows() == 1;
+		
 		
 		return false;
 	}

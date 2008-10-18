@@ -33,31 +33,19 @@ class Module extends Model
 	
 	function get_all_modules()
 	{
-		//The home module is allowed by all users, this is NOT stored in database
-		$modules=array('home');
-		
 		$this->db->from('modules');
 		$this->db->order_by("sort", "asc");
-		$query = $this->db->get();		
-		
-		foreach($query->result() as $row)
-		{
-			$modules[]=$row->module_id;
-		}
-		return $modules;
+		return $this->db->get();		
 	}
 	
-	function get_allowed_modules()
+	function get_allowed_modules($person_id)
 	{
-		$allowed_modules=array();
-		foreach($this->get_all_modules() as $module_id)
-		{
-			if($this->Employee->has_permission($module_id))
-			{
-				$allowed_modules[]=$module_id;
-			}
-		}
-		return $allowed_modules;
+		$this->db->select('modules.*');
+		$this->db->from('modules');
+		$this->db->join('permissions','permissions.module_id=modules.module_id');
+		$this->db->where("permissions.person_id",$person_id);
+		$this->db->order_by("sort", "asc");
+		return $this->db->get();		
 	}
 }
 ?>

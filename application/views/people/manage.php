@@ -3,7 +3,7 @@
 $(document).ready(function() 
 { 
     init_table_sorting();
-    select_all_enable();
+    enable_select_all();
     enable_search('<?php echo site_url("$controller_name/suggest")?>','<?php echo $this->lang->line("common_confirm_search")?>');
     enable_email('<?php echo site_url("$controller_name/mailto")?>');
     enable_delete('<?php echo $this->lang->line($controller_name."_confirm_delete")?>','<?php echo $this->lang->line($controller_name."_none_selected")?>');
@@ -36,7 +36,7 @@ function post_form_submit(response)
 	else
 	{
 		//This is an update, just update one row
-		if(jQuery.inArray(response.person_id,get_visible_person_ids()) != -1)
+		if(jQuery.inArray(response.person_id,get_visible_checkbox_ids()) != -1)
 		{
 			update_row(response.person_id,'<?php echo site_url("$controller_name/get_row")?>');
 			set_feedback(response.message,'success_message',false);	

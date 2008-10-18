@@ -1,5 +1,6 @@
 <?php
-class Employees extends Secure_Area implements iPersonController
+require_once("iPerson_Controller.php");
+class Employees extends Secure_Area implements iPerson_Controller
 {
 	function __construct()
 	{
@@ -44,6 +45,7 @@ class Employees extends Secure_Area implements iPersonController
 	function view($employee_id=-1)
 	{
 		$data['employee_info']=$this->Employee->get_info($employee_id);
+		$data['all_modules']=$this->Module->get_all_modules();
 		$this->load->view("employees/form",$data);
 	}
 	
@@ -63,6 +65,7 @@ class Employees extends Secure_Area implements iPersonController
 		'country'=>$this->input->post('country'),
 		'comments'=>$this->input->post('comments')
 		);
+		$permission_data = $this->input->post("permissions")!=false ? $this->input->post("permissions"):array();
 		
 		//Password has been changed OR first time password set
 		if($this->input->post('password')!='')
@@ -77,8 +80,7 @@ class Employees extends Secure_Area implements iPersonController
 			$employee_data=array('username'=>$this->input->post('username'));
 		}
 		
-		$success = $this->Employee->save($person_data,$employee_data,$employee_id);
-		if($success)
+		if($this->Employee->save($person_data,$employee_data,$permission_data,$employee_id))
 		{
 			//New employee
 			if($employee_id==-1)
@@ -105,9 +107,8 @@ class Employees extends Secure_Area implements iPersonController
 	function delete()
 	{
 		$employees_to_delete=$this->input->post('ids');
-		$success = $this->Employee->delete_list($employees_to_delete);
 		
-		if($success)
+		if($this->Employee->delete_list($employees_to_delete))
 		{
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('employees_successful_deleted').' '.
 			count($employees_to_delete).' '.$this->lang->line('employees_one_or_multiple')));
@@ -146,7 +147,8 @@ class Employees extends Secure_Area implements iPersonController
 	*/
 	function _get_form_width()
 	{
-		return 300;
+	
+		return 650;
 	}
 	
 	/*
@@ -154,7 +156,10 @@ class Employees extends Secure_Area implements iPersonController
 	*/
 	function _get_form_height()
 	{
-		return 650;
+		if($this->agent->browser()=="Internet Explorer")
+			return 625;
+			
+		return 600;
 	}
 }
 ?>

@@ -28,14 +28,20 @@
 		</div>
 		
 		<div id="menubar_navigation">
+			<div class="menu_item">
+				<a href="<?php echo site_url('home');?>">
+				<img src="<?php echo base_url().'images/menubar/home.gif';?>" border="0" alt="Menubar Image" /></a><br />
+				<a href="<?php echo site_url("home");?>"><?php echo $this->lang->line("module_home") ?></a>
+			</div>
+
 			<?php
-			foreach($allowed_modules as $module_id)
+			foreach($allowed_modules->result() as $module)
 			{
 			?>
 			<div class="menu_item">
-				<a href="<?php echo site_url("$module_id");?>">
-				<img src="<?php echo base_url().'images/menubar/'.$module_id.'.gif';?>" border="0" alt="Menubar Image" /></a><br />
-				<a href="<?php echo site_url("$module_id");?>"><?php echo $this->lang->line("module_$module_id") ?></a>
+				<a href="<?php echo site_url("$module->module_id");?>">
+				<img src="<?php echo base_url().'images/menubar/'.$module->module_id.'.gif';?>" border="0" alt="Menubar Image" /></a><br />
+				<a href="<?php echo site_url("$module->module_id");?>"><?php echo $this->lang->line("module_".$module->module_id) ?></a>
 			</div>
 			<?php
 			}

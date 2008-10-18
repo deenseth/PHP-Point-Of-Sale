@@ -38,7 +38,10 @@ function do_search(show_feedback,on_complete)
 		//re-init elements in new table, as table tbody children were replaced
 		tb_init('#sortable_table a.thickbox');
 		update_sortable_table();	
-		enable_email();
+		$('#sortable_table tbody :checkbox').click(function()
+		{
+			do_email(enable_email.url);
+		});
 		$("#select_all").attr('checked',false);
 	});
 }

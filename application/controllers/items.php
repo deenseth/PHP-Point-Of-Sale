@@ -1,9 +1,9 @@
 <?php
 class Items extends Secure_Area 
 {
-	function Items()
+	function __construct()
 	{
-		parent::Secure_Area('items');	
+		parent::__construct('items');	
 	}
 	
 	function index()

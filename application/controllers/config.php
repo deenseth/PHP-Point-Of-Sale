@@ -1,9 +1,9 @@
 <?php
 class Config extends Secure_Area 
 {
-	function Config()
+	function __construct()
 	{
-		parent::Secure_Area('config');	
+		parent::__construct('config');	
 	}
 	
 	function index()

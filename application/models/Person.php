@@ -1,10 +1,10 @@
 <?php
-class Person extends Model 
-{
-    function Person()
-    {
-        parent::Model();
-	}
+abstract class Person extends Model 
+{	
+	abstract protected function exists($person_id);
+	abstract protected function get_all();
+	abstract protected function get_search_suggestions($search,$limit=25);
+	abstract protected function search($search);
 	
 	/*
 	Gets information about a person as an array.

@@ -1,15 +1,14 @@
 <?php
-
 class Login extends Controller 
 {
-	function Login()
+	function __construct()
 	{
-		parent::Controller();	
+		parent::__construct();	
 	}
 	
 	function index()
 	{
-		if($this->User->is_logged_in())
+		if($this->Employee->is_logged_in())
 		{
 			redirect ('home');
 		}
@@ -38,7 +37,7 @@ class Login extends Controller
 	{
 		$password = $this->validation->password;	
 		
-		if(!$this->User->login_user($username,$password))
+		if(!$this->Employee->login($username,$password))
 		{
 			$this->validation->set_message('login_check', $this->lang->line('login_invalid_username_and_password'));
 			return false;

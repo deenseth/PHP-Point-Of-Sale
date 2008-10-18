@@ -1,9 +1,22 @@
 <?php
+require_once('Person.php');
+
 class Employee extends Person 
 {
-    function Employee()
+    function __construct()
     {
-        parent::Person();
+        parent::__construct();
+	}
+	
+	/*
+	Returns all the employees
+	*/
+	function get_all()
+	{
+		$this->db->from('employees');
+		$this->db->join('people','employees.person_id=people.person_id');			
+		$this->db->order_by("last_name", "asc");
+		return $this->db->get();		
 	}
 	
 	/*
@@ -37,6 +50,20 @@ class Employee extends Person
 			return $person_obj;
 		}
 	}
+	
+	/*
+	Determines if a given person_id is an employee
+	*/
+	function exists($person_id)
+	{
+		$this->db->from('employees');	
+		$this->db->join('people', 'people.person_id = employees.person_id');
+		$this->db->where('employees.person_id',$employee_id);
+		$query = $this->db->get();
+		
+		return ($query->num_rows()==1);
+	}
+	
 	/*
 	Gets information about multiple employees
 	*/
@@ -126,6 +153,84 @@ class Employee extends Person
  	}
 	
 	/*
+	Get search suggestions to find employees
+	*/
+	function get_search_suggestions($search,$limit=5)
+	{
+		$suggestions = array();
+		
+		$this->db->from('employees');
+		$this->db->join('people','employees.person_id=people.person_id');	
+		$this->db->like('first_name', $search); 
+		$this->db->or_like('last_name', $search);
+		$this->db->or_like("CONCAT(`first_name`,' ',`last_name`)",$search);		
+		$this->db->order_by("last_name", "asc");		
+		$by_name = $this->db->get();
+		foreach($by_name->result() as $row)
+		{
+			$suggestions[]=$row->first_name.' '.$row->last_name;		
+		}
+		
+		$this->db->from('employees');
+		$this->db->join('people','employees.person_id=people.person_id');	
+		$this->db->like("email",$search);
+		$this->db->order_by("email", "asc");		
+		$by_email = $this->db->get();
+		foreach($by_email->result() as $row)
+		{
+			$suggestions[]=$row->email;		
+		}
+		
+		$this->db->from('employees');
+		$this->db->join('people','employees.person_id=people.person_id');	
+		$this->db->like("username",$search);
+		$this->db->order_by("username", "asc");		
+		$by_username = $this->db->get();
+		foreach($by_username->result() as $row)
+		{
+			$suggestions[]=$row->username;		
+		}
+
+
+		$this->db->from('employees');
+		$this->db->join('people','employees.person_id=people.person_id');	
+		$this->db->like("phone_number",$search);
+		$this->db->order_by("phone_number", "asc");		
+		$by_phone = $this->db->get();
+		foreach($by_phone->result() as $row)
+		{
+			$suggestions[]=$row->phone_number;		
+		}
+		
+		
+		//only return $limit suggestions
+		if(count($suggestions > $limit))
+		{
+			$suggestions = array_slice($suggestions, 0,$limit);
+		}
+		return $suggestions;
+	
+	}
+	
+	/*
+	Preform a search on employees
+	*/
+	function search($search)
+	{
+		$this->db->from('employees');
+		$this->db->join('people','employees.person_id=people.person_id');		
+		$this->db->like('first_name', $search);
+		$this->db->or_like('last_name', $search); 
+		$this->db->or_like('email', $search); 
+		$this->db->or_like('phone_number', $search);
+		$this->db->or_like("CONCAT(`first_name`,' ',`last_name`)",$search);
+		$this->db->or_like('username', $search);
+		$this->db->order_by("last_name", "asc");
+		
+		return $this->db->get();	
+	}
+	
+	/*
 	Attempts to login employee and set session. Returns boolean based on outcome.
 	*/
 	function login($username, $password)
@@ -182,13 +287,14 @@ class Employee extends Person
 		}
 		
 		$employee_info=$this->get_logged_in_employee_info();
-		if($user_info!=false)
+		if($employee_info!=false)
 		{
-			$query = $this->db->get_where('permissions', array('employee_id' => $employee_info->employee_id,'module_id'=>$module_id), 1);
+			$query = $this->db->get_where('permissions', array('person_id' => $employee_info->person_id,'module_id'=>$module_id), 1);
 			return $query->num_rows() == 1;
 		}
 		
 		return false;
 	}
+
 }
 ?>

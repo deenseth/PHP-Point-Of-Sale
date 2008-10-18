@@ -95,7 +95,7 @@ $autoload['config'] = array('config_phppos.php','config_static.php');
 |
 */
 
-$autoload['language'] = array('login','module','common','error','employee');
+$autoload['language'] = array('login','module','common','error','employees','customers');
 
 
 /*
@@ -108,7 +108,7 @@ $autoload['language'] = array('login','module','common','error','employee');
 |
 */
 
-$autoload['model'] = array('Person','Customer','Employee','Module');
+$autoload['model'] = array('Customer','Employee','Module');
 
 
 /*

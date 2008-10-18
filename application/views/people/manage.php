@@ -4,9 +4,9 @@ $(document).ready(function()
 { 
     init_table_sorting();
     select_all_enable();
-    enable_search("<?php echo site_url('customers/suggest')?>","<?php echo $this->lang->line('common_confirm_search')?>");
-    enable_email("<?php echo site_url('customers/email')?>");
-    enable_delete("<?php echo $this->lang->line('customer_confirm_delete')?>");
+    enable_search('<?php echo site_url("$controller/suggest")?>','<?php echo $this->lang->line("common_confirm_search")?>');
+    enable_email('<?php echo site_url("$controller/mailto")?>');
+    enable_delete('<?php echo $this->lang->line($controller."_confirm_delete")?>');
 }); 
 
 function init_table_sorting()
@@ -27,7 +27,7 @@ function init_table_sorting()
 	}
 }
 
-function customer_form_submit(form)
+function form_submit(form)
 {
 	$(form).ajaxSubmit({
 		success:function(response)
@@ -47,26 +47,26 @@ function customer_form_submit(form)
 <div id="title_bar">
 	<div id="title" class="float_left"><?php echo $this->lang->line('common_list_of').' '.$this->lang->line('module_customers'); ?></div>
 	<div id="new_button" class="float_right">
-		<?php echo anchor('customers/view/-1/width:300/height:550',
-		"<div class='big_button'><span>".$this->lang->line('customer_new_customer')."</span></div>",
-		array('class'=>'thickbox none','title'=>$this->lang->line('customer_new_customer')));
+		<?php echo anchor("$controller/view/-1/width:300/height:550",
+		"<div class='big_button'><span>".$this->lang->line($controller.'_new')."</span></div>",
+		array('class'=>'thickbox none','title'=>$this->lang->line($controller.'_new')));
 		?>
 	</div>
 </div>
 <div id="feedback_bar"></div>
 <div id="table_action_header">
 	<ul>
-		<li class="float_left"><span><?php echo anchor('customers/delete',$this->lang->line("common_delete"),array('id'=>'delete')); ?></a></span></li>
+		<li class="float_left"><span><?php echo anchor("$controller/delete",$this->lang->line("common_delete"),array('id'=>'delete')); ?></a></span></li>
 		<li class="float_left"><span><a href="#" id="email"><?php echo $this->lang->line("common_email");?></a></span></li>
 		<li class="float_right">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
-		<?php echo form_open('customers/search',array('id'=>'search_form')); ?>
+		<?php echo form_open("$controller/search",array('id'=>'search_form')); ?>
 		<input type="text" name ='search' id='search'/>
 		</form>
 		</li>
 	</ul>
 </div>
 <div id="table_holder">
-<?php echo get_customer_manage_table($this->Customer->get_all_customers()); ?>
+<?php echo $manage_table; ?>
 </div>
 <?php $this->load->view("partial/footer"); ?>

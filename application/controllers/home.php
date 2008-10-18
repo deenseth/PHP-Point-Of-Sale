@@ -1,9 +1,9 @@
 <?php
 class Home extends Secure_Area 
 {
-	function Home()
+	function __construct()
 	{
-		parent::Secure_Area();	
+		parent::__construct();	
 	}
 	
 	function index()
@@ -13,7 +13,7 @@ class Home extends Secure_Area
 	
 	function logout()
 	{
-		$this->User->logout_user();
+		$this->Employee->logout();
 	}
 }
 ?>

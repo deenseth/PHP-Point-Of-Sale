@@ -1,9 +1,9 @@
 <?php
 class Sales extends Secure_Area 
 {
-	function Sales()
+	function __construct()
 	{
-		parent::Secure_Area('sales');	
+		parent::__construct('sales');	
 	}
 	
 	function index()

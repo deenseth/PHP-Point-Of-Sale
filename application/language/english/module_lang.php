@@ -4,8 +4,8 @@ $lang['module_home']='Home';
 $lang['module_customers']='Customers';
 $lang['module_customers_desc']='Add, Update, Delete, and Search customers';
 
-$lang['module_users']='Users';
-$lang['module_users_desc']='Add, Update, Delete, and Search users';
+$lang['module_employees']='Employees';
+$lang['module_employees_desc']='Add, Update, Delete, and Search employees';
 
 $lang['module_sales']='Sales';
 $lang['module_sales_desc']='Process sales and returns';

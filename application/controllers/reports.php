@@ -1,9 +1,9 @@
 <?php
 class Reports extends Secure_Area 
 {
-	function Reports()
+	function __construct()
 	{
-		parent::Secure_Area('reports');	
+		parent::__construct('reports');	
 	}
 	
 	function index()

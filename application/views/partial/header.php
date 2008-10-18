@@ -33,7 +33,7 @@
 			?>
 			<div class="menu_item">
 				<a href="<?php echo site_url("$module_id");?>">
-				<img src="<?php echo base_url().'images/menubar/'.$module_id.'.gif';?>" border="0" alt="Home Image" /></a><br />
+				<img src="<?php echo base_url().'images/menubar/'.$module_id.'.gif';?>" border="0" alt="Menubar Image" /></a><br />
 				<a href="<?php echo site_url("$module_id");?>"><?php echo $this->lang->line("module_$module_id") ?></a>
 			</div>
 			<?php

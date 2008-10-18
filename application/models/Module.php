@@ -1,9 +1,9 @@
 <?php
 class Module extends Model 
 {
-    function Module()
+    function __construct()
     {
-        parent::Model();
+        parent::__construct();
     }
 	
 	function get_module_name($module_id)
@@ -42,7 +42,7 @@ class Module extends Model
 		
 		foreach($query->result() as $row)
 		{
-			$modules[]=$row->id;
+			$modules[]=$row->module_id;
 		}
 		return $modules;
 	}
@@ -52,7 +52,7 @@ class Module extends Model
 		$allowed_modules=array();
 		foreach($this->get_all_modules() as $module_id)
 		{
-			if($this->User->has_permission($module_id))
+			if($this->Employee->has_permission($module_id))
 			{
 				$allowed_modules[]=$module_id;
 			}

@@ -1,5 +1,5 @@
 <?php
-echo form_open('customers/save/'.$customer_info->id,array('id'=>'customer_form'));
+echo form_open('customers/save/'.$customer_info->person_id,array('id'=>'customer_form'));
 ?>
 <div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
 <ul id="error_message_box"></ul>
@@ -122,7 +122,7 @@ $(document).ready(function()
 	$('#customer_form').validate({
 		submitHandler:function(form)
 		{
-			customer_form_submit(form);
+			form_submit(form);
 		},
 		errorLabelContainer: "#error_message_box",
  		wrapper: "li",

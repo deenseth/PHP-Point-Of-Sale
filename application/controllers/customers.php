@@ -1,14 +1,16 @@
 <?php
-class Customers extends Secure_Area 
+class Customers extends Secure_Area implements iPersonController
 {
-	function Customers()
+	function __construct()
 	{
-		parent::Secure_Area('customers');	
+		parent::__construct('customers');	
 	}
 	
 	function index()
 	{
-		$this->load->view('customers/manage');
+		$data['controller']=strtolower(get_class());
+		$data['manage_table']=get_people_manage_table($this->Customer->get_all(),$this);
+		$this->load->view('people/manage',$data);
 	}
 	
 	/*
@@ -17,26 +19,26 @@ class Customers extends Secure_Area
 	function search()
 	{
 		$search=$this->input->post('search');
-		$data_rows=get_customer_manage_table_data_rows($this->Customer->get_customers($search));
+		$data_rows=get_people_manage_table_data_rows($this->Customer->search($search),$this);
 		echo $data_rows;
 	}
 	
 	function suggest()
 	{
-		$suggestions = $this->Customer->get_customer_suggestions($this->input->post('q'),$this->input->post('limit'));
+		$suggestions = $this->Customer->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
 		echo implode("\n",$suggestions);
 	}
 	
 	function view($customer_id=-1)
 	{
-		$data['customer_info']=$this->Customer->get_customer_info($customer_id);
+		$data['customer_info']=$this->Customer->get_info($customer_id);
 		$this->load->view("customers/form",$data);
 	}
 	
 	
 	function save($customer_id=-1)
 	{
-		$customer_data = array(
+		$person_data = array(
 		'first_name'=>$this->input->post('first_name'),
 		'last_name'=>$this->input->post('last_name'),
 		'email'=>$this->input->post('email'),
@@ -50,26 +52,26 @@ class Customers extends Secure_Area
 		'comments'=>$this->input->post('comments')
 		);
 		
-		$success = $this->Customer->save_customer($customer_id,$customer_data);
+		$success = $this->Customer->save($person_data,array(),$customer_id);
 		
 		if($success)
 		{
 			//New customer
 			if($customer_id==-1)
 			{
-				echo json_encode(array('text'=>$this->lang->line('customer_successful_adding_customer').' '.
-				$customer_data['first_name'].' '.$customer_data['last_name'],'class_name'=>'success_message','keep_displayed'=>false));
+				echo json_encode(array('text'=>$this->lang->line('customers_successful_adding').' '.
+				$person_data['first_name'].' '.$person_data['last_name'],'class_name'=>'success_message','keep_displayed'=>false));
 			}
 			else //previous customer
 			{
-				echo json_encode(array('text'=>$this->lang->line('customer_successful_updating_customer').' '.
-				$customer_data['first_name'].' '.$customer_data['last_name'],'class_name'=>'success_message','keep_displayed'=>false));
+				echo json_encode(array('text'=>$this->lang->line('customers_successful_updating').' '.
+				$person_data['first_name'].' '.$person_data['last_name'],'class_name'=>'success_message','keep_displayed'=>false));
 			}
 		}
 		else//failure
 		{
-			echo json_encode(array('text'=>$this->lang->line('customer_error_adding_updating_customer').' '.
-			$customer_data['first_name'].' '.$customer_data['last_name'],'class_name'=>'error_message','keep_displayed'=>true));
+			echo json_encode(array('text'=>$this->lang->line('customers_error_adding_updating').' '.
+			$person_data['first_name'].' '.$person_data['last_name'],'class_name'=>'error_message','keep_displayed'=>true));
 		}
 	}
 	
@@ -79,16 +81,16 @@ class Customers extends Secure_Area
 	function delete()
 	{
 		$customers_to_delete=$this->input->post('ids');
-		$success = $this->Customer->delete_customers($customers_to_delete);
+		$success = $this->Customer->delete_list($customers_to_delete);
 		
 		if($success)
 		{
-			echo json_encode(array('text'=>$this->lang->line('customer_successful_deleted').' '.
-			count($customers_to_delete).' '.$this->lang->line('customer_customer(s)'),'class_name'=>'success_message','keep_displayed'=>false));
+			echo json_encode(array('text'=>$this->lang->line('customers_successful_deleted').' '.
+			count($customers_to_delete).' '.$this->lang->line('customers_one_or_multiple'),'class_name'=>'success_message','keep_displayed'=>false));
 		}
 		else
 		{
-			echo json_encode(array('text'=>$this->lang->line('customer_cannot_be_deleted'),
+			echo json_encode(array('text'=>$this->lang->line('customers_cannot_be_deleted'),
 			'class_name'=>'error_message','keep_displayed'=>true));
 		}
 	}
@@ -96,14 +98,14 @@ class Customers extends Secure_Area
 	/*
 	This returns a mailto link for customers with a certain id. This is called with AJAX.
 	*/
-	function email()
+	function mailto()
 	{
 		$customers_to_email=$this->input->post('ids');
 		
 		if($customers_to_email!=false)
 		{
 			$mailto_url='mailto:';
-			foreach($this->Customer->get_customers_with_ids($customers_to_email) as $customer)
+			foreach($this->Customer->get_multiple_info($customers_to_email)->result() as $customer)
 			{
 				$mailto_url.=$customer->email.',';	
 			}
@@ -114,6 +116,22 @@ class Customers extends Secure_Area
 			exit;
 		}
 		echo '#';
+	}
+	
+	/*
+	get the width for the add/edit form
+	*/
+	function _get_form_width()
+	{
+		return 300;
+	}
+	
+	/*
+	get the width for the add/edit form
+	*/
+	function _get_form_height()
+	{
+		return 600;
 	}
 }
 ?>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Oct 16, 2008 at 11:13 PM
+-- Generation Time: Oct 18, 2008 at 07:34 PM
 -- Server version: 5.0.67
 -- PHP Version: 5.2.5
 -- 
@@ -44,7 +44,7 @@ CREATE TABLE `phppos_employees` (
 -- Dumping data for table `phppos_employees`
 -- 
 
-INSERT INTO `phppos_employees` (`username`, `password`, `person_id`) VALUES ('admin', '439a6de57d475c1a0ba9bcb1c39f0af6', 1);
+INSERT INTO `phppos_employees` (`username`, `password`, `person_id`) VALUES ('admin', 'ac6fccd789003ba8e9f83c1c7063d85a', 1);
 
 -- --------------------------------------------------------
 
@@ -66,7 +66,7 @@ CREATE TABLE `phppos_items` (
   `reorder_level` int(10) NOT NULL default '0',
   `item_id` int(10) NOT NULL auto_increment,
   PRIMARY KEY  (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phppos_items`
@@ -120,7 +120,7 @@ CREATE TABLE `phppos_people` (
   `comments` text NOT NULL,
   `person_id` int(10) NOT NULL auto_increment,
   PRIMARY KEY  (`person_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phppos_people`
@@ -145,6 +145,12 @@ CREATE TABLE `phppos_permissions` (
 -- Dumping data for table `phppos_permissions`
 -- 
 
+INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES ('config', 1),
+('customers', 1),
+('employees', 1),
+('items', 1),
+('reports', 1),
+('sales', 1);
 
 -- --------------------------------------------------------
 
@@ -161,7 +167,7 @@ CREATE TABLE `phppos_sales` (
   PRIMARY KEY  (`sale_id`),
   KEY `customer_id` (`customer_id`),
   KEY `employee_id` (`employee_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phppos_sales`
@@ -185,7 +191,7 @@ CREATE TABLE `phppos_sales_items` (
   PRIMARY KEY  (`sale_item_id`),
   KEY `sale_id` (`sale_id`),
   KEY `item_id` (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phppos_sales_items`

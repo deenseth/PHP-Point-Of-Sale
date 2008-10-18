@@ -1,5 +1,5 @@
 <?php
-echo form_open('customers/save/'.$customer_info->person_id,array('id'=>'customer_form'));
+echo form_open('employees/save/'.$employee_info->person_id,array('id'=>'employee_form'));
 ?>
 <div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
 <ul id="error_message_box"></ul>
@@ -9,7 +9,7 @@ echo form_open('customers/save/'.$customer_info->person_id,array('id'=>'customer
 	<?php echo form_input(array(
 		'name'=>'first_name',
 		'id'=>'first_name',
-		'value'=>$customer_info->first_name)
+		'value'=>$employee_info->first_name)
 	);?>
 	</div>
 </div>
@@ -19,7 +19,7 @@ echo form_open('customers/save/'.$customer_info->person_id,array('id'=>'customer
 	<?php echo form_input(array(
 		'name'=>'last_name',
 		'id'=>'last_name',
-		'value'=>$customer_info->last_name)
+		'value'=>$employee_info->last_name)
 	);?>
 	</div>
 </div>
@@ -30,7 +30,7 @@ echo form_open('customers/save/'.$customer_info->person_id,array('id'=>'customer
 	<?php echo form_input(array(
 		'name'=>'email',
 		'id'=>'email',
-		'value'=>$customer_info->email)
+		'value'=>$employee_info->email)
 	);?>
 	</div>
 </div>
@@ -41,7 +41,7 @@ echo form_open('customers/save/'.$customer_info->person_id,array('id'=>'customer
 	<?php echo form_input(array(
 		'name'=>'phone_number',
 		'id'=>'phone_number',
-		'value'=>$customer_info->phone_number));?>
+		'value'=>$employee_info->phone_number));?>
 	</div>
 </div>
 
@@ -51,7 +51,7 @@ echo form_open('customers/save/'.$customer_info->person_id,array('id'=>'customer
 	<?php echo form_input(array(
 		'name'=>'address_1',
 		'id'=>'address_1',
-		'value'=>$customer_info->address_1));?>
+		'value'=>$employee_info->address_1));?>
 	</div>
 </div>
 
@@ -61,7 +61,7 @@ echo form_open('customers/save/'.$customer_info->person_id,array('id'=>'customer
 	<?php echo form_input(array(
 		'name'=>'address_2',
 		'id'=>'address_2',
-		'value'=>$customer_info->address_2));?>
+		'value'=>$employee_info->address_2));?>
 	</div>
 </div>
 
@@ -71,7 +71,7 @@ echo form_open('customers/save/'.$customer_info->person_id,array('id'=>'customer
 	<?php echo form_input(array(
 		'name'=>'city',
 		'id'=>'city',
-		'value'=>$customer_info->city));?>
+		'value'=>$employee_info->city));?>
 	</div>
 </div>
 
@@ -81,7 +81,7 @@ echo form_open('customers/save/'.$customer_info->person_id,array('id'=>'customer
 	<?php echo form_input(array(
 		'name'=>'state',
 		'id'=>'state',
-		'value'=>$customer_info->state));?>
+		'value'=>$employee_info->state));?>
 	</div>
 </div>
 
@@ -91,7 +91,7 @@ echo form_open('customers/save/'.$customer_info->person_id,array('id'=>'customer
 	<?php echo form_input(array(
 		'name'=>'zip',
 		'id'=>'zip',
-		'value'=>$customer_info->zip));?>
+		'value'=>$employee_info->zip));?>
 	</div>
 </div>
 
@@ -101,7 +101,42 @@ echo form_open('customers/save/'.$customer_info->person_id,array('id'=>'customer
 	<?php echo form_input(array(
 		'name'=>'country',
 		'id'=>'country',
-		'value'=>$customer_info->country));?>
+		'value'=>$employee_info->country));?>
+	</div>
+</div>
+
+<div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('employees_username').':', 'username',array('class'=>'required')); ?>
+	<div class='form_field'>
+	<?php echo form_input(array(
+		'name'=>'username',
+		'id'=>'username',
+		'value'=>$employee_info->username));?>
+	</div>
+</div>
+
+<?php
+$password_label_attributes = $employee_info->person_id == "" ? array('class'=>'required'):array();
+?>
+
+<div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('employees_password').':', 'password',$password_label_attributes); ?>
+	<div class='form_field'>
+	<?php echo form_password(array(
+		'name'=>'password',
+		'id'=>'password'
+	));?>
+	</div>
+</div>
+
+
+<div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('employees_repeat_password').':', 'repeat_password',$password_label_attributes); ?>
+	<div class='form_field'>
+	<?php echo form_password(array(
+		'name'=>'repeat_password',
+		'id'=>'repeat_password'
+	));?>
 	</div>
 </div>
 
@@ -111,7 +146,7 @@ echo form_open('customers/save/'.$customer_info->person_id,array('id'=>'customer
 	<?php echo form_textarea(array(
 		'name'=>'comments',
 		'id'=>'comments',
-		'value'=>$customer_info->comments,
+		'value'=>$employee_info->comments,
 		'rows'=>'5',
 		'cols'=>'17')		
 	);?>
@@ -131,7 +166,7 @@ echo form_close();
 //validation and submit handling
 $(document).ready(function()
 {
-	$('#customer_form').validate({
+	$('#employee_form').validate({
 		submitHandler:function(form)
 		{
 			$(form).ajaxSubmit({
@@ -150,12 +185,56 @@ $(document).ready(function()
 		{
 			first_name: "required",
 			last_name: "required",
+			username:
+			{
+				required:true,
+				minlength: 5
+			},
+			
+			password:
+			{
+				<?php
+				if($employee_info->person_id == "")
+				{
+				?>
+				required:true,
+				<?php
+				}
+				?>
+				minlength: 8
+			},	
+			repeat_password:
+			{
+ 				equalTo: "#password"
+			},
     		email: "email"
    		},
 		messages: 
 		{
      		first_name: "<?php echo $this->lang->line('common_first_name_required'); ?>",
      		last_name: "<?php echo $this->lang->line('common_last_name_required'); ?>",
+     		username:
+     		{
+     			required: "<?php echo $this->lang->line('employees_username_required'); ?>",
+     			minlength: "<?php echo $this->lang->line('employees_username_minlength'); ?>",
+     		},
+     		
+			password:
+			{
+				<?php
+				if($employee_info->person_id == "")
+				{
+				?>
+				required:"<?php echo $this->lang->line('employees_password_required'); ?>",
+				<?php
+				}
+				?>
+				minlength: "<?php echo $this->lang->line('employees_password_minlength'); ?>"
+			},
+			repeat_password:
+			{
+				equalTo: "<?php echo $this->lang->line('employees_password_must_match'); ?>"
+     		},
      		email: "<?php echo $this->lang->line('common_email_invalid_format'); ?>"
 		}
 	});

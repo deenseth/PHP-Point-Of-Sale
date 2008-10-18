@@ -115,6 +115,10 @@ class Employee extends Person
 	{
 		$success=false;
 		
+		//Don't let employee delete their self
+		if($employee_id==$this->get_logged_in_employee_info()->person_id)
+			return false;
+		
 		//Run these queries as a transaction, we want to make sure we do all or nothing
 		$this->db->trans_start();
 		
@@ -124,7 +128,7 @@ class Employee extends Person
 			//delete from employee table
 			if($this->db->delete('employees', array('person_id' => $employee_id)))
 			{
-				//delete from Person table
+				//delete from person table
 				$success = parent::delete($employee_id);
 			}
 		}
@@ -138,16 +142,26 @@ class Employee extends Person
 	function delete_list($employee_ids)
 	{
 		$success=false;
+		
+		//Don't let employee delete their self
+		if(in_array($this->get_logged_in_employee_info()->person_id,$employee_ids))
+			return false;
 
 		//Run these queries as a transaction, we want to make sure we do all or nothing
 		$this->db->trans_start();
 
 		$this->db->where_in('person_id',$employee_ids);
-		if ($this->db->delete('employees'))
+		//Delete permissions
+		if ($this->db->delete('permissions'))
 		{
-			$success = parent::delete_list($employee_ids);
+			//delete from employee table
+			$this->db->where_in('person_id',$employee_ids);
+			if ($this->db->delete('employees'))
+			{
+				//delete from person table
+				$success = parent::delete_list($employee_ids);
+			}
 		}
-		
 		$this->db->trans_complete();		
 		return $success;
  	}

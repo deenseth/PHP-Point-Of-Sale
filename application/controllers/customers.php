@@ -8,8 +8,9 @@ class Customers extends Secure_Area implements iPersonController
 	
 	function index()
 	{
-		$data['controller_name']=strtolower(get_class());
-		$data['controller']=$this;
+		$data['controller_name']=strtolower($this->uri->segment(1));
+		$data['form_width']=$this->_get_form_width();
+		$data['form_height']=$this->_get_form_height();
 		$data['manage_table']=get_people_manage_table($this->Customer->get_all(),$this);
 		$this->load->view('people/manage',$data);
 	}

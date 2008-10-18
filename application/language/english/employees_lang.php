@@ -8,5 +8,13 @@ $lang['employees_successful_adding']='You have successfully added employee';
 $lang['employees_successful_updating']='You have successfully updated employee';
 $lang['employees_successful_deleted']='You have successfully deleted';
 $lang['employees_one_or_multiple']='employee(s)';
-$lang['employees_cannot_be_deleted']='Could not deleted selected employees, one or more of the employees has processed sales.';
+$lang['employees_cannot_be_deleted']='Could not deleted selected employees, one or more of the employees has processed sales or you are trying to delete yourself :)';
+$lang['employees_username']='Username';
+$lang['employees_password']='Password';
+$lang['employees_repeat_password']='Password Again';
+$lang['employees_username_required']='Username is a required field';
+$lang['employees_username_minlength']='The username must be at least 5 characters';
+$lang['employees_password_required']='Password is required';
+$lang['employees_password_minlength']='Passwords must be at least 8 characters';
+$lang['employees_password_must_match']='Passwords do not match';
 ?>

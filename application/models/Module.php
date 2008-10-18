@@ -8,7 +8,7 @@ class Module extends Model
 	
 	function get_module_name($module_id)
 	{
-		$query = $this->db->get_where('modules', array('id' => $module_id), 1);
+		$query = $this->db->get_where('modules', array('module_id' => $module_id), 1);
 		
 		if ($query->num_rows() ==1)
 		{
@@ -21,7 +21,7 @@ class Module extends Model
 	
 	function get_module_desc($module_id)
 	{
-		$query = $this->db->get_where('modules', array('id' => $module_id), 1);
+		$query = $this->db->get_where('modules', array('module_id' => $module_id), 1);
 		if ($query->num_rows() ==1)
 		{
 			$row = $query->row();

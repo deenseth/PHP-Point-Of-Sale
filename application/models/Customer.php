@@ -40,7 +40,7 @@ class Customer extends Person
 	/*
 	Inserts or updates a customer
 	*/
-	function save($person_data, $customer_data,$person_id=false)
+	function save(&$person_data, &$customer_data,$person_id=false)
 	{
 		$success=false;
 		//Run these queries as a transaction, we want to make sure we do all or nothing

@@ -30,6 +30,7 @@ interface iPersonController
 {
 	public function index();
 	public function search();
+	public function get_row();
 	public function view($person_id=-1);
 	public function save($person_id=-1);
 	public function delete();

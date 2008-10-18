@@ -8,7 +8,8 @@ class Customers extends Secure_Area implements iPersonController
 	
 	function index()
 	{
-		$data['controller']=strtolower(get_class());
+		$data['controller_name']=strtolower(get_class());
+		$data['controller']=$this;
 		$data['manage_table']=get_people_manage_table($this->Customer->get_all(),$this);
 		$this->load->view('people/manage',$data);
 	}
@@ -21,6 +22,16 @@ class Customers extends Secure_Area implements iPersonController
 		$search=$this->input->post('search');
 		$data_rows=get_people_manage_table_data_rows($this->Customer->search($search),$this);
 		echo $data_rows;
+	}
+	
+	/*
+	Gets one row of the manage table. This is called using AJAX to update one row.
+	*/
+	function get_row()
+	{
+		$person_id = $this->input->post('person_id');
+		$data_row=get_person_data_row($this->Customer->get_info($person_id),$this);
+		echo $data_row;
 	}
 	
 	function suggest()
@@ -51,27 +62,26 @@ class Customers extends Secure_Area implements iPersonController
 		'country'=>$this->input->post('country'),
 		'comments'=>$this->input->post('comments')
 		);
-		
-		$success = $this->Customer->save($person_data,array(),$customer_id);
-		
+		$customer_data=array();
+		$success = $this->Customer->save($person_data,$customer_data,$customer_id);
 		if($success)
 		{
 			//New customer
 			if($customer_id==-1)
 			{
-				echo json_encode(array('text'=>$this->lang->line('customers_successful_adding').' '.
-				$person_data['first_name'].' '.$person_data['last_name'],'class_name'=>'success_message','keep_displayed'=>false));
+				echo json_encode(array('success'=>true,'message'=>$this->lang->line('customers_successful_adding').' '.
+				$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>$customer_data['person_id']));
 			}
 			else //previous customer
 			{
-				echo json_encode(array('text'=>$this->lang->line('customers_successful_updating').' '.
-				$person_data['first_name'].' '.$person_data['last_name'],'class_name'=>'success_message','keep_displayed'=>false));
+				echo json_encode(array('success'=>true,'message'=>$this->lang->line('customers_successful_updating').' '.
+				$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>$customer_id));
 			}
 		}
 		else//failure
-		{
-			echo json_encode(array('text'=>$this->lang->line('customers_error_adding_updating').' '.
-			$person_data['first_name'].' '.$person_data['last_name'],'class_name'=>'error_message','keep_displayed'=>true));
+		{	
+			echo json_encode(array('success'=>false,'message'=>$this->lang->line('customers_error_adding_updating').' '.
+			$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>-1));
 		}
 	}
 	
@@ -85,13 +95,12 @@ class Customers extends Secure_Area implements iPersonController
 		
 		if($success)
 		{
-			echo json_encode(array('text'=>$this->lang->line('customers_successful_deleted').' '.
-			count($customers_to_delete).' '.$this->lang->line('customers_one_or_multiple'),'class_name'=>'success_message','keep_displayed'=>false));
+			echo json_encode(array('success'=>true,'message'=>$this->lang->line('customers_successful_deleted').' '.
+			count($customers_to_delete).' '.$this->lang->line('customers_one_or_multiple')));
 		}
 		else
 		{
-			echo json_encode(array('text'=>$this->lang->line('customers_cannot_be_deleted'),
-			'class_name'=>'error_message','keep_displayed'=>true));
+			echo json_encode(array('success'=>false,'message'=>$this->lang->line('customers_cannot_be_deleted')));
 		}
 	}
 	

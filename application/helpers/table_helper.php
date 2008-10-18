@@ -32,20 +32,10 @@ function get_people_manage_table_data_rows($people,$controller)
 {
 	$CI =& get_instance();
 	$table_data_rows='';
-	$controller_name=strtolower(get_class($controller));
-	$width = $controller->_get_form_width();
-	$height = $controller->_get_form_height();
 	
 	foreach($people->result() as $person)
 	{
-		$table_data_rows.='<tr>';
-		$table_data_rows.="<td width='5'><input type='checkbox' id='person_$person->person_id' value='".$person->person_id."'/></td>";
-		$table_data_rows.='<td width="20%">'.character_limiter($person->last_name,13).'</td>';
-		$table_data_rows.='<td width="20%">'.character_limiter($person->first_name,13).'</td>';
-		$table_data_rows.='<td width="30%">'.mailto($person->email,character_limiter($person->email,22)).'</td>';
-		$table_data_rows.='<td width="20%">'.character_limiter($person->phone_number,13).'</td>';		
-		$table_data_rows.='<td width="5%">'.anchor($controller_name."/view/$person->person_id/width:$width/height:$height", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line('person_update_person'))).'</td>';		
-		$table_data_rows.='</tr>';
+		$table_data_rows.=get_person_data_row($person,$controller);
 	}
 	
 	if($people->num_rows()==0)
@@ -54,5 +44,26 @@ function get_people_manage_table_data_rows($people,$controller)
 	}
 	
 	return $table_data_rows;
+}
+
+function get_person_data_row($person,$controller)
+{
+	$CI =& get_instance();
+	$controller_name=strtolower(get_class($controller));
+	$width = $controller->_get_form_width();
+	$height = $controller->_get_form_height();
+
+	$table_data_row='<tr>';
+	$table_data_row.="<td width='5'><input type='checkbox' id='person_$person->person_id' value='".$person->person_id."'/></td>";
+	$table_data_row.='<td width="20%">'.character_limiter($person->last_name,13).'</td>';
+	$table_data_row.='<td width="20%">'.character_limiter($person->first_name,13).'</td>';
+	$table_data_row.='<td width="30%">'.mailto($person->email,character_limiter($person->email,22)).'</td>';
+	$table_data_row.='<td width="20%">'.character_limiter($person->phone_number,13).'</td>';		
+	$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$person->person_id/width:$width/height:$height", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
+	$table_data_row.='</tr>';
+	
+	return $table_data_row;
+	
+	
 }
 ?>

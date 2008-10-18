@@ -238,11 +238,6 @@ table.tablesorter tbody tr
 	border-bottom:1px solid #DDDDDD;
 }
 
-table.tablesorter tbody tr.hightlight
-{
-	background-color:yellow;
-}
-
 table.tablesorter thead tr .headerSortUp 
 {
 	background-image: url(../images/tables/asc.gif);

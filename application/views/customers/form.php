@@ -122,7 +122,15 @@ $(document).ready(function()
 	$('#customer_form').validate({
 		submitHandler:function(form)
 		{
-			form_submit(form);
+			$(form).ajaxSubmit({
+			success:function(response)
+			{
+				tb_remove();
+				post_form_submit(response);
+			},
+			dataType:'json'
+		});
+
 		},
 		errorLabelContainer: "#error_message_box",
  		wrapper: "li",

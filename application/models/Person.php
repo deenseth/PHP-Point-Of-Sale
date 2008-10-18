@@ -47,7 +47,7 @@ abstract class Person extends Model
 	/*
 	Inserts or updates a person
 	*/
-	function save($person_data,$person_id=false)
+	function save(&$person_data,$person_id=false)
 	{
 
 		$this->db->set($person_data);

@@ -37,14 +37,60 @@ function do_search(show_feedback,on_complete)
 		$('#spinner').hide();
 		//re-init elements in new table, as table tbody children were replaced
 		tb_init('#sortable_table a.thickbox');
-		
-		//let tablesorter know we changed <tbody> and then triger a resort
-		$("#sortable_table").trigger("update");
-		var sorting = $("#sortable_table")[0].config.sortList; 		
-		$("#sortable_table").trigger("sorton",[sorting]);
+		update_sortable_table();	
 		enable_email();
 		$("#select_all").attr('checked',false);
 	});
+}
+
+function update_sortable_table()
+{
+	//let tablesorter know we changed <tbody> and then triger a resort
+	$("#sortable_table").trigger("update");
+	
+	
+	if(typeof $("#sortable_table")[0].config!="undefined")
+	{
+		var sorting = $("#sortable_table")[0].config.sortList; 		
+		$("#sortable_table").trigger("sorton",[sorting]);
+	}
+}
+
+function update_row(person_id,url)
+{
+	$.post(url, { 'person_id': person_id },function(response)
+	{
+		//Replace previous row
+		var row_to_update = $("#sortable_table tbody tr :checkbox[value="+person_id+"]").parent().parent();
+		row_to_update.replaceWith(response);	
+		reinit_row(person_id);
+		hightlight_row(person_id);
+	});
+}
+
+function reinit_row(person_id)
+{
+	var new_checkbox = $("#sortable_table tbody tr :checkbox[value="+person_id+"]");
+	var new_row = new_checkbox.parent().parent();
+	
+	//Re-init some stuff as we replaced row
+	update_sortable_table();
+	tb_init(new_row.find("a.thickbox"));
+	//re-enable e-mail
+	new_checkbox.click(function()
+	{
+		do_email(enable_email.url);
+	});
+}
+
+function hightlight_row(person_id)
+{
+	var new_checkbox = $("#sortable_table tbody tr :checkbox[value="+person_id+"]");
+	var new_row = new_checkbox.parent().parent();
+
+	new_row.find("td").animate({backgroundColor:"#e1ffdd"},"slow","linear")
+		.animate({backgroundColor:"#e1ffdd"},5000)
+		.animate({backgroundColor:"#ffffff"},"slow","linear");
 }
 
 function enable_email(email_url)
@@ -70,27 +116,50 @@ function do_email(url)
 
 }
 
-function enable_delete(confirm_message)
+function enable_delete(confirm_message,none_selected_message)
 {
 	$('#delete').click(function(event)
 	{
 		event.preventDefault();
-		
-		if(confirm(confirm_message))
+		if($("#sortable_table tbody :checkbox:checked").length >0)
 		{
-			do_delete($("#delete").attr('href'));
+			if(confirm(confirm_message))
+			{
+				do_delete($("#delete").attr('href'));
+			}
+		}
+		else
+		{
+			alert(none_selected_message);
 		}
 	});
 }
 
 function do_delete(url)
 {
-	$.post(url, { 'ids[]': get_selected_values() },function(response)
+	var person_ids = get_selected_values();
+	var selected_rows = get_selected_rows();
+	$.post(url, { 'ids[]': person_ids },function(response)
 	{
-		do_search(true,function()
+		//delete was successful, remove checkbox rows
+		if(response.success)
 		{
-			set_feedback(response.text,response.class_name,response.keep_displayed);
-		});
+			$(selected_rows).each(function(index, dom)
+			{
+				$(this).find("td").animate({backgroundColor:"red"},1200,"linear")
+				.end().animate({opacity:0},1200,"linear",function()
+				{
+					$(this).remove();
+				});
+			});	
+			set_feedback(response.message,'success_message',false);	
+		}
+		else
+		{
+			set_feedback(response.message,'error_message',true);	
+		}
+		
+
 	},"json");
 }
 
@@ -123,6 +192,26 @@ function get_selected_values()
 		selected_values.push($(this).val());
 	});
 	return selected_values;
+}
+
+function get_selected_rows() 
+{ 
+	var selected_rows = new Array(); 
+	$("#sortable_table tbody :checkbox:checked").each(function() 
+	{ 
+		selected_rows.push($(this).parent().parent()); 
+	}); 
+	return selected_rows; 
+}
+
+function get_visible_person_ids()
+{
+	var person_ids = new Array();
+	$("#sortable_table tbody :checkbox").each(function()
+	{
+		person_ids.push($(this).val());
+	});
+	return person_ids;
 }
 
 function set_feedback(text, classname, keep_displayed)

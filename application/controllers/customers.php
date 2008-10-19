@@ -1,5 +1,5 @@
 <?php
-require_once("iPerson_Controller.php");
+require_once("interfaces/iPerson_Controller.php");
 class Customers extends Secure_Area implements iPerson_Controller
 {
 	function __construct()

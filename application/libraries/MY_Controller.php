@@ -26,4 +26,12 @@ class Secure_Area extends Controller
 		$this->load->vars($data);
 	}
 }
+
+abstract class Person_Controller extends Secure_Area implements iPerson_Controller
+{
+	function __construct($module_id=null)
+	{
+		parent::__construct($module_id);		
+	}
+}
 ?>

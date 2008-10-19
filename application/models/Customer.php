@@ -3,9 +3,17 @@ require_once('interfaces/iSearchable_Person.php');
 class Customer extends Person implements iSearchable_Person
 {	
 	/*
-	Currently not overriding get_info & get_multiple_info as customers do not 
-	contain any more information than a Person. (But they can in the future)
+	Determines if a given person_id is a customer
 	*/
+	function exists($person_id)
+	{
+		$this->db->from('customers');	
+		$this->db->join('people', 'people.person_id = customers.person_id');
+		$this->db->where('customers.person_id',$employee_id);
+		$query = $this->db->get();
+		
+		return ($query->num_rows()==1);
+	}
 	
 	/*
 	Returns all the customers
@@ -19,16 +27,47 @@ class Customer extends Person implements iSearchable_Person
 	}
 	
 	/*
-	Determines if a given person_id is a customer
+	Gets information about a particular customer
 	*/
-	function exists($person_id)
+	function get_info($customer_id)
 	{
 		$this->db->from('customers');	
 		$this->db->join('people', 'people.person_id = customers.person_id');
-		$this->db->where('customers.person_id',$employee_id);
+		$this->db->where('customers.person_id',$customer_id);
 		$query = $this->db->get();
 		
-		return ($query->num_rows()==1);
+		if($query->num_rows()==1)
+		{
+			return $query->row();
+		}
+		else
+		{
+			//Get empty base parent object, as $customer_id is NOT an customer
+			$person_obj=parent::get_info(-1);
+			
+			//Get all the fields from customer table
+			$fields = $this->db->list_fields('customers');
+			
+			//append those fields to base parent object, we we have a complete empty object
+			foreach ($fields as $field)
+			{
+				$person_obj->$field='';
+			}
+			
+			return $person_obj;
+		}
+	}
+	
+	/*
+	Gets information about multiple customers
+	*/
+	function get_multiple_info($customer_ids)
+	{
+		$this->db->from('customers');
+		$this->db->join('people', 'people.person_id = customers.person_id');		
+		$this->db->where_in('customers.person_id',$customer_ids);
+		$this->db->order_by("last_name", "asc");
+		return $this->db->get();		
 	}
 	
 	/*
@@ -50,14 +89,9 @@ class Customer extends Person implements iSearchable_Person
 			}
 			else
 			{
-				//Currently there is no extra data for a customer, so their is nothing to update
-				$success = true;
-				
-				/*
 				$this->db->set($customer_data);
 				$this->db->where('person_id', $customer_id);
 				$success = $this->db->update('customers');
-				*/
 			}
 			
 		}

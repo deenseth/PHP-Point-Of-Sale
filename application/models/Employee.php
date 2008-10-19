@@ -3,6 +3,19 @@ require_once('interfaces/iSearchable_Person.php');
 class Employee extends Person implements iSearchable_Person
 {
 	/*
+	Determines if a given person_id is an employee
+	*/
+	function exists($person_id)
+	{
+		$this->db->from('employees');	
+		$this->db->join('people', 'people.person_id = employees.person_id');
+		$this->db->where('employees.person_id',$employee_id);
+		$query = $this->db->get();
+		
+		return ($query->num_rows()==1);
+	}	
+	
+	/*
 	Returns all the employees
 	*/
 	function get_all()
@@ -43,19 +56,6 @@ class Employee extends Person implements iSearchable_Person
 			
 			return $person_obj;
 		}
-	}
-	
-	/*
-	Determines if a given person_id is an employee
-	*/
-	function exists($person_id)
-	{
-		$this->db->from('employees');	
-		$this->db->join('people', 'people.person_id = employees.person_id');
-		$this->db->where('employees.person_id',$employee_id);
-		$query = $this->db->get();
-		
-		return ($query->num_rows()==1);
 	}
 	
 	/*

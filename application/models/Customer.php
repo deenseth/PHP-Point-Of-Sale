@@ -1,13 +1,7 @@
 <?php
-require_once('Person.php');
-
-class Customer extends Person 
-{
-    function __construct()
-    {
-        parent::__construct();
-	}
-	
+require_once('interfaces/iSearchable_Person.php');
+class Customer extends Person implements iSearchable_Person
+{	
 	/*
 	Currently not overriding get_info & get_multiple_info as customers do not 
 	contain any more information than a Person. (But they can in the future)

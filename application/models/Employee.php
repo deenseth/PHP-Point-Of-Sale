@@ -1,13 +1,7 @@
 <?php
-require_once('Person.php');
-
-class Employee extends Person 
+require_once('interfaces/iSearchable_Person.php');
+class Employee extends Person implements iSearchable_Person
 {
-    function __construct()
-    {
-        parent::__construct();
-	}
-	
 	/*
 	Returns all the employees
 	*/

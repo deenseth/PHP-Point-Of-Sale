@@ -1,6 +1,5 @@
 <?php
-require_once("interfaces/iPerson_Controller.php");
-class Customers extends Secure_Area implements iPerson_Controller
+class Customers extends Person_Controller
 {
 	function __construct()
 	{
@@ -27,28 +26,26 @@ class Customers extends Secure_Area implements iPerson_Controller
 	}
 	
 	/*
-	Gets one row of the manage table. This is called using AJAX to update one row.
+	Gives search suggestions based on what is being searched for
 	*/
-	function get_row()
-	{
-		$person_id = $this->input->post('person_id');
-		$data_row=get_person_data_row($this->Customer->get_info($person_id),$this);
-		echo $data_row;
-	}
-	
 	function suggest()
 	{
 		$suggestions = $this->Customer->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
 		echo implode("\n",$suggestions);
 	}
 	
+	/*
+	Loads the customer edit form
+	*/
 	function view($customer_id=-1)
 	{
-		$data['customer_info']=$this->Customer->get_info($customer_id);
+		$data['person_info']=$this->Customer->get_info($customer_id);
 		$this->load->view("customers/form",$data);
 	}
 	
-	
+	/*
+	Inserts/updates a customer
+	*/
 	function save($customer_id=-1)
 	{
 		$person_data = array(
@@ -102,29 +99,6 @@ class Customers extends Secure_Area implements iPerson_Controller
 		{
 			echo json_encode(array('success'=>false,'message'=>$this->lang->line('customers_cannot_be_deleted')));
 		}
-	}
-	
-	/*
-	This returns a mailto link for customers with a certain id. This is called with AJAX.
-	*/
-	function mailto()
-	{
-		$customers_to_email=$this->input->post('ids');
-		
-		if($customers_to_email!=false)
-		{
-			$mailto_url='mailto:';
-			foreach($this->Customer->get_multiple_info($customers_to_email)->result() as $customer)
-			{
-				$mailto_url.=$customer->email.',';	
-			}
-			//remove last comma
-			$mailto_url=substr($mailto_url,0,strlen($mailto_url)-1);
-			
-			echo $mailto_url;
-			exit;
-		}
-		echo '#';
 	}
 	
 	/*

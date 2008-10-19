@@ -1,6 +1,5 @@
 <?php
-require_once("interfaces/iPerson_Controller.php");
-class Employees extends Secure_Area implements iPerson_Controller
+class Employees extends Person_Controller
 {
 	function __construct()
 	{
@@ -27,29 +26,27 @@ class Employees extends Secure_Area implements iPerson_Controller
 	}
 	
 	/*
-	Gets one row of the manage table. This is called using AJAX to update one row.
+	Gives search suggestions based on what is being searched for
 	*/
-	function get_row()
-	{
-		$person_id = $this->input->post('person_id');
-		$data_row=get_person_data_row($this->Employee->get_info($person_id),$this);
-		echo $data_row;
-	}
-	
 	function suggest()
 	{
 		$suggestions = $this->Employee->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
 		echo implode("\n",$suggestions);
 	}
 	
+	/*
+	Loads the employee edit form
+	*/
 	function view($employee_id=-1)
 	{
-		$data['employee_info']=$this->Employee->get_info($employee_id);
+		$data['person_info']=$this->Employee->get_info($employee_id);
 		$data['all_modules']=$this->Module->get_all_modules();
 		$this->load->view("employees/form",$data);
 	}
 	
-	
+	/*
+	Inserts/updates an employee
+	*/
 	function save($employee_id=-1)
 	{
 		$person_data = array(
@@ -118,36 +115,11 @@ class Employees extends Secure_Area implements iPerson_Controller
 			echo json_encode(array('success'=>false,'message'=>$this->lang->line('employees_cannot_be_deleted')));
 		}
 	}
-	
-	/*
-	This returns a mailto link for employees with a certain id. This is called with AJAX.
-	*/
-	function mailto()
-	{
-		$employees_to_email=$this->input->post('ids');
-		
-		if($employees_to_email!=false)
-		{
-			$mailto_url='mailto:';
-			foreach($this->Employee->get_multiple_info($employees_to_email)->result() as $employee)
-			{
-				$mailto_url.=$employee->email.',';	
-			}
-			//remove last comma
-			$mailto_url=substr($mailto_url,0,strlen($mailto_url)-1);
-			
-			echo $mailto_url;
-			exit;
-		}
-		echo '#';
-	}
-	
 	/*
 	get the width for the add/edit form
 	*/
 	function _get_form_width()
 	{
-	
 		return 650;
 	}
 	

@@ -1,10 +1,23 @@
 <?php
-abstract class Person extends Model 
-{	
-	abstract protected function exists($person_id);
-	abstract protected function get_all();
-	abstract protected function get_search_suggestions($search,$limit=25);
-	abstract protected function search($search);
+class Person extends Model 
+{
+	/*Determines whether the given person exists*/
+	function exists($person_id)
+	{
+		$this->db->from('people');	
+		$this->db->where('people.person_id',$person_id);
+		$query = $this->db->get();
+		
+		return ($query->num_rows()==1);
+	}
+	
+	/*Gets all people*/
+	function get_all()
+	{
+		$this->db->from('people');
+		$this->db->order_by("last_name", "asc");
+		return $this->db->get();		
+	}
 	
 	/*
 	Gets information about a person as an array.
@@ -42,7 +55,6 @@ abstract class Person extends Model
 		$this->db->order_by("last_name", "asc");
 		return $this->db->get();		
 	}
-	
 	
 	/*
 	Inserts or updates a person

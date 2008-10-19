@@ -1,5 +1,4 @@
 <?php
-
 class No_Access extends Controller 
 {
 	function __construct()

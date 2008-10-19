@@ -1,5 +1,6 @@
 <?php
 require_once ("interfaces/iPerson_Controller.php");
+require_once ("Secure_Area.php");
 abstract class Person_Controller extends Secure_Area implements iPerson_Controller
 {
 	function __construct($module_id=null)

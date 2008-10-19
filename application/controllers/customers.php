@@ -1,4 +1,5 @@
 <?php
+require_once ("Person_Controller.php");
 class Customers extends Person_Controller
 {
 	function __construct()

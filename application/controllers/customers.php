@@ -118,9 +118,9 @@ class Customers extends Person_Controller
 	function _get_form_height()
 	{
 		if($this->agent->browser()=="Internet Explorer")
-			return 645;
+			return 695;
 		
-		return 600;
+		return 640;
 	}
 }
 ?>

@@ -142,6 +142,16 @@ a.none
 	color:#000000;
 }	
 
+#page_title
+{
+	margin-top:8px;
+	font-size:30px;
+	font-weight:bold;
+	color:#000000;
+	text-align:center;
+
+}
+
 #new_button
 {
 	position:absolute;
@@ -370,6 +380,11 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	line-height:2.3;
 }
 
+.field_row label.wide 
+{
+	width:150px;
+}
+
 .field_row label.required
 {
 	color:red;
@@ -399,7 +414,14 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	width:45%;
 	padding:5px;
 }
-
+#config_info
+{
+	width:45%;
+	margin:0 auto;
+	padding:10px;
+	margin-bottom:30px;
+	margin-top:10px;
+}
 #employee_login_info
 {
 	float:left;
@@ -533,5 +555,6 @@ html[xmlns] .clearfix {	display: block; }
 	text-align:center;
 	font-size:11px;
 	color:#777777;
+	clear:both;
 	
 }

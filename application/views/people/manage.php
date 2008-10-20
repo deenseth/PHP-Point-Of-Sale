@@ -64,7 +64,6 @@ function post_form_submit(response)
 		?>
 	</div>
 </div>
-<div id="feedback_bar"></div>
 <div id="table_action_header">
 	<ul>
 		<li class="float_left"><span><?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('id'=>'delete')); ?></a></span></li>
@@ -80,4 +79,5 @@ function post_form_submit(response)
 <div id="table_holder">
 <?php echo $manage_table; ?>
 </div>
+<div id="feedback_bar"></div>
 <?php $this->load->view("partial/footer"); ?>

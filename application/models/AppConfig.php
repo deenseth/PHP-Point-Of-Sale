@@ -48,6 +48,26 @@ class AppConfig extends Model
 		$this->db->where('key', $key);
 		return $this->db->update('app_config');		
 	}
+	
+	function batch_save($data)
+	{
+		$success=true;
+		
+		//Run these queries as a transaction, we want to make sure we do all or nothing
+		$this->db->trans_start();
+		foreach($data as $key=>$value)
+		{
+			if(!$this->save($key,$value))
+			{
+				$success=false;
+				break;
+			}
+		}
+		
+		$this->db->trans_complete();		
+		return $success;
+		
+	}
 		
 	function delete($key)
 	{

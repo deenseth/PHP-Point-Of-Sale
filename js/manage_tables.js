@@ -127,7 +127,7 @@ function do_delete(url)
 		{
 			$(selected_rows).each(function(index, dom)
 			{
-				$(this).find("td").animate({backgroundColor:"red"},1200,"linear")
+				$(this).find("td").animate({backgroundColor:"green"},1200,"linear")
 				.end().animate({opacity:0},1200,"linear",function()
 				{
 					$(this).remove();

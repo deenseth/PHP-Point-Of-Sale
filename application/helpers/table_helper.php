@@ -49,7 +49,7 @@ function get_people_manage_table_data_rows($people,$controller)
 function get_person_data_row($person,$controller)
 {
 	$CI =& get_instance();
-	$controller_name=strtolower(get_class($controller));
+	$controller_name=$CI->uri->segment(1);
 	$width = $controller->_get_form_width();
 	$height = $controller->_get_form_height();
 

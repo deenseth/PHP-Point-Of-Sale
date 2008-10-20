@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Oct 18, 2008 at 07:34 PM
+-- Generation Time: Oct 20, 2008 at 12:39 PM
 -- Server version: 5.0.67
 -- PHP Version: 5.2.5
 -- 
@@ -13,11 +13,37 @@
 -- --------------------------------------------------------
 
 -- 
+-- Table structure for table `phppos_app_config`
+-- 
+
+CREATE TABLE `phppos_app_config` (
+  `key` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  PRIMARY KEY  (`key`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `phppos_app_config`
+-- 
+
+INSERT INTO `phppos_app_config` (`key`, `value`) VALUES ('company', 'Muench Inc!!'),
+('address', '30 foxboro Lane'),
+('phone', '585-880-6599'),
+('email', 'me@chrismuench.com'),
+('fax', ''),
+('company_website', 'http://www.chrismuench.com'),
+('default_tax_rate', '8'),
+('currency_symbol', '$');
+
+-- --------------------------------------------------------
+
+-- 
 -- Table structure for table `phppos_customers`
 -- 
 
 CREATE TABLE `phppos_customers` (
   `person_id` int(10) NOT NULL,
+  `account_number` varchar(255) NOT NULL,
   KEY `person_id` (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -25,6 +51,8 @@ CREATE TABLE `phppos_customers` (
 -- Dumping data for table `phppos_customers`
 -- 
 
+INSERT INTO `phppos_customers` (`person_id`, `account_number`) VALUES (102, '3333'),
+(129, '3333');
 
 -- --------------------------------------------------------
 
@@ -44,7 +72,7 @@ CREATE TABLE `phppos_employees` (
 -- Dumping data for table `phppos_employees`
 -- 
 
-INSERT INTO `phppos_employees` (`username`, `password`, `person_id`) VALUES ('admin', 'ac6fccd789003ba8e9f83c1c7063d85a', 1);
+INSERT INTO `phppos_employees` (`username`, `password`, `person_id`) VALUES ('admin', '439a6de57d475c1a0ba9bcb1c39f0af6', 1);
 
 -- --------------------------------------------------------
 
@@ -66,7 +94,7 @@ CREATE TABLE `phppos_items` (
   `reorder_level` int(10) NOT NULL default '0',
   `item_id` int(10) NOT NULL auto_increment,
   PRIMARY KEY  (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
 -- Dumping data for table `phppos_items`
@@ -120,13 +148,15 @@ CREATE TABLE `phppos_people` (
   `comments` text NOT NULL,
   `person_id` int(10) NOT NULL auto_increment,
   PRIMARY KEY  (`person_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=latin1 AUTO_INCREMENT=130 ;
 
 -- 
 -- Dumping data for table `phppos_people`
 -- 
 
-INSERT INTO `phppos_people` (`first_name`, `last_name`, `phone_number`, `email`, `address_1`, `address_2`, `city`, `state`, `zip`, `country`, `comments`, `person_id`) VALUES ('Chris', 'Muench', '585-880-6599', 'me@chrismuench.com', 'Address 1', '', '', '', '', '', '', 1);
+INSERT INTO `phppos_people` (`first_name`, `last_name`, `phone_number`, `email`, `address_1`, `address_2`, `city`, `state`, `zip`, `country`, `comments`, `person_id`) VALUES ('John', 'Doe', '585-880-6599', 'me@chrismuench.com', 'Address 1', '', '', '', '', '', '', 1),
+('Chris', 'Muench', '585-880-6599', 'me@chrismuench.com', '30 Foxboro Lane', '', 'Fairport', 'NY', '14450', '', '', 102),
+('Chris', 'Muench', '585-880-6599', 'me@chrismuench.com', '30 Foxboro Lane', '', 'Fairport', 'NY', '14450', '', '', 129);
 
 -- --------------------------------------------------------
 
@@ -146,7 +176,6 @@ CREATE TABLE `phppos_permissions` (
 -- 
 
 INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES ('config', 1),
-('customers', 1),
 ('employees', 1),
 ('items', 1),
 ('reports', 1),
@@ -167,7 +196,7 @@ CREATE TABLE `phppos_sales` (
   PRIMARY KEY  (`sale_id`),
   KEY `customer_id` (`customer_id`),
   KEY `employee_id` (`employee_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
 -- Dumping data for table `phppos_sales`
@@ -191,7 +220,7 @@ CREATE TABLE `phppos_sales_items` (
   PRIMARY KEY  (`sale_item_id`),
   KEY `sale_id` (`sale_id`),
   KEY `item_id` (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
 -- Dumping data for table `phppos_sales_items`

@@ -64,7 +64,7 @@ class Person extends Model
 
 		$this->db->set($person_data);
 		
-		if (!$person_id or $person_id < 0)
+		if (!$person_id or !$this->exists($person_id))
 		{
 			return $this->db->insert('people');
 		}

@@ -9,7 +9,7 @@ class Employee extends Person implements iSearchable_Person
 	{
 		$this->db->from('employees');	
 		$this->db->join('people', 'people.person_id = employees.person_id');
-		$this->db->where('employees.person_id',$employee_id);
+		$this->db->where('employees.person_id',$person_id);
 		$query = $this->db->get();
 		
 		return ($query->num_rows()==1);
@@ -83,7 +83,7 @@ class Employee extends Person implements iSearchable_Person
 		if(parent::save($person_data,$employee_id))
 		{
 		
-			if (!$employee_id or $employee_id < 0)
+			if (!$employee_id or !$this->exists($employee_id))
 			{
 				$employee_id=$this->db->insert_id();
 				$employee_data['person_id']=$employee_id;

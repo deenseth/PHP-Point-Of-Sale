@@ -37,16 +37,14 @@ class AppConfig extends Model
 		'key'=>$key,
 		'value'=>$value
 		);
-		
-		$this->db->set($config_data);
-		
+				
 		if (!$this->exists($key))
 		{
-			return $this->db->insert('app_config');
+			return $this->db->insert('app_config',$config_data);
 		}
 		
 		$this->db->where('key', $key);
-		return $this->db->update('app_config');		
+		return $this->db->update('app_config',$config_data);		
 	}
 	
 	function batch_save($data)

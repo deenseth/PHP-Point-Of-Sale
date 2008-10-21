@@ -60,17 +60,14 @@ class Person extends Model
 	Inserts or updates a person
 	*/
 	function save(&$person_data,$person_id=false)
-	{
-
-		$this->db->set($person_data);
-		
+	{		
 		if (!$person_id or !$this->exists($person_id))
 		{
-			return $this->db->insert('people');
+			return $this->db->insert('people',$person_data);
 		}
 		
 		$this->db->where('person_id', $person_id);
-		return $this->db->update('people');		
+		return $this->db->update('people',$person_data);		
 		
 	}
 	

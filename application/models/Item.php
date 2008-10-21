@@ -131,12 +131,10 @@ class Item extends Model implements iSearchable
 	Inserts or updates a item
 	*/
 	function save(&$item_data,$item_id=false)
-	{
-		$this->db->set($item_data);
-		
+	{		
 		if (!$item_id or !$this->exists($item_id))
 		{
-			if($this->db->insert('items'))
+			if($this->db->insert('items',$item_data))
 			{
 				$item_data['item_id']=$this->db->insert_id();
 				return true;
@@ -145,7 +143,7 @@ class Item extends Model implements iSearchable
 		}
 		
 		$this->db->where('item_id', $item_id);
-		return $this->db->update('items');		
+		return $this->db->update('items',$item_data);		
 	}
 	
 	/*

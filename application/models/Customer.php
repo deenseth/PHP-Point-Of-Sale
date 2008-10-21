@@ -84,14 +84,12 @@ class Customer extends Person implements iSearchable
 			if (!$customer_id or !$this->exists($customer_id))
 			{
 				$customer_data['person_id']=$this->db->insert_id();
-				$this->db->set($customer_data);
-				$success = $this->db->insert('customers');
+				$success = $this->db->insert('customers',$customer_data);
 			}
 			else
 			{
-				$this->db->set($customer_data);
 				$this->db->where('person_id', $customer_id);
-				$success = $this->db->update('customers');
+				$success = $this->db->update('customers',$customer_data);
 			}
 			
 		}

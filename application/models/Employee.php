@@ -87,14 +87,12 @@ class Employee extends Person implements iSearchable
 			{
 				$employee_id=$this->db->insert_id();
 				$employee_data['person_id']=$employee_id;
-				$this->db->set($employee_data);
-				$success = $this->db->insert('employees');
+				$success = $this->db->insert('employees',$employee_data);
 			}
 			else
 			{
-				$this->db->set($employee_data);
 				$this->db->where('person_id', $employee_id);
-				$success = $this->db->update('employees');		
+				$success = $this->db->update('employees',$employee_data);		
 			}
 			
 			//We have either inserted or updated a new employee, now lets set permissions. 

@@ -1,6 +1,7 @@
 <?php
 require_once ("Secure_Area.php");
-class Items extends Secure_Area 
+require_once ("interfaces/iData_Controller.php");
+class Items extends Secure_Area implements iData_Controller 
 {
 	function __construct()
 	{
@@ -9,6 +10,117 @@ class Items extends Secure_Area
 	
 	function index()
 	{
+		$data['controller_name']=strtolower($this->uri->segment(1));
+		$data['form_width']=$this->_get_form_width();
+		$data['form_height']=$this->_get_form_height();
+		$data['manage_table']=get_items_manage_table($this->Item->get_all(),$this);
+		$this->load->view('items/manage',$data);
 	}
+	
+	function find_item_info($item_number)
+	{
+		echo json_encode($this->Item->find_item_info($item_number));
+	}
+	
+	function search()
+	{
+		$search=$this->input->post('search');
+		$data_rows=get_items_manage_table_data_rows($this->Item->search($search),$this);
+		echo $data_rows;
+	}
+	
+	/*
+	Gives search suggestions based on what is being searched for
+	*/
+	function suggest()
+	{
+		$suggestions = $this->Item->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		echo implode("\n",$suggestions);
+	}
+	function get_row()
+	{
+		$item_id = $this->input->post('item_id');
+		$data_row=get_item_data_row($this->Item->get_info($item_id),$this);
+		echo $data_row;
+	}
+	
+	function view($item_id=-1)
+	{
+		$data['item_info']=$this->Item->get_info($item_id);
+		$this->load->view("items/form",$data);
+	}
+	
+	function save($item_id=-1)
+	{
+		$item_data = array(
+		'name'=>$this->input->post('name'),
+		'category'=>$this->input->post('category'),
+		'item_number'=>$this->input->post('item_number')=='' ? null:$this->input->post('item_number'),
+		'description'=>$this->input->post('description'),
+		'buy_price'=>$this->input->post('buy_price'),
+		'unit_price'=>$this->input->post('unit_price'),
+		'tax_percent'=>$this->input->post('tax_percent'),
+		'sale_markdown_percent'=>$this->input->post('sale_markdown_percent'),
+		'employee_markdown_percent'=>$this->input->post('employee_markdown_percent'),
+		'quantity'=>$this->input->post('quantity'),
+		'reorder_level'=>$this->input->post('reorder_level')
+		);
+		
+		if($this->Item->save($item_data,$item_id))
+		{
+			//New item
+			if($item_id==-1)
+			{
+				echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_adding').' '.
+				$item_data['name'],'item_id'=>$item_data['item_id']));
+			}
+			else //previous item
+			{
+				echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_updating').' '.
+				$item_data['name'],'item_id'=>$item_id));
+			}
+		}
+		else//failure
+		{	
+				echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_error_adding_updating').' '.
+				$item_data['name'],'item_id'=>-1));
+		}
+
+	}
+	
+	function delete()
+	{
+		$items_to_delete=$this->input->post('ids');
+		
+		if($this->Item->delete_list($items_to_delete))
+		{
+			echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_deleted').' '.
+			count($items_to_delete).' '.$this->lang->line('items_one_or_multiple')));
+		}
+		else
+		{
+			echo json_encode(array('success'=>false,'message'=>$this->lang->line('items_cannot_be_deleted')));
+		}
+	}
+	
+	/*
+	get the width for the add/edit form
+	*/
+	function _get_form_width()
+	{			
+		return 300;
+	}
+	
+	/*
+	get the width for the add/edit form
+	*/
+	function _get_form_height()
+	{
+		if($this->agent->browser()=="Internet Explorer")
+			return 695;
+		
+		return 640;
+	}
+
 }
 ?>

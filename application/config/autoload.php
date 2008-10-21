@@ -39,7 +39,7 @@
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database','session','validation','session','user_agent');
+$autoload['libraries'] = array('xmlrpc','database','session','validation','session','user_agent');
 
 
 /*
@@ -51,7 +51,7 @@ $autoload['libraries'] = array('database','session','validation','session','user
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('form','url','table','text');
+$autoload['helper'] = array('form','url','table','text','currency');
 
 
 /*
@@ -95,7 +95,7 @@ $autoload['config'] = array();
 |
 */
 
-$autoload['language'] = array('config','login','module','common','error','employees','customers');
+$autoload['language'] = array('config','login','module','common','error','employees','customers','items');
 
 
 /*
@@ -108,7 +108,7 @@ $autoload['language'] = array('config','login','module','common','error','employ
 |
 */
 
-$autoload['model'] = array('AppConfig','Person','Customer','Employee','Module');
+$autoload['model'] = array('AppConfig','Person','Customer','Employee','Module','Item');
 
 
 /*

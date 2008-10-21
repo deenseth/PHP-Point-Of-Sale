@@ -54,7 +54,7 @@ function get_person_data_row($person,$controller)
 	$height = $controller->_get_form_height();
 
 	$table_data_row='<tr>';
-	$table_data_row.="<td width='5'><input type='checkbox' id='person_$person->person_id' value='".$person->person_id."'/></td>";
+	$table_data_row.="<td width='5%'><input type='checkbox' id='person_$person->person_id' value='".$person->person_id."'/></td>";
 	$table_data_row.='<td width="20%">'.character_limiter($person->last_name,13).'</td>';
 	$table_data_row.='<td width="20%">'.character_limiter($person->first_name,13).'</td>';
 	$table_data_row.='<td width="30%">'.mailto($person->email,character_limiter($person->email,22)).'</td>';
@@ -63,7 +63,75 @@ function get_person_data_row($person,$controller)
 	$table_data_row.='</tr>';
 	
 	return $table_data_row;
+}
+
+
+
+/*
+Gets the html table to manage items.
+*/
+function get_items_manage_table($items,$controller)
+{
+	$CI =& get_instance();
+	$table='<table class="tablesorter" id="sortable_table">';
 	
+	$headers = array('<input type="checkbox" id="select_all" />', 
+	$CI->lang->line('items_name'),
+	$CI->lang->line('items_category'),
+	$CI->lang->line('items_unit_price'),
+	$CI->lang->line('items_quantity'),
+	$CI->lang->line('items_reorder_level'),
+	'&nbsp');
 	
+	$table.='<thead><tr>';
+	foreach($headers as $header)
+	{
+		$table.="<th>$header</th>";
+	}
+	$table.='</tr></thead><tbody>';
+	$table.=get_items_manage_table_data_rows($items,$controller);
+	$table.='</tbody></table>';
+	return $table;
+}
+
+/*
+Gets the html data rows for the items.
+*/
+function get_items_manage_table_data_rows($items,$controller)
+{
+	$CI =& get_instance();
+	$table_data_rows='';
+	
+	foreach($items->result() as $item)
+	{
+		$table_data_rows.=get_item_data_row($item,$controller);
+	}
+	
+	if($items->num_rows()==0)
+	{
+		$table_data_rows.="<tr><td colspan='7'><div class='warning_message' style='padding:7px;'>".$CI->lang->line('items_no_items_to_display')."</div></tr></tr>";
+	}
+	
+	return $table_data_rows;
+}
+
+function get_item_data_row($item,$controller)
+{
+	$CI =& get_instance();
+	$controller_name=$CI->uri->segment(1);
+	$width = $controller->_get_form_width();
+	$height = $controller->_get_form_height();
+
+	$table_data_row='<tr>';
+	$table_data_row.="<td width='5%'><input type='checkbox' id='item_$item->item_id' value='".$item->item_id."'/></td>";
+	$table_data_row.='<td width="16%">'.$item->name.'</td>';
+	$table_data_row.='<td width="16%">'.$item->category.'</td>';
+	$table_data_row.='<td width="16%">'.to_currency($item->unit_price).'</td>';
+	$table_data_row.='<td width="16%">'.$item->quantity.'</td>';
+	$table_data_row.='<td width="16%">'.$item->reorder_level.'</td>';
+	$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$item->item_id/width:$width/height:$height", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
+	$table_data_row.='</tr>';
+	
+	return $table_data_row;
 }
 ?>

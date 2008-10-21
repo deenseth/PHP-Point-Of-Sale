@@ -7,6 +7,7 @@ interface iData_Controller
 {
 	public function index();
 	public function search();
+	public function suggest();
 	public function get_row();
 	public function view($data_item_id=-1);
 	public function save($data_item_id=-1);

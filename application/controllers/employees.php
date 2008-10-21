@@ -130,9 +130,9 @@ class Employees extends Person_Controller
 	function _get_form_height()
 	{
 		if($this->agent->browser()=="Internet Explorer")
-			return 625;
+			return 550;
 			
-		return 600;
+		return 525;
 	}
 }
 ?>

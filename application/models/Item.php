@@ -3,6 +3,7 @@ require_once('interfaces/iSearchable.php');
 class Item extends Model implements iSearchable
 {
 	private $AWS_Access_Key='0RTAFSRZ27W8KM2JAJ02';
+	private $AWS_AssociateTag='phppos-20';
 	
 	/*
 	Determines if a given item_id is an item
@@ -66,7 +67,7 @@ class Item extends Model implements iSearchable
 		$item_info = $this->get_info(-1);
 		
 		$request = "http://ecs.amazonaws.com/onca/xml?Service=AWSECommerceService".
-		"&AWSAccessKeyId=$this->AWS_Access_Key&SearchIndex=All".
+		"&AWSAccessKeyId=$this->AWS_Access_Key&AssociateTag=$this->AWS_AssociateTag&SearchIndex=All".
 		"&Operation=ItemLookup&ItemId=$item_number&IdType=UPC&ResponseGroup=ItemAttributes,OfferSummary";
 		$session = curl_init($request); 
    		curl_setopt($session, CURLOPT_HEADER, false); 
@@ -85,6 +86,8 @@ class Item extends Model implements iSearchable
 			//remove any non numberic symbols
 			$item_info->unit_price=preg_replace("/[^0-9\.]/","",$item_info->unit_price);
 			$item_info->tax_percent=$this->config->item('default_tax_rate');
+			$item_info->url=(string)$parsed_xml->Items->Item[0]->DetailPageURL;
+			$item_info->provider=$this->lang->line('items_amazon');
 			return $item_info;
 		}
 		else
@@ -104,6 +107,8 @@ class Item extends Model implements iSearchable
 					$item_info->name=$parsed_xml['description'];
 					$item_info->description=$parsed_xml['issuerCountry'].' - '.$parsed_xml['size'];
 					$item_info->tax_percent=$this->config->item('default_tax_rate');
+					$item_info->url="http://www.upcdatabase.com/item/$item_number";
+					$item_info->provider=$this->lang->line('items_upc_database');						
 				}
 			}
 		}

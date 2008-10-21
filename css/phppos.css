@@ -271,6 +271,20 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	top:5px;
 }
 
+#form_spinner
+{
+	position:absolute;
+	display:none;
+	right:13px;
+	top:5px;
+}
+
+#info_provided_by
+{
+	display:none;
+	font-weight:bold;
+}
+
 .big_button
 {
 	position:relative;
@@ -403,8 +417,9 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
  	padding: 4px;
 }
 
-#customer_basic_info
+#customer_basic_info,#item_basic_info,#item_number_info
 {
+	position:relative;
 	padding:5px;
 
 }

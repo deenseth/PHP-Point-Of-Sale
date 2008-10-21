@@ -17,8 +17,9 @@ class Items extends Secure_Area implements iData_Controller
 		$this->load->view('items/manage',$data);
 	}
 	
-	function find_item_info($item_number)
+	function find_item_info()
 	{
+		$item_number=$this->input->post('scan_item_number');
 		echo json_encode($this->Item->find_item_info($item_number));
 	}
 	
@@ -54,9 +55,9 @@ class Items extends Secure_Area implements iData_Controller
 	{
 		$item_data = array(
 		'name'=>$this->input->post('name'),
+		'description'=>$this->input->post('description'),
 		'category'=>$this->input->post('category'),
 		'item_number'=>$this->input->post('item_number')=='' ? null:$this->input->post('item_number'),
-		'description'=>$this->input->post('description'),
 		'buy_price'=>$this->input->post('buy_price'),
 		'unit_price'=>$this->input->post('unit_price'),
 		'tax_percent'=>$this->input->post('tax_percent'),
@@ -82,7 +83,7 @@ class Items extends Secure_Area implements iData_Controller
 		}
 		else//failure
 		{	
-				echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_error_adding_updating').' '.
+				echo json_encode(array('success'=>false,'message'=>$this->lang->line('items_error_adding_updating').' '.
 				$item_data['name'],'item_id'=>-1));
 		}
 
@@ -108,7 +109,7 @@ class Items extends Secure_Area implements iData_Controller
 	*/
 	function _get_form_width()
 	{			
-		return 300;
+		return 360;
 	}
 	
 	/*
@@ -117,9 +118,9 @@ class Items extends Secure_Area implements iData_Controller
 	function _get_form_height()
 	{
 		if($this->agent->browser()=="Internet Explorer")
-			return 695;
+			return 550;
 		
-		return 640;
+		return 525;
 	}
 
 }

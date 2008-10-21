@@ -47,7 +47,14 @@ class Items extends Secure_Area implements iData_Controller
 	
 	function view($item_id=-1)
 	{
+		$markdown_dropdown_options=array();
+		for($k=0;$k<85;$k+=5)
+		{
+			$markdown_dropdown_options[$k]=$k.'%';
+		}
+		
 		$data['item_info']=$this->Item->get_info($item_id);
+		$data['markdown_dropdown_options']=$markdown_dropdown_options;
 		$this->load->view("items/form",$data);
 	}
 	

@@ -103,7 +103,6 @@ a.none
 	font-weight:bold;
 }
 /*End Menubar Stuff*/
-
 #content_area_wrapper
 {
 	position:relative;
@@ -271,12 +270,12 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	top:5px;
 }
 
-#form_spinner
+#scan_item_number.loading
 {
-	position:absolute;
-	display:none;
-	right:13px;
-	top:5px;
+	background-image: url(../images/spinner_small.gif);
+	background-position:center right;
+	background-repeat:no-repeat;	
+	
 }
 
 #info_provided_by
@@ -374,7 +373,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 
 #required_fields_message
 {
-	position: relative;
+	float:left;
 	width: 100%;
 	text-align: center;
 	margin-bottom: 3px;
@@ -411,15 +410,16 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
  	background-color: #f2f2f2;
  }
   
-.form_field input, .form_field textarea 
+.form_field input, .form_field textarea
 {
+	float:left;
  	border: 1px solid #ccc;
  	padding: 4px;
 }
 
 #customer_basic_info,#item_basic_info,#item_number_info
 {
-	position:relative;
+	float:left;
 	padding:5px;
 
 }
@@ -457,7 +457,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 
 #permission_list input
 {
-	position:relative;
+	float:left;
 	top:3px;
 }
 
@@ -487,7 +487,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 
 #error_message_box
 {
-	position:relative;
+	float:left;
 	margin-bottom:7px;
 	margin-left:20px;
 	color:red;

@@ -24,8 +24,6 @@ echo form_submit(array(
 );
 ?>
 <div id="info_provided_by"></div>
-<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='form_spinner' />
-
 </fieldset>
 <?php
 echo form_close();
@@ -60,6 +58,7 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 	<div class='form_field'>
 	<?php echo form_input(array(
 		'name'=>'buy_price',
+		'size'=>'8',
 		'id'=>'buy_price',
 		'value'=>$item_info->buy_price)
 	);?>
@@ -71,6 +70,7 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 	<div class='form_field'>
 	<?php echo form_input(array(
 		'name'=>'unit_price',
+		'size'=>'8',
 		'id'=>'unit_price',
 		'value'=>$item_info->unit_price)
 	);?>
@@ -83,6 +83,7 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 	<?php echo form_input(array(
 		'name'=>'tax_percent',
 		'id'=>'tax_percent',
+		'size'=>'4',
 		'value'=>$item_info->tax_percent)
 	);?>
 	</div>
@@ -91,22 +92,14 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 <div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('items_sale_markdown_percent').':', 'sale_markdown_percent',array('class'=>'required wide')); ?>
 	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'sale_markdown_percent',
-		'id'=>'sale_markdown_percent',
-		'value'=>$item_info->sale_markdown_percent)
-	);?>
+	<?php echo form_dropdown('sale_markdown_percent',$markdown_dropdown_options,$item_info->sale_markdown_percent,'id="sale_markdown_percent"');?>
 	</div>
 </div>
 
 <div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('items_employee_markdown_percent').':', 'employee_markdown_percent',array('class'=>'required wide')); ?>
 	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'employee_markdown_percent',
-		'id'=>'employee_markdown_percent',
-		'value'=>$item_info->employee_markdown_percent)
-	);?>
+	<?php echo form_dropdown('employee_markdown_percent',$markdown_dropdown_options,$item_info->employee_markdown_percent,'id="employee_markdown_percent"');?>
 	</div>
 </div>
 
@@ -172,11 +165,11 @@ $(document).ready(function()
 	{
 		beforeSubmit:function()
 		{
-			$('#form_spinner').show();
+			$('#scan_item_number').addClass('loading');
 		},
 		success:function(response)
 		{
-			$('#form_spinner').hide();
+			$('#scan_item_number').removeClass('loading');
 			
 			if(typeof response.provider!='undefined')
 			{
@@ -193,6 +186,10 @@ $(document).ready(function()
 				$('#info_provided_by').append(a);
 				$('#info_provided_by').show();
 	
+			}
+			else
+			{
+				$('#info_provided_by').html("<?php echo $this->lang->line('items_cannot_find_item');?> ");
 			}
 		},
 		dataType:'json'
@@ -221,9 +218,68 @@ $(document).ready(function()
  		wrapper: "li",
 		rules: 
 		{
+			name:"required",
+			category:"required",
+			buy_price:
+			{
+				required:true,
+				number:true
+			},
+			unit_price:
+			{
+				required:true,
+				number:true
+			},
+			tax_percent:
+			{
+				required:true,
+				number:true
+			},
+			sale_markdown_percent:"required",
+			sale_markdown_percent:"required",
+			quantity:
+			{
+				required:true,
+				number:true
+			},
+			reorder_level:
+			{
+				required:true,
+				number:true
+			}
    		},
 		messages: 
 		{
+			name:"<?php echo $this->lang->line('items_name_required'); ?>",
+			category:"<?php echo $this->lang->line('items_category_required'); ?>",
+			buy_price:
+			{
+				required:"<?php echo $this->lang->line('items_buy_price_required'); ?>",
+				number:"<?php echo $this->lang->line('items_buy_price_number'); ?>"
+			},
+			unit_price:
+			{
+				required:"<?php echo $this->lang->line('items_unit_price_required'); ?>",
+				number:"<?php echo $this->lang->line('items_unit_price_number'); ?>"
+			},
+			tax_percent:
+			{
+				required:"<?php echo $this->lang->line('items_tax_percent_required'); ?>",
+				number:"<?php echo $this->lang->line('items_tax_percent_number'); ?>"
+			},
+			sale_markdown_percent:"<?php echo $this->lang->line('items_sale_markdown_percent_required'); ?>",
+			employee_markdown_percent:"<?php echo $this->lang->line('items_employee_markdown_percent_required'); ?>",
+			quantity:
+			{
+				required:"<?php echo $this->lang->line('items_quantity_required'); ?>",
+				number:"<?php echo $this->lang->line('items_quantity_number'); ?>"
+			},
+			reorder_level:
+			{
+				required:"<?php echo $this->lang->line('items_reorder_level_required'); ?>",
+				number:"<?php echo $this->lang->line('items_reorder_level_number'); ?>"
+			}
+
 		}
 	});
 });

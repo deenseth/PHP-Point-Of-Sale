@@ -1,3 +1,9 @@
+@import url(autocomplete.css);
+@import url(menubar.css);
+@import url(general.css);
+@import url(tables.css);
+@import url(thickbox.css);
+
 body
 {
 	margin:0px;
@@ -9,100 +15,8 @@ a.none
 {
 	text-decoration:none;
 }
-/*Menubar Stuff*/
-#menubar
-{
-	position:relative;
-	margin:0px;
-	padding:0px;
-	background-image: url("../images/menubar/menubar_bg.gif"); 
-	background-repeat: repeat-x;
-	width:100%;
-	height:100px;
-	color:#FFFFFF;
-	text-align:left;
-}
-
-#menubar_container
-{
-	position:relative;
-	margin:0 auto;
-	width:775px;
-}
-
-.menu_item
-{
-	float:left;
-	width:65px;
-	height:100%;
-	text-align:center;	
-}
 
 
-#menubar a:link, #menubar a:visited, #menubar a
-{
-	color:#FFFFFF;
-	text-decoration:underline;
-}
-
-#menubar a:hover
-{
-	color:#CCCCCC;
-	text-decoration:underline;	
-}
-
-.menu_item
-{
-	font-size:8pt;
-}
-
-#menubar_company_info
-{
-	position:absolute;
-	left:0px;
-	top:18px;
-	width:250px;
-	height:55%;
-}
-
-#company_title
-{
-	font-size:14pt;
-	font-weight:bold;
-}
-
-#menubar_navigation
-{
-	position:relative;
-	width:72%;
-	left:200px;
-	top:28px;
-	height:45%;
-
-}
-
-#menubar_footer
-{
-	position:absolute;
-	top:80px;
-	left:0px;
-	height:17%;
-	padding-top:3px;
-	font-size:8pt;
-	font-weight:bold;
-}
-
-#menubar_date
-{
-	position:absolute;
-	top:80px;
-	right:0px;
-	height:17%;
-	padding-top:3px;
-	font-size:8pt;
-	font-weight:bold;
-}
-/*End Menubar Stuff*/
 #content_area_wrapper
 {
 	position:relative;
@@ -158,110 +72,6 @@ a.none
 	right:0px;
 }
 
-#table_action_header
-{
-	position:relative;
-	width:100%;
-	background-color:#EEEEEE;
-	background-image:url(../images/checkbox_arrow.gif);
-	height:20px;
-	border-top:1px solid #CCCCCC;	
-	background-position:5px 10px;
-	background-repeat:no-repeat;	
-	padding:3px 0px 3px 0px;
-}
-
-#table_action_header ul
-{
-	list-style:none;
-	padding:0px;
-	margin:0px;
-	margin-left:15px;
-}
-
-#table_action_header ul li
-{
-	margin-left:8px;
-	margin-right:4px;
-	
-}
-
-#table_action_header ul li span
-{
-	background-color:#0a6184;
-	border:2px solid #DDDDDD;
-	font-size:14px;
-	padding:2px 5px 2px 5px;
-	
-}
-
-#table_action_header a
-{
-	text-decoration:none;
-	color:#FFF;	
-}
-
-#table_holder
-{
-	position:relative;
-	margin-bottom:50px;
-}
-
-
-/* tables */
-table.tablesorter 
-{
-	position:relative;
-	width:100%;
-	border-top:3px solid #0a6184;
-	border-collapse:collapse;
-}
-
-table.tablesorter thead tr th, table.tablesorter tfoot tr th 
-{
-	color:#FFFFFF;
-	text-align:left;
-	background-color:#4386a1;
-	padding: 0px 5px 0px 5px;
-}
-
-table.tablesorter thead tr .header 
-{
-	background-image: url(../images/tables/bg.gif);
-	background-repeat: no-repeat;
-	background-position: center right;
-	cursor: pointer;
-}
-
-table.tablesorter tbody td 
-{
-	color: #3D3D3D;
-	background-color: #FFF;
-	vertical-align: top;
-	padding: 0px 5px 0px 5px;
-	
-}
-
-table.tablesorter tbody tr 
-{
-	border-bottom:1px solid #DDDDDD;
-}
-
-table.tablesorter thead tr .headerSortUp 
-{
-	background-image: url(../images/tables/asc.gif);
-}
-
-table.tablesorter thead tr .headerSortDown 
-{
-	background-image: url(../images/tables/desc.gif);
-}
-
-table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp 
-{
-	background-color: #8dbdd8;
-}
-
 #spinner
 {
 	position:absolute;
@@ -284,56 +94,6 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	font-weight:bold;
 }
 
-.big_button
-{
-	position:relative;
-	width:119px;
-	height:45px;
-	background-image: url(../images/big_action_button);
-	background-repeat:no-repeat;
-	cursor:pointer;
-}
-.big_button span
-{
-	position:absolute;
-	width:100%;
-	top:35%;
-	color:#FFF;
-	font-size:13px;
-	font-weight:bold;
-	text-align:center;
-}
-
-.small_button
-{
-	position:relative;
-	width:95px;
-	height:30px;
-	background-image: url(../images/small_action_button);
-	background-repeat:no-repeat;
-	cursor:pointer;
-}
-.small_button span
-{
-	position:absolute;
-	width:100%;
-	top:35%;
-	color:#FFF;
-	font-size:11px;
-	font-weight:bold;
-	text-align:center;
-}
-
-.float_left
-{
-	float:left;
-}
-
-.float_right
-{
-	float:right;
-}
-
 #feedback_bar
 {
 	position:fixed;
@@ -347,29 +107,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	z-index:1;
 	line-height:3.3;
 }
-.warning_message
-{
-	text-align:center;
-	background-color:#fffcdd;
-	border:1px solid #fff4aa;
-	font-weight:bold;
-}
 
-.error_message
-{
-	text-align:center;
-	background-color:#f68383;
-	border:1px solid #da3232;
-	font-weight:bold;
-}
-
-.success_message
-{
-	text-align:center;
-	background-color:#e1ffdd;
-	border:1px solid #2ca71c;
-	font-weight:bold;
-}
 
 #required_fields_message
 {
@@ -377,42 +115,6 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	text-align: center;
 	margin-bottom: 3px;
 	font-style: italic;
-}
-
-.field_row 
-{
-	margin: 0 0 10px 0;
-}
-
-.field_row label 
-{
-	float:left;
-	width:100px;
-	text-align:left;
-	line-height:2.3;
-}
-
-.field_row label.wide 
-{
-	width:150px;
-}
-
-.field_row label.required
-{
-	color:red;
-}
- 
-.form_field
-{
- 	float:left;
- 	padding: 3px;
- 	background-color: #f2f2f2;
- }
-  
-.form_field input, .form_field textarea 
-{
- 	border: 1px solid #ccc;
- 	padding: 4px;
 }
 
 #customer_basic_info,#item_basic_info,#item_number_info
@@ -483,74 +185,6 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	
 }
 
-.submit_button 
-{
-	padding: 5px;
-	color: #fff;
-	background-color: #0a6184;
-	border: 2px solid #ddd;
-}
-
-.clearfix:after {
-	content: ".";
-	display: block;
-	clear: both;
-	visibility: hidden;
-	line-height: 0;
-	height: 0;
-}
-.clearfix { display: inline-block; }
-html[xmlns] .clearfix {	display: block; }
-* html .clearfix { height: 1%; }
-
-.ac_results {
-	padding: 0px;
-	border: 1px solid black;
-	background-color: white;
-	overflow: hidden;
-	z-index: 99999;
-}
-
-.ac_results ul {
-	width: 100%;
-	list-style-position: outside;
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-.ac_results li {
-	margin: 0px;
-	padding: 2px 5px;
-	cursor: default;
-	display: block;
-	/* 
-	if width will be 100% horizontal scrollbar will apear 
-	when scroll mode will be used
-	*/
-	/*width: 100%;*/
-	font: menu;
-	font-size: 12px;
-	/* 
-	it is very important, if line-height not setted or setted 
-	in relative units scroll will be broken in firefox
-	*/
-	line-height: 16px;
-	overflow: hidden;
-}
-
-.ac_loading {
-	background: white url('../images/spinner_small.gif') right center no-repeat;
-}
-
-.ac_odd {
-	background-color: #eee;
-}
-
-.ac_over {
-	background-color: #0A246A;
-	color: white;
-}
 #footer
 {
 	position:relative;

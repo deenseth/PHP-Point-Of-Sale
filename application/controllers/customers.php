@@ -109,7 +109,7 @@ class Customers extends Person_Controller
 	*/
 	function _get_form_width()
 	{			
-		return 300;
+		return 350;
 	}
 	
 	/*
@@ -117,10 +117,7 @@ class Customers extends Person_Controller
 	*/
 	function _get_form_height()
 	{
-		if($this->agent->browser()=="Internet Explorer")
-			return 550;
-		
-		return 525;
+		return 550;
 	}
 }
 ?>

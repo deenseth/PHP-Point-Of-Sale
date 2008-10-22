@@ -373,7 +373,6 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 
 #required_fields_message
 {
-	float:left;
 	width: 100%;
 	text-align: center;
 	margin-bottom: 3px;
@@ -410,16 +409,14 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
  	background-color: #f2f2f2;
  }
   
-.form_field input, .form_field textarea
+.form_field input, .form_field textarea 
 {
-	float:left;
  	border: 1px solid #ccc;
  	padding: 4px;
 }
 
 #customer_basic_info,#item_basic_info,#item_number_info
 {
-	float:left;
 	padding:5px;
 
 }
@@ -457,7 +454,6 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 
 #permission_list input
 {
-	float:left;
 	top:3px;
 }
 
@@ -473,12 +469,6 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 	font-weight:bold;
 }
 
-#employee_permission_info span.medium
-{
-	
-}
-
-
 #employee_permission_info span.small
 {
 	font-style:italic;
@@ -487,7 +477,6 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 
 #error_message_box
 {
-	float:left;
 	margin-bottom:7px;
 	margin-left:20px;
 	color:red;

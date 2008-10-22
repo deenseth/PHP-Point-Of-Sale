@@ -124,10 +124,7 @@ class Items extends Secure_Area implements iData_Controller
 	*/
 	function _get_form_height()
 	{
-		if($this->agent->browser()=="Internet Explorer")
-			return 550;
-		
-		return 525;
+		return 550;
 	}
 
 }

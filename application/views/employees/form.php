@@ -64,14 +64,17 @@ foreach($all_modules->result() as $module)
 }
 ?>
 </ul>
-</fieldset>
-<?php 
+<?php
 echo form_submit(array(
 	'name'=>'submit',
 	'id'=>'submit',
 	'value'=>$this->lang->line('common_submit'),
 	'class'=>'submit_button float_right')
 );
+
+?>
+</fieldset>
+<?php 
 echo form_close();
 ?>
 <script type='text/javascript'>

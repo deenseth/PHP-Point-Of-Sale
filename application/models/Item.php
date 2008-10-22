@@ -53,6 +53,8 @@ class Item extends Model implements iSearchable
 				$item_obj->$field='';
 			}
 			
+			//Set tax percent to store default
+			$item_obj->tax_percent=$this->config->item("default_tax_rate");
 			return $item_obj;
 		}
 	}

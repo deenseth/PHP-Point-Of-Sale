@@ -7,6 +7,16 @@ echo form_open('items/bulk_update/',array('id'=>'item_form'));
 <legend><?php echo $this->lang->line("items_basic_information"); ?></legend>
 
 <div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('items_name').':', 'name',array('class'=>'wide')); ?>
+	<div class='form_field'>
+	<?php echo form_input(array(
+		'name'=>'name',
+		'id'=>'name')
+	);?>
+	</div>
+</div>
+
+<div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('items_category').':', 'category',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(

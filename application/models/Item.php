@@ -198,6 +198,16 @@ class Item extends Model implements iSearchable
 		}
 		
 		$this->db->from('items');
+		$this->db->distinct();		
+		$this->db->like('category', $search); 
+		$this->db->order_by("category", "asc");		
+		$by_category = $this->db->get();
+		foreach($by_category->result() as $row)
+		{
+			$suggestions[]=$row->category;		
+		}
+
+		$this->db->from('items');
 		$this->db->like('item_number', $search); 
 		$this->db->order_by("item_number", "asc");		
 		$by_item_number = $this->db->get();
@@ -241,6 +251,7 @@ class Item extends Model implements iSearchable
 		$this->db->from('items');
 		$this->db->like('name', $search); 
 		$this->db->or_like('item_number', $search);
+		$this->db->or_like('category', $search);
 		$this->db->order_by("name", "asc");				
 		return $this->db->get();	
 	}

@@ -50,7 +50,7 @@ class Items extends Secure_Area implements iData_Controller
 	
 	function get_row()
 	{
-		$item_id = $this->input->post('item_id');
+		$item_id = $this->input->post('row_id');
 		$data_row=get_item_data_row($this->Item->get_info($item_id),$this);
 		echo $data_row;
 	}
@@ -59,6 +59,11 @@ class Items extends Secure_Area implements iData_Controller
 	{
 		$data['item_info']=$this->Item->get_info($item_id);
 		$this->load->view("items/form",$data);
+	}
+	
+	function bulk_edit()
+	{
+		$this->load->view("items/form_bulk");
 	}
 	
 	function save($item_id=-1)
@@ -90,10 +95,33 @@ class Items extends Secure_Area implements iData_Controller
 		}
 		else//failure
 		{	
-				echo json_encode(array('success'=>false,'message'=>$this->lang->line('items_error_adding_updating').' '.
-				$item_data['name'],'item_id'=>-1));
+			echo json_encode(array('success'=>false,'message'=>$this->lang->line('items_error_adding_updating').' '.
+			$item_data['name'],'item_id'=>-1));
 		}
 
+	}
+	
+	function bulk_update()
+	{		
+		$items_to_update=$this->input->post('item_ids[]');
+		$item_data = array();
+		
+		foreach($_POST as $key=>$value)
+		{
+			if($value!='' and $key!='item_ids')
+			{
+				$item_data["$key"]=$value;
+			}
+		}
+
+		if($this->Item->update_multiple($item_data,$items_to_update))
+		{
+			echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_bulk_edit')));
+		}
+		else
+		{
+			echo json_encode(array('success'=>false,'message'=>$this->lang->line('items_error_updating_multiple')));
+		}
 	}
 	
 	function delete()

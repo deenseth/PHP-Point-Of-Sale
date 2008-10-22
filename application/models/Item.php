@@ -156,6 +156,15 @@ class Item extends Model implements iSearchable
 	}
 	
 	/*
+	Updates multiple items at once
+	*/
+	function update_multiple($item_data,$item_ids)
+	{
+		$this->db->where_in('item_id',$item_ids);
+		return $this->db->update('items',$item_data);		
+	}
+	
+	/*
 	Deletes one item
 	*/
 	function delete($item_id)

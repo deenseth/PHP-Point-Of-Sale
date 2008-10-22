@@ -6,6 +6,7 @@ $(document).ready(function()
     enable_select_all();
     enable_search('<?php echo site_url("$controller_name/suggest")?>','<?php echo $this->lang->line("common_confirm_search")?>');
     enable_delete('<?php echo $this->lang->line($controller_name."_confirm_delete")?>','<?php echo $this->lang->line($controller_name."_none_selected")?>');
+    enable_bulk_edit('<?php echo $this->lang->line($controller_name."_none_selected")?>');
 }); 
 
 function init_table_sorting()
@@ -52,6 +53,23 @@ function post_form_submit(response)
 		}
 	}
 }
+
+function post_bulk_form_submit(response)
+{
+	if(!response.success)
+	{
+		set_feedback(response.message,'error_message',true);	
+	}
+	else
+	{
+		var selected_item_ids=get_selected_values();
+		for(k=0;k<selected_item_ids.length;k++)
+		{
+			update_row(selected_item_ids[k],'<?php echo site_url("$controller_name/get_row")?>');
+		}
+		set_feedback(response.message,'success_message',false);	
+	}
+}
 </script>
 
 <div id="title_bar">
@@ -65,8 +83,8 @@ function post_form_submit(response)
 </div>
 <div id="table_action_header">
 	<ul>
-		<li class="float_left"><span><?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('id'=>'delete')); ?></a></span></li>
-		<li class="float_left"><span><a href="#" id="email"><?php echo $this->lang->line("items_bulk_edit");?></a></span></li>
+		<li class="float_left"><span><?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('id'=>'delete')); ?></span></li>
+		<li class="float_left"><span><?php echo anchor("$controller_name/bulk_edit/width:$form_width/height:$form_height",$this->lang->line("items_bulk_edit"),array('id'=>'bulk_edit','title'=>$this->lang->line('items_edit_multiple_items'))); ?></span></li>
 		<li class="float_right">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
 		<?php echo form_open("$controller_name/search",array('id'=>'search_form')); ?>

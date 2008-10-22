@@ -110,7 +110,6 @@ function enable_delete(confirm_message,none_selected_message)
 		}
 	});
 }
-enable_delete.enabled=false;
 
 function do_delete(url)
 {
@@ -118,9 +117,9 @@ function do_delete(url)
 	if(!enable_delete.enabled)
 		return;
 	
-	var person_ids = get_selected_values();
+	var row_ids = get_selected_values();
 	var selected_rows = get_selected_rows();
-	$.post(url, { 'ids[]': person_ids },function(response)
+	$.post(url, { 'ids[]': row_ids },function(response)
 	{
 		//delete was successful, remove checkbox rows
 		if(response.success)
@@ -143,6 +142,28 @@ function do_delete(url)
 
 	},"json");
 }
+
+function enable_bulk_edit(none_selected_message)
+{
+	//Keep track of enable_bulk_edit has been called
+	if(!enable_bulk_edit.enabled)
+		enable_bulk_edit.enabled=true;
+	
+	$('#bulk_edit').click(function(event)
+	{
+		event.preventDefault();
+		if($("#sortable_table tbody :checkbox:checked").length >0)
+		{
+			tb_show($(this).attr('title'),$(this).attr('href'),false);
+			$(this).blur();
+		}
+		else
+		{
+			alert(none_selected_message);
+		}
+	});
+}
+enable_bulk_edit.enabled=false;
 
 function enable_select_all()
 {
@@ -183,15 +204,15 @@ function update_sortable_table()
 	}
 }
 
-function update_row(person_id,url)
+function update_row(row_id,url)
 {
-	$.post(url, { 'person_id': person_id },function(response)
+	$.post(url, { 'row_id': row_id },function(response)
 	{
 		//Replace previous row
-		var row_to_update = $("#sortable_table tbody tr :checkbox[value="+person_id+"]").parent().parent();
+		var row_to_update = $("#sortable_table tbody tr :checkbox[value="+row_id+"]").parent().parent();
 		row_to_update.replaceWith(response);	
-		reinit_row(person_id);
-		hightlight_row(person_id);
+		reinit_row(row_id);
+		hightlight_row(row_id);
 	});
 }
 
@@ -242,10 +263,10 @@ function get_selected_rows()
 
 function get_visible_checkbox_ids()
 {
-	var person_ids = new Array();
+	var row_ids = new Array();
 	$("#sortable_table tbody :checkbox").each(function()
 	{
-		person_ids.push($(this).val());
+		row_ids.push($(this).val());
 	});
-	return person_ids;
+	return row_ids;
 }

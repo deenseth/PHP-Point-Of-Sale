@@ -36,7 +36,7 @@ abstract class Person_Controller extends Secure_Area implements iPerson_Controll
 	*/
 	function get_row()
 	{
-		$person_id = $this->input->post('person_id');
+		$person_id = $this->input->post('row_id');
 		$data_row=get_person_data_row($this->Person->get_info($person_id),$this);
 		echo $data_row;
 	}

@@ -85,6 +85,13 @@ class Item extends Model implements iSearchable
 			$item_info->description=(string)$parsed_xml->Items->Item[0]->ItemAttributes->Title;
 			$item_info->category=(string)$parsed_xml->Items->Item[0]->ItemAttributes->Binding;		
 			$item_info->unit_price=(string)$parsed_xml->Items->Item[0]->ItemAttributes->ListPrice->FormattedPrice;
+			
+			//No list price, get lowest new price
+			if($item_info->unit_price==null)
+			{
+				$item_info->unit_price=(string)$parsed_xml->Items->Item[0]->OfferSummary->LowestNewPrice->FormattedPrice;
+			}
+			
 			//remove any non numberic symbols
 			$item_info->unit_price=preg_replace("/[^0-9\.]/","",$item_info->unit_price);
 			$item_info->tax_percent=$this->config->item('default_tax_rate');

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Oct 22, 2008 at 09:54 AM
+-- Generation Time: Oct 22, 2008 at 11:58 AM
 -- Server version: 5.0.67
 -- PHP Version: 5.2.5
 -- 
@@ -43,7 +43,8 @@ INSERT INTO `phppos_app_config` (`key`, `value`) VALUES ('company', 'Chris Muenc
 
 CREATE TABLE `phppos_customers` (
   `person_id` int(10) NOT NULL,
-  `account_number` varchar(255) NOT NULL,
+  `account_number` varchar(255) default NULL,
+  UNIQUE KEY `account_number` (`account_number`),
   KEY `person_id` (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -51,8 +52,7 @@ CREATE TABLE `phppos_customers` (
 -- Dumping data for table `phppos_customers`
 -- 
 
-INSERT INTO `phppos_customers` (`person_id`, `account_number`) VALUES (134, ''),
-(135, '');
+INSERT INTO `phppos_customers` (`person_id`, `account_number`) VALUES (134, '3333');
 
 -- --------------------------------------------------------
 
@@ -92,13 +92,13 @@ CREATE TABLE `phppos_items` (
   `item_id` int(10) NOT NULL auto_increment,
   PRIMARY KEY  (`item_id`),
   UNIQUE KEY `item_number` (`item_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 -- 
 -- Dumping data for table `phppos_items`
 -- 
 
-INSERT INTO `phppos_items` (`name`, `category`, `item_number`, `description`, `unit_price`, `tax_percent`, `quantity`, `reorder_level`, `item_id`) VALUES ('Duracell AA Alkaline batteries - 4 pack', 'Electronics', '041333015330', 'Duracell AA Alkaline batteries - 4 pack', 4.95, 8, 10, 1, 8);
+INSERT INTO `phppos_items` (`name`, `category`, `item_number`, `description`, `unit_price`, `tax_percent`, `quantity`, `reorder_level`, `item_id`) VALUES ('Duracell AA Alkaline batteries - 4 pack', 'Electronics', '041333015330', 'Duracell AA Alkaline batteries - 4 pack', 5.95, 8, 10, 3, 20);
 
 -- --------------------------------------------------------
 
@@ -147,7 +147,7 @@ CREATE TABLE `phppos_people` (
   `comments` text NOT NULL,
   `person_id` int(10) NOT NULL auto_increment,
   PRIMARY KEY  (`person_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=latin1 AUTO_INCREMENT=136 ;
+) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=latin1 AUTO_INCREMENT=139 ;
 
 -- 
 -- Dumping data for table `phppos_people`

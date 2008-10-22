@@ -9,6 +9,7 @@ $lang['items_info_provided_by']='Info provided by';
 $lang['items_basic_information']='Item Information';
 $lang['items_number_information']='Item Number';
 $lang['items_new']='New Item';
+$lang['items_update']='Update Item';
 $lang['items_name']='Item Name';
 $lang['items_category']='Category';
 $lang['items_unit_price']='Unit Price';

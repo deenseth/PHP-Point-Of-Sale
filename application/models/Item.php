@@ -89,7 +89,7 @@ class Item extends Model implements iSearchable
 			$item_info->unit_price=preg_replace("/[^0-9\.]/","",$item_info->unit_price);
 			$item_info->tax_percent=$this->config->item('default_tax_rate');
 			$item_info->url=(string)$parsed_xml->Items->Item[0]->DetailPageURL;
-			$item_info->provider=$this->lang->line('items_amazon');
+			$item_info->provider=(string)$this->lang->line('items_amazon');
 			return $item_info;
 		}
 		else
@@ -180,6 +180,16 @@ class Item extends Model implements iSearchable
 		{
 			$suggestions[]=$row->name;		
 		}
+		
+		$this->db->from('items');
+		$this->db->like('item_number', $search); 
+		$this->db->order_by("item_number", "asc");		
+		$by_item_number = $this->db->get();
+		foreach($by_item_number->result() as $row)
+		{
+			$suggestions[]=$row->item_number;		
+		}
+
 				
 		//only return $limit suggestions
 		if(count($suggestions > $limit))
@@ -190,6 +200,23 @@ class Item extends Model implements iSearchable
 	
 	}
 	
+	function get_category_suggestions($search)
+	{
+		$suggestions = array();
+		$this->db->distinct();
+		$this->db->select('category');
+		$this->db->from('items');
+		$this->db->like('category', $search); 		
+		$this->db->order_by("category", "asc");		
+		$by_category = $this->db->get();
+		foreach($by_category->result() as $row)
+		{
+			$suggestions[]=$row->category;		
+		}
+				
+		return $suggestions;
+	}
+	
 	/*
 	Preform a search on items
 	*/
@@ -197,6 +224,7 @@ class Item extends Model implements iSearchable
 	{
 		$this->db->from('items');
 		$this->db->like('name', $search); 
+		$this->db->or_like('item_number', $search);
 		$this->db->order_by("name", "asc");				
 		return $this->db->get();	
 	}

@@ -84,7 +84,7 @@ class Customer extends Person implements iSearchable
 			if (!$customer_id or !$this->exists($customer_id))
 			{
 				$customer_data['person_id']=$this->db->insert_id();
-				$success = $this->db->insert('customers',$customer_data);
+				$success = $this->db->insert('customers',$customer_data);				
 			}
 			else
 			{
@@ -178,6 +178,17 @@ class Customer extends Person implements iSearchable
 			$suggestions[]=$row->phone_number;		
 		}
 		
+		$this->db->from('customers');
+		$this->db->join('people','customers.person_id=people.person_id');	
+		$this->db->like("account_number",$search);
+		$this->db->order_by("account_number", "asc");		
+		$by_account_number = $this->db->get();
+		foreach($by_account_number->result() as $row)
+		{
+			$suggestions[]=$row->account_number;		
+		}
+
+		
 		
 		//only return $limit suggestions
 		if(count($suggestions > $limit))
@@ -199,6 +210,7 @@ class Customer extends Person implements iSearchable
 		$this->db->or_like('last_name', $search); 
 		$this->db->or_like('email', $search); 
 		$this->db->or_like('phone_number', $search);
+		$this->db->or_like('account_number', $search);
 		$this->db->or_like("CONCAT(`first_name`,' ',`last_name`)",$search);
 		$this->db->order_by("last_name", "asc");
 		

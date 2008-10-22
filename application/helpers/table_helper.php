@@ -79,8 +79,8 @@ function get_items_manage_table($items,$controller)
 	$CI->lang->line('items_name'),
 	$CI->lang->line('items_category'),
 	$CI->lang->line('items_unit_price'),
+	$CI->lang->line('items_tax_percent'),
 	$CI->lang->line('items_quantity'),
-	$CI->lang->line('items_reorder_level'),
 	'&nbsp');
 	
 	$table.='<thead><tr>';
@@ -124,11 +124,11 @@ function get_item_data_row($item,$controller)
 
 	$table_data_row='<tr>';
 	$table_data_row.="<td width='5%'><input type='checkbox' id='item_$item->item_id' value='".$item->item_id."'/></td>";
-	$table_data_row.='<td width="16%">'.$item->name.'</td>';
+	$table_data_row.='<td width="25%">'.$item->name.'</td>';
 	$table_data_row.='<td width="16%">'.$item->category.'</td>';
 	$table_data_row.='<td width="16%">'.to_currency($item->unit_price).'</td>';
+	$table_data_row.='<td width="16%">'.$item->tax_percent.'%</td>';	
 	$table_data_row.='<td width="16%">'.$item->quantity.'</td>';
-	$table_data_row.='<td width="16%">'.$item->reorder_level.'</td>';
 	$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$item->item_id/width:$width/height:$height", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
 	$table_data_row.='</tr>';
 	

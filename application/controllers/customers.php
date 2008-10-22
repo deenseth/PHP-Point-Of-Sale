@@ -63,7 +63,7 @@ class Customers extends Person_Controller
 		'comments'=>$this->input->post('comments')
 		);
 		$customer_data=array(
-		'account_number'=>$this->input->post('account_number')
+		'account_number'=>$this->input->post('account_number')=='' ? null:$this->input->post('account_number'),
 		);
 		if($this->Customer->save($person_data,$customer_data,$customer_id))
 		{

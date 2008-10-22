@@ -54,18 +54,6 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_buy_price').':', 'buy_price',array('class'=>'required wide')); ?>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'buy_price',
-		'size'=>'8',
-		'id'=>'buy_price',
-		'value'=>$item_info->buy_price)
-	);?>
-	</div>
-</div>
-
-<div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('items_unit_price').':', 'unit_price',array('class'=>'required wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
@@ -86,20 +74,6 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 		'size'=>'4',
 		'value'=>$item_info->tax_percent)
 	);?>
-	</div>
-</div>
-
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_sale_markdown_percent').':', 'sale_markdown_percent',array('class'=>'required wide')); ?>
-	<div class='form_field'>
-	<?php echo form_dropdown('sale_markdown_percent',$markdown_dropdown_options,$item_info->sale_markdown_percent,'id="sale_markdown_percent"');?>
-	</div>
-</div>
-
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_employee_markdown_percent').':', 'employee_markdown_percent',array('class'=>'required wide')); ?>
-	<div class='form_field'>
-	<?php echo form_dropdown('employee_markdown_percent',$markdown_dropdown_options,$item_info->employee_markdown_percent,'id="employee_markdown_percent"');?>
 	</div>
 </div>
 
@@ -160,7 +134,13 @@ $(document).ready(function()
 	{
 		$("#scan_item_number").focus();
 	},100);
-		
+	
+	$("#category").autocomplete("<?php echo site_url('items/suggest_category');?>",{max:100,minChars:0,delay:10});
+    $("#category").result(function(event, data, formatted)
+    {
+    });
+	$("#category").search();
+	
 	$('#item_number_form').ajaxForm(
 	{
 		beforeSubmit:function()
@@ -220,11 +200,6 @@ $(document).ready(function()
 		{
 			name:"required",
 			category:"required",
-			buy_price:
-			{
-				required:true,
-				number:true
-			},
 			unit_price:
 			{
 				required:true,
@@ -235,8 +210,6 @@ $(document).ready(function()
 				required:true,
 				number:true
 			},
-			sale_markdown_percent:"required",
-			sale_markdown_percent:"required",
 			quantity:
 			{
 				required:true,
@@ -252,11 +225,6 @@ $(document).ready(function()
 		{
 			name:"<?php echo $this->lang->line('items_name_required'); ?>",
 			category:"<?php echo $this->lang->line('items_category_required'); ?>",
-			buy_price:
-			{
-				required:"<?php echo $this->lang->line('items_buy_price_required'); ?>",
-				number:"<?php echo $this->lang->line('items_buy_price_number'); ?>"
-			},
 			unit_price:
 			{
 				required:"<?php echo $this->lang->line('items_unit_price_required'); ?>",
@@ -267,8 +235,6 @@ $(document).ready(function()
 				required:"<?php echo $this->lang->line('items_tax_percent_required'); ?>",
 				number:"<?php echo $this->lang->line('items_tax_percent_number'); ?>"
 			},
-			sale_markdown_percent:"<?php echo $this->lang->line('items_sale_markdown_percent_required'); ?>",
-			employee_markdown_percent:"<?php echo $this->lang->line('items_employee_markdown_percent_required'); ?>",
 			quantity:
 			{
 				required:"<?php echo $this->lang->line('items_quantity_required'); ?>",

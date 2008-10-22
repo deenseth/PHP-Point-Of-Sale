@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Oct 20, 2008 at 12:39 PM
+-- Generation Time: Oct 22, 2008 at 09:54 AM
 -- Server version: 5.0.67
 -- PHP Version: 5.2.5
 -- 
@@ -26,14 +26,14 @@ CREATE TABLE `phppos_app_config` (
 -- Dumping data for table `phppos_app_config`
 -- 
 
-INSERT INTO `phppos_app_config` (`key`, `value`) VALUES ('company', 'Muench Inc!!'),
-('address', '30 foxboro Lane'),
-('phone', '585-880-6599'),
+INSERT INTO `phppos_app_config` (`key`, `value`) VALUES ('company', 'Chris Muench Inc.'),
+('address', '30 Foxboro Lane\nFairport, NY\n14450'),
+('phone', '585-223-1188'),
 ('email', 'me@chrismuench.com'),
 ('fax', ''),
-('company_website', 'http://www.chrismuench.com'),
 ('default_tax_rate', '8'),
-('currency_symbol', '$');
+('website', ''),
+('version', '10.0');
 
 -- --------------------------------------------------------
 
@@ -51,8 +51,8 @@ CREATE TABLE `phppos_customers` (
 -- Dumping data for table `phppos_customers`
 -- 
 
-INSERT INTO `phppos_customers` (`person_id`, `account_number`) VALUES (102, '3333'),
-(129, '3333');
+INSERT INTO `phppos_customers` (`person_id`, `account_number`) VALUES (134, ''),
+(135, '');
 
 -- --------------------------------------------------------
 
@@ -83,23 +83,22 @@ INSERT INTO `phppos_employees` (`username`, `password`, `person_id`) VALUES ('ad
 CREATE TABLE `phppos_items` (
   `name` varchar(255) NOT NULL,
   `category` varchar(255) NOT NULL,
-  `upc` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `buy_price` decimal(15,2) NOT NULL,
+  `item_number` varchar(255) default NULL,
+  `description` varchar(255) NOT NULL,
   `unit_price` decimal(15,2) NOT NULL,
-  `tax_percent` decimal(15,2) NOT NULL,
-  `sale_markdown_percent` int(2) NOT NULL default '0',
-  `employee_markdown_percent` int(2) NOT NULL default '0',
+  `tax_percent` int(2) NOT NULL,
   `quantity` int(10) NOT NULL default '0',
   `reorder_level` int(10) NOT NULL default '0',
   `item_id` int(10) NOT NULL auto_increment,
-  PRIMARY KEY  (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  PRIMARY KEY  (`item_id`),
+  UNIQUE KEY `item_number` (`item_number`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 -- 
 -- Dumping data for table `phppos_items`
 -- 
 
+INSERT INTO `phppos_items` (`name`, `category`, `item_number`, `description`, `unit_price`, `tax_percent`, `quantity`, `reorder_level`, `item_id`) VALUES ('Duracell AA Alkaline batteries - 4 pack', 'Electronics', '041333015330', 'Duracell AA Alkaline batteries - 4 pack', 4.95, 8, 10, 1, 8);
 
 -- --------------------------------------------------------
 
@@ -148,15 +147,15 @@ CREATE TABLE `phppos_people` (
   `comments` text NOT NULL,
   `person_id` int(10) NOT NULL auto_increment,
   PRIMARY KEY  (`person_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=latin1 AUTO_INCREMENT=130 ;
+) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=latin1 AUTO_INCREMENT=136 ;
 
 -- 
 -- Dumping data for table `phppos_people`
 -- 
 
 INSERT INTO `phppos_people` (`first_name`, `last_name`, `phone_number`, `email`, `address_1`, `address_2`, `city`, `state`, `zip`, `country`, `comments`, `person_id`) VALUES ('John', 'Doe', '585-880-6599', 'me@chrismuench.com', 'Address 1', '', '', '', '', '', '', 1),
-('Chris', 'Muench', '585-880-6599', 'me@chrismuench.com', '30 Foxboro Lane', '', 'Fairport', 'NY', '14450', '', '', 102),
-('Chris', 'Muench', '585-880-6599', 'me@chrismuench.com', '30 Foxboro Lane', '', 'Fairport', 'NY', '14450', '', '', 129);
+('Chris', 'Muench', '', 'me@chrismuench.com', '', '', '', '', '', '', '', 134),
+('Chris', 'Muench', '', '', '', '', '', '', '', '', '', 135);
 
 -- --------------------------------------------------------
 
@@ -176,6 +175,7 @@ CREATE TABLE `phppos_permissions` (
 -- 
 
 INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES ('config', 1),
+('customers', 1),
 ('employees', 1),
 ('items', 1),
 ('reports', 1),

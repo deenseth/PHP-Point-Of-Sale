@@ -38,6 +38,16 @@ class Items extends Secure_Area implements iData_Controller
 		$suggestions = $this->Item->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
 		echo implode("\n",$suggestions);
 	}
+	
+	/*
+	Gives search suggestions based on what is being searched for
+	*/
+	function suggest_category()
+	{
+		$suggestions = $this->Item->get_category_suggestions($this->input->post('q'));
+		echo implode("\n",$suggestions);
+	}
+	
 	function get_row()
 	{
 		$item_id = $this->input->post('item_id');
@@ -47,14 +57,7 @@ class Items extends Secure_Area implements iData_Controller
 	
 	function view($item_id=-1)
 	{
-		$markdown_dropdown_options=array();
-		for($k=0;$k<85;$k+=5)
-		{
-			$markdown_dropdown_options[$k]=$k.'%';
-		}
-		
 		$data['item_info']=$this->Item->get_info($item_id);
-		$data['markdown_dropdown_options']=$markdown_dropdown_options;
 		$this->load->view("items/form",$data);
 	}
 	
@@ -65,11 +68,8 @@ class Items extends Secure_Area implements iData_Controller
 		'description'=>$this->input->post('description'),
 		'category'=>$this->input->post('category'),
 		'item_number'=>$this->input->post('item_number')=='' ? null:$this->input->post('item_number'),
-		'buy_price'=>$this->input->post('buy_price'),
 		'unit_price'=>$this->input->post('unit_price'),
 		'tax_percent'=>$this->input->post('tax_percent'),
-		'sale_markdown_percent'=>$this->input->post('sale_markdown_percent'),
-		'employee_markdown_percent'=>$this->input->post('employee_markdown_percent'),
 		'quantity'=>$this->input->post('quantity'),
 		'reorder_level'=>$this->input->post('reorder_level')
 		);

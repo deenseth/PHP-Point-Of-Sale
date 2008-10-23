@@ -9,6 +9,7 @@
 	height:100px;
 	color:#FFFFFF;
 	text-align:left;
+	text-align:center;
 }
 
 #menubar_container
@@ -16,6 +17,7 @@
 	position:relative;
 	margin:0 auto;
 	width:775px;
+	text-align:left;
 }
 
 .menu_item

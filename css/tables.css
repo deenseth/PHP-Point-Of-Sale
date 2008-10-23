@@ -80,7 +80,7 @@ table.tablesorter tbody td
 	
 }
 
-table.tablesorter tbody tr 
+table.tablesorter tbody td 
 {
 	border-bottom:1px solid #DDDDDD;
 }

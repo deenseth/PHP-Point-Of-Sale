@@ -3,6 +3,7 @@
 <?php
 echo form_open('config/save/',array('id'=>'config_form'));
 ?>
+<div id="config_wrapper">
 <fieldset id="config_info">
 <div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
 <ul id="error_message_box"></ul>
@@ -92,6 +93,7 @@ echo form_submit(array(
 );
 ?>
 </fieldset>
+</div>
 <?php
 echo form_close();
 ?>

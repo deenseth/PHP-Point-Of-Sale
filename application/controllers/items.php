@@ -12,7 +12,6 @@ class Items extends Secure_Area implements iData_Controller
 	{
 		$data['controller_name']=strtolower($this->uri->segment(1));
 		$data['form_width']=$this->_get_form_width();
-		$data['form_height']=$this->_get_form_height();
 		$data['manage_table']=get_items_manage_table($this->Item->get_all(),$this);
 		$this->load->view('items/manage',$data);
 	}
@@ -146,14 +145,5 @@ class Items extends Secure_Area implements iData_Controller
 	{			
 		return 360;
 	}
-	
-	/*
-	get the width for the add/edit form
-	*/
-	function _get_form_height()
-	{
-		return 550;
-	}
-
 }
 ?>

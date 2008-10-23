@@ -1,9 +1,15 @@
+body
+{
+	text-align:center;
+}
 #container
 {
 	position:relative;
-	margin-left:auto;margin-right:auto;
+	margin-left:auto;
+	margin-right:auto;
 	margin-top:20px;
 	width:360px;
+
 }
 
 #top
@@ -69,5 +75,10 @@
 	position:absolute;
 	bottom:60px;
 	right:60px;
+}
+
+input
+{
+	font-family:Arial;
 }
 

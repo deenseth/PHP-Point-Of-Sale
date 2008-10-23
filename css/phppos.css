@@ -1,6 +1,7 @@
 @import url(autocomplete.css);
 @import url(menubar.css);
 @import url(general.css);
+@import url(popupbox.css);
 @import url(tables.css);
 @import url(thickbox.css);
 
@@ -25,6 +26,7 @@ a.none
 	margin:0px;
 	padding:0px;
 	border-bottom:1px solid #CCCCCC;
+	text-align:center;	
 
 }
 
@@ -33,6 +35,7 @@ a.none
 	position:relative;
 	margin:0 auto;
 	width:775px;
+	text-align:left;	
 	
 }
 
@@ -80,20 +83,6 @@ a.none
 	top:5px;
 }
 
-#scan_item_number.loading
-{
-	background-image: url(../images/spinner_small.gif);
-	background-position:center right;
-	background-repeat:no-repeat;	
-	
-}
-
-#info_provided_by
-{
-	display:none;
-	font-weight:bold;
-}
-
 #feedback_bar
 {
 	position:fixed;
@@ -108,26 +97,11 @@ a.none
 	line-height:3.3;
 }
 
-
-#required_fields_message
+#config_wrapper
 {
-	width: 100%;
-	text-align: center;
-	margin-bottom: 3px;
-	font-style: italic;
+	text-align:center;
 }
 
-#customer_basic_info,#item_basic_info,#item_number_info
-{
-	padding:5px;
-
-}
-#employee_basic_info
-{
-	float:left;
-	width:45%;
-	padding:5px;
-}
 #config_info
 {
 	width:45%;
@@ -135,54 +109,7 @@ a.none
 	padding:10px;
 	margin-bottom:30px;
 	margin-top:10px;
-}
-#employee_login_info
-{
-	float:left;
-	width:45%;
-	margin-left:5px;
-	padding:5px;
-}
-
-#permission_list
-{
-	list-style:none;
-}
-
-#permission_list li
-{
-	padding:5px;	
-}
-
-#permission_list input
-{
-	top:3px;
-}
-
-#employee_permission_info
-{
-	float:left;
-	width:45%;
-	margin-left:5px;
-	padding:5px;
-}
-#employee_permission_info p
-{
-	font-weight:bold;
-}
-
-#employee_permission_info span.small
-{
-	font-style:italic;
-	font-size:80%;
-}
-
-#error_message_box
-{
-	margin-bottom:7px;
-	margin-left:20px;
-	color:red;
-	
+	text-align:left;
 }
 
 #footer

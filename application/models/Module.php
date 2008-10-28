@@ -40,7 +40,6 @@ class Module extends Model
 	
 	function get_allowed_modules($person_id)
 	{
-		$this->db->select('modules.*');
 		$this->db->from('modules');
 		$this->db->join('permissions','permissions.module_id=modules.module_id');
 		$this->db->where("permissions.person_id",$person_id);

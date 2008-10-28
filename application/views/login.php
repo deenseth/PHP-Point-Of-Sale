@@ -17,8 +17,7 @@ $(document).ready(function()
 <body>
 <?php echo form_open('login') ?>
 <div id="container">
-<?php echo $this->validation->error_string; ?>
-
+<?php echo validation_errors(); ?>
 	<div id="top">
 	<?php echo $this->lang->line('login_login'); ?>
 	</div>
@@ -31,7 +30,7 @@ $(document).ready(function()
 		<div class="form_field">
 		<?php echo form_input(array(
 		'name'=>'username', 
-		'value'=>$this->validation->username,
+		'value'=>set_value('username'),
 		'size'=>'20')); ?>
 		</div>
 
@@ -39,7 +38,7 @@ $(document).ready(function()
 		<div class="form_field">
 		<?php echo form_password(array(
 		'name'=>'password', 
-		'value'=>$this->validation->password,
+		'value'=>set_value('password'),
 		'size'=>'20')); ?>
 		
 		</div>

@@ -89,7 +89,7 @@ $(document).ready(function()
 			success:function(response)
 			{
 				tb_remove();
-				post_form_submit(response);
+				post_person_form_submit(response);
 			},
 			dataType:'json'
 		});

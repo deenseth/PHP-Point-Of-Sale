@@ -60,6 +60,23 @@ class Item extends Model implements iSearchable
 	}
 	
 	/*
+	Get an item id given an item number
+	*/
+	function get_item_id($item_number)
+	{
+		$this->db->from('items');
+		$this->db->where('item_number',$item_number);
+		$query = $this->db->get();
+		
+		if($query->num_rows()==1)
+		{
+			return $query->row()->item_id;
+		}
+		
+		return false;
+	}
+	
+	/*
 	Uses Amazon to find out pricing, name, description of item, list price....
 	If amazon does not have information use UPCDatabase.com for basic information
 	*/
@@ -224,6 +241,22 @@ class Item extends Model implements iSearchable
 		}
 		return $suggestions;
 	
+	}
+	
+	function get_item_search_suggestions($search,$limit=25)
+	{
+		$suggestions = array();
+		
+		$this->db->from('items');
+		$this->db->like('name', $search); 
+		$this->db->order_by("name", "asc");		
+		$by_name = $this->db->get();
+		foreach($by_name->result() as $row)
+		{
+			$suggestions[]=$row->item_id.'|'.$row->name;		
+		}
+
+		return $suggestions;		
 	}
 	
 	function get_category_suggestions($search)

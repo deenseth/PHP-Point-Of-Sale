@@ -27,7 +27,7 @@ function init_table_sorting()
 	}
 }
 
-function post_form_submit(response)
+function post_person_form_submit(response)
 {
 	if(!response.success)
 	{
@@ -57,7 +57,7 @@ function post_form_submit(response)
 
 <div id="title_bar">
 	<div id="title" class="float_left"><?php echo $this->lang->line('common_list_of').' '.$this->lang->line('module_'.$controller_name); ?></div>
-	<div id="new_button" class="float_right">
+	<div id="new_button">
 		<?php echo anchor("$controller_name/view/-1/width:$form_width",
 		"<div class='big_button'><span>".$this->lang->line($controller_name.'_new')."</span></div>",
 		array('class'=>'thickbox none','title'=>$this->lang->line($controller_name.'_new')));

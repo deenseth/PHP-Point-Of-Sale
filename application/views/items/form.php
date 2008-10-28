@@ -188,7 +188,7 @@ $(document).ready(function()
 			success:function(response)
 			{
 				tb_remove();
-				post_form_submit(response);
+				post_item_form_submit(response);
 			},
 			dataType:'json'
 		});

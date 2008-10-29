@@ -18,7 +18,7 @@ class Cart
 	
 	function set_cart($cart_data)
 	{
-		return $this->CI->session->set_userdata('cart',$cart_data);
+		$this->CI->session->set_userdata('cart',$cart_data);
 	}
 	
 	function add_item($item_id,$quantity=1,$price=null,$tax=null)
@@ -43,25 +43,20 @@ class Cart
 			)
 		);
 			
-		if($items==false)
+		//Item already exists, add to quantity
+		if(isset($items[$item_id]))
 		{
-			return $this->set_cart($item);
+			$items[$item_id]['quantity']+=$quantity;
 		}
 		else
 		{
-			//Item already exists, add to quantity
-			if(isset($items[$item_id]))
-			{
-				$items[$item_id]['quantity']+=$quantity;
-			}
-			else
-			{
-				//add to existing array
-				$items+=$item;
-			}
-			
-			return $this->set_cart($items);
+			//add to existing array
+			$items+=$item;
 		}
+		
+		$this->set_cart($items);
+		return true;
+		
 	}
 	
 	function edit_item($item_id,$quantity,$price,$tax)

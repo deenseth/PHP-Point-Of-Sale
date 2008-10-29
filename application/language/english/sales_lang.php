@@ -5,4 +5,5 @@ $lang['sales_edit']='Edit';
 $lang['sales_edit_item']='Edit Item';
 $lang['sales_find_or_scan_item']='Find/Scan Item';
 $lang['sales_unable_to_add_item']='Unable to add item to sales';
+$lang['sales_error_editing_item']='Error editing item';
 ?>

@@ -21,8 +21,12 @@ class Sales extends Secure_Area
 	function add_item()
 	{
 		$item_id_or_number = $this->input->post("item");
-		$this->cart->add_item($item_id_or_number);
-		redirect('sales/index');
+		if(!$this->cart->add_item($item_id_or_number))
+		{
+			$data['error']=$this->lang->line('sales_unable_to_add_item');
+		}
+		$data['cart']=$this->cart->get_cart();
+		$this->load->view("sales/register",$data);
 	}
 	
 	function edit_item($item_id)
@@ -39,15 +43,19 @@ class Sales extends Secure_Area
 		{
 			$this->cart->edit_item($item_id,$quantity,$price,$tax);				
 		}
-		
-		redirect('sales/index');
+		else
+		{
+			$data['error']=$this->lang->line('sales_error_editing_item');
+		}
+		$data['cart']=$this->cart->get_cart();
+		$this->load->view("sales/register",$data);
 		
 	}
 	
 	function delete_item($item_number)
 	{
 		$this->cart->delete_item($item_number);
-		redirect('sales/index');
+		$this->load->view("sales/register",array('cart'=>$this->cart->get_cart()));
 	}
 
 	

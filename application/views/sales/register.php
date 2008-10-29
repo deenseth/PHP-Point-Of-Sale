@@ -69,24 +69,24 @@ else
 <script type="text/javascript" language="javascript">
 $(document).ready(function()
 {
-	$('#item').focus();
-	$('#item').click(function()
-    {
-    	$(this).attr('value','');
-    });
-
     $("#item").autocomplete('<?php echo site_url("sales/item_search"); ?>',
     {
     	minChars:0,
     	max:100,
-    	formatItem: function(row, i, max) {
-			return row[row.length-1];
+    	formatItem: function(row) {
+			return row[1];
 		}
-    	
     });
+       
     $("#item").result(function(event, data, formatted)
     {
 		$("#add_item_form").submit();
+    });
+    
+	$('#item').focus();
+	$('#item').click(function()
+    {
+    	$(this).attr('value','');
     });    
 });
 

@@ -22,7 +22,7 @@ class Sales extends Secure_Area
 	{
 		$item_id_or_number = $this->input->post("item");
 		$this->cart->add_item($item_id_or_number);
-		$this->load->view("sales/register",array('cart'=>$this->cart->get_cart()));
+		redirect('sales/index');
 	}
 	
 	function edit_item($item_id)
@@ -40,14 +40,14 @@ class Sales extends Secure_Area
 			$this->cart->edit_item($item_id,$quantity,$price,$tax);				
 		}
 		
-		$this->load->view("sales/register",array('cart'=>$this->cart->get_cart()));
+		redirect('sales/index');
 		
 	}
 	
 	function delete_item($item_number)
 	{
 		$this->cart->delete_item($item_number);
-		$this->load->view("sales/register",array('cart'=>$this->cart->get_cart()));
+		redirect('sales/index');
 	}
 
 	

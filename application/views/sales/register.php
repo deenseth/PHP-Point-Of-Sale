@@ -1,9 +1,15 @@
-<?php $this->load->view("partial/header"); ?>
+<?php $this->load->view("partial/header"); 
+if(isset($error))
+{
+	echo "<div class='error_message'>".$error."</div>";
+}
+?>
 <div id="register_wrapper">
 <?php echo form_open("sales/add_item",array('id'=>'add_item_form')); ?>
-<label id="item_label" for="item">Find/Scan Item</label>
-<input type="text" name="item" id="item"/>
-	<div id="new_item_button_register" >
+<label id="item_label" for="item"><?php echo $this->lang->line('sales_find_or_scan_item'); ?></label>
+<?php echo form_input(array('name'=>'item','id'=>'item','size'=>'35'));?>
+
+<div id="new_item_button_register" >
 		<?php echo anchor("items/view/-1/",
 		"<div class='small_button'><span>".$this->lang->line('items_new')."</span></div>",
 		array('class'=>'thickbox none','title'=>$this->lang->line('items_new')));
@@ -14,32 +20,43 @@
 <table id="register">
 <thead>
 <tr>
-<th>Delete</th>
-<th>Name</th>
-<th>Price</th>
-<th>Tax</th>
-<th>Quantity</th>
-<th>Item Total</th>
-<th>Edit</th>
+<th><?php echo $this->lang->line('common_delete'); ?></th>
+<th><?php echo $this->lang->line('items_name'); ?></th>
+<th><?php echo $this->lang->line('items_unit_price'); ?></th>
+<th><?php echo $this->lang->line('items_tax_percent'); ?></th>
+<th><?php echo $this->lang->line('items_quantity'); ?></th>
+<th><?php echo $this->lang->line('sales_item_total'); ?></th>
+<th><?php echo $this->lang->line('sales_edit'); ?></th>
 </tr>
 </thead>
 <tbody id="cart_contents">
 <?php
-foreach($cart as $item_id=>$item)
+if(count($cart)==0)
 {
-	echo form_open("sales/edit_item/$item_id");
 ?>
-	<tr>
-	<td><?php echo anchor("sales/delete_item/$item_id","[Delete]");?></td>
-	<td><?php echo $item['name']; ?></td>
-	<td><?php echo form_input(array('name'=>'price','value'=>$item['price'],'size'=>'6'));?></td>
-	<td><?php echo form_input(array('name'=>'tax','value'=>$item['tax'],'size'=>'4'));?></td>
-	<td><?php echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'3'));?></td>
-	<td><?php echo to_currency($item['price']*$item['quantity']*(1+($item['tax']/100))); ?></td>
-	<td><?php echo form_submit("edit_item", "Edit Item");?></td>
-	</tr>
-	</form>
+<tr><td colspan='7'>
+<div class='warning_message' style='padding:7px;'><?php echo $this->lang->line('sales_no_items_in_cart'); ?></div>
+</tr></tr>
 <?php
+}
+else
+{
+	foreach($cart as $item_id=>$item)
+	{
+		echo form_open("sales/edit_item/$item_id");
+	?>
+		<tr>
+		<td><?php echo anchor("sales/delete_item/$item_id",'['.$this->lang->line('common_delete').']');?></td>
+		<td><?php echo $item['name']; ?></td>
+		<td><?php echo form_input(array('name'=>'price','value'=>$item['price'],'size'=>'6'));?></td>
+		<td><?php echo form_input(array('name'=>'tax','value'=>$item['tax'],'size'=>'3'));?></td>
+		<td><?php echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2'));?></td>
+		<td><?php echo to_currency($item['price']*$item['quantity']*(1+($item['tax']/100))); ?></td>
+		<td><?php echo form_submit("edit_item", $this->lang->line('sales_edit_item'));?></td>
+		</tr>
+		</form>
+	<?php
+	}
 }
 ?>
 </tbody>
@@ -52,7 +69,7 @@ foreach($cart as $item_id=>$item)
 <script type="text/javascript" language="javascript">
 $(document).ready(function()
 {
-
+	$('#item').focus();
 	$('#item').click(function()
     {
     	$(this).attr('value','');

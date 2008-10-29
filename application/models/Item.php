@@ -255,6 +255,12 @@ class Item extends Model implements iSearchable
 		{
 			$suggestions[]=$row->item_id.'|'.$row->name;		
 		}
+		//only return $limit suggestions
+		if(count($suggestions > $limit))
+		{
+			$suggestions = array_slice($suggestions, 0,$limit);
+		}
+		return $suggestions;
 
 		return $suggestions;		
 	}

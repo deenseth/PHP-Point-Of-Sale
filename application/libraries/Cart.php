@@ -45,7 +45,7 @@ class Cart
 			
 		if($items==false)
 		{
-			$this->set_cart($item);
+			return $this->set_cart($item);
 		}
 		else
 		{
@@ -60,7 +60,7 @@ class Cart
 				$items+=$item;
 			}
 			
-			$this->set_cart($items);
+			return $this->set_cart($items);
 		}
 	}
 	

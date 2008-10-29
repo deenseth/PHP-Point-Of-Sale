@@ -28,6 +28,11 @@
  	
 }
 
+#item_label
+{
+	font-weight:bold;
+}
+
 #add_item_form label
 {
 	margin: 0px 5px 0px 5px;
@@ -46,6 +51,8 @@
 #register th
 {	
 	background-color:#4386a1;
+	padding:5px;
+	text-align:center;
 	color:#FFFFFF;
 }
 

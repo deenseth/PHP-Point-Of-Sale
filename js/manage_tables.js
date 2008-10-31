@@ -1,3 +1,17 @@
+function checkbox_click(event)
+{
+	event.stopPropagation();
+	do_email(enable_email.url);
+	if($(event.target).attr('checked'))
+	{
+		$(event.target).parent().parent().find("td").addClass('selected');		
+	}
+	else
+	{
+		$(event.target).parent().parent().find("td").removeClass();		
+	}
+}
+
 function enable_search(suggest_url,confirm_search_message)
 {	
 	//Keep track of enable_search has been called
@@ -47,10 +61,7 @@ function do_search(show_feedback,on_complete)
 		//re-init elements in new table, as table tbody children were replaced
 		tb_init('#sortable_table a.thickbox');
 		update_sortable_table();	
-		$('#sortable_table tbody :checkbox').click(function()
-		{
-			do_email(enable_email.url);
-		});
+		$('#sortable_table tbody :checkbox').click(checkbox_click);
 		$("#select_all").attr('checked',false);
 	});
 }
@@ -67,10 +78,7 @@ function enable_email(email_url)
 		enable_email.url=email_url;
 	}
 	
-	$('#select_all, #sortable_table tbody :checkbox').click(function()
-	{
-		do_email(enable_email.url);
-	});
+	$('#select_all, #sortable_table tbody :checkbox').click(checkbox_click);
 }
 enable_email.enabled=false;
 enable_email.url=false;
@@ -191,6 +199,34 @@ function enable_select_all()
 }
 enable_select_all.enabled=false;
 
+function enable_row_selection()
+{
+	//Keep track of enable_row_selection has been called
+	if(!enable_row_selection.enabled)
+		enable_row_selection.enabled=true;
+	
+	$("#sortable_table tbody tr").hover(
+		function over()
+		{
+			$(this).find("td").addClass('over');
+		},
+		
+		function out()
+		{
+			if(!$(this).find("td").hasClass("selected"))
+			{
+				$(this).find("td").removeClass();
+			}
+		}
+	);
+	
+	$("#sortable_table tbody tr").click(function(event)
+	{	
+		$(this).find(":checkbox").click();
+	});
+}
+enable_row_selection.enabled=false;
+
 function update_sortable_table()
 {
 	//let tablesorter know we changed <tbody> and then triger a resort
@@ -225,10 +261,7 @@ function reinit_row(checkbox_id)
 	update_sortable_table();
 	tb_init(new_row.find("a.thickbox"));
 	//re-enable e-mail
-	new_checkbox.click(function()
-	{
-		do_email(enable_email.url);
-	});
+	new_checkbox.click(checkbox_click);
 }
 
 function hightlight_row(checkbox_id)

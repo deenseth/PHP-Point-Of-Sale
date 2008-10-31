@@ -85,6 +85,16 @@ table.tablesorter tbody td
 	border-bottom:1px solid #DDDDDD;
 }
 
+table.tablesorter tbody td.over
+{
+	background-color:#CCCCCC;
+}
+
+table.tablesorter tbody td.selected
+{
+	background-color:#BBBBBB;
+}
+
 table.tablesorter thead tr .headerSortUp 
 {
 	background-image: url(../images/tables/asc.gif);

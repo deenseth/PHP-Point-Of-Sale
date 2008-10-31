@@ -108,5 +108,36 @@ class Cart
 		empty_cart();
 		delete_customer();
 	}
+	
+	function get_tax()
+	{
+		$tax = 0;
+		foreach($this->get_cart() as $item)
+		{
+			$tax+=($item['price']*$item['quantity'])*($item['tax']/100);
+		}
+		
+		return to_currency($tax);
+	}
+	
+	function get_subtotal()
+	{
+		$subtotal = 0;
+		foreach($this->get_cart() as $item)
+		{
+			$subtotal+=($item['price']*$item['quantity']);
+		}
+		return to_currency($subtotal);		
+	}
+	
+	function get_total()
+	{
+		$total = 0;
+		foreach($this->get_cart() as $item)
+		{
+			$total+=($item['price']*$item['quantity'])*(1+($item['tax']/100));
+		}
+		return to_currency($total);		
+	}
 }
 ?>

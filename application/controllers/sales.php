@@ -82,6 +82,9 @@ class Sales extends Secure_Area
 	function _reload($data=array())
 	{
 		$data['cart']=$this->cart->get_cart();
+		$data['subtotal']=$this->cart->get_subtotal();
+		$data['tax']=$this->cart->get_tax();
+		$data['total']=$this->cart->get_total();
 		$customer_id=$this->cart->get_customer();
 		if($customer_id!=-1)
 		{

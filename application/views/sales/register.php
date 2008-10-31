@@ -89,9 +89,9 @@ else
 	?>
 
 	<div id='sale_details'>
-	Subtotal: <br />
-	Tax: <br />
-	Total: <br />
+	Subtotal: <?php echo $subtotal; ?><br />
+	Tax: <?php echo $tax; ?><br />
+	Total:<?php echo $total; ?> <br />
 	</div>
 </div>
 <div class="clearfix" style="margin-bottom:30px;">&nbsp;</div>

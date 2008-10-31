@@ -68,3 +68,10 @@
 	width:28%;
 	padding:5px;
 }
+
+#sale_details
+{
+	margin-top:5px;
+	border-top:2px solid #000;
+	padding:3px;
+}

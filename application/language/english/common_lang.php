@@ -1,6 +1,7 @@
 <?php
 $lang['common_common']='common';
 $lang['common_submit']='Submit';
+$lang['common_or']='OR';
 $lang['common_powered_by']='Powered by';
 $lang['common_welcome']='Welcome';
 $lang['common_logout']='Logout';

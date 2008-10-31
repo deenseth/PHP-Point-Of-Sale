@@ -64,21 +64,35 @@ else
 </table>
 </div>
 <div id="overall_sale">
-<?php
-if(isset($customer))
-{
-	echo $this->lang->line("customers_customer").': <b>'.$customer. '</b><br />';
-	echo anchor("sales/delete_customer",'['.$this->lang->line('common_delete').' '.$this->lang->line('customers_customer').']');
-}
-else
-{
-	echo form_open("sales/select_customer",array('id'=>'select_customer_form')); ?>
-	<label id="customer_label" for="customer"><?php echo $this->lang->line('sales_select_customer'); ?></label>
-	<?php echo form_input(array('name'=>'customer','id'=>'customer','size'=>'30','value'=>$this->lang->line('sales_start_typing_customer_name')));?>
-	</form>
-<?php
-}
-?>
+	<?php
+	if(isset($customer))
+	{
+		echo $this->lang->line("customers_customer").': <b>'.$customer. '</b><br />';
+		echo anchor("sales/delete_customer",'['.$this->lang->line('common_delete').' '.$this->lang->line('customers_customer').']');
+	}
+	else
+	{
+		echo form_open("sales/select_customer",array('id'=>'select_customer_form')); ?>
+		<label id="customer_label" for="customer"><?php echo $this->lang->line('sales_select_customer'); ?></label>
+		<?php echo form_input(array('name'=>'customer','id'=>'customer','size'=>'30','value'=>$this->lang->line('sales_start_typing_customer_name')));?>
+		</form>
+		<div style="margin-top:5px;text-align:center;">
+		<h3 style="margin: 5px 0 5px 0"><?php echo $this->lang->line('common_or'); ?></h3>
+		<?php echo anchor("customers/view/-1/",
+		"<div class='small_button' style='margin:0 auto;'><span>".$this->lang->line('customers_new')."</span></div>",
+		array('class'=>'thickbox none','title'=>$this->lang->line('customers_new')));
+		?>
+		</div>
+		<div class="clearfix">&nbsp;</div>
+		<?php
+	}
+	?>
+
+	<div id='sale_details'>
+	Subtotal: <br />
+	Tax: <br />
+	Total: <br />
+	</div>
 </div>
 <div class="clearfix" style="margin-bottom:30px;">&nbsp;</div>
 
@@ -144,4 +158,14 @@ function post_item_form_submit(response)
 		$("#add_item_form").submit();		
 	}
 }
+
+function post_person_form_submit(response)
+{
+	if(response.success)
+	{
+		$("#customer").attr("value",response.person_id);
+		$("#select_customer_form").submit();		
+	}
+}
+
 </script>

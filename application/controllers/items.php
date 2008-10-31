@@ -102,7 +102,7 @@ class Items extends Secure_Area implements iData_Controller
 	
 	function bulk_update()
 	{		
-		$items_to_update=$this->input->post('item_ids[]');
+		$items_to_update=$this->input->post('item_ids');
 		$item_data = array();
 		
 		foreach($_POST as $key=>$value)
@@ -112,7 +112,7 @@ class Items extends Secure_Area implements iData_Controller
 				$item_data["$key"]=$value;
 			}
 		}
-
+		
 		if($this->Item->update_multiple($item_data,$items_to_update))
 		{
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_bulk_edit')));

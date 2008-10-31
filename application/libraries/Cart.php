@@ -21,6 +21,19 @@ class Cart
 		$this->CI->session->set_userdata('cart',$cart_data);
 	}
 	
+	function get_customer()
+	{
+		if(!$this->CI->session->userdata('customer'))
+			$this->set_customer(-1);
+		
+		return $this->CI->session->userdata('customer');
+	}
+	
+	function set_customer($customer_id)
+	{
+		$this->CI->session->set_userdata('customer',$customer_id);
+	}
+	
 	function add_item($item_id,$quantity=1,$price=null,$tax=null)
 	{
 		//make sure item exists
@@ -83,6 +96,17 @@ class Cart
 	function empty_cart()
 	{
 		$this->CI->session->unset_userdata('cart');
+	}
+	
+	function delete_customer()
+	{
+		$this->CI->session->unset_userdata('customer');
+	}
+	
+	function clear_all()
+	{
+		empty_cart();
+		delete_customer();
 	}
 }
 ?>

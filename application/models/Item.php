@@ -262,7 +262,6 @@ class Item extends Model implements iSearchable
 		}
 		return $suggestions;
 
-		return $suggestions;		
 	}
 	
 	function get_category_suggestions($search)

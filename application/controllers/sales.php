@@ -9,7 +9,7 @@ class Sales extends Secure_Area
 	
 	function index()
 	{
-		$this->load->view("sales/register",array('cart'=>$this->cart->get_cart()));
+		$this->_reload();		
 	}
 	
 	function item_search()
@@ -18,19 +18,35 @@ class Sales extends Secure_Area
 		echo implode("\n",$suggestions);
 	}	
 	
+	function customer_search()
+	{
+		$suggestions = $this->Customer->get_customer_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		echo implode("\n",$suggestions);
+	}
+	
+	function select_customer()
+	{
+		$customer_id = $this->input->post("customer");
+		$this->cart->set_customer($customer_id);
+		$this->_reload();		
+	}
+	
 	function add_item()
 	{
+		$data=array();
+		
 		$item_id_or_number = $this->input->post("item");
 		if(!$this->cart->add_item($item_id_or_number))
 		{
 			$data['error']=$this->lang->line('sales_unable_to_add_item');
 		}
-		$data['cart']=$this->cart->get_cart();
-		$this->load->view("sales/register",$data);
+		$this->_reload($data);		
 	}
 	
 	function edit_item($item_id)
 	{
+		$data= array();
+		
 		$this->form_validation->set_rules('price', 'lang:items_price', 'required|numeric');
 		$this->form_validation->set_rules('tax', 'lang:items_tax', 'required|numeric');
 		$this->form_validation->set_rules('quantity', 'lang:items_quantity', 'required|integer');
@@ -47,15 +63,32 @@ class Sales extends Secure_Area
 		{
 			$data['error']=$this->lang->line('sales_error_editing_item');
 		}
-		$data['cart']=$this->cart->get_cart();
-		$this->load->view("sales/register",$data);
 		
+		$this->_reload($data);		
 	}
 	
 	function delete_item($item_number)
 	{
 		$this->cart->delete_item($item_number);
-		$this->load->view("sales/register",array('cart'=>$this->cart->get_cart()));
+		$this->_reload();		
+	}
+
+	function delete_customer()
+	{
+		$this->cart->delete_customer();
+		$this->_reload();		
+	}
+	
+	function _reload($data=array())
+	{
+		$data['cart']=$this->cart->get_cart();
+		$customer_id=$this->cart->get_customer();
+		if($customer_id!=-1)
+		{
+			$info=$this->Customer->get_info($customer_id);
+			$data['customer']=$info->first_name.' '.$info->last_name;
+		}
+		$this->load->view("sales/register",$data);		
 	}
 
 	

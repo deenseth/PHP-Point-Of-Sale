@@ -1,5 +1,6 @@
 <?php
 $lang['customers_new']='New Customer';
+$lang['customers_customer']='Customer';
 $lang['customers_update']='Update Customer';
 $lang['customers_confirm_delete']='Are you sure you want to delete the selected customers?';
 $lang['customers_none_selected']='You have not selected any customers to delete';

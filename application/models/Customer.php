@@ -187,8 +187,6 @@ class Customer extends Person implements iSearchable
 		{
 			$suggestions[]=$row->account_number;		
 		}
-
-		
 		
 		//only return $limit suggestions
 		if(count($suggestions > $limit))
@@ -199,6 +197,33 @@ class Customer extends Person implements iSearchable
 	
 	}
 	
+	/*
+	Get search suggestions to find customers
+	*/
+	function get_customer_search_suggestions($search,$limit=25)
+	{
+		$suggestions = array();
+		
+		$this->db->from('customers');
+		$this->db->join('people','customers.person_id=people.person_id');	
+		$this->db->like('first_name', $search); 
+		$this->db->or_like('last_name', $search);
+		$this->db->or_like("CONCAT(`first_name`,' ',`last_name`)",$search);		
+		$this->db->order_by("last_name", "asc");		
+		$by_name = $this->db->get();
+		foreach($by_name->result() as $row)
+		{
+			$suggestions[]=$row->person_id.'|'.$row->first_name.' '.$row->last_name;		
+		}
+		
+		//only return $limit suggestions
+		if(count($suggestions > $limit))
+		{
+			$suggestions = array_slice($suggestions, 0,$limit);
+		}
+		return $suggestions;
+
+	}
 	/*
 	Preform a search on customers
 	*/

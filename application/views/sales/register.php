@@ -1,4 +1,6 @@
-<?php $this->load->view("partial/header"); 
+<?php $this->load->view("partial/header"); ?>
+<div id="page_title" style="margin-bottom:8px;"><?php echo $this->lang->line('sales_register'); ?></div>
+<?php
 if(isset($error))
 {
 	echo "<div class='error_message'>".$error."</div>";
@@ -7,8 +9,7 @@ if(isset($error))
 <div id="register_wrapper">
 <?php echo form_open("sales/add_item",array('id'=>'add_item_form')); ?>
 <label id="item_label" for="item"><?php echo $this->lang->line('sales_find_or_scan_item'); ?></label>
-<?php echo form_input(array('name'=>'item','id'=>'item','size'=>'35'));?>
-
+<?php echo form_input(array('name'=>'item','id'=>'item','size'=>'40'));?>
 <div id="new_item_button_register" >
 		<?php echo anchor("items/view/-1/",
 		"<div class='small_button'><span>".$this->lang->line('items_new')."</span></div>",
@@ -20,13 +21,13 @@ if(isset($error))
 <table id="register">
 <thead>
 <tr>
-<th><?php echo $this->lang->line('common_delete'); ?></th>
-<th><?php echo $this->lang->line('items_name'); ?></th>
-<th><?php echo $this->lang->line('items_unit_price'); ?></th>
-<th><?php echo $this->lang->line('items_tax_percent'); ?></th>
-<th><?php echo $this->lang->line('items_quantity'); ?></th>
-<th><?php echo $this->lang->line('sales_item_total'); ?></th>
-<th><?php echo $this->lang->line('sales_edit'); ?></th>
+<th style="width:11%;"><?php echo $this->lang->line('common_delete'); ?></th>
+<th style="width:30%;"><?php echo $this->lang->line('items_name'); ?></th>
+<th style="width:11%;"><?php echo $this->lang->line('sales_price'); ?></th>
+<th style="width:11%;"><?php echo $this->lang->line('sales_tax_percent'); ?></th>
+<th style="width:11%;"><?php echo $this->lang->line('sales_quantity'); ?></th>
+<th style="width:11%;"><?php echo $this->lang->line('sales_total'); ?></th>
+<th style="width:11%;"><?php echo $this->lang->line('sales_edit'); ?></th>
 </tr>
 </thead>
 <tbody id="cart_contents">
@@ -62,6 +63,24 @@ else
 </tbody>
 </table>
 </div>
+<div id="overall_sale">
+<?php
+if(isset($customer))
+{
+	echo $this->lang->line("customers_customer").': <b>'.$customer. '</b><br />';
+	echo anchor("sales/delete_customer",'['.$this->lang->line('common_delete').' '.$this->lang->line('customers_customer').']');
+}
+else
+{
+	echo form_open("sales/select_customer",array('id'=>'select_customer_form')); ?>
+	<label id="customer_label" for="customer"><?php echo $this->lang->line('sales_select_customer'); ?></label>
+	<?php echo form_input(array('name'=>'customer','id'=>'customer','size'=>'30','value'=>$this->lang->line('sales_start_typing_customer_name')));?>
+	</form>
+<?php
+}
+?>
+</div>
+<div class="clearfix" style="margin-bottom:30px;">&nbsp;</div>
 
 
 <?php $this->load->view("partial/footer"); ?>
@@ -73,6 +92,7 @@ $(document).ready(function()
     {
     	minChars:0,
     	max:100,
+       	delay:10,
     	formatItem: function(row) {
 			return row[1];
 		}
@@ -84,10 +104,36 @@ $(document).ready(function()
     });
     
 	$('#item').focus();
-	$('#item').click(function()
+	
+	$('#item').blur(function()
+    {
+    	$(this).attr('value',"<?php echo $this->lang->line('sales_start_typing_item_name'); ?>");
+    });
+
+	$('#item,#customer').click(function()
     {
     	$(this).attr('value','');
-    });    
+    });  
+    
+    $("#customer").autocomplete('<?php echo site_url("sales/customer_search"); ?>',
+    {
+    	minChars:0,
+    	delay:10,
+    	max:100,
+    	formatItem: function(row) {
+			return row[1];
+		}
+    });
+    
+    $("#customer").result(function(event, data, formatted)
+    {
+		$("#select_customer_form").submit();
+    });
+
+    $('#customer').blur(function()
+    {
+    	$(this).attr('value',"<?php echo $this->lang->line('sales_start_typing_customer_name'); ?>");
+    });
 });
 
 function post_item_form_submit(response)

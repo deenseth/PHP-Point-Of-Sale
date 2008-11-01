@@ -13,7 +13,11 @@ function checkbox_click(event)
 }
 
 function enable_search(suggest_url,confirm_search_message)
-{	
+{
+	//Keep track of enable_email has been called
+	if(!enable_search.enabled)
+		enable_search.enabled=true;
+
 	$('#search').click(function()
     {
     	$(this).attr('value','');
@@ -141,6 +145,9 @@ function do_delete(url)
 				.end().animate({opacity:0},1200,"linear",function()
 				{
 					$(this).remove();
+					//Re-init sortable table as we removed a row
+					update_sortable_table();
+					
 				});
 			});	
 			set_feedback(response.message,'success_message',false);	
@@ -251,7 +258,6 @@ function update_sortable_table()
 {
 	//let tablesorter know we changed <tbody> and then triger a resort
 	$("#sortable_table").trigger("update");
-	
 	
 	if(typeof $("#sortable_table")[0].config!="undefined")
 	{

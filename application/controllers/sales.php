@@ -27,7 +27,7 @@ class Sales extends Secure_Area
 	function select_customer()
 	{
 		$customer_id = $this->input->post("customer");
-		$this->cart->set_customer($customer_id);
+		$this->sale_lib->set_customer($customer_id);
 		$this->_reload();		
 	}
 	
@@ -36,7 +36,7 @@ class Sales extends Secure_Area
 		$data=array();
 		
 		$item_id_or_number = $this->input->post("item");
-		if(!$this->cart->add_item($item_id_or_number))
+		if(!$this->sale_lib->add_item($item_id_or_number))
 		{
 			$data['error']=$this->lang->line('sales_unable_to_add_item');
 		}
@@ -57,7 +57,7 @@ class Sales extends Secure_Area
 		
 		if ($this->form_validation->run() != FALSE)
 		{
-			$this->cart->edit_item($item_id,$quantity,$price,$tax);				
+			$this->sale_lib->edit_item($item_id,$quantity,$price,$tax);				
 		}
 		else
 		{
@@ -69,23 +69,23 @@ class Sales extends Secure_Area
 	
 	function delete_item($item_number)
 	{
-		$this->cart->delete_item($item_number);
+		$this->sale_lib->delete_item($item_number);
 		$this->_reload();		
 	}
 
 	function delete_customer()
 	{
-		$this->cart->delete_customer();
+		$this->sale_lib->delete_customer();
 		$this->_reload();		
 	}
 	
 	function _reload($data=array())
 	{
-		$data['cart']=$this->cart->get_cart();
-		$data['subtotal']=$this->cart->get_subtotal();
-		$data['tax']=$this->cart->get_tax();
-		$data['total']=$this->cart->get_total();
-		$customer_id=$this->cart->get_customer();
+		$data['cart']=$this->sale_lib->get_cart();
+		$data['subtotal']=$this->sale_lib->get_subtotal();
+		$data['tax']=$this->sale_lib->get_tax();
+		$data['total']=$this->sale_lib->get_total();
+		$customer_id=$this->sale_lib->get_customer();
 		if($customer_id!=-1)
 		{
 			$info=$this->Customer->get_info($customer_id);

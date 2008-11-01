@@ -4,7 +4,7 @@ function checkbox_click(event)
 	do_email(enable_email.url);
 	if($(event.target).attr('checked'))
 	{
-		$(event.target).parent().parent().find("td").addClass('selected');		
+		$(event.target).parent().parent().find("td").addClass('selected').css("backgroundColor","");		
 	}
 	else
 	{
@@ -14,10 +14,6 @@ function checkbox_click(event)
 
 function enable_search(suggest_url,confirm_search_message)
 {	
-	//Keep track of enable_search has been called
-	if(!enable_search.enabled)
-		enable_search.enabled=true;
-		
 	$('#search').click(function()
     {
     	$(this).attr('value','');
@@ -61,6 +57,7 @@ function do_search(show_feedback,on_complete)
 		//re-init elements in new table, as table tbody children were replaced
 		tb_init('#sortable_table a.thickbox');
 		update_sortable_table();	
+		enable_row_selection();		
 		$('#sortable_table tbody :checkbox').click(checkbox_click);
 		$("#select_all").attr('checked',false);
 	});
@@ -96,6 +93,11 @@ function do_email(url)
 
 }
 
+function enable_checkboxes()
+{
+	$('#sortable_table tbody :checkbox').click(checkbox_click);
+}
+
 function enable_delete(confirm_message,none_selected_message)
 {
 	//Keep track of enable_delete has been called
@@ -118,6 +120,7 @@ function enable_delete(confirm_message,none_selected_message)
 		}
 	});
 }
+enable_delete.enabled=false;
 
 function do_delete(url)
 {
@@ -186,6 +189,8 @@ function enable_select_all()
 			$("#sortable_table tbody :checkbox").each(function()
 			{
 				$(this).attr('checked',true);
+				$(this).parent().parent().find("td").addClass('selected').css("backgroundColor","");
+
 			});
 		}
 		else
@@ -193,25 +198,30 @@ function enable_select_all()
 			$("#sortable_table tbody :checkbox").each(function()
 			{
 				$(this).attr('checked',false);
+				$(this).parent().parent().find("td").removeClass();				
 			});    	
 		}
 	 });	
 }
 enable_select_all.enabled=false;
 
-function enable_row_selection()
+function enable_row_selection(rows)
 {
 	//Keep track of enable_row_selection has been called
 	if(!enable_row_selection.enabled)
 		enable_row_selection.enabled=true;
 	
-	$("#sortable_table tbody tr").hover(
-		function over()
+	if(typeof rows =="undefined")
+		rows=$("#sortable_table tbody tr");
+	
+	rows.hover(
+		function row_over()
 		{
-			$(this).find("td").addClass('over');
+			$(this).find("td").addClass('over').css("backgroundColor","");
+			$(this).css("cursor","pointer");
 		},
 		
-		function out()
+		function row_out()
 		{
 			if(!$(this).find("td").hasClass("selected"))
 			{
@@ -220,9 +230,19 @@ function enable_row_selection()
 		}
 	);
 	
-	$("#sortable_table tbody tr").click(function(event)
+	rows.click(function row_click(event)
 	{	
-		$(this).find(":checkbox").click();
+		var checkbox = $(this).find(":checkbox");
+		checkbox.attr('checked',!checkbox.attr('checked'));
+		
+		if(checkbox.attr('checked'))
+		{
+			$(this).find("td").addClass('selected').css("backgroundColor","");
+		}
+		else
+		{
+			$(this).find("td").removeClass();
+		}
 	});
 }
 enable_row_selection.enabled=false;
@@ -256,12 +276,12 @@ function reinit_row(checkbox_id)
 {
 	var new_checkbox = $("#sortable_table tbody tr :checkbox[value="+checkbox_id+"]");
 	var new_row = new_checkbox.parent().parent();
-	
+	enable_row_selection(new_row);
 	//Re-init some stuff as we replaced row
 	update_sortable_table();
 	tb_init(new_row.find("a.thickbox"));
 	//re-enable e-mail
-	new_checkbox.click(checkbox_click);
+	new_checkbox.click(checkbox_click);	
 }
 
 function hightlight_row(checkbox_id)

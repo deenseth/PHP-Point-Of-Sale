@@ -89,9 +89,14 @@ else
 	?>
 
 	<div id='sale_details'>
-	Subtotal: <?php echo $subtotal; ?><br />
-	Tax: <?php echo $tax; ?><br />
-	Total:<?php echo $total; ?> <br />
+		<div class="float_left" style="width:38%;"><?php echo $this->lang->line('sales_sub_total'); ?>:</div>
+		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo $subtotal; ?></div>
+		
+		<div class="float_left" style='width:38%;'><?php echo $this->lang->line('sales_tax'); ?>:</div>
+		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo $tax; ?></div>
+		
+		<div class="float_left" style='width:38%;'><?php echo $this->lang->line('sales_total'); ?>:</div>
+		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo $total; ?></div>
 	</div>
 </div>
 <div class="clearfix" style="margin-bottom:30px;">&nbsp;</div>

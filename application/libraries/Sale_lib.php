@@ -1,5 +1,5 @@
 <?php
-class Cart 
+class Sale_lib 
 {
 	var $CI;
   

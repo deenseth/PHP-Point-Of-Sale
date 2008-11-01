@@ -4,6 +4,8 @@ $(document).ready(function()
 { 
     init_table_sorting();
     enable_select_all();
+    enable_checkboxes();
+    enable_row_selection();
     enable_search('<?php echo site_url("$controller_name/suggest")?>','<?php echo $this->lang->line("common_confirm_search")?>');
     enable_delete('<?php echo $this->lang->line($controller_name."_confirm_delete")?>','<?php echo $this->lang->line($controller_name."_none_selected")?>');
     enable_bulk_edit('<?php echo $this->lang->line($controller_name."_none_selected")?>');
@@ -36,7 +38,7 @@ function post_item_form_submit(response)
 	else
 	{
 		//This is an update, just update one row
-		if(jQuery.inArray(response.person_id,get_visible_checkbox_ids()) != -1)
+		if(jQuery.inArray(response.item_id,get_visible_checkbox_ids()) != -1)
 		{
 			update_row(response.item_id,'<?php echo site_url("$controller_name/get_row")?>');
 			set_feedback(response.message,'success_message',false);	

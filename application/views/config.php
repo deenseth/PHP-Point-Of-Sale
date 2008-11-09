@@ -84,6 +84,19 @@ echo form_open('config/save/',array('id'=>'config_form'));
 	</div>
 </div>
 
+<div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('common_return_policy').':', 'return_policy',array('class'=>'wide required')); ?>
+	<div class='form_field'>
+	<?php echo form_textarea(array(
+		'name'=>'return_policy',
+		'id'=>'return_policy',
+		'rows'=>'4',
+		'cols'=>'17',
+		'value'=>$this->config->item('return_policy')));?>
+	</div>
+</div>
+
+
 <?php 
 echo form_submit(array(
 	'name'=>'submit',
@@ -135,7 +148,8 @@ $(document).ready(function()
     			number:true
     		},
     		email:"email",
-    		website:"url"
+    		website:"url",
+    		return_policy: "required"    		
    		},
 		messages: 
 		{
@@ -148,7 +162,9 @@ $(document).ready(function()
     			number:"<?php echo $this->lang->line('config_default_tax_rate_number'); ?>"
     		},
      		email: "<?php echo $this->lang->line('common_email_invalid_format'); ?>",
-     		website:"<?php echo $this->lang->line('config_company_website_url'); ?>"
+     		website:"<?php echo $this->lang->line('config_company_website_url'); ?>",
+     		return_policy:"<?php echo $this->lang->line('config_return_policy_required'); ?>"
+	
 		}
 	});
 });

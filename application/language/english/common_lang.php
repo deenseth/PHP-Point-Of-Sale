@@ -33,4 +33,6 @@ $lang['common_last_name_required']='The last name is a required field';
 $lang['common_email_invalid_format']='The e-mail address is not in the proper format';
 $lang['common_confirm_search']='You have selected one or more rows, these will no longer be selected after your search. Are you sure you want to submit this search?';
 $lang['common_no_persons_to_display']='There are no people to display';
+$lang['common_return_policy']='Return Policy';
+$lang['common_price']='Price';
 ?>

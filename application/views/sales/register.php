@@ -7,8 +7,23 @@ if(isset($error))
 }
 ?>
 <div id="register_wrapper">
-<?php echo form_open("sales/add_item",array('id'=>'add_item_form')); ?>
-<label id="item_label" for="item"><?php echo $this->lang->line('sales_find_or_scan_item'); ?></label>
+<?php echo form_open("sales/change_mode",array('id'=>'mode_form')); ?>
+<?php echo form_dropdown('mode',$modes,$mode,'onchange="$(\'#mode_form\').submit();"'); ?>
+</form>
+<?php echo form_open("sales/add",array('id'=>'add_item_form')); ?>
+<label id="item_label" for="item">
+
+<?php 
+if($mode=='sale')
+{
+	echo $this->lang->line('sales_find_or_scan_item'); 
+}
+else
+{
+	echo $this->lang->line('sales_find_or_scan_item_or_receipt'); 
+}
+?>
+</label>
 <?php echo form_input(array('name'=>'item','id'=>'item','size'=>'40'));?>
 <div id="new_item_button_register" >
 		<?php echo anchor("items/view/-1/",
@@ -50,7 +65,7 @@ else
 		<td><?php echo anchor("sales/delete_item/$item_id",'['.$this->lang->line('common_delete').']');?></td>
 		<td><?php echo $item['name']; ?></td>
 		<td><?php echo form_input(array('name'=>'price','value'=>$item['price'],'size'=>'6'));?></td>
-		<td><?php echo form_input(array('name'=>'tax','value'=>$item['tax'],'size'=>'3'));?></td>
+		<td><?php echo form_input(array('name'=>'tax','value'=>$item['tax'],'size'=>'4'));?></td>
 		<td><?php echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2'));?></td>
 		<td><?php echo to_currency($item['price']*$item['quantity']*(1+($item['tax']/100))); ?></td>
 		<td><?php echo form_submit("edit_item", $this->lang->line('sales_edit_item'));?></td>

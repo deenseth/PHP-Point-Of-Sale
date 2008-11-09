@@ -34,6 +34,19 @@ class Sale_lib
 		$this->CI->session->set_userdata('customer',$customer_id);
 	}
 	
+	function get_mode()
+	{
+		if(!$this->CI->session->userdata('sale_mode'))
+			$this->set_mode('sale');
+		
+		return $this->CI->session->userdata('sale_mode');
+	}
+	
+	function set_mode($mode)
+	{
+		$this->CI->session->set_userdata('sale_mode',$mode);
+	}
+	
 	function add_item($item_id,$quantity=1,$price=null,$tax=null)
 	{
 		//make sure item exists
@@ -52,7 +65,7 @@ class Sale_lib
 			'name'=>$this->CI->Item->get_info($item_id)->name,			
 			'quantity'=>$quantity,
 			'price'=>$price!=null ? $price: $this->CI->Item->get_info($item_id)->unit_price,
-			'tax'=>$tax!=null ? $price: $this->CI->Item->get_info($item_id)->tax_percent
+			'tax'=>$tax!=null ? $tax: $this->CI->Item->get_info($item_id)->tax_percent
 			)
 		);
 			
@@ -86,13 +99,42 @@ class Sale_lib
 		return false;
 	}
 	
+	function is_valid_receipt($receipt_sale_id)
+	{
+		//POS #
+		$pieces = explode(' ',$receipt_sale_id);
+		
+		if(count($pieces)==2)
+		{
+			return $this->CI->Sale->exists($pieces[1]);
+		}
+		
+		return false;
+	}
+	
+	function return_entire_sale($receipt_sale_id)
+	{
+		//POS #
+		$pieces = explode(' ',$receipt_sale_id);
+		$sale_id = $pieces[1];
+		
+		$this->empty_cart();
+		$this->delete_customer();
+		
+		foreach($this->CI->Sale->get_sale_Items($sale_id)->result() as $row)
+		{
+			$this->add_item($row->item_id,-$row->quantity_purchased,$row->item_unit_price,$row->item_tax_percent);
+		}
+		$this->set_customer($this->CI->Sale->get_customer($sale_id)->person_id);
+	}
+	
 	function delete_item($item_id)
 	{
 		$items=$this->get_cart();
 		unset($items[$item_id]);
 		$this->set_cart($items);
 	}
-	
+		
 	function empty_cart()
 	{
 		$this->CI->session->unset_userdata('cart');
@@ -103,8 +145,14 @@ class Sale_lib
 		$this->CI->session->unset_userdata('customer');
 	}
 	
+	function clear_mode()
+	{
+		$this->CI->session->unset_userdata('sale_mode');
+	}
+	
 	function clear_all()
 	{
+		$this->clear_mode();
 		$this->empty_cart();
 		$this->delete_customer();
 	}

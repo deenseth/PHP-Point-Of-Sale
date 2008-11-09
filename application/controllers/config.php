@@ -21,7 +21,8 @@ class Config extends Secure_Area
 		'email'=>$this->input->post('email'),
 		'fax'=>$this->input->post('fax'),
 		'website'=>$this->input->post('website'),
-		'default_tax_rate'=>$this->input->post('default_tax_rate')		
+		'default_tax_rate'=>$this->input->post('default_tax_rate'),		
+		'return_policy'=>$this->input->post('return_policy')	
 		);
 		
 		if($this->AppConfig->batch_save($batch_save_data))

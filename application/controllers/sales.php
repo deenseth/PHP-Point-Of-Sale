@@ -31,12 +31,25 @@ class Sales extends Secure_Area
 		$this->_reload();		
 	}
 	
-	function add_item()
+	function change_mode()
+	{
+		$mode = $this->input->post("mode");
+		$this->sale_lib->set_mode($mode);
+		$this->_reload();		
+	}
+	
+	function add()
 	{
 		$data=array();
+		$mode = $this->sale_lib->get_mode();
+		$item_id_or_number_or_receipt = $this->input->post("item");
+		$quantity = $mode=="sale" ? 1:-1;
 		
-		$item_id_or_number = $this->input->post("item");
-		if(!$this->sale_lib->add_item($item_id_or_number))
+		if($this->sale_lib->is_valid_receipt($item_id_or_number_or_receipt) && $mode=='return')
+		{
+			$this->sale_lib->return_entire_sale($item_id_or_number_or_receipt);
+		}
+		elseif(!$this->sale_lib->add_item($item_id_or_number_or_receipt,$quantity))
 		{
 			$data['error']=$this->lang->line('sales_unable_to_add_item');
 		}
@@ -85,6 +98,8 @@ class Sales extends Secure_Area
 		$data['subtotal']=$this->sale_lib->get_subtotal();
 		$data['tax']=$this->sale_lib->get_tax();
 		$data['total']=$this->sale_lib->get_total();
+		$data['receipt_title']=$this->lang->line('sales_receipt');
+		$data['transaction_time']= date('m/d/Y h:i:s a');
 		$customer_id=$this->sale_lib->get_customer();
 		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
 		$comment = $this->input->post('comment');
@@ -98,22 +113,17 @@ class Sales extends Secure_Area
 		}
 		
 		//SAVE sale to database
-		$data['sale_id']=$this->Sale->save($data['cart'],$customer_id,$employee_id,$comment);
+		$data['sale_id']='POS '.$this->Sale->save($data['cart'],$customer_id,$employee_id,$comment);
 		
-		if($data['sale_id']!=-1)
-		{
-			$this->load->view("sales/receipt",$data);		
-			$this->sale_lib->clear_all();
-		}
-		else
-		{
-			redirect('sales/index');
-		}
+		$this->load->view("sales/receipt",$data);		
+		$this->sale_lib->clear_all();
 	}
 	
 	function _reload($data=array())
 	{
 		$data['cart']=$this->sale_lib->get_cart();
+		$data['modes']=array('sale'=>$this->lang->line('sales_sale'),'return'=>$this->lang->line('sales_return'));
+		$data['mode']=$this->sale_lib->get_mode();
 		$data['subtotal']=$this->sale_lib->get_subtotal();
 		$data['tax']=$this->sale_lib->get_tax();
 		$data['total']=$this->sale_lib->get_total();

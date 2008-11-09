@@ -6,7 +6,7 @@
 #receipt_header
 {
 	text-align:center;
-
+	width:100%;
 }
 
 #company_name
@@ -21,6 +21,11 @@
 
 }
 
+#sale_time
+{
+	margin-bottom:5px;
+}
+
 #receipt_items
 {
 	position:relative;
@@ -28,4 +33,28 @@
 	margin-top:15px;
 	margin-bottom:15px;
 	width:100%;
+}
+
+#receipt_items td
+{
+	position:relative;
+	padding:3px;	
+}
+
+.short_name
+{
+	display:none;
+}
+
+#sale_return_policy
+{
+	width:80%;
+	margin:0 auto;
+	text-align:center;
+}
+
+#barcode
+{
+	margin-top:10px;
+	text-align:center;
 }

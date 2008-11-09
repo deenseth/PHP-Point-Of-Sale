@@ -8,6 +8,7 @@ $lang['sales_quantity']='Qty.';
 $lang['sales_edit']='Edit';
 $lang['sales_edit_item']='Edit Item';
 $lang['sales_find_or_scan_item']='Find/Scan Item';
+$lang['sales_find_or_scan_item_or_receipt']='Find/Scan Item OR Receipt';
 $lang['sales_select_customer']='Select Customer (Optional)';
 $lang['sales_start_typing_item_name']='Start Typing item\'s name or scan barcode...';
 $lang['sales_start_typing_customer_name']='Start Typing customer\'s name...';
@@ -21,4 +22,6 @@ $lang['sales_error_editing_item']='Error editing item';
 $lang['sales_complete_sale']='Complete Sale';
 $lang['sales_receipt']='Sales Receipt';
 $lang['sales_id']='Sale ID';
+$lang['sales_sale']='Sale';
+$lang['sales_return']='Return';
 ?>

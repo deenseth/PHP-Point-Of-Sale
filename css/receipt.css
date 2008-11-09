@@ -1,0 +1,31 @@
+#receipt_wrapper
+{
+	font-family:Arial;
+}
+
+#receipt_header
+{
+	text-align:center;
+
+}
+
+#company_name
+{
+	font-size:22px;
+	font-weight:bold;
+}
+
+#company_phone
+{
+	margin-bottom:15px;
+
+}
+
+#receipt_items
+{
+	position:relative;
+	border-collapse:collapse;
+	margin-top:15px;
+	margin-bottom:15px;
+	width:100%;
+}

@@ -79,6 +79,38 @@ class Sales extends Secure_Area
 		$this->_reload();		
 	}
 	
+	function complete()
+	{
+		$data['cart']=$this->sale_lib->get_cart();
+		$data['subtotal']=$this->sale_lib->get_subtotal();
+		$data['tax']=$this->sale_lib->get_tax();
+		$data['total']=$this->sale_lib->get_total();
+		$customer_id=$this->sale_lib->get_customer();
+		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
+		$comment = $this->input->post('comment');
+		$emp_info=$this->Employee->get_info($employee_id);		
+		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
+		
+		if($customer_id!=-1)
+		{
+			$cust_info=$this->Customer->get_info($customer_id);
+			$data['customer']=$cust_info->first_name.' '.$cust_info->last_name;
+		}
+		
+		//SAVE sale to database
+		$data['sale_id']=$this->Sale->save($data['cart'],$customer_id,$employee_id,$comment);
+		
+		if($data['sale_id']!=-1)
+		{
+			$this->load->view("sales/receipt",$data);		
+			$this->sale_lib->clear_all();
+		}
+		else
+		{
+			redirect('sales/index');
+		}
+	}
+	
 	function _reload($data=array())
 	{
 		$data['cart']=$this->sale_lib->get_cart();

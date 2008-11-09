@@ -1,0 +1,19 @@
+body
+{
+	background-color:#FFFFFF;
+}
+
+#menubar,#footer
+{
+	display:none;
+}
+
+#content_area
+{
+	width:100%;
+}
+
+#content_area_wrapper
+{
+	border:0px;
+}

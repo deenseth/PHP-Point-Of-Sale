@@ -18,4 +18,7 @@ $lang['sales_unable_to_add_item']='Unable to add item to sale';
 $lang['sales_sale_for_customer']='Customer:';
 $lang['sales_remove_customer']='Remove Customer';
 $lang['sales_error_editing_item']='Error editing item';
+$lang['sales_complete_sale']='Complete Sale';
+$lang['sales_receipt']='Sales Receipt';
+$lang['sales_id']='Sale ID';
 ?>

@@ -105,8 +105,8 @@ class Sale_lib
 	
 	function clear_all()
 	{
-		empty_cart();
-		delete_customer();
+		$this->empty_cart();
+		$this->delete_customer();
 	}
 	
 	function get_tax()

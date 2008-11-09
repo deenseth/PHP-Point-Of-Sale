@@ -98,6 +98,23 @@ else
 		<div class="float_left" style='width:38%;'><?php echo $this->lang->line('sales_total'); ?>:</div>
 		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo $total; ?></div>
 	</div>
+	<?php
+	if(count($cart) > 0)
+	{
+	?>
+	<div id="finish_sale">
+		<?php echo form_open("sales/complete",array('id'=>'finish_sale_form')); ?>
+		<label id="comment_label" for="comment"><?php echo $this->lang->line('common_comments'); ?>:</label>
+		<?php echo form_textarea(array('name'=>'comment','value'=>'','rows'=>'4','cols'=>'23'));?>
+		<?php echo "<div class='small_button' onclick=\"$('#finish_sale_form').submit();\" style='float:right;margin-top:5px;'><span>".$this->lang->line('sales_complete_sale')."</span></div>";
+		?>
+		</div>
+
+		</form>
+	</div>
+	<?php
+	}
+	?>
 </div>
 <div class="clearfix" style="margin-bottom:30px;">&nbsp;</div>
 

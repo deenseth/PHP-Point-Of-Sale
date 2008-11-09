@@ -10,6 +10,7 @@ $lang['items_basic_information']='Item Information';
 $lang['items_number_information']='Item Number';
 $lang['items_new']='New Item';
 $lang['items_update']='Update Item';
+$lang['items_item']='Item';
 $lang['items_edit_multiple_items']='Editing Multiple Items';
 $lang['items_name']='Item Name';
 $lang['items_category']='Category';

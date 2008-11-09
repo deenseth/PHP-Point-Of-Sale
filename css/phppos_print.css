@@ -1,6 +1,7 @@
 body
 {
 	background-color:#FFFFFF;
+	font-size:75%;	
 }
 
 #menubar,#footer
@@ -21,7 +22,7 @@ body
 #sale_return_policy
 {
 	width:100%;
-	text-align:left;
+	text-align:center;
 }
 
 .long_name

@@ -7,7 +7,7 @@
 		<div id="sale_receipt"><?php echo $receipt_title; ?></div>
 		<div id="sale_time"><?php echo $transaction_time ?></div>
 	</div>
-	<div id="recipt_general_info">
+	<div id="receipt_general_info">
 		<?php if(isset($customer))
 		{
 		?>
@@ -21,7 +21,7 @@
 	
 	<table id="receipt_items">
 	<tr>
-	<th style="width:50%;"><?php echo $this->lang->line('items_name'); ?></th>
+	<th style="width:50%;"><?php echo $this->lang->line('items_item'); ?></th>
 	<th style="width:17%;"><?php echo $this->lang->line('common_price'); ?></th>
 	<th style="width:16%;text-align:center;"><?php echo $this->lang->line('sales_quantity'); ?></th>
 	<th style="width:17%;text-align:right;"><?php echo $this->lang->line('sales_total'); ?></th>
@@ -31,7 +31,7 @@
 	{
 	?>
 		<tr>
-		<td><span class='long_name'><?php echo $item['name']; ?></span><span class='short_name'><?php echo character_limiter($item['name'],20); ?></span></td>
+		<td><span class='long_name'><?php echo $item['name']; ?></span><span class='short_name'><?php echo character_limiter($item['name'],10); ?></span></td>
 		<td><?php echo to_currency($item['price']); ?></td>
 		<td style='text-align:center;'><?php echo $item['quantity']; ?></td>
 		<td style='text-align:right;'><?php echo to_currency($item['price']*$item['quantity']); ?></td>

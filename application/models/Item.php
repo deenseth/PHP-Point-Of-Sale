@@ -1,6 +1,5 @@
 <?php
-require_once('interfaces/iSearchable.php');
-class Item extends Model implements iSearchable
+class Item extends Model
 {
 	private $AWS_Access_Key='0RTAFSRZ27W8KM2JAJ02';
 	private $AWS_AssociateTag='phppos-20';

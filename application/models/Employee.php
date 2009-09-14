@@ -1,6 +1,5 @@
 <?php
-require_once('interfaces/iSearchable.php');
-class Employee extends Person implements iSearchable
+class Employee extends Person
 {
 	/*
 	Determines if a given person_id is an employee

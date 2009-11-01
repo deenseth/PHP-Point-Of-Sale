@@ -47,7 +47,7 @@
 	position:relative;
 	width:95px;
 	height:30px;
-	background-image: url(../images/small_action_button);
+	background-image: url(../images/small_action_button.jpg);
 	background-repeat:no-repeat;
 	cursor:pointer;
 }
@@ -78,7 +78,7 @@
 	position:relative;
 	width:119px;
 	height:45px;
-	background-image: url(../images/big_action_button);
+	background-image: url(../images/big_action_button.jpg);
 	background-repeat:no-repeat;
 	cursor:pointer;
 }

@@ -10,7 +10,7 @@ class Employees extends Person_Controller
 	function index()
 	{
 		$data['controller_name']=strtolower($this->uri->segment(1));
-		$data['form_width']=$this->_get_form_width();
+		$data['form_width']=$this->get_form_width();
 		$data['manage_table']=get_people_manage_table($this->Employee->get_all(),$this);
 		$this->load->view('people/manage',$data);
 	}
@@ -118,7 +118,7 @@ class Employees extends Person_Controller
 	/*
 	get the width for the add/edit form
 	*/
-	function _get_form_width()
+	function get_form_width()
 	{
 		return 650;
 	}

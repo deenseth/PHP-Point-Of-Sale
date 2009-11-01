@@ -50,7 +50,7 @@ function get_person_data_row($person,$controller)
 {
 	$CI =& get_instance();
 	$controller_name=$CI->uri->segment(1);
-	$width = $controller->_get_form_width();
+	$width = $controller->get_form_width();
 
 	$table_data_row='<tr>';
 	$table_data_row.="<td width='5%'><input type='checkbox' id='person_$person->person_id' value='".$person->person_id."'/></td>";
@@ -118,7 +118,7 @@ function get_item_data_row($item,$controller)
 {
 	$CI =& get_instance();
 	$controller_name=$CI->uri->segment(1);
-	$width = $controller->_get_form_width();
+	$width = $controller->get_form_width();
 
 	$table_data_row='<tr>';
 	$table_data_row.="<td width='5%'><input type='checkbox' id='item_$item->item_id' value='".$item->item_id."'/></td>";

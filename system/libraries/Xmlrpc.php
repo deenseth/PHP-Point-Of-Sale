@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -38,7 +38,7 @@ class CI_Xmlrpc {
 	var $xmlrpcBoolean	= 'boolean';
 	var $xmlrpcDouble	= 'double';	
 	var $xmlrpcString	= 'string';
-	var $xmlrpcDateTime	= 'datetime.iso8601';
+	var $xmlrpcDateTime	= 'dateTime.iso8601';
 	var $xmlrpcBase64	= 'base64';
 	var $xmlrpcArray	= 'array';
 	var $xmlrpcStruct	= 'struct';
@@ -133,7 +133,7 @@ class CI_Xmlrpc {
 
 	function initialize($config = array())
 	{
-		if (sizeof($config) > 0)
+		if (count($config) > 0)
 		{
 			foreach ($config as $key => $val)
 			{
@@ -231,7 +231,7 @@ class CI_Xmlrpc {
 	{
 		if (is_array($value) && isset($value['0']))
 		{
-			if ( ! isset($value['1']) OR ! isset($this->xmlrpcTypes[strtolower($value['1'])]))
+			if ( ! isset($value['1']) OR (! isset($this->xmlrpcTypes[$value['1']])))
 			{
 				if (is_array($value[0]))
 				{
@@ -554,7 +554,7 @@ class XML_RPC_Response
 		{
 			reset($xmlrpc_val->me);
 			list($a,$b) = each($xmlrpc_val->me);
-			$size = sizeof($b);
+			$size = count($b);
 			
 			$arr = array();
 
@@ -619,9 +619,9 @@ class XML_RPC_Message extends CI_Xmlrpc
 		parent::CI_Xmlrpc();
 		
 		$this->method_name = $method;
-		if (is_array($pars) && sizeof($pars) > 0)
+		if (is_array($pars) && count($pars) > 0)
 		{
-			for($i=0; $i<sizeof($pars); $i++)
+			for($i=0; $i<count($pars); $i++)
 			{
 				// $pars[$i] = XML_RPC_Values
 				$this->params[] = $pars[$i];
@@ -639,7 +639,7 @@ class XML_RPC_Message extends CI_Xmlrpc
 		$this->payload .= '<methodName>' . $this->method_name . "</methodName>\r\n";
 		$this->payload .= "<params>\r\n";
 		
-		for($i=0; $i<sizeof($this->params); $i++)
+		for($i=0; $i<count($this->params); $i++)
 		{
 			// $p = XML_RPC_Values
 			$p = $this->params[$i];
@@ -737,7 +737,7 @@ class XML_RPC_Message extends CI_Xmlrpc
 		//  PARSE XML DATA
 		//-------------------------------------  	
 
-		if ( ! xml_parse($parser, $data, sizeof($data)))
+		if ( ! xml_parse($parser, $data, count($data)))
 		{
 			$errstr = sprintf('XML error: %s at line %d',
 					xml_error_string(xml_get_error_code($parser)),
@@ -1137,7 +1137,7 @@ class XML_RPC_Message extends CI_Xmlrpc
 		{
 			$parameters = array();
 		
-			for ($i = 0; $i < sizeof($this->params); $i++)
+			for ($i = 0; $i < count($this->params); $i++)
 			{
 				$a_param = $this->decode_message($this->params[$i]);
 				
@@ -1171,7 +1171,7 @@ class XML_RPC_Message extends CI_Xmlrpc
 			
 			$arr = array();
 
-			for($i = 0; $i < sizeof($b); $i++)
+			for($i = 0; $i < count($b); $i++)
 			{
 				$arr[] = $this->decode_message($param->me['array'][$i]);
 			}
@@ -1340,7 +1340,7 @@ class XML_RPC_Values extends CI_Xmlrpc
 			case 2:
 				// array
 				$rs .= "<array>\n<data>\n";
-				for($i=0; $i < sizeof($val); $i++)
+				for($i=0; $i < count($val); $i++)
 				{
 					$rs .= $this->serializeval($val[$i]);
 				}
@@ -1351,13 +1351,13 @@ class XML_RPC_Values extends CI_Xmlrpc
 				switch ($typ)
 				{
 					case $this->xmlrpcBase64:
-						$rs .= "<{$typ}>" . base64_encode($val) . "</{$typ}>\n";
+						$rs .= "<{$typ}>" . base64_encode((string)$val) . "</{$typ}>\n";
 					break;
 					case $this->xmlrpcBoolean:
-						$rs .= "<{$typ}>" . ($val ? '1' : '0') . "</{$typ}>\n";
+						$rs .= "<{$typ}>" . ((bool)$val ? '1' : '0') . "</{$typ}>\n";
 					break;
 					case $this->xmlrpcString:
-						$rs .= "<{$typ}>" . htmlspecialchars($val). "</{$typ}>\n";
+						$rs .= "<{$typ}>" . htmlspecialchars((string)$val). "</{$typ}>\n";
 					break;
 					default:
 						$rs .= "<{$typ}>{$val}</{$typ}>\n";

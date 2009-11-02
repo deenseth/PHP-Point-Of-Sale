@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -32,15 +32,15 @@
  *
  * @access	public
  * @param	string
- * @param	string	the character set of your data
+ * @param	bool	whether or not the content is an image file
  * @return	string
  */	
 if ( ! function_exists('xss_clean'))
 {
-	function xss_clean($str, $charset = 'ISO-8859-1')
+	function xss_clean($str, $is_image = FALSE)
 	{
 		$CI =& get_instance();
-		return $CI->input->xss_clean($str, $charset);
+		return $CI->input->xss_clean($str, $is_image);
 	}
 }
 

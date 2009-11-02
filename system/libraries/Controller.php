@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -18,7 +18,7 @@
 /**
  * CodeIgniter Application Controller Class
  *
- * This class object is the super class the every library in
+ * This class object is the super class that every library in
  * CodeIgniter will be assigned to.
  *
  * @package		CodeIgniter

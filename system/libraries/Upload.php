@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -556,11 +556,22 @@ class CI_Upload {
 			$this->set_error('upload_no_file_types');
 			return FALSE;
 		}
-			 	
+
+		$image_types = array('gif', 'jpg', 'jpeg', 'png', 'jpe');
+
 		foreach ($this->allowed_types as $val)
 		{
 			$mime = $this->mimes_types(strtolower($val));
-		
+
+			// Images get some additional checks
+			if (in_array($val, $image_types))
+			{
+				if (getimagesize($this->file_temp) === FALSE)
+				{
+					return FALSE;
+				}
+			}
+
 			if (is_array($mime))
 			{
 				if (in_array($this->file_type, $mime, TRUE))
@@ -900,11 +911,11 @@ class CI_Upload {
 		{
 			return $filename;
 		}
-		
+
 		$parts		= explode('.', $filename);
 		$ext		= array_pop($parts);
 		$filename	= array_shift($parts);
-				
+
 		foreach ($parts as $part)
 		{
 			if ($this->mimes_types(strtolower($part)) === FALSE)
@@ -916,7 +927,14 @@ class CI_Upload {
 				$filename .= '.'.$part;
 			}
 		}
-		
+
+		// file name override, since the exact name is provided, no need to
+		// run it through a $this->mimes check.
+		if ($this->file_name != '')
+		{
+			$filename = $this->file_name;
+		}
+
 		$filename .= '.'.$ext;
 		
 		return $filename;

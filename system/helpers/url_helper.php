@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -382,7 +382,7 @@ if ( ! function_exists('auto_link'))
 			{
 				$pop = ($popup == TRUE) ? " target=\"_blank\" " : "";
 	
-				for ($i = 0; $i < sizeof($matches['0']); $i++)
+				for ($i = 0; $i < count($matches['0']); $i++)
 				{
 					$period = '';
 					if (preg_match("|\.$|", $matches['6'][$i]))
@@ -406,9 +406,9 @@ if ( ! function_exists('auto_link'))
 
 		if ($type != 'url')
 		{
-			if (preg_match_all("/([a-zA-Z0-9_\.\-\+Å]+)@([a-zA-Z0-9\-]+)\.([a-zA-Z0-9\-\.]*)/i", $str, $matches))
+			if (preg_match_all("/([a-zA-Z0-9_\.\-\+]+)@([a-zA-Z0-9\-]+)\.([a-zA-Z0-9\-\.]*)/i", $str, $matches))
 			{
-				for ($i = 0; $i < sizeof($matches['0']); $i++)
+				for ($i = 0; $i < count($matches['0']); $i++)
 				{
 					$period = '';
 					if (preg_match("|\.$|", $matches['3'][$i]))
@@ -471,7 +471,7 @@ if ( ! function_exists('prep_url'))
  */
 if ( ! function_exists('url_title'))
 {
-	function url_title($str, $separator = 'dash')
+	function url_title($str, $separator = 'dash', $lowercase = FALSE)
 	{
 		if ($separator == 'dash')
 		{
@@ -491,7 +491,8 @@ if ( ! function_exists('url_title'))
 						'[^a-z0-9\-\._]'		=> '',
 						$replace.'+'			=> $replace,
 						$replace.'$'			=> $replace,
-						'^'.$replace			=> $replace
+						'^'.$replace			=> $replace,
+						'\.+$'					=> ''
 					  );
 
 		$str = strip_tags($str);
@@ -501,6 +502,11 @@ if ( ! function_exists('url_title'))
 			$str = preg_replace("#".$key."#i", $val, $str);
 		}
 
+		if ($lowercase === TRUE)
+		{
+			$str = strtolower($str);
+		}
+		
 		return trim(stripslashes($str));
 	}
 }
@@ -523,11 +529,16 @@ if ( ! function_exists('redirect'))
 {
 	function redirect($uri = '', $method = 'location', $http_response_code = 302)
 	{
+		if ( ! preg_match('#^https?://#i', $uri))
+		{
+			$uri = site_url($uri);
+		}
+		
 		switch($method)
 		{
-			case 'refresh'	: header("Refresh:0;url=".site_url($uri));
+			case 'refresh'	: header("Refresh:0;url=".$uri);
 				break;
-			default			: header("Location: ".site_url($uri), TRUE, $http_response_code);
+			default			: header("Location: ".$uri, TRUE, $http_response_code);
 				break;
 		}
 		exit;

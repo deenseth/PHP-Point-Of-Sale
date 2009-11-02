@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -87,14 +87,16 @@ if ( ! function_exists('character_limiter'))
 		{
 			return $str;
 		}
-									
+
 		$out = "";
 		foreach (explode(' ', trim($str)) as $val)
 		{
-			$out .= $val.' ';			
+			$out .= $val.' ';
+			
 			if (strlen($out) >= $n)
 			{
-				return trim($out).$end_char;
+				$out = trim($out);
+				return (strlen($out) == strlen($str)) ? $out : $out.$end_char;
 			}		
 		}
 	}
@@ -125,7 +127,17 @@ if ( ! function_exists('ascii_to_entities'))
 	
 		   if ($ordinal < 128)
 		   {
-			   $out .= $str[$i];
+				/*
+					If the $temp array has a value but we have moved on, then it seems only
+					fair that we output that entity and restart $temp before continuing. -Paul
+				*/
+				if (count($temp) == 1)
+				{
+					$out  .= '&#'.array_shift($temp).';';
+					$count = 1;
+				}
+
+				$out .= $str[$i];
 		   }
 		   else
 		   {
@@ -230,21 +242,28 @@ if ( ! function_exists('word_censor'))
 		{
 			return $str;
 		}
+        
+        $str = ' '.$str.' ';
 
-		$str = ' '.$str.' ';
+		// \w, \b and a few others do not match on a unicode character
+		// set for performance reasons. As a result words like über
+		// will not match on a word boundary. Instead, we'll assume that
+		// a bad word will be bookended by any of these characters.
+		$delim = '[-_\'\"`(){}<>\[\]|!?@#%&,.:;^~*+=\/ 0-9\n\r\t]';
+
 		foreach ($censored as $badword)
 		{
 			if ($replacement != '')
 			{
-				$str = preg_replace("/\b(".str_replace('\*', '\w*?', preg_quote($badword, '/')).")\b/i", $replacement, $str);
+				$str = preg_replace("/({$delim})(".str_replace('\*', '\w*?', preg_quote($badword, '/')).")({$delim})/i", "\\1{$replacement}\\3", $str);
 			}
 			else
 			{
-				$str = preg_replace("/\b(".str_replace('\*', '\w*?', preg_quote($badword, '/')).")\b/ie", "str_repeat('#', strlen('\\1'))", $str);
+				$str = preg_replace("/({$delim})(".str_replace('\*', '\w*?', preg_quote($badword, '/')).")({$delim})/ie", "'\\1'.str_repeat('#', strlen('\\2')).'\\3'", $str);
 			}
 		}
-	
-		return trim($str);
+
+        return trim($str);
 	}
 }
 	

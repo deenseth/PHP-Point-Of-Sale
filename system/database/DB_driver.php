@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -613,7 +613,7 @@ class CI_DB_driver {
 	 */	
 	function is_write_type($sql)
 	{
-		if ( ! preg_match('/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|LOAD DATA|COPY|ALTER|GRANT|REVOKE|LOCK|UNLOCK)\s+/i', $sql))
+		if ( ! preg_match('/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD DATA|COPY|ALTER|GRANT|REVOKE|LOCK|UNLOCK)\s+/i', $sql))
 		{
 			return FALSE;
 		}
@@ -670,25 +670,45 @@ class CI_DB_driver {
 	 *
 	 * @access	public
 	 * @param	string
-	 * @return	integer		
+	 * @return	mixed		
 	 */	
 	function escape($str)
-	{	
-		switch (gettype($str))
+	{
+		if (is_string($str))
 		{
-			case 'string'	:	$str = "'".$this->escape_str($str)."'";
-				break;
-			case 'boolean'	:	$str = ($str === FALSE) ? 0 : 1;
-				break;
-			default			:	$str = ($str === NULL) ? 'NULL' : $str;
-				break;
-		}		
+			$str = "'".$this->escape_str($str)."'";
+		}
+		elseif (is_bool($str))
+		{
+			$str = ($str === FALSE) ? 0 : 1;
+		}
+		elseif (is_null($str))
+		{
+			$str = 'NULL';
+		}
 
 		return $str;
 	}
 
 	// --------------------------------------------------------------------
+	
+	/**
+	 * Escape LIKE String
+	 *
+	 * Calls the individual driver for platform
+	 * specific escaping for LIKE conditions
+	 * 
+	 * @access	public
+	 * @param	string
+	 * @return	mixed
+	 */
+    function escape_like_str($str)    
+    {    
+    	return $this->escape_str($str, TRUE);
+	}
 
+	// --------------------------------------------------------------------
+	
 	/**
 	 * Primary
 	 *
@@ -1086,12 +1106,15 @@ class CI_DB_driver {
 		{
 			return TRUE;
 		}
-	
-		if ( ! @include(BASEPATH.'database/DB_cache'.EXT))
+
+		if ( ! class_exists('CI_DB_Cache'))
 		{
-			return $this->cache_off();
+			if ( ! @include(BASEPATH.'database/DB_cache'.EXT))
+			{
+				return $this->cache_off();
+			}
 		}
-		
+
 		$this->CACHE = new CI_DB_Cache($this); // pass db object to support multiple db connections and returned db objects
 		return TRUE;
 	}
@@ -1196,17 +1219,38 @@ class CI_DB_driver {
 		{
 			$protect_identifiers = $this->_protect_identifiers;
 		}
-		
+
+		if (is_array($item))
+		{
+			$escaped_array = array();
+
+			foreach($item as $k => $v)
+			{
+				$escaped_array[$this->_protect_identifiers($k)] = $this->_protect_identifiers($v);
+			}
+
+			return $escaped_array;
+		}
+
 		// Convert tabs or multiple spaces into single spaces
-		$item = preg_replace('/[\t| ]+/', ' ', $item);
+		$item = preg_replace('/[\t ]+/', ' ', $item);
 	
 		// If the item has an alias declaration we remove it and set it aside.
 		// Basically we remove everything to the right of the first space
 		$alias = '';
 		if (strpos($item, ' ') !== FALSE)
-		{		
+		{
 			$alias = strstr($item, " ");
 			$item = substr($item, 0, - strlen($alias));
+		}
+
+		// This is basically a bug fix for queries that use MAX, MIN, etc.
+		// If a parenthesis is found we know that we do not need to 
+		// escape the data or add a prefix.  There's probably a more graceful
+		// way to deal with this, but I'm not thinking of it -- Rick
+		if (strpos($item, '(') !== FALSE)
+		{
+			return $item.$alias;
 		}
 
 		// Break the string apart if it contains periods, then insert the table prefix
@@ -1218,9 +1262,9 @@ class CI_DB_driver {
 			
 			// Does the first segment of the exploded item match
 			// one of the aliases previously identified?  If so,
-			// we have nothing more to do other then escape the item
+			// we have nothing more to do other than escape the item
 			if (in_array($parts[0], $this->ar_aliased_tables))
-			{				
+			{
 				if ($protect_identifiers === TRUE)
 				{
 					foreach ($parts as $key => $val)
@@ -1265,7 +1309,13 @@ class CI_DB_driver {
 				{
 					$i++;
 				}
-				
+
+				// Verify table prefix and replace if necessary
+				if ($this->swap_pre != '' && strncmp($parts[$i], $this->swap_pre, strlen($this->swap_pre)) === 0)
+				{
+					$parts[$i] = preg_replace("/^".$this->swap_pre."(\S+?)/", $this->dbprefix."\\1", $parts[$i]);
+				}
+								
 				// We only add the table prefix if it does not already exist
 				if (substr($parts[$i], 0, strlen($this->dbprefix)) != $this->dbprefix)
 				{
@@ -1284,25 +1334,22 @@ class CI_DB_driver {
 			return $item.$alias;
 		}
 
-		// This is basically a bug fix for queries that use MAX, MIN, etc.
-		// If a parenthesis is found we know that we do not need to 
-		// escape the data or add a prefix.  There's probably a more graceful
-		// way to deal with this, but I'm not thinking of it -- Rick
-		if (strpos($item, '(') !== FALSE)
-		{
-			return $item.$alias;
-		}
-		
 		// Is there a table prefix?  If not, no need to insert it
 		if ($this->dbprefix != '')
 		{
+			// Verify table prefix and replace if necessary
+			if ($this->swap_pre != '' && strncmp($item, $this->swap_pre, strlen($this->swap_pre)) === 0)
+			{
+				$item = preg_replace("/^".$this->swap_pre."(\S+?)/", $this->dbprefix."\\1", $item);
+			}
+
 			// Do we prefix an item with no segments?
 			if ($prefix_single == TRUE AND substr($item, 0, strlen($this->dbprefix)) != $this->dbprefix)
 			{
 				$item = $this->dbprefix.$item;
 			}		
 		}
-		
+
 		if ($protect_identifiers === TRUE AND ! in_array($item, $this->_reserved_identifiers))
 		{
 			$item = $this->_escape_identifiers($item);

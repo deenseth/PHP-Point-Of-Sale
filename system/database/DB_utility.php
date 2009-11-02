@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -175,7 +175,7 @@ class CI_DB_utility extends CI_DB_forge {
 	 */
 	function csv_from_result($query, $delim = ",", $newline = "\n", $enclosure = '"')
 	{
-		if ( ! is_object($query) OR ! method_exists($query, 'field_names'))
+		if ( ! is_object($query) OR ! method_exists($query, 'list_fields'))
 		{
 			show_error('You must submit a valid result object');
 		}	
@@ -217,7 +217,7 @@ class CI_DB_utility extends CI_DB_forge {
 	 */
 	function xml_from_result($query, $params = array())
 	{
-		if ( ! is_object($query) OR ! method_exists($query, 'field_names'))
+		if ( ! is_object($query) OR ! method_exists($query, 'list_fields'))
 		{
 			show_error('You must submit a valid result object');
 		}

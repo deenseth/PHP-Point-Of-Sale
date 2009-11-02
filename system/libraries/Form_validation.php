@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -57,7 +57,7 @@ class CI_Form_validation {
 			mb_internal_encoding($this->CI->config->item('charset'));
 		}
 	
-		log_message('debug', "Validation Class Initialized");
+		log_message('debug', "Form Validation Class Initialized");
 	}
 	
 	// --------------------------------------------------------------------
@@ -416,45 +416,36 @@ class CI_Form_validation {
 				}
 				else
 				{
-					$post = '$_POST["';
+					// start with a reference
+					$post_ref =& $_POST;
 					
+					// before we assign values, make a reference to the right POST key
 					if (count($row['keys']) == 1)
 					{
-						$post .= current($row['keys']);
-						$post .= '"]';
+						$post_ref =& $post_ref[current($row['keys'])];
 					}
 					else
 					{
-						$i = 0;
 						foreach ($row['keys'] as $val)
 						{
-							if ($i == 0)
-							{
-								$post .= $val.'"]';
-								$i++;
-								continue;
-							}
-						
-							$post .= '["'.$val.'"]';
+							$post_ref =& $post_ref[$val];
 						}
 					}
-					
+
 					if (is_array($row['postdata']))
-					{					
+					{
 						$array = array();
 						foreach ($row['postdata'] as $k => $v)
 						{
 							$array[$k] = $this->prep_for_form($v);
 						}
-						
-						$post .= ' = $array;';
+
+						$post_ref = $array;
 					}
 					else
-					{						
-						$post .= ' = "'.$this->prep_for_form($row['postdata']).'";';
+					{
+						$post_ref = $this->prep_for_form($row['postdata']);
 					}
-
-					eval($post);
 				}
 			}
 		}
@@ -610,7 +601,7 @@ class CI_Form_validation {
 				// If the field isn't required and we just processed a callback we'll move on...
 				if ( ! in_array('required', $rules, TRUE) AND $result !== FALSE)
 				{
-					return;
+					continue;
 				}
 			}
 			else
@@ -662,7 +653,14 @@ class CI_Form_validation {
 				{
 					$line = $this->_error_messages[$rule];
 				}
-
+				
+				// Is the parameter we are inserting into the error message the name
+				// of another field?  If so we need to grab its "field label"
+				if (isset($this->_field_data[$param]) AND isset($this->_field_data[$param]['label']))
+				{
+					$param = $this->_field_data[$param]['label'];
+				}
+				
 				// Build the error message
 				$message = sprintf($line, $this->_translate_fieldname($row['label']), $param);
 

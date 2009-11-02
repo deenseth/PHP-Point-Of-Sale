@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -103,19 +103,35 @@ if ( ! function_exists('form_open_multipart'))
  */
 if ( ! function_exists('form_hidden'))
 {
-	function form_hidden($name, $value = '')
+	function form_hidden($name, $value = '', $recursing = FALSE)
 	{
-		if ( ! is_array($name))
+		static $form;
+
+		if ($recursing === FALSE)
 		{
-			return '<input type="hidden" name="'.$name.'" value="'.form_prep($value).'" />';
+			$form = "\n";
 		}
 
-		$form = '';
-
-		foreach ($name as $name => $value)
+		if (is_array($name))
 		{
-			$form .= "\n";
-			$form .= '<input type="hidden" name="'.$name.'" value="'.form_prep($value).'" />';
+			foreach ($name as $key => $val)
+			{
+				form_hidden($key, $val, TRUE);
+			}
+			return $form;
+		}
+
+		if ( ! is_array($value))
+		{
+			$form .= '<input type="hidden" name="'.$name.'" value="'.form_prep($value, $name).'" />'."\n";
+		}
+		else
+		{
+			foreach ($value as $k => $v)
+			{
+				$k = (is_int($k)) ? '' : $k; 
+				form_hidden($name.'['.$k.']', $v, TRUE);
+			}
 		}
 
 		return $form;
@@ -223,12 +239,38 @@ if ( ! function_exists('form_textarea'))
 			$val = $data['value']; 
 			unset($data['value']); // textareas don't use the value attribute
 		}
-
-		return "<textarea "._parse_form_attributes($data, $defaults).$extra.">".$val."</textarea>";
+		
+		$name = (is_array($data)) ? $data['name'] : $data;
+		return "<textarea "._parse_form_attributes($data, $defaults).$extra.">".form_prep($val, $name)."</textarea>";
 	}
 }
 
 // ------------------------------------------------------------------------
+
+/**
+ * Multi-select menu
+ *
+ * @access	public
+ * @param	string
+ * @param	array
+ * @param	mixed
+ * @param	string
+ * @return	type
+ */
+if (! function_exists('form_multiselect'))
+{
+	function form_multiselect($name = '', $options = array(), $selected = array(), $extra = '')
+	{
+		if ( ! strpos($extra, 'multiple'))
+		{
+			$extra .= ' multiple="multiple"';
+		}
+		
+		return form_dropdown($name, $options, $selected, $extra);
+	}
+}
+
+// --------------------------------------------------------------------
 
 /**
  * Drop-down Menu
@@ -264,15 +306,30 @@ if ( ! function_exists('form_dropdown'))
 		$multiple = (count($selected) > 1 && strpos($extra, 'multiple') === FALSE) ? ' multiple="multiple"' : '';
 
 		$form = '<select name="'.$name.'"'.$extra.$multiple.">\n";
-	
+
 		foreach ($options as $key => $val)
 		{
 			$key = (string) $key;
-			$val = (string) $val;
 
-			$sel = (in_array($key, $selected))?' selected="selected"':'';
+			if (is_array($val))
+			{
+				$form .= '<optgroup label="'.$key.'">'."\n";
 
-			$form .= '<option value="'.$key.'"'.$sel.'>'.$val."</option>\n";
+				foreach ($val as $optgroup_key => $optgroup_val)
+				{
+					$sel = (in_array($optgroup_key, $selected)) ? ' selected="selected"' : '';
+
+					$form .= '<option value="'.$optgroup_key.'"'.$sel.'>'.(string) $optgroup_val."</option>\n";
+				}
+
+				$form .= '</optgroup>'."\n";
+			}
+			else
+			{
+				$sel = (in_array($key, $selected)) ? ' selected="selected"' : '';
+
+				$form .= '<option value="'.$key.'"'.$sel.'>'.(string) $val."</option>\n";
+			}
 		}
 
 		$form .= '</select>';
@@ -409,7 +466,7 @@ if ( ! function_exists('form_button'))
 {
 	function form_button($data = '', $content = '', $extra = '')
 	{
-		$defaults = array('name' => (( ! is_array($data)) ? $data : ''), 'type' => 'submit');
+		$defaults = array('name' => (( ! is_array($data)) ? $data : ''), 'type' => 'button');
 
 		if ( is_array($data) AND isset($data['content']))
 		{
@@ -536,8 +593,10 @@ if ( ! function_exists('form_close'))
  */
 if ( ! function_exists('form_prep'))
 {
-	function form_prep($str = '')
+	function form_prep($str = '', $field_name = '')
 	{
+		static $prepped_fields = array();
+		
 		// if the field name is an array we do this recursively
 		if (is_array($str))
 		{
@@ -554,22 +613,25 @@ if ( ! function_exists('form_prep'))
 			return '';
 		}
 
-		$temp = '__TEMP_AMPERSANDS__';
-
-		// Replace entities to temporary markers so that 
-		// htmlspecialchars won't mess them up
-		$str = preg_replace("/&#(\d+);/", "$temp\\1;", $str);
-		$str = preg_replace("/&(\w+);/",  "$temp\\1;", $str);
-
+		// we've already prepped a field with this name
+		// @todo need to figure out a way to namespace this so
+		// that we know the *exact* field and not just one with
+		// the same name
+		if (isset($prepped_fields[$field_name]))
+		{
+			return $str;
+		}
+		
 		$str = htmlspecialchars($str);
 
 		// In case htmlspecialchars misses these.
 		$str = str_replace(array("'", '"'), array("&#39;", "&quot;"), $str);
 
-		// Decode the temp markers back to entities
-		$str = preg_replace("/$temp(\d+);/","&#\\1;",$str);
-		$str = preg_replace("/$temp(\w+);/","&\\1;",$str);
-
+		if ($field_name != '')
+		{
+			$prepped_fields[$field_name] = $str;
+		}
+		
 		return $str;
 	}
 }
@@ -598,10 +660,10 @@ if ( ! function_exists('set_value'))
 				return $default;
 			}
 
-			return form_prep($_POST[$field]);
+			return form_prep($_POST[$field], $field);
 		}
 
-		return form_prep($OBJ->set_value($field, $default));
+		return form_prep($OBJ->set_value($field, $default), $field);
 	}
 }
 
@@ -629,7 +691,7 @@ if ( ! function_exists('set_select'))
 		{
 			if ( ! isset($_POST[$field]))
 			{
-				if (count($_POST) === 0)
+				if (count($_POST) === 0 AND $default == TRUE)
 				{
 					return ' selected="selected"';
 				}
@@ -684,7 +746,7 @@ if ( ! function_exists('set_checkbox'))
 		{ 
 			if ( ! isset($_POST[$field]))
 			{
-				if (count($_POST) === 0)
+				if (count($_POST) === 0 AND $default == TRUE)
 				{
 					return ' checked="checked"';
 				}
@@ -739,7 +801,7 @@ if ( ! function_exists('set_radio'))
 		{
 			if ( ! isset($_POST[$field]))
 			{
-				if (count($_POST) === 0)
+				if (count($_POST) === 0 AND $default == TRUE)
 				{
 					return ' checked="checked"';
 				}
@@ -857,12 +919,12 @@ if ( ! function_exists('_parse_form_attributes'))
 		}
 
 		$att = '';
-
+		
 		foreach ($default as $key => $val)
 		{
 			if ($key == 'value')
 			{
-				$val = form_prep($val);
+				$val = form_prep($val, $default['name']);
 			}
 
 			$att .= $key . '="' . $val . '" ';

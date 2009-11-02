@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -97,18 +97,22 @@ class CI_Router {
 			{
 				show_error("Unable to determine what should be displayed. A default route has not been specified in the routing file.");
 			}
-
-			// Turn the default route into an array.  We explode it in the event that
-			// the controller is located in a subfolder
-			$segments = $this->_validate_request(explode('/', $this->default_controller));
-
-			// Set the class and method
-			$this->set_class($segments[0]);
-			$this->set_method('index');
 			
-			// Assign the segments to the URI class
-			$this->uri->rsegments = $segments;
-			
+			if (strpos($this->default_controller, '/') !== FALSE)
+			{
+				$x = explode('/', $this->default_controller);
+
+				$this->set_class(end($x));
+				$this->set_method('index');
+				$this->_set_request($x);
+			}
+			else
+			{
+				$this->set_class($this->default_controller);
+				$this->set_method('index');
+				$this->_set_request(array($this->default_controller, 'index'));
+			}
+
 			// re-index the routed segments array so it starts with 1 rather than 0
 			$this->uri->_reindex_segments();
 			
@@ -144,7 +148,7 @@ class CI_Router {
 	 * @return	void
 	 */
 	function _set_request($segments = array())
-	{	
+	{
 		$segments = $this->_validate_request($segments);
 		
 		if (count($segments) == 0)

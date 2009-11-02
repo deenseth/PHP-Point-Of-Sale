@@ -63,12 +63,21 @@ class Person extends Model
 	{		
 		if (!$person_id or !$this->exists($person_id))
 		{
-			return $this->db->insert('people',$person_data);
+			if ($this->db->insert('people',$person_data))
+			{
+				return $this->db->insert_id();
+			}
+			
+			return false;
 		}
 		
 		$this->db->where('person_id', $person_id);
-		return $this->db->update('people',$person_data);		
+		if ($this->db->update('people',$person_data))
+		{
+			return $person_id;
+		}
 		
+		return false;
 	}
 	
 	/*

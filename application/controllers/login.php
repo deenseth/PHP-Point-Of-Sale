@@ -10,7 +10,7 @@ class Login extends Controller
 	{
 		if($this->Employee->is_logged_in())
 		{
-			redirect ('home');
+			redirect('home');
 		}
 		else
 		{
@@ -23,7 +23,7 @@ class Login extends Controller
 			}
 			else
 			{
-				redirect ('home');
+				redirect('home');
 			}
 		}
 	}

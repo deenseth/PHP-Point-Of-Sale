@@ -1,5 +1,5 @@
 <?php
-class AppConfig extends Model 
+class Appconfig extends Model 
 {
 	
 	function exists($key)

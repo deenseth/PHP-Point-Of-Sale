@@ -4,11 +4,12 @@ class Reports extends Secure_Area
 {
 	function __construct()
 	{
-		parent::__construct('reports');	
+		parent::__construct('reports');
 	}
 	
 	function index()
 	{
+		$this->load->view("reports/report",array());	
 	}
 }
 ?>

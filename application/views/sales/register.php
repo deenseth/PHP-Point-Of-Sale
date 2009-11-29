@@ -8,6 +8,7 @@ if(isset($error))
 ?>
 <div id="register_wrapper">
 <?php echo form_open("sales/change_mode",array('id'=>'mode_form')); ?>
+	<span><?php echo $this->lang->line('sales_mode') ?></span>  
 <?php echo form_dropdown('mode',$modes,$mode,'onchange="$(\'#mode_form\').submit();"'); ?>
 </form>
 <?php echo form_open("sales/add",array('id'=>'add_item_form')); ?>

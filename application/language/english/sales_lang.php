@@ -1,5 +1,6 @@
 <?php
 $lang['sales_register']='Sales Register';
+$lang['sales_mode']='Register Mode';
 $lang['sales_no_items_in_cart']='There are no items in the cart';
 $lang['sales_total']='Total';
 $lang['sales_tax_percent']='Tax %';

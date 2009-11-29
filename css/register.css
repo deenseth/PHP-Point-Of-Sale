@@ -5,6 +5,17 @@
 	font-family:Arial;
 	font-size:13px;
 }
+#mode_form
+{
+	position:relative;
+	background-color:#DDD;
+	padding: 3px 0px 3px 5px;
+}
+
+#mode_form span
+{
+	font-weight:bold;
+}
 
 #add_item_form
 {

@@ -5,7 +5,6 @@ class Employees extends Person_controller
 	function __construct()
 	{
 		parent::__construct('employees');
-		$this->load->language('employees');
 	}
 	
 	function index()

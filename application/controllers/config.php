@@ -5,7 +5,6 @@ class Config extends Secure_area
 	function __construct()
 	{
 		parent::__construct('config');
-		$this->load->language('config');
 	}
 	
 	function index()

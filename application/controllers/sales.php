@@ -5,7 +5,6 @@ class Sales extends Secure_area
 	function __construct()
 	{
 		parent::__construct('sales');
-		$this->load->language('sales');
 		$this->load->library('sale_lib');
 	}
 	

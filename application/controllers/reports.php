@@ -5,7 +5,6 @@ class Reports extends Secure_area
 	function __construct()
 	{
 		parent::__construct('reports');
-		$this->load->language('reports');
 		$this->load->helper('report');		
 	}
 	

@@ -79,12 +79,12 @@ class Employee extends Person
 		//Run these queries as a transaction, we want to make sure we do all or nothing
 		$this->db->trans_start();
 			
-		if($person_id = parent::save($person_data,$employee_id))
+		if(parent::save($person_data,$employee_id))
 		{
 		
 			if (!$employee_id or !$this->exists($employee_id))
 			{
-				$employee_id=$person_id;
+				$employee_id=$this->db->insert_id();
 				$employee_data['person_id']=$employee_id;
 				$success = $this->db->insert('employees',$employee_data);
 			}

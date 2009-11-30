@@ -40,7 +40,8 @@ class Sale extends Model
 			$this->db->insert('sales_items',$sales_items_data);
 			
 			//Update stock quantity
-			
+			$item_data = array('quantity'=>$this->Item->get_info($item_id)->quantity-$item['quantity']);
+			$this->Item->save($item_data,$item_id);
 		}
 		
 		return $sale_id;

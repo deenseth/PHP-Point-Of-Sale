@@ -16,7 +16,7 @@
 	width:150px;
 }
 
-.field_row label.required
+label.required
 {
 	color:red;
 }

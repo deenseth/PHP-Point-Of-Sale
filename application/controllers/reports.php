@@ -9,11 +9,20 @@ class Reports extends Secure_area
 		$this->load->helper('report');		
 	}
 	
+	//Initial report listing screen
 	function index()
 	{
 		$this->load->view("reports/listing",array());	
 	}
 	
+	//Input for all the summary reports. (see routes.php to see that all summary reports route here)
+	function summary_input()
+	{
+		$data['report_date_range_simple'] = get_simple_date_ranges();
+		$this->load->view("reports/summary_input",$data);	
+	}
+	
+	//Summary sales report
 	function summary_sales($start_date, $end_date)
 	{
 		$this->load->model('reports/Summary_sales');
@@ -34,13 +43,6 @@ class Reports extends Secure_area
 		);
 
 		$this->load->view("reports/tabular",$data);
-
-	}
-	
-	function summary_input()
-	{
-		$data['report_date_range_simple'] = get_simple_date_ranges();
-		$this->load->view("reports/summary_input",$data);	
 	}
 }
 ?>

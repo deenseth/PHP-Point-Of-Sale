@@ -2,6 +2,7 @@
 require_once("report.php");
 class Summary_sales extends Report
 {
+	//TODO USE LANGUAGE FILE
 	public function getDataColumns()
 	{
 		return array('Date', 'Subtotal', 'Total', 'Tax');

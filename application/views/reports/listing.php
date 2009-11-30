@@ -5,11 +5,11 @@
 	<li>Summary Reports
 		<ul>
 			<li><a href="<?php echo site_url('reports/summary_sales');?>">Sales</a></li>
-			<li>Brands</li>
-			<li>Categories</li>
-			<li>Customers</li>
-			<li>Items</li>
-			<li>Employees</li>
+			<li><a href="<?php echo site_url('reports/summary_brands');?>">Brands</a></li>
+			<li><a href="<?php echo site_url('reports/summary_categories');?>">Categories</a></li>
+			<li><a href="<?php echo site_url('reports/summary_customers');?>">Customers</a></li>
+			<li><a href="<?php echo site_url('reports/summary_items');?>">Items</a></li>
+			<li><a href="<?php echo site_url('reports/summary_employees');?>">Employees</a></li>
 		</ul>
 </ul>
 <?php

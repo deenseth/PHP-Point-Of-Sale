@@ -65,19 +65,15 @@ class Person extends Model
 		{
 			if ($this->db->insert('people',$person_data))
 			{
-				return $this->db->insert_id();
+				$person_data['person_id']=$this->db->insert_id();
+				return true;
 			}
 			
 			return false;
 		}
 		
 		$this->db->where('person_id', $person_id);
-		if ($this->db->update('people',$person_data))
-		{
-			return $person_id;
-		}
-		
-		return false;
+		return $this->db->update('people',$person_data);
 	}
 	
 	/*

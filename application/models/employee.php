@@ -84,8 +84,7 @@ class Employee extends Person
 		
 			if (!$employee_id or !$this->exists($employee_id))
 			{
-				$employee_id=$this->db->insert_id();
-				$employee_data['person_id']=$employee_id;
+				$employee_data['person_id'] = $person_data['person_id'];
 				$success = $this->db->insert('employees',$employee_data);
 			}
 			else

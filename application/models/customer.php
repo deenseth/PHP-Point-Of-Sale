@@ -77,12 +77,12 @@ class Customer extends Person
 		$success=false;
 		//Run these queries as a transaction, we want to make sure we do all or nothing
 		$this->db->trans_start();
-		if($person_id = parent::save($person_data,$customer_id))
+		if(parent::save($person_data,$customer_id))
 		{
 		
 			if (!$customer_id or !$this->exists($customer_id))
 			{
-				$customer_data['person_id'] = $person_id;
+				$customer_data['person_id'] = $person_data['person_id'];
 				$success = $this->db->insert('customers',$customer_data);				
 			}
 			else

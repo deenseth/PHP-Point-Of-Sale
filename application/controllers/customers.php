@@ -1,6 +1,6 @@
 <?php
-require_once ("Person_Controller.php");
-class Customers extends Person_Controller
+require_once ("person_controller.php");
+class Customers extends Person_controller
 {
 	function __construct()
 	{

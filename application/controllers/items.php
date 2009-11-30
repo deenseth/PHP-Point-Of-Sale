@@ -1,7 +1,7 @@
 <?php
-require_once ("Secure_Area.php");
-require_once ("interfaces/iData_Controller.php");
-class Items extends Secure_Area implements iData_Controller 
+require_once ("secure_area.php");
+require_once ("interfaces/idata_controller.php");
+class Items extends Secure_area implements iData_controller 
 {
 	function __construct()
 	{

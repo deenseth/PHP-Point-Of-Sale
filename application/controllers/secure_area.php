@@ -1,8 +1,8 @@
 <?php
-class Secure_Area extends Controller 
+class Secure_area extends Controller 
 {
 	/*
-	Controllers that are considered secure extend Secure_Area, optionally a $module_id can
+	Controllers that are considered secure extend Secure_area, optionally a $module_id can
 	be set to also check if a user can access a particular module in the system.
 	*/
 	function __construct($module_id=null)

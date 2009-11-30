@@ -1,6 +1,6 @@
 <?php
-require_once ("Secure_Area.php");
-class Home extends Secure_Area 
+require_once ("secure_area.php");
+class Home extends Secure_area 
 {
 	function __construct()
 	{

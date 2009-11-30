@@ -26,7 +26,7 @@ class Config extends Secure_area
 		'return_policy'=>$this->input->post('return_policy')	
 		);
 		
-		if($this->AppConfig->batch_save($batch_save_data))
+		if($this->Appconfig->batch_save($batch_save_data))
 		{
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('config_saved_successfully')));
 		}

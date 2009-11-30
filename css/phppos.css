@@ -71,6 +71,15 @@ a.none
 
 }
 
+#page_subtitle
+{
+	margin-top:8px;
+	font-size:16px;
+	font-weight:bold;
+	color:#000000;
+	text-align:center;
+}
+
 #new_button
 {
 	position:absolute;

@@ -5,7 +5,8 @@ class Items extends Secure_Area implements iData_Controller
 {
 	function __construct()
 	{
-		parent::__construct('items');	
+		parent::__construct('items');
+		$this->load->language('items');
 	}
 	
 	function index()

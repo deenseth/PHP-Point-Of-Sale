@@ -4,7 +4,8 @@ class Customers extends Person_Controller
 {
 	function __construct()
 	{
-		parent::__construct('customers');	
+		parent::__construct('customers');
+		$this->load->language('customers');
 	}
 	
 	function index()

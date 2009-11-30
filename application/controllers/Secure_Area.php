@@ -8,7 +8,7 @@ class Secure_Area extends Controller
 	function __construct($module_id=null)
 	{
 		parent::__construct();	
-		
+		$this->load->model('Employee');
 		if(!$this->Employee->is_logged_in())
 		{
 			redirect('login');

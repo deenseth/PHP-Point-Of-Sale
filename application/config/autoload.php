@@ -39,7 +39,7 @@
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('xmlrpc','database','session','form_validation','session','user_agent','sale_lib');
+$autoload['libraries'] = array('database','session','form_validation','session','user_agent');
 
 
 /*
@@ -51,7 +51,8 @@ $autoload['libraries'] = array('xmlrpc','database','session','form_validation','
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('form','url','table','text','currency','sale');
+//sale
+$autoload['helper'] = array('form','url','table','text','currency');
 
 
 /*
@@ -94,8 +95,7 @@ $autoload['config'] = array();
 | "codeigniter_lang.php" would be referenced as array('codeigniter');
 |
 */
-
-$autoload['language'] = array('config','login','module','common','error','employees','customers','items', 'reports', 'sales');
+$autoload['language'] = array('module','common','error',);
 
 
 /*

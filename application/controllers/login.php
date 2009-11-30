@@ -3,7 +3,8 @@ class Login extends Controller
 {
 	function __construct()
 	{
-		parent::__construct();	
+		parent::__construct();
+		$this->load->language('login');
 	}
 	
 	function index()

@@ -117,6 +117,8 @@ class Item extends Model
 		}
 		else
 		{
+			$this->load->library('xmlrpc');
+
 			$this->xmlrpc->server('http://www.upcdatabase.com/rpc', 80);
 			$this->xmlrpc->method('lookupUPC');
 

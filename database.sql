@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Nov 08, 2008 at 10:41 PM
--- Server version: 5.0.67
--- PHP Version: 5.2.5
+-- Generation Time: Nov 30, 2009 at 01:43 PM
+-- Server version: 5.1.39
+-- PHP Version: 5.3.0
 -- 
 -- Database: `pos`
 -- 
@@ -19,7 +19,7 @@
 CREATE TABLE `phppos_app_config` (
   `key` varchar(255) NOT NULL,
   `value` varchar(255) NOT NULL,
-  PRIMARY KEY  (`key`)
+  PRIMARY KEY (`key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
@@ -43,7 +43,7 @@ INSERT INTO `phppos_app_config` (`key`, `value`) VALUES ('company', 'Chris Muenc
 
 CREATE TABLE `phppos_customers` (
   `person_id` int(10) NOT NULL,
-  `account_number` varchar(255) default NULL,
+  `account_number` varchar(255) DEFAULT NULL,
   UNIQUE KEY `account_number` (`account_number`),
   KEY `person_id` (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -88,14 +88,14 @@ INSERT INTO `phppos_employees` (`username`, `password`, `person_id`) VALUES ('ad
 CREATE TABLE `phppos_items` (
   `name` varchar(255) NOT NULL,
   `category` varchar(255) NOT NULL,
-  `item_number` varchar(255) default NULL,
+  `item_number` varchar(255) DEFAULT NULL,
   `description` varchar(255) NOT NULL,
   `unit_price` decimal(15,2) NOT NULL,
   `tax_percent` int(2) NOT NULL,
-  `quantity` int(10) NOT NULL default '0',
-  `reorder_level` int(10) NOT NULL default '0',
-  `item_id` int(10) NOT NULL auto_increment,
-  PRIMARY KEY  (`item_id`),
+  `quantity` int(10) NOT NULL DEFAULT '0',
+  `reorder_level` int(10) NOT NULL DEFAULT '0',
+  `item_id` int(10) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`item_id`),
   UNIQUE KEY `item_number` (`item_number`)
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1 AUTO_INCREMENT=47 ;
 
@@ -103,10 +103,10 @@ CREATE TABLE `phppos_items` (
 -- Dumping data for table `phppos_items`
 -- 
 
-INSERT INTO `phppos_items` (`name`, `category`, `item_number`, `description`, `unit_price`, `tax_percent`, `quantity`, `reorder_level`, `item_id`) VALUES ('Duracell AA Alkaline batteries - 4 pack', 'Electronics', '041333015330', 'Duracell AA Alkaline batteries - 4 pack', 4.95, 8, 10, 1, 43),
-('POLAND SPRING WATER PET', 'Grocery', '075720008513', 'POLAND SPRING WATER PET', 14.32, 8, 10, 1, 44),
+INSERT INTO `phppos_items` (`name`, `category`, `item_number`, `description`, `unit_price`, `tax_percent`, `quantity`, `reorder_level`, `item_id`) VALUES ('Duracell AA Alkaline batteries - 4 pack', 'Electronics', '041333015330', 'Duracell AA Alkaline batteries - 4 pack', 4.95, 8, 8, 1, 43),
+('POLAND SPRING WATER PET', 'Grocery', '075720008513', 'POLAND SPRING WATER PET', 14.32, 8, 9, 1, 44),
 ('Simpsons Series 6 Kitchen Playset Muumuu Homer Figure', 'Toy', '029000070370', 'Simpsons Series 6 Kitchen Playset Muumuu Homer Figure', 22.00, 8, 11, 1, 45),
-('Hersheys Whoppers Mini Carton Peanut Butter Malted Milk Balls Candy - 3.5 Oz, 15 / Pack', 'Grocery', '0010700022929', 'Hersheys Whoppers Mini Carton Peanut Butter Malted Milk Balls Candy - 3.5 Oz, 15 / Pack', 18.26, 8, 11, 1, 46);
+('Hersheys Whoppers Mini Carton Peanut Butter Malted Milk Balls Candy - 3.5 Oz, 15 / Pack', 'Grocery', '0010700022929', 'Hersheys Whoppers Mini Carton Peanut Butter Malted Milk Balls Candy - 3.5 Oz, 15 / Pack', 18.26, 8, 10, 1, 46);
 
 -- --------------------------------------------------------
 
@@ -119,7 +119,7 @@ CREATE TABLE `phppos_modules` (
   `desc_lang_key` varchar(255) NOT NULL,
   `sort` int(10) NOT NULL,
   `module_id` varchar(255) NOT NULL,
-  PRIMARY KEY  (`module_id`),
+  PRIMARY KEY (`module_id`),
   UNIQUE KEY `desc_lang_key` (`desc_lang_key`),
   UNIQUE KEY `name_lang_key` (`name_lang_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -153,8 +153,8 @@ CREATE TABLE `phppos_people` (
   `zip` varchar(255) NOT NULL,
   `country` varchar(255) NOT NULL,
   `comments` text NOT NULL,
-  `person_id` int(10) NOT NULL auto_increment,
-  PRIMARY KEY  (`person_id`)
+  `person_id` int(10) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`person_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=latin1 AUTO_INCREMENT=152 ;
 
 -- 
@@ -179,7 +179,7 @@ INSERT INTO `phppos_people` (`first_name`, `last_name`, `phone_number`, `email`,
 CREATE TABLE `phppos_permissions` (
   `module_id` varchar(255) NOT NULL,
   `person_id` int(10) NOT NULL,
-  PRIMARY KEY  (`module_id`,`person_id`),
+  PRIMARY KEY (`module_id`,`person_id`),
   KEY `person_id` (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -201,26 +201,21 @@ INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES ('config', 1)
 -- 
 
 CREATE TABLE `phppos_sales` (
-  `sale_time` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  `customer_id` int(10) default NULL,
-  `employee_id` int(10) NOT NULL default '0',
+  `sale_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `customer_id` int(10) DEFAULT NULL,
+  `employee_id` int(10) NOT NULL DEFAULT '0',
   `comment` text NOT NULL,
-  `sale_id` int(10) NOT NULL auto_increment,
-  PRIMARY KEY  (`sale_id`),
+  `sale_id` int(10) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`sale_id`),
   KEY `customer_id` (`customer_id`),
   KEY `employee_id` (`employee_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 -- 
 -- Dumping data for table `phppos_sales`
 -- 
 
-INSERT INTO `phppos_sales` (`sale_time`, `customer_id`, `employee_id`, `comment`, `sale_id`) VALUES ('2008-11-08 22:35:03', NULL, 1, 'Awesome', 1),
-('2008-11-08 22:35:37', NULL, 1, '', 2),
-('2008-11-08 22:37:29', 145, 1, '', 3),
-('2008-11-08 22:39:12', 145, 1, '', 4),
-('2008-11-08 22:39:41', NULL, 1, '', 5),
-('2008-11-08 22:39:59', NULL, 1, '', 6);
+INSERT INTO `phppos_sales` (`sale_time`, `customer_id`, `employee_id`, `comment`, `sale_id`) VALUES ('2009-11-30 13:42:00', 145, 1, '', 7);
 
 -- --------------------------------------------------------
 
@@ -229,33 +224,22 @@ INSERT INTO `phppos_sales` (`sale_time`, `customer_id`, `employee_id`, `comment`
 -- 
 
 CREATE TABLE `phppos_sales_items` (
-  `sale_id` int(10) NOT NULL default '0',
-  `item_id` int(10) NOT NULL default '0',
-  `quantity_purchased` int(10) NOT NULL default '0',
+  `sale_id` int(10) NOT NULL DEFAULT '0',
+  `item_id` int(10) NOT NULL DEFAULT '0',
+  `quantity_purchased` int(10) NOT NULL DEFAULT '0',
   `item_unit_price` decimal(15,2) NOT NULL,
   `item_tax_percent` decimal(4,2) NOT NULL,
-  `sale_item_id` int(10) NOT NULL auto_increment,
-  PRIMARY KEY  (`sale_item_id`),
-  KEY `sale_id` (`sale_id`),
-  KEY `item_id` (`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+  PRIMARY KEY (`sale_id`,`item_id`),
+  KEY `phppos_sales_items_ibfk_1` (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phppos_sales_items`
 -- 
 
-INSERT INTO `phppos_sales_items` (`sale_id`, `item_id`, `quantity_purchased`, `item_unit_price`, `item_tax_percent`, `sale_item_id`) VALUES (1, 43, 3, 4.95, 8.00, 1),
-(2, 45, 2, 22.00, 8.00, 2),
-(2, 43, 4, 4.95, 8.00, 3),
-(2, 46, 1, 18.26, 8.00, 4),
-(2, 44, 3, 14.32, 8.00, 5),
-(3, 43, 1, 4.95, 8.00, 6),
-(3, 44, 1, 14.32, 8.00, 7),
-(4, 43, 1, 4.95, 8.00, 8),
-(5, 43, 1, 4.95, 8.00, 9),
-(6, 43, 1, 4.95, 8.00, 10),
-(6, 46, 1, 18.26, 8.00, 11),
-(6, 45, 1, 22.00, 8.00, 12);
+INSERT INTO `phppos_sales_items` (`sale_id`, `item_id`, `quantity_purchased`, `item_unit_price`, `item_tax_percent`) VALUES (7, 43, 2, 4.95, 8.00),
+(7, 44, 1, 14.32, 8.00),
+(7, 46, 1, 18.26, 8.00);
 
 -- --------------------------------------------------------
 
@@ -264,20 +248,19 @@ INSERT INTO `phppos_sales_items` (`sale_id`, `item_id`, `quantity_purchased`, `i
 -- 
 
 CREATE TABLE `phppos_sessions` (
-  `session_id` varchar(40) NOT NULL default '0',
-  `ip_address` varchar(16) NOT NULL default '0',
+  `session_id` varchar(40) NOT NULL DEFAULT '0',
+  `ip_address` varchar(16) NOT NULL DEFAULT '0',
   `user_agent` varchar(50) NOT NULL,
-  `last_activity` int(10) unsigned NOT NULL default '0',
+  `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
   `user_data` text NOT NULL,
-  PRIMARY KEY  (`session_id`)
+  PRIMARY KEY (`session_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phppos_sessions`
 -- 
 
-INSERT INTO `phppos_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES ('e61294346c5863089c5cc707221121ce', '10.37.129.2', 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_5; ', 1226201947, 'a:3:{s:9:"person_id";s:1:"1";s:4:"cart";a:0:{}s:8:"customer";s:2:"-1";}'),
-('4b0ea036feaf9c2b187901f407c17ee4', '0.0.0.0', 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_5; ', 1226201294, '');
+INSERT INTO `phppos_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES ('0a0a3f9df37554e6f5d53687aacff802', '74.77.175.242', 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en', 1259606501, 'a:1:{s:9:"person_id";s:1:"1";}');
 
 -- 
 -- Constraints for dumped tables

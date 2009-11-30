@@ -118,7 +118,7 @@ class Sales extends Secure_Area
 		$data['sale_id']='POS '.$this->Sale->save($data['cart'],$customer_id,$employee_id,$comment);
 		
 		$this->load->view("sales/receipt",$data);		
-		//$this->sale_lib->clear_all();
+		$this->sale_lib->clear_all();
 	}
 	
 	function _reload($data=array())

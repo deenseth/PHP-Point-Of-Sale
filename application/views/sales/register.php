@@ -28,8 +28,8 @@ else
 <?php echo form_input(array('name'=>'item','id'=>'item','size'=>'40'));?>
 <div id="new_item_button_register" >
 		<?php echo anchor("items/view/-1/width:360",
-		"<div class='small_button'><span>".$this->lang->line('items_new')."</span></div>",
-		array('class'=>'thickbox none','title'=>$this->lang->line('items_new')));
+		"<div class='small_button'><span>".$this->lang->line('sales_new_item')."</span></div>",
+		array('class'=>'thickbox none','title'=>$this->lang->line('sales_new_item')));
 		?>
 	</div>
 
@@ -38,7 +38,7 @@ else
 <thead>
 <tr>
 <th style="width:11%;"><?php echo $this->lang->line('common_delete'); ?></th>
-<th style="width:30%;"><?php echo $this->lang->line('items_name'); ?></th>
+<th style="width:30%;"><?php echo $this->lang->line('sales_item_name'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_price'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_tax_percent'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_quantity'); ?></th>
@@ -83,7 +83,7 @@ else
 	<?php
 	if(isset($customer))
 	{
-		echo $this->lang->line("customers_customer").': <b>'.$customer. '</b><br />';
+		echo $this->lang->line("sales_customer").': <b>'.$customer. '</b><br />';
 		echo anchor("sales/delete_customer",'['.$this->lang->line('common_delete').' '.$this->lang->line('customers_customer').']');
 	}
 	else
@@ -95,8 +95,8 @@ else
 		<div style="margin-top:5px;text-align:center;">
 		<h3 style="margin: 5px 0 5px 0"><?php echo $this->lang->line('common_or'); ?></h3>
 		<?php echo anchor("customers/view/-1/width:350",
-		"<div class='small_button' style='margin:0 auto;'><span>".$this->lang->line('customers_new')."</span></div>",
-		array('class'=>'thickbox none','title'=>$this->lang->line('customers_new')));
+		"<div class='small_button' style='margin:0 auto;'><span>".$this->lang->line('sales_new_customer')."</span></div>",
+		array('class'=>'thickbox none','title'=>$this->lang->line('sales_new_customer')));
 		?>
 		</div>
 		<div class="clearfix">&nbsp;</div>

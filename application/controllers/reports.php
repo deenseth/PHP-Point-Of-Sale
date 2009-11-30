@@ -6,24 +6,23 @@ class Reports extends Secure_Area
 	{
 		parent::__construct('reports');
 		$this->load->language('reports');
+		$this->load->helper('report');		
 	}
 	
 	function index()
 	{
-		$this->load->helper('report');
-
-		$data = array();
-		$data['report_date_range_simple'] = get_simple_date_ranges();
-		$data['report_date_range_simple_selected'] = date('Y-m-d') . '|' . date('Y-m-d');
-		
-		$data['report_date_range_custom'] = array();
-		$this->load->view("reports/report",$data);	
+		$this->load->view("reports/listing",array());	
 	}
 	
-	function summary()
+	function summary_sales($start_date, $end_date)
 	{
+		
+	}
 	
-		$this->load->view("reports/report",$data);
+	function summary_input()
+	{
+		$data['report_date_range_simple'] = get_simple_date_ranges();
+		$this->load->view("reports/summary_input",$data);	
 	}
 }
 ?>

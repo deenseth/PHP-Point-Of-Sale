@@ -42,6 +42,8 @@
 
 $route['default_controller'] = "login";
 $route['no_access/(:any)'] = "no_access/index/$1";
+$route['reports/(summary_:any)/(:any)/(:any)'] = "reports/$1/$2/$3";
+$route['reports/summary_:any'] = "reports/summary_input";
 $route['scaffolding_trigger'] = "";
 
 

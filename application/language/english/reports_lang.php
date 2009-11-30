@@ -1,5 +1,8 @@
 <?php
 $lang['reports_reports'] = 'Reports';
+$lang['reports_welcome_message'] = 'Welcome to the reports panel. Please select a report to view.';
+$lang['reports_summary'] = 'Summary Report';
+$lang['reports_report_input'] = 'Report Input';
 $lang['reports_type'] = 'Type';
 $lang['reports_date_range'] = 'Date Range';
 $lang['reports_today'] = 'Today';

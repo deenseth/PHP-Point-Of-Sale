@@ -10,12 +10,13 @@ class Summary_sales extends Report
 	//TODO THIS IS BUGGY AS I CANNOT FIGURE OUT HOW TO LIMIT TO A DATE RANGE	
 	public function getData(array $inputs)
 	{
-		return $this->db->query('SELECT DATE_FORMAT(phppos_sales.sale_time, "%m-%d-%Y") as sale_date, 
+		return $this->db->query('SELECT date(phppos_sales.sale_time) as sale_date, 
 		SUM(item_unit_price*quantity_purchased) as subtotal, 
 		ROUND(SUM(item_unit_price*quantity_purchased)*(1+(item_tax_percent/100)), 2) as total,
 		ROUND(SUM(item_unit_price*quantity_purchased)*(item_tax_percent/100), 2) as tax
 		FROM phppos_sales INNER JOIN phppos_sales_items USING (sale_id)
 		GROUP BY sale_date
+		HAVING sale_date BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date']. '"
 		ORDER BY sale_date ASC')->result_array();
 	}
 	

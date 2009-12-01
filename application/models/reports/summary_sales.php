@@ -2,15 +2,14 @@
 require_once("report.php");
 class Summary_sales extends Report
 {
-	//TODO USE LANGUAGE FILE
 	public function getDataColumns()
 	{
-		return array('Date', 'Subtotal', 'Total', 'Tax');
+		return array($this->lang->line('reports_date'), $this->lang->line('reports_subtotal'), $this->lang->line('reports_total'), $this->lang->line('reports_tax'));
 	}
 	
 	public function getData(array $inputs)
 	{
-		$this->db->select('date(phppos_sales.sale_time) as sale_date, 
+		$this->db->select('date(sale_time) as sale_date, 
 		SUM(item_unit_price*quantity_purchased) as subtotal, 
 		ROUND(SUM(item_unit_price*quantity_purchased)*(1+(item_tax_percent/100)), 2) as total,
 		ROUND(SUM(item_unit_price*quantity_purchased)*(item_tax_percent/100), 2) as tax', false);

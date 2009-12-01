@@ -5,7 +5,7 @@ function get_simple_date_ranges()
 		$CI->load->language('reports');
 		$today =  date('Y-m-d');
 		$yesterday = date('Y-m-d', mktime(0,0,0,date("m"),date("d")-1,date("Y")));
-		$seven_days_ago = date('Y-m-d', mktime(0,0,0,date("m"),date("d")-7,date("Y")));
+		$six_days_ago = date('Y-m-d', mktime(0,0,0,date("m"),date("d")-6,date("Y")));
 		$start_of_this_month = date('Y-m-d', mktime(0,0,0,date("m"),1,date("Y")));
 		$end_of_this_month = date('Y-m-d',strtotime('-1 second',strtotime('+1 month',strtotime(date('m').'/01/'.date('Y').' 00:00:00'))));
 		$start_of_last_month = date('Y-m-d', mktime(0,0,0,date("m")-1,1,date("Y")));
@@ -19,7 +19,7 @@ function get_simple_date_ranges()
 		return array(
 			$today. '/' . $today 								=> $CI->lang->line('reports_today'),
 			$yesterday. '/' . $yesterday						=> $CI->lang->line('reports_yesterday'),
-			$seven_days_ago. '/' . $today 						=> $CI->lang->line('reports_last_7'),
+			$six_days_ago. '/' . $today 						=> $CI->lang->line('reports_last_7'),
 			$start_of_this_month . '/' . $end_of_this_month		=> $CI->lang->line('reports_this_month'),
 			$start_of_last_month . '/' . $end_of_last_month		=> $CI->lang->line('reports_last_month'),
 			$start_of_this_year . '/' . $end_of_this_year	 	=> $CI->lang->line('reports_this_year'),

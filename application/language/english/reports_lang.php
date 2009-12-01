@@ -2,7 +2,12 @@
 $lang['reports_reports'] = 'Reports';
 $lang['reports_welcome_message'] = 'Welcome to the reports panel. Please select a report to view.';
 $lang['reports_sales_summary_report'] = 'Sales Summary Report';
-$lang['reports_brands_summary_report'] = 'Brands Summary Report';
+$lang['reports_categories_summary_report'] = 'Categories Summary Report';
+$lang['reports_date'] = 'Date';
+$lang['reports_category'] = 'Category';
+$lang['reports_subtotal'] = 'Subtotal';
+$lang['reports_total'] = 'Total';
+$lang['reports_tax'] = 'Tax';
 $lang['reports_report_input'] = 'Report Input';
 $lang['reports_type'] = 'Type';
 $lang['reports_date_range'] = 'Date Range';

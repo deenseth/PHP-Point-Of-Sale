@@ -65,8 +65,24 @@ else
 		<tr>
 		<td><?php echo anchor("sales/delete_item/$item_id",'['.$this->lang->line('common_delete').']');?></td>
 		<td><?php echo $item['name']; ?></td>
-		<td><?php echo form_input(array('name'=>'price','value'=>$item['price'],'size'=>'6'));?></td>
-		<td><?php echo form_input(array('name'=>'tax','value'=>$item['tax'],'size'=>'4'));?></td>
+		
+		<?php if ($items_module_allowed) 
+		{ 
+		?>
+			<td><?php echo form_input(array('name'=>'price','value'=>$item['price'],'size'=>'6'));?></td>
+			<td><?php echo form_input(array('name'=>'tax','value'=>$item['tax'],'size'=>'4'));?></td>			
+		<?php 
+		}
+		else
+		{
+		?>
+			<td><?php echo $item['price']; ?></td>
+			<td><?php echo $item['tax']; ?></td>
+			<?php echo form_hidden('price',$item['price']); ?> 
+			<?php echo form_hidden('tax',$item['tax']); ?> 
+		<?php
+		} 
+		?>
 		<td><?php echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2'));?></td>
 		<td><?php echo to_currency($item['price']*$item['quantity']*(1+($item['tax']/100))); ?></td>
 		<td><?php echo form_submit("edit_item", $this->lang->line('sales_edit_item'));?></td>

@@ -122,12 +122,14 @@ class Sales extends Secure_area
 	
 	function _reload($data=array())
 	{
+		$person_info = $this->Employee->get_logged_in_employee_info();
 		$data['cart']=$this->sale_lib->get_cart();
 		$data['modes']=array('sale'=>$this->lang->line('sales_sale'),'return'=>$this->lang->line('sales_return'));
 		$data['mode']=$this->sale_lib->get_mode();
 		$data['subtotal']=$this->sale_lib->get_subtotal();
 		$data['tax']=$this->sale_lib->get_tax();
 		$data['total']=$this->sale_lib->get_total();
+		$data['items_module_allowed'] = $this->Employee->has_permission('items', $person_info->person_id);
 		$customer_id=$this->sale_lib->get_customer();
 		if($customer_id!=-1)
 		{

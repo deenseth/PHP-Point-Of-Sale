@@ -81,7 +81,6 @@ class Employee extends Person
 			
 		if(parent::save($person_data,$employee_id))
 		{
-		
 			if (!$employee_id or !$this->exists($employee_id))
 			{
 				$employee_data['person_id'] = $person_data['person_id'];

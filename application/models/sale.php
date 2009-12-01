@@ -51,7 +51,6 @@ class Sale extends Model
 	{
 		$this->db->from('sales_items');
 		$this->db->where('sale_id',$sale_id);
-		$this->db->order_by("sale_item_id", "asc");
 		return $this->db->get();		
 	}
 	

@@ -121,7 +121,7 @@ class Sale_lib
 		$this->empty_cart();
 		$this->delete_customer();
 		
-		foreach($this->CI->Sale->get_sale_Items($sale_id)->result() as $row)
+		foreach($this->CI->Sale->get_sale_items($sale_id)->result() as $row)
 		{
 			$this->add_item($row->item_id,-$row->quantity_purchased,$row->item_unit_price,$row->item_tax_percent);
 		}

@@ -1,7 +1,6 @@
 <?php
 abstract class Report extends Model 
 {
-	
 	//Returns the column names used for the report
 	abstract public function getDataColumns();
 	

@@ -94,8 +94,8 @@ class Items extends Secure_area implements iData_controller
 			}
 			
 			$items_taxes_data = array();
-			$tax_names = $this->input->post('tax_name');
-			$tax_percents = $this->input->post('tax_percent');
+			$tax_names = $this->input->post('tax_names');
+			$tax_percents = $this->input->post('tax_percents');
 			for($k=0;$k<count($tax_percents);$k++)
 			{
 				if (is_numeric($tax_percents[$k]))
@@ -120,14 +120,27 @@ class Items extends Secure_area implements iData_controller
 		
 		foreach($_POST as $key=>$value)
 		{
-			if($value!='' and $key!='item_ids')
+			if($value!='' and !(in_array($key, array('item_ids', 'tax_names', 'tax_percents'))))
 			{
 				$item_data["$key"]=$value;
 			}
 		}
 		
-		if($this->Item->update_multiple($item_data,$items_to_update))
+		//Item data could be empty if tax information is being updated
+		if(empty($item_data) || $this->Item->update_multiple($item_data,$items_to_update))
 		{
+			$items_taxes_data = array();
+			$tax_names = $this->input->post('tax_names');
+			$tax_percents = $this->input->post('tax_percents');
+			for($k=0;$k<count($tax_percents);$k++)
+			{
+				if (is_numeric($tax_percents[$k]))
+				{
+					$items_taxes_data[] = array('name'=>$tax_names[$k], 'percent'=>$tax_percents[$k] );
+				}
+			}
+			$this->Item_taxes->save_multiple($items_taxes_data, $items_to_update);
+			
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_bulk_edit')));
 		}
 		else

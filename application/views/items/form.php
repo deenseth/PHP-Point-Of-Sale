@@ -69,7 +69,7 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 <?php echo form_label($this->lang->line('items_tax_1').':', 'tax_percent_1',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
-		'name'=>'tax_name[]',
+		'name'=>'tax_names[]',
 		'id'=>'tax_name_1',
 		'size'=>'10',
 		'value'=> isset($item_tax_info[0]['name']) ? $item_tax_info[0]['name'] : $this->lang->line('items_sales_tax'))
@@ -77,7 +77,7 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 	</div>
 	<div class='form_field'>
 	<?php echo form_input(array(
-		'name'=>'tax_percent[]',
+		'name'=>'tax_percents[]',
 		'id'=>'tax_percent_name_1',
 		'size'=>'4',
 		'value'=> isset($item_tax_info[0]['percent']) ? $item_tax_info[0]['percent'] : '')
@@ -90,15 +90,15 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 <?php echo form_label($this->lang->line('items_tax_2').':', 'tax_percent_2',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
-		'name'=>'tax_name[]',
+		'name'=>'tax_names[]',
 		'id'=>'tax_name_2',
 		'size'=>'10',
-		'value'=> isset($item_tax_info[1]['name']) ? $item_tax_info[1]['name'] : $this->lang->line('items_sales_tax'))
+		'value'=> isset($item_tax_info[1]['name']) ? $item_tax_info[1]['name'] : '')
 	);?>
 	</div>
 	<div class='form_field'>
 	<?php echo form_input(array(
-		'name'=>'tax_percent[]',
+		'name'=>'tax_percents[]',
 		'id'=>'tax_percent_name_2',
 		'size'=>'4',
 		'value'=> isset($item_tax_info[1]['percent']) ? $item_tax_info[1]['percent'] : '')

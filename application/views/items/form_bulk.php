@@ -38,16 +38,46 @@ echo form_open('items/bulk_update/',array('id'=>'item_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_tax_percent').':', 'tax_percent',array('class'=>'wide')); ?>
+<?php echo form_label($this->lang->line('items_tax_1').':', 'tax_percent_1',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
-		'name'=>'tax_percent',
-		'id'=>'tax_percent',
-		'size'=>'4')
+		'name'=>'tax_names[]',
+		'id'=>'tax_name_1',
+		'size'=>'10',
+		'value'=> isset($item_tax_info[0]['name']) ? $item_tax_info[0]['name'] : $this->lang->line('items_sales_tax'))
 	);?>
+	</div>
+	<div class='form_field'>
+	<?php echo form_input(array(
+		'name'=>'tax_percents[]',
+		'id'=>'tax_percent_name_1',
+		'size'=>'4',
+		'value'=> isset($item_tax_info[0]['percent']) ? $item_tax_info[0]['percent'] : '')
+	);?>
+	%
 	</div>
 </div>
 
+<div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('items_tax_2').':', 'tax_percent_2',array('class'=>'wide')); ?>
+	<div class='form_field'>
+	<?php echo form_input(array(
+		'name'=>'tax_names[]',
+		'id'=>'tax_name_2',
+		'size'=>'10',
+		'value'=> isset($item_tax_info[1]['name']) ? $item_tax_info[1]['name'] : '')
+	);?>
+	</div>
+	<div class='form_field'>
+	<?php echo form_input(array(
+		'name'=>'tax_percents[]',
+		'id'=>'tax_percent_name_2',
+		'size'=>'4',
+		'value'=> isset($item_tax_info[1]['percent']) ? $item_tax_info[1]['percent'] : '')
+	);?>
+	%
+	</div>
+</div>
 <div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('items_quantity').':', 'quantity',array('class'=>'wide')); ?>
 	<div class='form_field'>

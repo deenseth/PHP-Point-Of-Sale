@@ -44,10 +44,12 @@
 	<td style='text-align:right;border-top:2px solid #000000;'><?php echo $subtotal; ?></td>
 	</tr>
 	
-	<tr>
-	<td colspan="3" style='text-align:right;'><?php echo $this->lang->line('sales_tax'); ?></td>
-	<td style='text-align:right;'><?php echo $tax; ?></td>
-	</tr>
+	<?php foreach($taxes as $name=>$value) { ?>
+		<tr>
+			<td colspan="3" style='text-align:right;'><?php echo $name; ?>:</td>
+			<td style='text-align:right;'><?php echo to_currency($value); ?></td>
+		</tr>
+	<?php }; ?>
 	
 	<tr>
 	<td colspan="3" style='text-align:right;'><?php echo $this->lang->line('sales_total'); ?></td>

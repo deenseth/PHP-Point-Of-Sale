@@ -33,8 +33,7 @@ class Sale extends Model
 				'sale_id'=>$sale_id,
 				'item_id'=>$item_id,
 				'quantity_purchased'=>$item['quantity'],
-				'item_unit_price'=>$item['price'],
-				'item_tax_percent'=>$item['tax']				
+				'item_unit_price'=>$item['price']
 			);
 		
 			$this->db->insert('sales_items',$sales_items_data);
@@ -42,6 +41,18 @@ class Sale extends Model
 			//Update stock quantity
 			$item_data = array('quantity'=>$this->Item->get_info($item_id)->quantity-$item['quantity']);
 			$this->Item->save($item_data,$item_id);
+			
+			
+			
+			foreach($this->Item_taxes->get_info($item_id) as $row)
+			{
+				$this->db->insert('sales_items_taxes', array(
+					'sale_id' 	=>$sale_id, 
+					'item_id' 	=>$item_id, 
+					'name'		=>$row['name'],
+					'percent' 	=>$row['percent']
+				));
+			}
 		}
 		
 		return $sale_id;

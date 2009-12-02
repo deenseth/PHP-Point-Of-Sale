@@ -40,7 +40,6 @@ else
 <th style="width:11%;"><?php echo $this->lang->line('common_delete'); ?></th>
 <th style="width:30%;"><?php echo $this->lang->line('sales_item_name'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_price'); ?></th>
-<th style="width:11%;"><?php echo $this->lang->line('sales_tax_percent'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_quantity'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_total'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_edit'); ?></th>
@@ -70,21 +69,18 @@ else
 		{ 
 		?>
 			<td><?php echo form_input(array('name'=>'price','value'=>$item['price'],'size'=>'6'));?></td>
-			<td><?php echo form_input(array('name'=>'tax','value'=>$item['tax'],'size'=>'4'));?></td>			
 		<?php 
 		}
 		else
 		{
 		?>
 			<td><?php echo $item['price']; ?></td>
-			<td><?php echo $item['tax']; ?></td>
 			<?php echo form_hidden('price',$item['price']); ?> 
-			<?php echo form_hidden('tax',$item['tax']); ?> 
 		<?php
 		} 
 		?>
 		<td><?php echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2'));?></td>
-		<td><?php echo to_currency($item['price']*$item['quantity']*(1+($item['tax']/100))); ?></td>
+		<td><?php echo to_currency($item['price']*$item['quantity']); ?></td>
 		<td><?php echo form_submit("edit_item", $this->lang->line('sales_edit_item'));?></td>
 		</tr>
 		</form>
@@ -124,9 +120,11 @@ else
 		<div class="float_left" style="width:38%;"><?php echo $this->lang->line('sales_sub_total'); ?>:</div>
 		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo $subtotal; ?></div>
 		
-		<div class="float_left" style='width:38%;'><?php echo $this->lang->line('sales_tax'); ?>:</div>
-		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo $tax; ?></div>
-		
+		<?php foreach($taxes as $name=>$value) { ?>
+		<div class="float_left" style='width:38%;'><?php echo $name; ?>:</div>
+		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo to_currency($value); ?></div>
+		<?php }; ?>
+
 		<div class="float_left" style='width:38%;'><?php echo $this->lang->line('sales_total'); ?>:</div>
 		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo $total; ?></div>
 	</div>

@@ -64,8 +64,7 @@ class Sale_lib
 		array(
 			'name'=>$this->CI->Item->get_info($item_id)->name,			
 			'quantity'=>$quantity,
-			'price'=>$price!=null ? $price: $this->CI->Item->get_info($item_id)->unit_price,
-			'tax'=>$tax!=null ? $tax: $this->CI->Item->get_info($item_id)->tax_percent
+			'price'=>$price!=null ? $price: $this->CI->Item->get_info($item_id)->unit_price
 			)
 		);
 			
@@ -85,14 +84,13 @@ class Sale_lib
 		
 	}
 	
-	function edit_item($item_id,$quantity,$price,$tax)
+	function edit_item($item_id,$quantity,$price)
 	{
 		$items = $this->get_cart();
 		if(isset($items[$item_id]))
 		{
 			$items[$item_id]['quantity'] = $quantity;
 			$items[$item_id]['price'] = $price;
-			$items[$item_id]['tax'] = $tax;
 			$this->set_cart($items);	
 		}
 		
@@ -123,7 +121,7 @@ class Sale_lib
 		
 		foreach($this->CI->Sale->get_sale_items($sale_id)->result() as $row)
 		{
-			$this->add_item($row->item_id,-$row->quantity_purchased,$row->item_unit_price,$row->item_tax_percent);
+			$this->add_item($row->item_id,-$row->quantity_purchased,$row->item_unit_price);
 		}
 		$this->set_customer($this->CI->Sale->get_customer($sale_id)->person_id);
 	}
@@ -157,15 +155,28 @@ class Sale_lib
 		$this->delete_customer();
 	}
 	
-	function get_tax()
+	function get_taxes()
 	{
-		$tax = 0;
-		foreach($this->get_cart() as $item)
+		$taxes = array();
+		foreach($this->get_cart() as $item_id=>$item)
 		{
-			$tax+=($item['price']*$item['quantity'])*($item['tax']/100);
+			$tax_info = $this->CI->Item_taxes->get_info($item_id);
+			
+			foreach($tax_info as $tax)
+			{
+				$name = $tax['percent'].'% ' . $tax['name'];
+				$tax_amount=($item['price']*$item['quantity'])*(($tax['percent'])/100);
+				
+				
+				if (!isset($taxes[$name]))
+				{
+					$taxes[$name] = 0;
+				}
+				$taxes[$name] += $tax_amount;
+			}
 		}
 		
-		return to_currency($tax);
+		return $taxes;
 	}
 	
 	function get_subtotal()
@@ -183,8 +194,14 @@ class Sale_lib
 		$total = 0;
 		foreach($this->get_cart() as $item)
 		{
-			$total+=($item['price']*$item['quantity'])*(1+($item['tax']/100));
+			$total+=($item['price']*$item['quantity']);
 		}
+		
+		foreach($this->get_taxes() as $tax)
+		{
+			$total+=$tax;
+		}
+		
 		return to_currency($total);		
 	}
 }

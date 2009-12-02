@@ -62,16 +62,14 @@ class Sales extends Secure_area
 		$data= array();
 		
 		$this->form_validation->set_rules('price', 'lang:items_price', 'required|numeric');
-		$this->form_validation->set_rules('tax', 'lang:items_tax', 'required|numeric');
 		$this->form_validation->set_rules('quantity', 'lang:items_quantity', 'required|integer');
 	
 		$price = $this->input->post("price");
-		$tax = $this->input->post("tax");
 		$quantity = $this->input->post("quantity");
 		
 		if ($this->form_validation->run() != FALSE)
 		{
-			$this->sale_lib->edit_item($item_id,$quantity,$price,$tax);				
+			$this->sale_lib->edit_item($item_id,$quantity,$price);				
 		}
 		else
 		{
@@ -97,7 +95,7 @@ class Sales extends Secure_area
 	{
 		$data['cart']=$this->sale_lib->get_cart();
 		$data['subtotal']=$this->sale_lib->get_subtotal();
-		$data['tax']=$this->sale_lib->get_tax();
+		$data['taxes']=$this->sale_lib->get_taxes();
 		$data['total']=$this->sale_lib->get_total();
 		$data['receipt_title']=$this->lang->line('sales_receipt');
 		$data['transaction_time']= date('m/d/Y h:i:s a');
@@ -114,7 +112,7 @@ class Sales extends Secure_area
 		}
 		
 		//SAVE sale to database
-		$data['sale_id']='POS '.$this->Sale->save($data['cart'],$customer_id,$employee_id,$comment);
+		$data['sale_id']='POS '.$this->Sale->save($data['cart'], $customer_id,$employee_id,$comment);
 		
 		$this->load->view("sales/receipt",$data);		
 		$this->sale_lib->clear_all();
@@ -127,7 +125,7 @@ class Sales extends Secure_area
 		$data['modes']=array('sale'=>$this->lang->line('sales_sale'),'return'=>$this->lang->line('sales_return'));
 		$data['mode']=$this->sale_lib->get_mode();
 		$data['subtotal']=$this->sale_lib->get_subtotal();
-		$data['tax']=$this->sale_lib->get_tax();
+		$data['taxes']=$this->sale_lib->get_taxes();
 		$data['total']=$this->sale_lib->get_total();
 		$data['items_module_allowed'] = $this->Employee->has_permission('items', $person_info->person_id);
 		$customer_id=$this->sale_lib->get_customer();

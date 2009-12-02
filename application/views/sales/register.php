@@ -136,7 +136,7 @@ else
 		<?php echo form_open("sales/complete",array('id'=>'finish_sale_form')); ?>
 		<label id="comment_label" for="comment"><?php echo $this->lang->line('common_comments'); ?>:</label>
 		<?php echo form_textarea(array('name'=>'comment','value'=>'','rows'=>'4','cols'=>'23'));?>
-		<?php echo "<div class='small_button' onclick=\"$('#finish_sale_form').submit();\" style='float:right;margin-top:5px;'><span>".$this->lang->line('sales_complete_sale')."</span></div>";
+		<?php echo "<div class='small_button' id='finish_sale_button' style='float:right;margin-top:5px;'><span>".$this->lang->line('sales_complete_sale')."</span></div>";
 		?>
 		</div>
 
@@ -199,6 +199,14 @@ $(document).ready(function()
     $('#customer').blur(function()
     {
     	$(this).attr('value',"<?php echo $this->lang->line('sales_start_typing_customer_name'); ?>");
+    });
+    
+    $("#finish_sale_button").click(function()
+    {
+    	if (confirm('<?php echo $this->lang->line("sales_confirm_finish_sale"); ?>'))
+    	{
+    		$('#finish_sale_form').submit();
+    	}
     });
 });
 

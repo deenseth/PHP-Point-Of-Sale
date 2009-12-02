@@ -57,6 +57,7 @@ class Items extends Secure_area implements iData_controller
 	function view($item_id=-1)
 	{
 		$data['item_info']=$this->Item->get_info($item_id);
+		$data['item_tax_info']=$this->Item_taxes->get_info($item_id);
 		$this->load->view("items/form",$data);
 	}
 	
@@ -92,12 +93,16 @@ class Items extends Secure_area implements iData_controller
 				$item_data['name'],'item_id'=>$item_id));
 			}
 			
-			$items_taxes_data = array(
-				array('name' => 'VAT', 'percent' => '8'),
-				array('name' => 'FAT', 'percent' => '4'),
-				array('name' => 'FAT', 'percent' => '2'),
-			);
-			
+			$items_taxes_data = array();
+			$tax_names = $this->input->post('tax_name');
+			$tax_percents = $this->input->post('tax_percent');
+			for($k=0;$k<count($tax_percents);$k++)
+			{
+				if (is_numeric($tax_percents[$k]))
+				{
+					$items_taxes_data[] = array('name'=>$tax_names[$k], 'percent'=>$tax_percents[$k] );
+				}
+			}
 			$this->Item_taxes->save($items_taxes_data, $item_id);
 		}
 		else//failure

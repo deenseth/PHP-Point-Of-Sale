@@ -297,7 +297,7 @@ ALTER TABLE `phppos_employees`
 -- Constraints for table `phppos_items_taxes`
 -- 
 ALTER TABLE `phppos_items_taxes`
-  ADD CONSTRAINT `phppos_items_taxes_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `phppos_items` (`item_id`);
+  ADD CONSTRAINT `phppos_items_taxes_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `phppos_items` (`item_id`) ON DELETE cascade;
 
 -- 
 -- Constraints for table `phppos_permissions`

@@ -117,6 +117,13 @@ function get_items_manage_table_data_rows($items,$controller)
 function get_item_data_row($item,$controller)
 {
 	$CI =& get_instance();
+	$item_tax_info=$CI->Item_taxes->get_info($item->item_id);
+	$tax_percents = '';
+	foreach($item_tax_info as $tax_info)
+	{
+		$tax_percents.=$tax_info['percent']. '%, ';
+	}
+	$tax_percents=substr($tax_percents, 0, -2);
 	$controller_name=$CI->uri->segment(1);
 	$width = $controller->get_form_width();
 
@@ -125,7 +132,7 @@ function get_item_data_row($item,$controller)
 	$table_data_row.='<td width="25%">'.$item->name.'</td>';
 	$table_data_row.='<td width="16%">'.$item->category.'</td>';
 	$table_data_row.='<td width="16%">'.to_currency($item->unit_price).'</td>';
-	$table_data_row.='<td width="16%">8%, 4%</td>';	
+	$table_data_row.='<td width="16%">'.$tax_percents.'</td>';	
 	$table_data_row.='<td width="16%">'.$item->quantity.'</td>';
 	$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$item->item_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
 	$table_data_row.='</tr>';

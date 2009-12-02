@@ -2,9 +2,9 @@
 class Item_taxes extends Model
 {
 	/*
-	Gets information about a particular item
+	Gets tax info for a particular item
 	*/
-	function get_taxes($item_id)
+	function get_info($item_id)
 	{
 		$this->db->from('items_taxes');
 		$this->db->where('item_id',$item_id);
@@ -15,7 +15,7 @@ class Item_taxes extends Model
 	/*
 	Inserts or updates an item's taxes
 	*/
-	function save(&$items_taxes_data,$item_id)
+	function save(&$items_taxes_data, $item_id)
 	{
 		//Run these queries as a transaction, we want to make sure we do all or nothing
 		$this->db->trans_start();
@@ -24,6 +24,7 @@ class Item_taxes extends Model
 		
 		foreach ($items_taxes_data as $row)
 		{
+			$row['item_id'] = $item_id;
 			$this->db->insert('items_taxes',$row);		
 		}
 		
@@ -38,7 +39,7 @@ class Item_taxes extends Model
 			$this->save($items_taxes_data, $item_id);
 		}
 	}
-	
+
 	/*
 	Deletes taxes given an item
 	*/

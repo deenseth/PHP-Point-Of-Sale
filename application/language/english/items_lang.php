@@ -16,6 +16,7 @@ $lang['items_name']='Item Name';
 $lang['items_category']='Category';
 $lang['items_unit_price']='Unit Price';
 $lang['items_tax_percent']='Tax Percent';
+$lang['items_tax_percents']='Tax Percent(s)';
 $lang['items_reorder_level']='Reorder Level';
 $lang['items_quantity']='Quantity';
 $lang['items_reorder_level']='Reorder Level';

@@ -73,7 +73,6 @@ class Items extends Secure_area implements iData_controller
 		'category'=>$this->input->post('category'),
 		'item_number'=>$this->input->post('item_number')=='' ? null:$this->input->post('item_number'),
 		'unit_price'=>$this->input->post('unit_price'),
-		'tax_percent'=>$this->input->post('tax_percent'),
 		'quantity'=>$this->input->post('quantity'),
 		'reorder_level'=>$this->input->post('reorder_level')
 		);
@@ -85,12 +84,21 @@ class Items extends Secure_area implements iData_controller
 			{
 				echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_adding').' '.
 				$item_data['name'],'item_id'=>$item_data['item_id']));
+				$item_id = $item_data['item_id'];
 			}
 			else //previous item
 			{
 				echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_updating').' '.
 				$item_data['name'],'item_id'=>$item_id));
 			}
+			
+			$items_taxes_data = array(
+				array('name' => 'VAT', 'percent' => '8'),
+				array('name' => 'FAT', 'percent' => '4'),
+				array('name' => 'FAT', 'percent' => '2'),
+			);
+			
+			$this->Item_taxes->save($items_taxes_data, $item_id);
 		}
 		else//failure
 		{	

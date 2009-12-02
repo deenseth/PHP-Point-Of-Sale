@@ -108,7 +108,7 @@ $autoload['language'] = array('common', 'config', 'customers', 'employees', 'err
 |
 */
 
-$autoload['model'] = array('Appconfig','Person','Customer','Employee','Module','Item','Sale');
+$autoload['model'] = array('Appconfig','Person','Customer','Employee','Module','Item', 'Item_taxes', 'Sale');
 
 
 /*

@@ -78,7 +78,7 @@ function get_items_manage_table($items,$controller)
 	$CI->lang->line('items_name'),
 	$CI->lang->line('items_category'),
 	$CI->lang->line('items_unit_price'),
-	$CI->lang->line('items_tax_percent'),
+	$CI->lang->line('items_tax_percents'),
 	$CI->lang->line('items_quantity'),
 	'&nbsp');
 	
@@ -125,7 +125,7 @@ function get_item_data_row($item,$controller)
 	$table_data_row.='<td width="25%">'.$item->name.'</td>';
 	$table_data_row.='<td width="16%">'.$item->category.'</td>';
 	$table_data_row.='<td width="16%">'.to_currency($item->unit_price).'</td>';
-	$table_data_row.='<td width="16%">'.$item->tax_percent.'%</td>';	
+	$table_data_row.='<td width="16%">8%, 4%</td>';	
 	$table_data_row.='<td width="16%">'.$item->quantity.'</td>';
 	$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$item->item_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
 	$table_data_row.='</tr>';

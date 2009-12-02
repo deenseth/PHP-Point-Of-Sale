@@ -52,8 +52,6 @@ class Item extends Model
 				$item_obj->$field='';
 			}
 			
-			//Set tax percent to store default
-			$item_obj->tax_percent=$this->config->item("default_tax_rate");
 			return $item_obj;
 		}
 	}
@@ -110,7 +108,6 @@ class Item extends Model
 			
 			//remove any non numberic symbols
 			$item_info->unit_price=preg_replace("/[^0-9\.]/","",$item_info->unit_price);
-			$item_info->tax_percent=$this->config->item('default_tax_rate');
 			$item_info->url=(string)$parsed_xml->Items->Item[0]->DetailPageURL;
 			$item_info->provider=(string)$this->lang->line('items_amazon');
 			return $item_info;
@@ -133,7 +130,6 @@ class Item extends Model
 					$item_info->item_number=$item_number;
 					$item_info->name=$parsed_xml['description'];
 					$item_info->description=$parsed_xml['issuerCountry'].' - '.$parsed_xml['size'];
-					$item_info->tax_percent=$this->config->item('default_tax_rate');
 					$item_info->url="http://www.upcdatabase.com/item/$item_number";
 					$item_info->provider=$this->lang->line('items_upc_database');						
 				}

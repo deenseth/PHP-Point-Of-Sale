@@ -80,7 +80,7 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 		'name'=>'tax_percents[]',
 		'id'=>'tax_percent_name_1',
 		'size'=>'4',
-		'value'=> isset($item_tax_info[0]['percent']) ? $item_tax_info[0]['percent'] : '')
+		'value'=> isset($item_tax_info[0]['percent']) ? $item_tax_info[0]['percent'] : $default_tax_rate)
 	);?>
 	%
 	</div>

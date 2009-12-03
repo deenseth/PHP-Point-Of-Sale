@@ -26,7 +26,7 @@ $(document).ready(function()
 {
 	$("#generate_report").click(function()
 	{
-		window.location = window.location+'/'+$("#report_date_range_simple option:selected").val();
+		window.location = window.location+'/'+$("#report_date_range_simple option:selected").val()+'/'+new Date().getTime();
 	});
 	
 });

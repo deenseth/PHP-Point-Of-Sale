@@ -4,8 +4,7 @@ class Summary_items extends Report
 {
 	function __construct()
 	{
-		parent::Model();
-		$this->createSalesItemsTempTable();
+		parent::__construct();
 	}
 	
 	public function getDataColumns()

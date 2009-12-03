@@ -2,6 +2,12 @@
 require_once("report.php");
 class Summary_categories extends Report
 {
+	function __construct()
+	{
+		parent::Model();
+		$this->createSalesItemsIncTaxTempTable();
+	}
+	
 	public function getDataColumns()
 	{
 		return array($this->lang->line('reports_category'), $this->lang->line('reports_subtotal'), $this->lang->line('reports_total'), $this->lang->line('reports_tax'));
@@ -13,8 +19,8 @@ class Summary_categories extends Report
 		ROUND(SUM(item_unit_price*quantity_purchased)*(1+(item_tax_percent/100)), 2) as total,
 		ROUND(SUM(item_unit_price*quantity_purchased)*(item_tax_percent/100), 2) as tax', false);
 		$this->db->from('items');
-		$this->db->join('sales_items', 'items.item_id = sales_items.item_id');		
-		$this->db->join('sales', 'sales_items.sale_id = sales.sale_id');		
+		$this->db->join('sales_items_tax_percent_temp', 'items.item_id = sales_items_tax_percent_temp.item_id');		
+		$this->db->join('sales', 'sales_items_tax_percent_temp.sale_id = sales.sale_id');		
 		$this->db->where('date(sale_time) BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
 		$this->db->group_by('category');
 		$this->db->order_by('category');
@@ -28,8 +34,8 @@ class Summary_categories extends Report
 		ROUND(SUM(item_unit_price*quantity_purchased)*(1+(item_tax_percent/100)), 2) as total,
 		ROUND(SUM(item_unit_price*quantity_purchased)*(item_tax_percent/100), 2) as tax', false);
 		$this->db->from('items');
-		$this->db->join('sales_items', 'items.item_id = sales_items.item_id');		
-		$this->db->join('sales', 'sales_items.sale_id = sales.sale_id');		
+		$this->db->join('sales_items_tax_percent_temp', 'items.item_id = sales_items_tax_percent_temp.item_id');		
+		$this->db->join('sales', 'sales_items_tax_percent_temp.sale_id = sales.sale_id');		
 		$this->db->where('date(sale_time) BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
 		
 		return $this->db->get()->row_array();

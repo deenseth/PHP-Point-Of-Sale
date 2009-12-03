@@ -22,6 +22,9 @@ class Sale extends Model
 		'comment'=>$comment
 		);
 		
+		//Run these queries as a transaction, we want to make sure we do all or nothing
+		$this->db->trans_start();
+
 		$this->db->insert('sales',$sales_data);
 		$sale_id = $this->db->insert_id();
 		
@@ -54,7 +57,8 @@ class Sale extends Model
 				));
 			}
 		}
-		
+		$this->db->trans_complete();
+
 		return $sale_id;
 	}
 	

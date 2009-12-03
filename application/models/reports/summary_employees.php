@@ -2,6 +2,12 @@
 require_once("report.php");
 class Summary_employees extends Report
 {
+	function __construct()
+	{
+		parent::Model();
+		$this->createSalesItemsIncTaxTempTable();
+	}
+	
 	public function getDataColumns()
 	{
 		return array($this->lang->line('reports_employee'), $this->lang->line('reports_subtotal'), $this->lang->line('reports_total'), $this->lang->line('reports_tax'));

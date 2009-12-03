@@ -9,22 +9,30 @@ class Summary_categories extends Report
 	
 	public function getData(array $inputs)
 	{
-		return array(
-			array('Computers', to_currency('12.40'), to_currency('1.00'), to_currency('13.40')),
-			array('Computers', to_currency('12.40'), to_currency('1.00'), to_currency('13.40')),
-			array('Computers', to_currency('12.40'), to_currency('1.00'), to_currency('13.40')),
-			array('Computers', to_currency('12.40'), to_currency('1.00'), to_currency('13.40')),
-			array('Computers', to_currency('12.40'), to_currency('1.00'), to_currency('13.40')),
-		);
+		$this->db->select('category, SUM(item_unit_price*quantity_purchased) as subtotal, 
+		ROUND(SUM(item_unit_price*quantity_purchased)*(1+(item_tax_percent/100)), 2) as total,
+		ROUND(SUM(item_unit_price*quantity_purchased)*(item_tax_percent/100), 2) as tax', false);
+		$this->db->from('items');
+		$this->db->join('sales_items', 'items.item_id = sales_items.item_id');		
+		$this->db->join('sales', 'sales_items.sale_id = sales.sale_id');		
+		$this->db->where('date(sale_time) BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
+		$this->db->group_by('category');
+		$this->db->order_by('category');
+		
+		return $this->db->get()->result_array();		
 	}
 	
 	public function getSummaryData(array $inputs)
 	{
-		return array(
-			'Subtotal'=>'9.50',
-			'Tax'=>'9.50',
-			'Total'=>'9.50',
-		);
+		$this->db->select('SUM(item_unit_price*quantity_purchased) as subtotal, 
+		ROUND(SUM(item_unit_price*quantity_purchased)*(1+(item_tax_percent/100)), 2) as total,
+		ROUND(SUM(item_unit_price*quantity_purchased)*(item_tax_percent/100), 2) as tax', false);
+		$this->db->from('items');
+		$this->db->join('sales_items', 'items.item_id = sales_items.item_id');		
+		$this->db->join('sales', 'sales_items.sale_id = sales.sale_id');		
+		$this->db->where('date(sale_time) BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
+		
+		return $this->db->get()->row_array();
 	}
 }
 ?>

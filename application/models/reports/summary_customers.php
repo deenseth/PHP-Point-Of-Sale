@@ -5,7 +5,7 @@ class Summary_customers extends Report
 	function __construct()
 	{
 		parent::Model();
-		$this->createSalesItemsIncTaxTempTable();
+		$this->createSalesItemsTempTable();
 	}
 	
 	public function getDataColumns()
@@ -21,7 +21,7 @@ class Summary_customers extends Report
 		$this->db->from('customers');
 		$this->db->join('people', 'customers.person_id = people.person_id');
 		$this->db->join('sales', 'customers.person_id = sales.customer_id');		
-		$this->db->join('sales_items_tax_percent_temp', 'sales.sale_id = sales_items_tax_percent_temp.sale_id');		
+		$this->db->join('sales_items_temp', 'sales.sale_id = sales_items_temp.sale_id');		
 		$this->db->where('date(sale_time) BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
 		$this->db->group_by('customer_id');
 		$this->db->order_by('last_name');
@@ -37,7 +37,7 @@ class Summary_customers extends Report
 		$this->db->from('customers');
 		$this->db->join('people', 'customers.person_id = people.person_id');
 		$this->db->join('sales', 'customers.person_id = sales.customer_id');		
-		$this->db->join('sales_items_tax_percent_temp', 'sales.sale_id = sales_items_tax_percent_temp.sale_id');		
+		$this->db->join('sales_items_temp', 'sales.sale_id = sales_items_temp.sale_id');		
 		$this->db->where('date(sale_time) BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
 
 		return $this->db->get()->row_array();

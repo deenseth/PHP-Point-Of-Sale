@@ -14,28 +14,19 @@ class Summary_sales extends Report
 	
 	public function getData(array $inputs)
 	{		
-		$this->db->select('date(sale_time) as sale_date, 
-		SUM(item_unit_price*quantity_purchased) as subtotal, 
-		ROUND(SUM(item_unit_price*quantity_purchased)*(1+(item_tax_percent/100)), 2) as total,
-		ROUND(SUM(item_unit_price*quantity_purchased)*(item_tax_percent/100), 2) as tax', false);
-		$this->db->from('sales');
-		$this->db->join('sales_items_temp', 'sales.sale_id = sales_items_temp.sale_id');		
+		$this->db->select('sale_date, sum(subtotal) as subtotal, sum(total) as total, sum(tax) as tax');
+		$this->db->from('sales_items_temp');
 		$this->db->group_by('sale_date');
 		$this->db->having('sale_date BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
 		$this->db->order_by('sale_date');
-		
-		return $this->db->get()->result_array();		
+		return $this->db->get()->result_array();
 	}
 	
 	public function getSummaryData(array $inputs)
 	{
-		$this->db->select('SUM(item_unit_price*quantity_purchased) as subtotal, 
-		ROUND(SUM(item_unit_price*quantity_purchased)*(1+(item_tax_percent/100)), 2) as total,
-		ROUND(SUM(item_unit_price*quantity_purchased)*(item_tax_percent/100), 2) as tax', false);
-		$this->db->from('sales');
-		$this->db->join('sales_items_temp', 'sales.sale_id = sales_items_temp.sale_id');		
-		$this->db->where('date(sale_time) BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
-
+		$this->db->select('sum(subtotal) as subtotal, sum(total) as total, sum(tax) as tax');
+		$this->db->from('sales_items_temp');
+		$this->db->where('sale_date BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
 		return $this->db->get()->row_array();		
 	}
 

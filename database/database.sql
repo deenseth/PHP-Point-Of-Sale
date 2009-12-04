@@ -85,7 +85,7 @@ CREATE TABLE `phppos_items` (
   `category` varchar(255) NOT NULL,
   `item_number` varchar(255) DEFAULT NULL,
   `description` varchar(255) NOT NULL,
-  `unit_price` decimal(15,2) NOT NULL,
+  `unit_price` DOUBLE(15,2) NOT NULL,
   `quantity` int(10) NOT NULL DEFAULT '0',
   `reorder_level` int(10) NOT NULL DEFAULT '0',
   `item_id` int(10) NOT NULL AUTO_INCREMENT,
@@ -107,7 +107,7 @@ CREATE TABLE `phppos_items` (
 CREATE TABLE `phppos_items_taxes` (
   `item_id` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `percent` decimal(15,2) NOT NULL,
+  `percent` DOUBLE(15,2) NOT NULL,
   PRIMARY KEY (`item_id`,`name`,`percent`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -227,7 +227,7 @@ CREATE TABLE `phppos_sales_items` (
   `sale_id` int(10) NOT NULL DEFAULT '0',
   `item_id` int(10) NOT NULL DEFAULT '0',
   `quantity_purchased` int(10) NOT NULL DEFAULT '0',
-  `item_unit_price` decimal(15,2) NOT NULL,
+  `item_unit_price` DOUBLE(15,2) NOT NULL,
   PRIMARY KEY (`sale_id`,`item_id`),
   KEY `phppos_sales_items_ibfk_1` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -247,7 +247,7 @@ CREATE TABLE `phppos_sales_items_taxes` (
   `sale_id` int(10) NOT NULL,
   `item_id` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `percent` decimal(15,2) NOT NULL,
+  `percent` DOUBLE(15,2) NOT NULL,
   PRIMARY KEY (`sale_id`,`item_id`,`name`,`percent`),
   KEY `phppos_sales_items_taxes_ibfk_2` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

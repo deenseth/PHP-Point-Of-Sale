@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Dec 02, 2009 at 07:17 AM
+-- Generation Time: Dec 03, 2009 at 08:59 PM
 -- Server version: 5.1.39
 -- PHP Version: 5.3.0
 -- 
@@ -91,7 +91,7 @@ CREATE TABLE `phppos_items` (
   `item_id` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`item_id`),
   UNIQUE KEY `item_number` (`item_number`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
 -- Dumping data for table `phppos_items`
@@ -107,7 +107,7 @@ CREATE TABLE `phppos_items` (
 CREATE TABLE `phppos_items_taxes` (
   `item_id` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `percent` int(2) NOT NULL,
+  `percent` decimal(15,2) NOT NULL,
   PRIMARY KEY (`item_id`,`name`,`percent`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -163,7 +163,7 @@ CREATE TABLE `phppos_people` (
   `comments` text NOT NULL,
   `person_id` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`person_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=latin1 AUTO_INCREMENT=154 ;
 
 -- 
 -- Dumping data for table `phppos_people`
@@ -210,7 +210,7 @@ CREATE TABLE `phppos_sales` (
   PRIMARY KEY (`sale_id`),
   KEY `customer_id` (`customer_id`),
   KEY `employee_id` (`employee_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
 -- Dumping data for table `phppos_sales`
@@ -247,7 +247,7 @@ CREATE TABLE `phppos_sales_items_taxes` (
   `sale_id` int(10) NOT NULL,
   `item_id` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `percent` int(2) NOT NULL,
+  `percent` decimal(15,2) NOT NULL,
   PRIMARY KEY (`sale_id`,`item_id`,`name`,`percent`),
   KEY `phppos_sales_items_taxes_ibfk_2` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -297,7 +297,7 @@ ALTER TABLE `phppos_employees`
 -- Constraints for table `phppos_items_taxes`
 -- 
 ALTER TABLE `phppos_items_taxes`
-  ADD CONSTRAINT `phppos_items_taxes_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `phppos_items` (`item_id`) ON DELETE cascade;
+  ADD CONSTRAINT `phppos_items_taxes_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `phppos_items` (`item_id`) ON DELETE CASCADE;
 
 -- 
 -- Constraints for table `phppos_permissions`
@@ -324,5 +324,5 @@ ALTER TABLE `phppos_sales_items`
 -- Constraints for table `phppos_sales_items_taxes`
 -- 
 ALTER TABLE `phppos_sales_items_taxes`
-  ADD CONSTRAINT `phppos_sales_items_taxes_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `phppos_sales_items` (`item_id`),
-  ADD CONSTRAINT `phppos_sales_items_taxes_ibfk_1` FOREIGN KEY (`sale_id`) REFERENCES `phppos_sales_items` (`sale_id`);
+  ADD CONSTRAINT `phppos_sales_items_taxes_ibfk_1` FOREIGN KEY (`sale_id`) REFERENCES `phppos_sales_items` (`sale_id`),
+  ADD CONSTRAINT `phppos_sales_items_taxes_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `phppos_sales_items` (`item_id`);

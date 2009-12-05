@@ -1,5 +1,5 @@
 <?php
-class Report extends Model 
+abstract class Report extends Model 
 {
 	function __construct()
 	{
@@ -16,13 +16,13 @@ class Report extends Model
 	}
 	
 	//Returns the column names used for the report
-	public function getDataColumns(){/*override*/}
+	public abstract function getDataColumns();
 	
 	//Returns all the data to be populated into the report
-	public function getData(array $inputs){/*override*/}
+	public abstract function getData(array $inputs);
 	
 	//Returns key=>value pairing of summary data for the report
-	public function getSummaryData(array $inputs){/*override*/}
+	public abstract function getSummaryData(array $inputs);
 	
 	//We create a temp table that allows us to do easy report queries
 	public function createSalesItemsTempTable()

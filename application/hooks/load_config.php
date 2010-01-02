@@ -3,9 +3,9 @@
 function load_config()
 {
 	$CI =& get_instance();
-	foreach($CI->Appconfig->get_all()->result() as $app_config)
+	foreach($CI->Store->get_info($CI->config->item('store_id')) as $key=>$value)
 	{
-		$CI->config->set_item($app_config->key,$app_config->value);
+		$CI->config->set_item($key,$value);
 	}
 }
 ?>

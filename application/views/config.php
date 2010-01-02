@@ -10,12 +10,12 @@ echo form_open('config/save/',array('id'=>'config_form'));
 <legend><?php echo $this->lang->line("config_info"); ?></legend>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_company').':', 'company',array('class'=>'wide required')); ?>
+<?php echo form_label($this->lang->line('config_store').':', 'store',array('class'=>'wide required')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
-		'name'=>'company',
-		'id'=>'company',
-		'value'=>$this->config->item('company')));?>
+		'name'=>'store',
+		'id'=>'store',
+		'value'=>$this->config->item('name')));?>
 	</div>
 </div>
 
@@ -139,7 +139,7 @@ $(document).ready(function()
  		wrapper: "li",
 		rules: 
 		{
-			company: "required",
+			store: "required",
 			address: "required",
     		phone: "required",
     		default_tax_rate:
@@ -153,7 +153,7 @@ $(document).ready(function()
    		},
 		messages: 
 		{
-     		company: "<?php echo $this->lang->line('config_company_required'); ?>",
+     		store: "<?php echo $this->lang->line('config_store_required'); ?>",
      		address: "<?php echo $this->lang->line('config_address_required'); ?>",
      		phone: "<?php echo $this->lang->line('config_phone_required'); ?>",
      		default_tax_rate:

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Jan 02, 2010 at 12:48 PM
+-- Generation Time: Jan 02, 2010 at 05:10 PM
 -- Server version: 5.1.39
 -- PHP Version: 5.3.0
 -- 
@@ -92,7 +92,7 @@ CREATE TABLE `phppos_items` (
   `item_id` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`item_id`),
   UNIQUE KEY `item_number` (`item_number`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phppos_items`
@@ -108,7 +108,7 @@ CREATE TABLE `phppos_items` (
 CREATE TABLE `phppos_items_taxes` (
   `item_id` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `percent` DOUBLE(15,2) NOT NULL,
+  `percent` double(15,2) NOT NULL,
   PRIMARY KEY (`item_id`,`name`,`percent`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -164,7 +164,7 @@ CREATE TABLE `phppos_people` (
   `comments` text NOT NULL,
   `person_id` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`person_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=latin1 AUTO_INCREMENT=154 ;
+) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phppos_people`
@@ -211,7 +211,7 @@ CREATE TABLE `phppos_sales` (
   PRIMARY KEY (`sale_id`),
   KEY `customer_id` (`customer_id`),
   KEY `employee_id` (`employee_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phppos_sales`
@@ -231,7 +231,7 @@ CREATE TABLE `phppos_sales_items` (
   `item_cost_price` decimal(15,2) NOT NULL,
   `item_unit_price` double(15,2) NOT NULL,
   PRIMARY KEY (`sale_id`,`item_id`),
-  KEY `phppos_sales_items_ibfk_1` (`item_id`)
+  KEY `item_id` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- 
@@ -249,9 +249,9 @@ CREATE TABLE `phppos_sales_items_taxes` (
   `sale_id` int(10) NOT NULL,
   `item_id` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `percent` DOUBLE(15,2) NOT NULL,
+  `percent` double(15,2) NOT NULL,
   PRIMARY KEY (`sale_id`,`item_id`,`name`,`percent`),
-  KEY `phppos_sales_items_taxes_ibfk_2` (`item_id`)
+  KEY `item_id` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- 

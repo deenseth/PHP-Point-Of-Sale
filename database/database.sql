@@ -3,12 +3,38 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Jan 02, 2010 at 11:22 AM
+-- Generation Time: Dec 03, 2009 at 08:59 PM
 -- Server version: 5.1.39
 -- PHP Version: 5.3.0
 -- 
 -- Database: `pos`
 -- 
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `phppos_app_config`
+-- 
+
+CREATE TABLE `phppos_app_config` (
+  `key` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  PRIMARY KEY (`key`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `phppos_app_config`
+-- 
+
+INSERT INTO `phppos_app_config` (`key`, `value`) VALUES ('address', '123 Nowhere street'),
+('company', 'PHP Point Of Sale, Inc'),
+('default_tax_rate', '8'),
+('email', 'admin@phppointofsale.com'),
+('fax', ''),
+('phone', '555-555-5555'),
+('return_policy', 'Test'),
+('version', '10.0'),
+('website', '');
 
 -- --------------------------------------------------------
 
@@ -59,14 +85,12 @@ CREATE TABLE `phppos_items` (
   `category` varchar(255) NOT NULL,
   `item_number` varchar(255) DEFAULT NULL,
   `description` varchar(255) NOT NULL,
-  `unit_price` double(15,2) NOT NULL,
+  `unit_price` DOUBLE(15,2) NOT NULL,
   `quantity` int(10) NOT NULL DEFAULT '0',
   `reorder_level` int(10) NOT NULL DEFAULT '0',
-  `store_id` int(11) NOT NULL,
   `item_id` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`item_id`),
-  UNIQUE KEY `item_number` (`item_number`),
-  KEY `phppos_items_ibfk_1` (`store_id`)
+  UNIQUE KEY `item_number` (`item_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
@@ -83,7 +107,7 @@ CREATE TABLE `phppos_items` (
 CREATE TABLE `phppos_items_taxes` (
   `item_id` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `percent` double(15,2) NOT NULL,
+  `percent` DOUBLE(15,2) NOT NULL,
   PRIMARY KEY (`item_id`,`name`,`percent`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -137,17 +161,15 @@ CREATE TABLE `phppos_people` (
   `zip` varchar(255) NOT NULL,
   `country` varchar(255) NOT NULL,
   `comments` text NOT NULL,
-  `store_id` int(11) NOT NULL,
   `person_id` int(10) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`person_id`),
-  KEY `store_id` (`store_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+  PRIMARY KEY (`person_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=latin1 AUTO_INCREMENT=154 ;
 
 -- 
 -- Dumping data for table `phppos_people`
 -- 
 
-INSERT INTO `phppos_people` (`first_name`, `last_name`, `phone_number`, `email`, `address_1`, `address_2`, `city`, `state`, `zip`, `country`, `comments`, `store_id`, `person_id`) VALUES ('Super', 'Admin', '', '', '', '', '', '', '', '', '', 1, 1);
+INSERT INTO `phppos_people` (`first_name`, `last_name`, `phone_number`, `email`, `address_1`, `address_2`, `city`, `state`, `zip`, `country`, `comments`, `person_id`) VALUES ('John', 'Doe', '555-555-5555', 'admin@phppointofsale', 'Address 1', '', '', '', '', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -184,12 +206,10 @@ CREATE TABLE `phppos_sales` (
   `customer_id` int(10) DEFAULT NULL,
   `employee_id` int(10) NOT NULL DEFAULT '0',
   `comment` text NOT NULL,
-  `store_id` int(11) NOT NULL,
   `sale_id` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`sale_id`),
   KEY `customer_id` (`customer_id`),
-  KEY `employee_id` (`employee_id`),
-  KEY `phppos_sales_ibfk_22` (`store_id`)
+  KEY `employee_id` (`employee_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
@@ -207,7 +227,7 @@ CREATE TABLE `phppos_sales_items` (
   `sale_id` int(10) NOT NULL DEFAULT '0',
   `item_id` int(10) NOT NULL DEFAULT '0',
   `quantity_purchased` int(10) NOT NULL DEFAULT '0',
-  `item_unit_price` double(15,2) NOT NULL,
+  `item_unit_price` DOUBLE(15,2) NOT NULL,
   PRIMARY KEY (`sale_id`,`item_id`),
   KEY `phppos_sales_items_ibfk_1` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -227,7 +247,7 @@ CREATE TABLE `phppos_sales_items_taxes` (
   `sale_id` int(10) NOT NULL,
   `item_id` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `percent` double(15,2) NOT NULL,
+  `percent` DOUBLE(15,2) NOT NULL,
   PRIMARY KEY (`sale_id`,`item_id`,`name`,`percent`),
   KEY `phppos_sales_items_taxes_ibfk_2` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -257,31 +277,6 @@ CREATE TABLE `phppos_sessions` (
 -- 
 
 
--- --------------------------------------------------------
-
--- 
--- Table structure for table `phppos_stores`
--- 
-
-CREATE TABLE `phppos_stores` (
-  `name` varchar(255) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `default_tax_rate` double(15,2) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `phone` varchar(255) NOT NULL,
-  `fax` varchar(255) NOT NULL,
-  `return_policy` varchar(255) NOT NULL,
-  `website` varchar(255) NOT NULL,
-  `store_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`store_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
--- 
--- Dumping data for table `phppos_stores`
--- 
-
-INSERT INTO `phppos_stores` (`name`, `address`, `default_tax_rate`, `email`, `phone`, `fax`, `return_policy`, `website`, `store_id`) VALUES ('PHP Point Of Sale Inc.', '123 Nowhere street', 8.00, 'admin@phppointofsale.com', '585-880-6599', '', 'Return''s are accepted after 14 days', 'http://www.phppointofsale.com', 1);
-
 -- 
 -- Constraints for dumped tables
 -- 
@@ -299,22 +294,10 @@ ALTER TABLE `phppos_employees`
   ADD CONSTRAINT `phppos_employees_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `phppos_people` (`person_id`);
 
 -- 
--- Constraints for table `phppos_items`
--- 
-ALTER TABLE `phppos_items`
-  ADD CONSTRAINT `phppos_items_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `phppos_stores` (`store_id`);
-
--- 
 -- Constraints for table `phppos_items_taxes`
 -- 
 ALTER TABLE `phppos_items_taxes`
   ADD CONSTRAINT `phppos_items_taxes_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `phppos_items` (`item_id`) ON DELETE CASCADE;
-
--- 
--- Constraints for table `phppos_people`
--- 
-ALTER TABLE `phppos_people`
-  ADD CONSTRAINT `phppos_people_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `phppos_stores` (`store_id`);
 
 -- 
 -- Constraints for table `phppos_permissions`
@@ -328,8 +311,7 @@ ALTER TABLE `phppos_permissions`
 -- 
 ALTER TABLE `phppos_sales`
   ADD CONSTRAINT `phppos_sales_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `phppos_employees` (`person_id`),
-  ADD CONSTRAINT `phppos_sales_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `phppos_customers` (`person_id`),
-  ADD CONSTRAINT `phppos_sales_ibfk_3` FOREIGN KEY (`store_id`) REFERENCES `phppos_stores` (`store_id`);
+  ADD CONSTRAINT `phppos_sales_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `phppos_customers` (`person_id`);
 
 -- 
 -- Constraints for table `phppos_sales_items`

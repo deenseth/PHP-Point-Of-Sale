@@ -15,6 +15,7 @@ class Person extends Model
 	function get_all()
 	{
 		$this->db->from('people');
+		$this->db->where('people.store_id', $this->config->item('store_id'));
 		$this->db->order_by("last_name", "asc");
 		return $this->db->get();		
 	}

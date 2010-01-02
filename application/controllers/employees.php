@@ -60,7 +60,8 @@ class Employees extends Person_controller
 		'state'=>$this->input->post('state'),
 		'zip'=>$this->input->post('zip'),
 		'country'=>$this->input->post('country'),
-		'comments'=>$this->input->post('comments')
+		'comments'=>$this->input->post('comments'),
+		'store_id'=>$this->config->item('store_id')
 		);
 		$permission_data = $this->input->post("permissions")!=false ? $this->input->post("permissions"):array();
 		

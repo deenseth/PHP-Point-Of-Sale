@@ -63,7 +63,6 @@ class Item extends Model
 	function get_item_id($item_number)
 	{
 		$this->db->from('items');
-		$this->db->where('store_id', $this->config->item('store_id'));
 		$this->db->where('item_number',$item_number);
 		$query = $this->db->get();
 		
@@ -205,7 +204,6 @@ class Item extends Model
 		$suggestions = array();
 		
 		$this->db->from('items');
-		$this->db->where('store_id', $this->config->item('store_id'));
 		$this->db->like('name', $search); 
 		$this->db->order_by("name", "asc");		
 		$by_name = $this->db->get();
@@ -215,7 +213,6 @@ class Item extends Model
 		}
 		
 		$this->db->from('items');
-		$this->db->where('store_id', $this->config->item('store_id'));
 		$this->db->distinct();		
 		$this->db->like('category', $search); 
 		$this->db->order_by("category", "asc");		
@@ -226,7 +223,6 @@ class Item extends Model
 		}
 
 		$this->db->from('items');
-		$this->db->where('store_id', $this->config->item('store_id'));
 		$this->db->like('item_number', $search); 
 		$this->db->order_by("item_number", "asc");		
 		$by_item_number = $this->db->get();
@@ -250,7 +246,6 @@ class Item extends Model
 		$suggestions = array();
 		
 		$this->db->from('items');
-		$this->db->where('store_id', $this->config->item('store_id'));		
 		$this->db->like('name', $search); 
 		$this->db->order_by("name", "asc");		
 		$by_name = $this->db->get();
@@ -273,7 +268,6 @@ class Item extends Model
 		$this->db->distinct();
 		$this->db->select('category');
 		$this->db->from('items');
-		$this->db->where('store_id', $this->config->item('store_id'));
 		$this->db->like('category', $search); 		
 		$this->db->order_by("category", "asc");		
 		$by_category = $this->db->get();
@@ -291,7 +285,6 @@ class Item extends Model
 	function search($search)
 	{
 		$this->db->from('items');
-		$this->db->where('store_id', $this->config->item('store_id'));
 		$this->db->like('name', $search); 
 		$this->db->or_like('item_number', $search);
 		$this->db->or_like('category', $search);

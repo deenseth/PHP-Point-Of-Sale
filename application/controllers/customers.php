@@ -59,10 +59,10 @@ class Customers extends Person_controller
 		'state'=>$this->input->post('state'),
 		'zip'=>$this->input->post('zip'),
 		'country'=>$this->input->post('country'),
-		'comments'=>$this->input->post('comments')
+		'comments'=>$this->input->post('comments'),
+		'store_id'=>$this->config->item('store_id')
 		);
 		$customer_data=array(
-		'store_id'=>$this->config->item('store_id'),		
 		'account_number'=>$this->input->post('account_number')=='' ? null:$this->input->post('account_number'),
 		);
 		if($this->Customer->save($person_data,$customer_data,$customer_id))

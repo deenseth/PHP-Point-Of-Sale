@@ -21,7 +21,7 @@ class Employee extends Person
 	{
 		$this->db->from('employees');
 		$this->db->join('people','employees.person_id=people.person_id');
-		$this->db->where('employees.store_id', $this->config->item('store_id'));
+		$this->db->where('people.store_id', $this->config->item('store_id'));
 		$this->db->order_by("last_name", "asc");
 		return $this->db->get();		
 	}

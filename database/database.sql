@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Jan 02, 2010 at 11:22 AM
+-- Generation Time: Jan 02, 2010 at 12:29 PM
 -- Server version: 5.1.39
 -- PHP Version: 5.3.0
 -- 
@@ -65,7 +65,8 @@ CREATE TABLE `phppos_items` (
   `store_id` int(11) NOT NULL,
   `item_id` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`item_id`),
-  UNIQUE KEY `item_number` (`item_number`)
+  UNIQUE KEY `item_number` (`item_number`),
+  KEY `store_id` (`store_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
@@ -140,7 +141,7 @@ CREATE TABLE `phppos_people` (
   `person_id` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`person_id`),
   KEY `store_id` (`store_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 -- 
 -- Dumping data for table `phppos_people`
@@ -187,7 +188,8 @@ CREATE TABLE `phppos_sales` (
   `sale_id` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`sale_id`),
   KEY `customer_id` (`customer_id`),
-  KEY `employee_id` (`employee_id`)
+  KEY `employee_id` (`employee_id`),
+  KEY `store_id` (`store_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
@@ -206,7 +208,8 @@ CREATE TABLE `phppos_sales_items` (
   `item_id` int(10) NOT NULL DEFAULT '0',
   `quantity_purchased` int(10) NOT NULL DEFAULT '0',
   `item_unit_price` double(15,2) NOT NULL,
-  PRIMARY KEY (`sale_id`,`item_id`)
+  PRIMARY KEY (`sale_id`,`item_id`),
+  KEY `item_id` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- 
@@ -225,7 +228,8 @@ CREATE TABLE `phppos_sales_items_taxes` (
   `item_id` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
   `percent` double(15,2) NOT NULL,
-  PRIMARY KEY (`sale_id`,`item_id`,`name`,`percent`)
+  PRIMARY KEY (`sale_id`,`item_id`,`name`,`percent`),
+  KEY `item_id` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- 
@@ -270,7 +274,7 @@ CREATE TABLE `phppos_stores` (
   `website` varchar(255) NOT NULL,
   `store_id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`store_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 AUTO_INCREMENT=2;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- 
 -- Dumping data for table `phppos_stores`

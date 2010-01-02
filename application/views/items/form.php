@@ -54,18 +54,6 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_cost_price').':', 'cost_price',array('class'=>'required wide')); ?>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'cost_price',
-		'size'=>'8',
-		'id'=>'cost_price',
-		'value'=>$item_info->cost_price)
-	);?>
-	</div>
-</div>
-
-<div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('items_unit_price').':', 'unit_price',array('class'=>'required wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
@@ -243,12 +231,6 @@ $(document).ready(function()
 		{
 			name:"required",
 			category:"required",
-			cost_price:
-			{
-				required:true,
-				number:true
-			},
-
 			unit_price:
 			{
 				required:true,
@@ -274,11 +256,6 @@ $(document).ready(function()
 		{
 			name:"<?php echo $this->lang->line('items_name_required'); ?>",
 			category:"<?php echo $this->lang->line('items_category_required'); ?>",
-			cost_price:
-			{
-				required:"<?php echo $this->lang->line('items_cost_price_required'); ?>",
-				number:"<?php echo $this->lang->line('items_cost_price_number'); ?>"
-			},
 			unit_price:
 			{
 				required:"<?php echo $this->lang->line('items_unit_price_required'); ?>",

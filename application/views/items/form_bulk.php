@@ -27,17 +27,6 @@ echo form_open('items/bulk_update/',array('id'=>'item_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_cost_price').':', 'cost_price',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'cost_price',
-		'size'=>'8',
-		'id'=>'cost_price')
-	);?>
-	</div>
-</div>
-
-<div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('items_unit_price').':', 'unit_price',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(

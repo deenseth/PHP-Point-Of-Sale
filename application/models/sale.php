@@ -32,21 +32,18 @@ class Sale extends Model
 		
 		foreach($items as $item_id=>$item)
 		{
-			$cur_item_info = $this->Item->get_info($item_id);
-			
 			$sales_items_data = array
 			(
 				'sale_id'=>$sale_id,
 				'item_id'=>$item_id,
 				'quantity_purchased'=>$item['quantity'],
-				'item_cost_price' => $cur_item_info->cost_price,				
 				'item_unit_price'=>$item['price']
 			);
 		
 			$this->db->insert('sales_items',$sales_items_data);
 			
 			//Update stock quantity
-			$item_data = array('quantity'=>$cur_item_info->quantity - $item['quantity']);
+			$item_data = array('quantity'=>$this->Item->get_info($item_id)->quantity-$item['quantity']);
 			$this->Item->save($item_data,$item_id);
 			
 			

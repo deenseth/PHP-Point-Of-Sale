@@ -74,7 +74,6 @@ class Items extends Secure_area implements iData_controller
 		'description'=>$this->input->post('description'),
 		'category'=>$this->input->post('category'),
 		'item_number'=>$this->input->post('item_number')=='' ? null:$this->input->post('item_number'),
-		'cost_price'=>$this->input->post('cost_price'),
 		'unit_price'=>$this->input->post('unit_price'),
 		'quantity'=>$this->input->post('quantity'),
 		'reorder_level'=>$this->input->post('reorder_level'),

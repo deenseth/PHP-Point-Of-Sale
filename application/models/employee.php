@@ -259,15 +259,7 @@ class Employee extends Person
 	*/
 	function login($username, $password)
 	{
-		$this->db->from('employees');
-		$this->db->join('people','employees.person_id=people.person_id');		
-		$this->db->where(array(
-		'username' => $username,
-		'password'=>md5($password),
-		'store_id' => $this->config->item('store_id')
-		));
-		
-		$query = $this->db->get();
+		$query = $this->db->get_where('employees', array('username' => $username,'password'=>md5($password)), 1);
 		if ($query->num_rows() ==1)
 		{
 			$row=$query->row();

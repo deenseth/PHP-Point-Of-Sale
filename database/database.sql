@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Dec 03, 2009 at 08:59 PM
+-- Generation Time: Jan 02, 2010 at 12:48 PM
 -- Server version: 5.1.39
 -- PHP Version: 5.3.0
 -- 
@@ -85,7 +85,8 @@ CREATE TABLE `phppos_items` (
   `category` varchar(255) NOT NULL,
   `item_number` varchar(255) DEFAULT NULL,
   `description` varchar(255) NOT NULL,
-  `unit_price` DOUBLE(15,2) NOT NULL,
+  `cost_price` double(15,2) NOT NULL,
+  `unit_price` double(15,2) NOT NULL,
   `quantity` int(10) NOT NULL DEFAULT '0',
   `reorder_level` int(10) NOT NULL DEFAULT '0',
   `item_id` int(10) NOT NULL AUTO_INCREMENT,
@@ -227,7 +228,8 @@ CREATE TABLE `phppos_sales_items` (
   `sale_id` int(10) NOT NULL DEFAULT '0',
   `item_id` int(10) NOT NULL DEFAULT '0',
   `quantity_purchased` int(10) NOT NULL DEFAULT '0',
-  `item_unit_price` DOUBLE(15,2) NOT NULL,
+  `item_cost_price` decimal(15,2) NOT NULL,
+  `item_unit_price` double(15,2) NOT NULL,
   PRIMARY KEY (`sale_id`,`item_id`),
   KEY `phppos_sales_items_ibfk_1` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

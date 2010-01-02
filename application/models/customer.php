@@ -21,7 +21,7 @@ class Customer extends Person
 	{
 		$this->db->from('customers');
 		$this->db->join('people','customers.person_id=people.person_id');
-		$this->db->where('people.store_id', $this->config->item('store_id'));
+		$this->db->where('customers.store_id', $this->config->item('store_id'));
 		$this->db->order_by("last_name", "asc");
 		return $this->db->get();		
 	}
@@ -147,6 +147,7 @@ class Customer extends Person
 		$suggestions = array();
 		
 		$this->db->from('customers');
+		$this->db->where('customers.store_id', $this->config->item('store_id'));
 		$this->db->join('people','customers.person_id=people.person_id');	
 		$this->db->like('first_name', $search); 
 		$this->db->or_like('last_name', $search);
@@ -159,6 +160,7 @@ class Customer extends Person
 		}
 		
 		$this->db->from('customers');
+		$this->db->where('customers.store_id', $this->config->item('store_id'));
 		$this->db->join('people','customers.person_id=people.person_id');	
 		$this->db->like("email",$search);
 		$this->db->order_by("email", "asc");		
@@ -169,6 +171,7 @@ class Customer extends Person
 		}
 
 		$this->db->from('customers');
+		$this->db->where('customers.store_id', $this->config->item('store_id'));
 		$this->db->join('people','customers.person_id=people.person_id');	
 		$this->db->like("phone_number",$search);
 		$this->db->order_by("phone_number", "asc");		
@@ -179,6 +182,7 @@ class Customer extends Person
 		}
 		
 		$this->db->from('customers');
+		$this->db->where('customers.store_id', $this->config->item('store_id'));
 		$this->db->join('people','customers.person_id=people.person_id');	
 		$this->db->like("account_number",$search);
 		$this->db->order_by("account_number", "asc");		
@@ -205,6 +209,7 @@ class Customer extends Person
 		$suggestions = array();
 		
 		$this->db->from('customers');
+		$this->db->where('customers.store_id', $this->config->item('store_id'));
 		$this->db->join('people','customers.person_id=people.person_id');	
 		$this->db->like('first_name', $search); 
 		$this->db->or_like('last_name', $search);
@@ -230,6 +235,7 @@ class Customer extends Person
 	function search($search)
 	{
 		$this->db->from('customers');
+		$this->db->where('customers.store_id', $this->config->item('store_id'));
 		$this->db->join('people','customers.person_id=people.person_id');		
 		$this->db->like('first_name', $search);
 		$this->db->or_like('last_name', $search); 

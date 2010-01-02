@@ -16,6 +16,7 @@ $lang['reports_employees'] = 'Employees';
 $lang['reports_subtotal'] = 'Subtotal';
 $lang['reports_total'] = 'Total';
 $lang['reports_tax'] = 'Tax';
+$lang['reports_profit'] = 'Profit';
 $lang['reports_report_input'] = 'Report Input';
 $lang['reports_type'] = 'Type';
 $lang['reports_date_range'] = 'Date Range';

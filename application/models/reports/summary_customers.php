@@ -9,12 +9,12 @@ class Summary_customers extends Report
 	
 	public function getDataColumns()
 	{
-		return array($this->lang->line('reports_customer'), $this->lang->line('reports_subtotal'), $this->lang->line('reports_total'), $this->lang->line('reports_tax'));
+		return array($this->lang->line('reports_customer'), $this->lang->line('reports_subtotal'), $this->lang->line('reports_total'), $this->lang->line('reports_tax'), $this->lang->line('reports_profit'));
 	}
 	
 	public function getData(array $inputs)
 	{
-		$this->db->select('CONCAT(first_name, " ",last_name) as customer, sum(subtotal) as subtotal, sum(total) as total, sum(tax) as tax', false);
+		$this->db->select('CONCAT(first_name, " ",last_name) as customer, sum(subtotal) as subtotal, sum(total) as total, sum(tax) as tax,sum(profit) as profit', false);
 		$this->db->from('sales_items_temp');
 		$this->db->join('customers', 'customers.person_id = sales_items_temp.customer_id');
 		$this->db->join('people', 'customers.person_id = people.person_id');
@@ -27,7 +27,7 @@ class Summary_customers extends Report
 	
 	public function getSummaryData(array $inputs)
 	{
-		$this->db->select('sum(subtotal) as subtotal, sum(total) as total, sum(tax) as tax');
+		$this->db->select('sum(subtotal) as subtotal, sum(total) as total, sum(tax) as tax, sum(profit) as profit');
 		$this->db->from('sales_items_temp');
 		$this->db->join('customers', 'customers.person_id = sales_items_temp.customer_id');
 		$this->db->join('people', 'customers.person_id = people.person_id');

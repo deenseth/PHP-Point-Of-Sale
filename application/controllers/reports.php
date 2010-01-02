@@ -31,7 +31,7 @@ class Reports extends Secure_area
 		
 		foreach($report_data as $row)
 		{
-			$tabular_data[] = array($row['sale_date'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']));
+			$tabular_data[] = array($row['sale_date'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
 		}
 
 		$data = array(
@@ -55,7 +55,7 @@ class Reports extends Secure_area
 		
 		foreach($report_data as $row)
 		{
-			$tabular_data[] = array($row['category'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']));
+			$tabular_data[] = array($row['category'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
 		}
 
 		$data = array(
@@ -79,7 +79,7 @@ class Reports extends Secure_area
 		
 		foreach($report_data as $row)
 		{
-			$tabular_data[] = array($row['customer'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']));
+			$tabular_data[] = array($row['customer'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
 		}
 
 		$data = array(
@@ -103,7 +103,7 @@ class Reports extends Secure_area
 		
 		foreach($report_data as $row)
 		{
-			$tabular_data[] = array(character_limiter($row['name'], 16), to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']));
+			$tabular_data[] = array(character_limiter($row['name'], 16), to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
 		}
 
 		$data = array(
@@ -127,7 +127,7 @@ class Reports extends Secure_area
 		
 		foreach($report_data as $row)
 		{
-			$tabular_data[] = array($row['employee'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']));
+			$tabular_data[] = array($row['employee'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
 		}
 
 		$data = array(

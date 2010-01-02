@@ -14,8 +14,8 @@ class Config extends Secure_area
 		
 	function save()
 	{
-		$store_data=array(
-		'name'=>$this->input->post('store'),
+		$batch_save_data=array(
+		'company'=>$this->input->post('company'),
 		'address'=>$this->input->post('address'),
 		'phone'=>$this->input->post('phone'),
 		'email'=>$this->input->post('email'),
@@ -25,7 +25,7 @@ class Config extends Secure_area
 		'return_policy'=>$this->input->post('return_policy')	
 		);
 		
-		if($this->Store->save($store_data, $this->config->item('store_id')))
+		if($this->Appconfig->batch_save($batch_save_data))
 		{
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('config_saved_successfully')));
 		}

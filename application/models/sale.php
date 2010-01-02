@@ -19,8 +19,7 @@ class Sale extends Model
 		$sales_data = array(
 		'customer_id'=> $this->Customer->exists($customer_id) ? $customer_id : null,
 		'employee_id'=>$employee_id,
-		'comment'=>$comment,
-		'store_id'=>$this->config->item('store_id')
+		'comment'=>$comment
 		);
 		
 		//Run these queries as a transaction, we want to make sure we do all or nothing

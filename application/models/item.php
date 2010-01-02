@@ -22,7 +22,6 @@ class Item extends Model
 	function get_all()
 	{
 		$this->db->from('items');
-		$this->db->where('store_id', $this->config->item('store_id'));
 		$this->db->order_by("name", "asc");
 		return $this->db->get();		
 	}

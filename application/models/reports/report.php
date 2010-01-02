@@ -35,7 +35,6 @@ abstract class Report extends Model
 		FROM ".$this->db->dbprefix('sales_items')."
 		INNER JOIN ".$this->db->dbprefix('sales')." USING (sale_id) 
 		LEFT OUTER JOIN ".$this->db->dbprefix('sales_items_taxes')." USING (sale_id, item_id)
-		WHERE store_id=".$this->config->item('store_id')."
 		GROUP BY sale_id, item_id)");
 		
 		//Update null item_tax_percents to be 0 instead of null

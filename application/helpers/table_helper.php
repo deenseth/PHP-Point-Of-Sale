@@ -77,6 +77,7 @@ function get_items_manage_table($items,$controller)
 	$headers = array('<input type="checkbox" id="select_all" />', 
 	$CI->lang->line('items_name'),
 	$CI->lang->line('items_category'),
+	$CI->lang->line('items_cost_price'),
 	$CI->lang->line('items_unit_price'),
 	$CI->lang->line('items_tax_percents'),
 	$CI->lang->line('items_quantity'),
@@ -131,6 +132,7 @@ function get_item_data_row($item,$controller)
 	$table_data_row.="<td width='5%'><input type='checkbox' id='item_$item->item_id' value='".$item->item_id."'/></td>";
 	$table_data_row.='<td width="25%">'.$item->name.'</td>';
 	$table_data_row.='<td width="16%">'.$item->category.'</td>';
+	$table_data_row.='<td width="16%">'.to_currency($item->cost_price).'</td>';
 	$table_data_row.='<td width="16%">'.to_currency($item->unit_price).'</td>';
 	$table_data_row.='<td width="16%">'.$tax_percents.'</td>';	
 	$table_data_row.='<td width="16%">'.$item->quantity.'</td>';

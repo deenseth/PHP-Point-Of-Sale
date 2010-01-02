@@ -20,8 +20,7 @@ class Customer extends Person
 	function get_all()
 	{
 		$this->db->from('customers');
-		$this->db->join('people','customers.person_id=people.person_id');
-		$this->db->where('people.store_id', $this->config->item('store_id'));
+		$this->db->join('people','customers.person_id=people.person_id');			
 		$this->db->order_by("last_name", "asc");
 		return $this->db->get();		
 	}

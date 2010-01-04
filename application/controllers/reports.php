@@ -14,16 +14,24 @@ class Reports extends Secure_area
 		$this->load->view("reports/listing",array());	
 	}
 	
-	//Input for all the summary reports. (see routes.php to see that all summary reports route here)
-	function summary_input()
+	function _get_common_report_data()
 	{
+		$data = array();
 		$data['report_date_range_simple'] = get_simple_date_ranges();
 		$data['months'] = get_months();
 		$data['days'] = get_days();
 		$data['years'] = get_years();
 		$data['selected_month']=date('n');
 		$data['selected_day']=date('d');
-		$data['selected_year']=date('Y');
+		$data['selected_year']=date('Y');	
+	
+		return $data;
+	}
+	
+	//Input for all the summary reports. (see routes.php to see that all summary reports route here)
+	function summary_input()
+	{
+		$data = $this->_get_common_report_data();
 		$this->load->view("reports/summary_input",$data);	
 	}
 	
@@ -146,6 +154,78 @@ class Reports extends Secure_area
 
 		$this->load->view("reports/tabular",$data);
 	}
+	
+	function specific_category_input()
+	{
+		$data = $this->_get_common_report_data();
+		$data['specific_input_name'] = 'Category';
+		
+		$categories = array();
+		foreach($this->Item->get_categories()->result() as $category)
+		{
+			$categories[base64_encode($category->category)] = $category->category;
+		}
+		$data['specific_input_data'] = $categories;
+		$this->load->view("reports/specific_input",$data);	
+	}
 
+	function specific_category($start_date, $end_date, $category_name)
+	{
+		$category_name = base64_decode($category_name);
+	}
+	
+	function specific_customer_input()
+	{
+		$data = $this->_get_common_report_data();
+		$data['specific_input_name'] = 'Customer';
+		
+		$customers = array();
+		foreach($this->Customer->get_all()->result() as $customer)
+		{
+			$customers[$customer->person_id] = $customer->first_name .' '.$customer->last_name;
+		}
+		$data['specific_input_data'] = $customers;
+		$this->load->view("reports/specific_input",$data);	
+	}
+
+	function specific_customer($start_date, $end_date, $customer_id)
+	{
+	}
+	
+	function specific_item_input()
+	{
+		$data = $this->_get_common_report_data();
+		$data['specific_input_name'] = 'Item';
+		
+		$items = array();
+		foreach($this->Item->get_all()->result() as $item)
+		{
+			$items[$item->item_id] = $item->name;
+		}
+		$data['specific_input_data'] = $items;
+		$this->load->view("reports/specific_input",$data);	
+	}
+
+	function specific_item($start_date, $end_date, $item_id)
+	{
+	}
+	
+	function specific_employee_input()
+	{
+		$data = $this->_get_common_report_data();
+		$data['specific_input_name'] = 'Employee';
+		
+		$employees = array();
+		foreach($this->Employee->get_all()->result() as $employee)
+		{
+			$employees[$employee->person_id] = $employee->first_name .' '.$employee->last_name;
+		}
+		$data['specific_input_data'] = $employees;
+		$this->load->view("reports/specific_input",$data);	
+	}
+
+	function specific_employee($start_date, $end_date, $employee_id)
+	{
+	}
 }
 ?>

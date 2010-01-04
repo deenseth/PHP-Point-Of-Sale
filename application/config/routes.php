@@ -44,6 +44,13 @@ $route['default_controller'] = "login";
 $route['no_access/(:any)'] = "no_access/index/$1";
 $route['reports/(summary_:any)/(:any)/(:any)'] = "reports/$1/$2/$3";
 $route['reports/summary_:any'] = "reports/summary_input";
+
+$route['reports/(specific_:any)/(:any)/(:any)/(:any)'] = "reports/$1/$2/$3/$4";
+$route['reports/specific_category'] = "reports/specific_category_input";
+$route['reports/specific_customer'] = "reports/specific_customer_input";
+$route['reports/specific_item'] = "reports/specific_item_input";
+$route['reports/specific_employee'] = "reports/specific_employee_input";
+
 $route['scaffolding_trigger'] = "";
 
 

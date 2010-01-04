@@ -18,6 +18,12 @@ class Reports extends Secure_area
 	function summary_input()
 	{
 		$data['report_date_range_simple'] = get_simple_date_ranges();
+		$data['months'] = get_months();
+		$data['days'] = get_days();
+		$data['years'] = get_years();
+		$data['selected_month']=date('n');
+		$data['selected_day']=date('d');
+		$data['selected_year']=date('Y');
 		$this->load->view("reports/summary_input",$data);	
 	}
 	

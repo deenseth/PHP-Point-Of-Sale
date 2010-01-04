@@ -10,6 +10,17 @@
 			<li><a href="<?php echo site_url('reports/summary_items');?>">Items</a></li>
 			<li><a href="<?php echo site_url('reports/summary_employees');?>">Employees</a></li>
 		</ul>
+	</li>
+	
+	<li>Specific Reports
+		<ul>
+			<li><a href="<?php echo site_url('reports/specific_category');?>">Category</a></li>
+			<li><a href="<?php echo site_url('reports/specific_customer');?>">Customer</a></li>
+			<li><a href="<?php echo site_url('reports/specific_item');?>">Item</a></li>
+			<li><a href="<?php echo site_url('reports/specific_employee');?>">Employee</a></li>
+		</ul>
+	
+	</li>
 </ul>
 <?php
 if(isset($error))

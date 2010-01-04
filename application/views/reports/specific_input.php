@@ -22,6 +22,13 @@ if(isset($error))
 		<?php echo form_dropdown('end_day',$days, $selected_day, 'id="end_day"'); ?>
 		<?php echo form_dropdown('end_year',$years, $selected_year, 'id="end_year"'); ?>
 	</div>
+	
+	<?php echo form_label($specific_input_name, 'specific_input_name_label', array('class'=>'required')); ?>
+	
+	<div id='report_specific_input_data'>
+		<?php echo form_dropdown('specific_input_data',$specific_input_data, '', 'id="specific_input_data"'); ?>
+	</div>
+
 
 <?php
 echo form_button(array(
@@ -41,14 +48,14 @@ $(document).ready(function()
 	{
 		if ($("#simple_radio").attr('checked'))
 		{
-			window.location = window.location+'/'+$("#report_date_range_simple option:selected").val();
+			window.location = window.location+'/'+$("#report_date_range_simple option:selected").val()+ '/' + $('#specific_input_data').val();
 		}
 		else
 		{
 			var start_date = $("#start_year").val()+'-'+$("#start_month").val()+'-'+$('#start_day').val();
 			var end_date = $("#end_year").val()+'-'+$("#end_month").val()+'-'+$('#end_day').val();
-	
-			window.location = window.location+'/'+start_date + '/'+ end_date;
+			
+			window.location = window.location+'/'+start_date + '/'+ end_date + '/' + $('#specific_input_data').val();
 
 		}
 	});

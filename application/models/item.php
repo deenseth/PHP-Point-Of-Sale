@@ -211,6 +211,7 @@ class Item extends Model
 			$suggestions[]=$row->name;		
 		}
 		
+		$this->db->select('category');		
 		$this->db->from('items');
 		$this->db->distinct();		
 		$this->db->like('category', $search); 
@@ -290,6 +291,16 @@ class Item extends Model
 		$this->db->order_by("name", "asc");				
 		return $this->db->get();	
 	}
-
+	
+	function get_categories()
+	{
+		$this->db->select('category');		
+		$this->db->from('items');
+		$this->db->distinct();		
+		$this->db->order_by("category", "asc");		
+		
+		return $this->db->get();
+	}
+	
 }
 ?>

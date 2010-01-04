@@ -54,7 +54,7 @@ echo form_open('items/bulk_update/',array('id'=>'item_form'));
 	<?php echo form_input(array(
 		'name'=>'tax_names[]',
 		'id'=>'tax_name_1',
-		'size'=>'10',
+		'size'=>'8',
 		'value'=> isset($item_tax_info[0]['name']) ? $item_tax_info[0]['name'] : $this->lang->line('items_sales_tax'))
 	);?>
 	</div>
@@ -62,7 +62,7 @@ echo form_open('items/bulk_update/',array('id'=>'item_form'));
 	<?php echo form_input(array(
 		'name'=>'tax_percents[]',
 		'id'=>'tax_percent_name_1',
-		'size'=>'4',
+		'size'=>'3',
 		'value'=> isset($item_tax_info[0]['percent']) ? $item_tax_info[0]['percent'] : '')
 	);?>
 	%
@@ -75,7 +75,7 @@ echo form_open('items/bulk_update/',array('id'=>'item_form'));
 	<?php echo form_input(array(
 		'name'=>'tax_names[]',
 		'id'=>'tax_name_2',
-		'size'=>'10',
+		'size'=>'8',
 		'value'=> isset($item_tax_info[1]['name']) ? $item_tax_info[1]['name'] : '')
 	);?>
 	</div>
@@ -83,7 +83,7 @@ echo form_open('items/bulk_update/',array('id'=>'item_form'));
 	<?php echo form_input(array(
 		'name'=>'tax_percents[]',
 		'id'=>'tax_percent_name_2',
-		'size'=>'4',
+		'size'=>'3',
 		'value'=> isset($item_tax_info[1]['percent']) ? $item_tax_info[1]['percent'] : '')
 	);?>
 	%

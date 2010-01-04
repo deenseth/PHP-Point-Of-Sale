@@ -20,7 +20,7 @@ echo form_submit(array(
 	'name'=>'submit',
 	'id'=>'submit',
 	'value'=>$this->lang->line('items_retrive_item_info'),
-	'class'=>'submit_button float_right')
+	'class'=>'submit_button')
 );
 ?>
 <div id="info_provided_by"></div>
@@ -159,7 +159,7 @@ echo form_submit(array(
 	'name'=>'submit',
 	'id'=>'submit',
 	'value'=>$this->lang->line('common_submit'),
-	'class'=>'submit_button float_right')
+	'class'=>'submit_button')
 );
 ?>
 </fieldset>

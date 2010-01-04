@@ -1,6 +1,6 @@
 .field_row 
 {
-	margin: 0 0 10px 0;
+	margin: 0 0 3px 0;
 }
 
 .field_row label 
@@ -8,7 +8,7 @@
 	float:left;
 	width:100px;
 	text-align:left;
-	line-height:2.3;
+	line-height:1.5;
 }
 
 .field_row label.wide 

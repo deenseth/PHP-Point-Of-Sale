@@ -21,7 +21,7 @@ echo form_submit(array(
 	'name'=>'submit',
 	'id'=>'submit',
 	'value'=>$this->lang->line('common_submit'),
-	'class'=>'submit_button float_right')
+	'class'=>'submit_button')
 );
 ?>
 </fieldset>

@@ -27,7 +27,8 @@ abstract class Report extends Model
 	//We create a temp table that allows us to do easy report queries
 	public function createSalesItemsTempTable()
 	{
-		$this->db->query("CREATE TEMPORARY TABLE ".$this->db->dbprefix('sales_items_temp')." 
+		$this->db->query("DROP TABLE IF EXISTS phppos_sales_items_temp");
+		$this->db->query("CREATE TABLE ".$this->db->dbprefix('sales_items_temp')." 
 		(SELECT date(sale_time) as sale_date, sale_id, customer_id, employee_id, item_id, quantity_purchased, item_cost_price, item_unit_price, SUM(percent) as item_tax_percent, 
 		(item_unit_price*quantity_purchased) as subtotal,
 		ROUND((item_unit_price*quantity_purchased)*(1+(SUM(percent)/100)),2) as total,

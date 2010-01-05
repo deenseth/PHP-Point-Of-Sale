@@ -1,5 +1,6 @@
 <?php
 $lang['reports_reports'] = 'Reports';
+$lang['reports_report'] = 'Report';
 $lang['reports_welcome_message'] = 'Welcome to the reports panel. Please select a report to view.';
 $lang['reports_sales_summary_report'] = 'Sales Summary Report';
 $lang['reports_categories_summary_report'] = 'Categories Summary Report';
@@ -7,6 +8,9 @@ $lang['reports_customers_summary_report'] = 'Customers Summary Report';
 $lang['reports_items_summary_report'] = 'Items Summary Report';
 $lang['reports_employees_summary_report'] = 'Employees Summary Report';
 $lang['reports_date'] = 'Date';
+$lang['reports_sale_id'] = 'Sale ID';
+$lang['reports_items_purchased'] = 'Items Purchased';
+$lang['reports_sold_by'] = 'Sold By';
 $lang['reports_category'] = 'Category';
 $lang['reports_customer'] = 'Customer';
 $lang['reports_employee'] = 'Employee';

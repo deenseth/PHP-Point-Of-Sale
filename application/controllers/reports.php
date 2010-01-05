@@ -155,25 +155,6 @@ class Reports extends Secure_area
 		$this->load->view("reports/tabular",$data);
 	}
 	
-	function specific_category_input()
-	{
-		$data = $this->_get_common_report_data();
-		$data['specific_input_name'] = 'Category';
-		
-		$categories = array();
-		foreach($this->Item->get_categories()->result() as $category)
-		{
-			$categories[base64_encode($category->category)] = $category->category;
-		}
-		$data['specific_input_data'] = $categories;
-		$this->load->view("reports/specific_input",$data);	
-	}
-
-	function specific_category($start_date, $end_date, $category_name)
-	{
-		$category_name = base64_decode($category_name);
-	}
-	
 	function specific_customer_input()
 	{
 		$data = $this->_get_common_report_data();
@@ -190,24 +171,26 @@ class Reports extends Secure_area
 
 	function specific_customer($start_date, $end_date, $customer_id)
 	{
-	}
-	
-	function specific_item_input()
-	{
-		$data = $this->_get_common_report_data();
-		$data['specific_input_name'] = 'Item';
+		$this->load->model('reports/Specific_customer');
+		$model = $this->Specific_customer;
+		$tabular_data = array();
+		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'customer_id' =>$customer_id));
 		
-		$items = array();
-		foreach($this->Item->get_all()->result() as $item)
+		foreach($report_data as $row)
 		{
-			$items[$item->item_id] = $item->name;
+			$tabular_data[] = array($row['sale_id'], $row['sale_date'], $row['items_purchased'], $row['employee_name'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
 		}
-		$data['specific_input_data'] = $items;
-		$this->load->view("reports/specific_input",$data);	
-	}
+		
+		$customer_info = $this->Customer->get_info($customer_id);
+		$data = array(
+			"title" => $customer_info->first_name .' '. $customer_info->last_name.' '.$this->lang->line('reports_report'),
+			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
+			"headers" => $model->getDataColumns(),
+			"data" => $tabular_data,
+			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'customer_id' =>$customer_id))
+		);
 
-	function specific_item($start_date, $end_date, $item_id)
-	{
+		$this->load->view("reports/tabular",$data);
 	}
 	
 	function specific_employee_input()
@@ -226,6 +209,26 @@ class Reports extends Secure_area
 
 	function specific_employee($start_date, $end_date, $employee_id)
 	{
+		$this->load->model('reports/Specific_employee');
+		$model = $this->Specific_employee;
+		$tabular_data = array();
+		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'employee_id' =>$employee_id));
+		
+		foreach($report_data as $row)
+		{
+			$tabular_data[] = array($row['sale_id'], $row['sale_date'], $row['items_purchased'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
+		}
+		
+		$employee_info = $this->Employee->get_info($employee_id);
+		$data = array(
+			"title" => $employee_info->first_name .' '. $employee_info->last_name.' '.$this->lang->line('reports_report'),
+			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
+			"headers" => $model->getDataColumns(),
+			"data" => $tabular_data,
+			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'employee_id' =>$employee_id))
+		);
+
+		$this->load->view("reports/tabular",$data);
 	}
 }
 ?>

@@ -9,7 +9,9 @@ class Specific_customer extends Report
 	
 	public function getDataColumns()
 	{
-		return array($this->lang->line('reports_sale_id'), $this->lang->line('reports_date'), $this->lang->line('reports_items_purchased'), $this->lang->line('reports_sold_by'), $this->lang->line('reports_subtotal'), $this->lang->line('reports_total'), $this->lang->line('reports_tax'), $this->lang->line('reports_profit'));
+		return array('summary' => array($this->lang->line('reports_sale_id'), $this->lang->line('reports_date'), $this->lang->line('reports_items_purchased'), $this->lang->line('reports_sold_by'), $this->lang->line('reports_subtotal'), $this->lang->line('reports_total'), $this->lang->line('reports_tax'), $this->lang->line('reports_profit')),
+					'details' => array('name', 'category', 'quantity purchased', 'subtotal', 'total', 'tax', 'profit')
+		);		
 	}
 	
 	public function getData(array $inputs)
@@ -21,7 +23,20 @@ class Specific_customer extends Report
 		$this->db->group_by('sale_id');
 		$this->db->order_by('sale_id');
 
-		return $this->db->get()->result_array();	
+		$data = array();
+		$data['summary'] = $this->db->get()->result_array();
+		$data['details'] = array();
+		
+		foreach($data['summary'] as $key=>$value)
+		{
+			$this->db->select('name, category, quantity_purchased, subtotal,total, tax, profit');
+			$this->db->from('sales_items_temp');
+			$this->db->join('items', 'sales_items_temp.item_id = items.item_id');
+			$this->db->where('sale_id = '.$value['sale_id']);
+			$data['details'][$key] = $this->db->get()->result_array();
+		}
+		
+		return $data;
 	}
 	
 	public function getSummaryData(array $inputs)

@@ -173,24 +173,34 @@ class Reports extends Secure_area
 	{
 		$this->load->model('reports/Specific_customer');
 		$model = $this->Specific_customer;
-		$tabular_data = array();
+		
+		$headers = $model->getDataColumns();
 		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'customer_id' =>$customer_id));
 		
-		foreach($report_data as $row)
-		{
-			$tabular_data[] = array($row['sale_id'], $row['sale_date'], $row['items_purchased'], $row['employee_name'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
-		}
+		$summary_data = array();
+		$details_data = array();
 		
+		foreach($report_data['summary'] as $key=>$row)
+		{
+			$summary_data[] = array($row['sale_id'], $row['sale_date'], $row['items_purchased'], $row['employee_name'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
+			
+			foreach($report_data['details'][$key] as $drow)
+			{
+				$details_data[$key][] = array($drow['name'], $drow['category'], $drow['quantity_purchased'], to_currency($drow['subtotal']), to_currency($drow['total']), to_currency($drow['tax']),to_currency($drow['profit']));
+			}
+		}
+
 		$customer_info = $this->Customer->get_info($customer_id);
 		$data = array(
 			"title" => $customer_info->first_name .' '. $customer_info->last_name.' '.$this->lang->line('reports_report'),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"headers" => $model->getDataColumns(),
-			"data" => $tabular_data,
-			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'customer_id' =>$customer_id))
+			"summary_data" => $summary_data,
+			"details_data" => $details_data,
+			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'customer_id' =>$customer_id)),
 		);
 
-		$this->load->view("reports/tabular",$data);
+		$this->load->view("reports/tabular_details",$data);
 	}
 	
 	function specific_employee_input()
@@ -211,24 +221,34 @@ class Reports extends Secure_area
 	{
 		$this->load->model('reports/Specific_employee');
 		$model = $this->Specific_employee;
-		$tabular_data = array();
+		
+		$headers = $model->getDataColumns();
 		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'employee_id' =>$employee_id));
 		
-		foreach($report_data as $row)
-		{
-			$tabular_data[] = array($row['sale_id'], $row['sale_date'], $row['items_purchased'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
-		}
+		$summary_data = array();
+		$details_data = array();
 		
+		foreach($report_data['summary'] as $key=>$row)
+		{
+			$summary_data[] = array($row['sale_id'], $row['sale_date'], $row['items_purchased'], $row['customer_name'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
+			
+			foreach($report_data['details'][$key] as $drow)
+			{
+				$details_data[$key][] = array($drow['name'], $drow['category'], $drow['quantity_purchased'], to_currency($drow['subtotal']), to_currency($drow['total']), to_currency($drow['tax']),to_currency($drow['profit']));
+			}
+		}
+
 		$employee_info = $this->Employee->get_info($employee_id);
 		$data = array(
 			"title" => $employee_info->first_name .' '. $employee_info->last_name.' '.$this->lang->line('reports_report'),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"headers" => $model->getDataColumns(),
-			"data" => $tabular_data,
-			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'employee_id' =>$employee_id))
+			"summary_data" => $summary_data,
+			"details_data" => $details_data,
+			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'employee_id' =>$employee_id)),
 		);
 
-		$this->load->view("reports/tabular",$data);
+		$this->load->view("reports/tabular_details",$data);
 	}
 }
 ?>

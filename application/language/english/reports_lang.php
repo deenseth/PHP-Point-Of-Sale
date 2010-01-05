@@ -11,6 +11,7 @@ $lang['reports_date'] = 'Date';
 $lang['reports_sale_id'] = 'Sale ID';
 $lang['reports_items_purchased'] = 'Items Purchased';
 $lang['reports_sold_by'] = 'Sold By';
+$lang['reports_sold_to'] = 'Sold To';
 $lang['reports_category'] = 'Category';
 $lang['reports_customer'] = 'Customer';
 $lang['reports_employee'] = 'Employee';

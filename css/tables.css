@@ -109,3 +109,18 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 {
 	background-color: #8dbdd8;
 }
+
+table.innertable
+{
+	display: none;
+}
+
+table.innertable thead tr th 
+{
+	background-color: #0a6184;
+}
+
+table.innertable tbody tr td 
+{
+	background-color: #DDD;
+}

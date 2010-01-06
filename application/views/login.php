@@ -14,7 +14,7 @@ $(document).ready(function()
 </script>
 </head>
 <body>
-<h1>PHP Point Of Sale 10.0 Alpha 3</h1>
+<h1>PHP Point Of Sale 10.0 Alpha 4</h1>
 <h3>Username/Password = admin/pointofsale
 <?php echo form_open('login') ?>
 <div id="container">

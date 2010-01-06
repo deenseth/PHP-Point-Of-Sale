@@ -10,7 +10,7 @@ class Specific_employee extends Report
 	public function getDataColumns()
 	{
 		return array('summary' => array($this->lang->line('reports_sale_id'), $this->lang->line('reports_date'), $this->lang->line('reports_items_purchased'), $this->lang->line('reports_sold_to'), $this->lang->line('reports_subtotal'), $this->lang->line('reports_total'), $this->lang->line('reports_tax'), $this->lang->line('reports_profit')),
-					'details' => array('name', 'category', 'quantity purchased', 'subtotal', 'total', 'tax', 'profit')
+					'details' => array($this->lang->line('reports_name'), $this->lang->line('reports_category'), $this->lang->line('reports_quantity_purchased'), $this->lang->line('reports_subtotal'), $this->lang->line('reports_total'), $this->lang->line('reports_tax'), $this->lang->line('reports_profit'))
 		);		
 	}
 	

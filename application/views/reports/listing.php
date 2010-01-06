@@ -12,8 +12,9 @@
 		</ul>
 	</li>
 	
-	<li>Specific Reports
+	<li>Detailed Reports
 		<ul>
+			<li><a href="<?php echo site_url('reports/detailed_sales');?>">Sales</a></li>
 			<li><a href="<?php echo site_url('reports/specific_customer');?>">Customer</a></li>
 			<li><a href="<?php echo site_url('reports/specific_employee');?>">Employee</a></li>
 		</ul>

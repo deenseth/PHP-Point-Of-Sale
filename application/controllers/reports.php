@@ -158,7 +158,7 @@ class Reports extends Secure_area
 	function specific_customer_input()
 	{
 		$data = $this->_get_common_report_data();
-		$data['specific_input_name'] = 'Customer';
+		$data['specific_input_name'] = $this->lang->line('reports_customer');
 		
 		$customers = array();
 		foreach($this->Customer->get_all()->result() as $customer)
@@ -206,7 +206,7 @@ class Reports extends Secure_area
 	function specific_employee_input()
 	{
 		$data = $this->_get_common_report_data();
-		$data['specific_input_name'] = 'Employee';
+		$data['specific_input_name'] = $this->lang->line('reports_employee');
 		
 		$employees = array();
 		foreach($this->Employee->get_all()->result() as $employee)

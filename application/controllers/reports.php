@@ -28,11 +28,11 @@ class Reports extends Secure_area
 		return $data;
 	}
 	
-	//Input for all the summary reports. (see routes.php to see that all summary reports route here)
-	function summary_input()
+	//Input for reports that require only a date range. (see routes.php to see that all summary reports route here)
+	function date_input()
 	{
 		$data = $this->_get_common_report_data();
-		$this->load->view("reports/summary_input",$data);	
+		$this->load->view("reports/date_input",$data);	
 	}
 	
 	//Summary sales report
@@ -250,5 +250,39 @@ class Reports extends Secure_area
 
 		$this->load->view("reports/tabular_details",$data);
 	}
+	
+	function detailed_sales($start_date, $end_date)
+	{
+		$this->load->model('reports/Detailed_sales');
+		$model = $this->Detailed_sales;
+		
+		$headers = $model->getDataColumns();
+		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
+		
+		$summary_data = array();
+		$details_data = array();
+		
+		foreach($report_data['summary'] as $key=>$row)
+		{
+			$summary_data[] = array($row['sale_id'], $row['sale_date'], $row['items_purchased'], $row['employee_name'], $row['customer_name'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
+			
+			foreach($report_data['details'][$key] as $drow)
+			{
+				$details_data[$key][] = array($drow['name'], $drow['category'], $drow['quantity_purchased'], to_currency($drow['subtotal']), to_currency($drow['total']), to_currency($drow['tax']),to_currency($drow['profit']));
+			}
+		}
+
+		$data = array(
+			"title" =>$this->lang->line('reports_detailed_sales_report'),
+			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
+			"headers" => $model->getDataColumns(),
+			"summary_data" => $summary_data,
+			"details_data" => $details_data,
+			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
+		);
+
+		$this->load->view("reports/tabular_details",$data);
+	}
+	
 }
 ?>

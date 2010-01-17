@@ -183,7 +183,7 @@ function tb_show(caption, url, imageGroup) {//function called when the user clic
 			var params = tb_parseUrl(url);
 			var dims = get_dimensions();
 			TB_WIDTH = (params['width']*1) + 30 || dims.width*.6;//default to 60% of window width
-			TB_HEIGHT = (params['height']*1) + 40 || dims.height*.90;//default to 90% of window height
+			TB_HEIGHT = (params['height']*1) + 40 || dims.height*.85;//default to 85% of window height
 			ajaxContentW = TB_WIDTH - 30;
 			ajaxContentH = TB_HEIGHT - 45;
 			

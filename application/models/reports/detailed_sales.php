@@ -19,7 +19,7 @@ class Detailed_sales extends Report
 		$this->db->select('sale_id, sale_date, sum(quantity_purchased) as items_purchased, CONCAT(employee.first_name," ",employee.last_name) as employee_name, CONCAT(customer.first_name," ",customer.last_name) as customer_name, sum(subtotal) as subtotal, sum(total) as total, sum(tax) as tax, sum(profit) as profit', false);
 		$this->db->from('sales_items_temp');
 		$this->db->join('people as employee', 'sales_items_temp.employee_id = employee.person_id');
-		$this->db->join('people as customer', 'sales_items_temp.customer_id = customer.person_id');
+		$this->db->join('people as customer', 'sales_items_temp.customer_id = customer.person_id', 'left');
 		$this->db->where('sale_date BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
 		$this->db->group_by('sale_id');
 		$this->db->order_by('sale_id');

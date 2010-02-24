@@ -8,20 +8,20 @@ if(isset($error))
 ?>
 <div id="register_wrapper">
 <?php echo form_open("sales/change_mode",array('id'=>'mode_form')); ?>
-	<span><?php echo $this->lang->line('sales_mode') ?></span>  
+	<span><?php echo $this->lang->line('sales_mode') ?></span>
 <?php echo form_dropdown('mode',$modes,$mode,'onchange="$(\'#mode_form\').submit();"'); ?>
 </form>
 <?php echo form_open("sales/add",array('id'=>'add_item_form')); ?>
 <label id="item_label" for="item">
 
-<?php 
+<?php
 if($mode=='sale')
 {
-	echo $this->lang->line('sales_find_or_scan_item'); 
+	echo $this->lang->line('sales_find_or_scan_item');
 }
 else
 {
-	echo $this->lang->line('sales_find_or_scan_item_or_receipt'); 
+	echo $this->lang->line('sales_find_or_scan_item_or_receipt');
 }
 ?>
 </label>
@@ -41,6 +41,7 @@ else
 <th style="width:30%;"><?php echo $this->lang->line('sales_item_name'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_price'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_quantity'); ?></th>
+<th style="width:15%;"><?php echo $this->lang->line('sales_discount'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_total'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_edit'); ?></th>
 </tr>
@@ -64,23 +65,24 @@ else
 		<tr>
 		<td><?php echo anchor("sales/delete_item/$item_id",'['.$this->lang->line('common_delete').']');?></td>
 		<td><?php echo $item['name']; ?></td>
-		
-		<?php if ($items_module_allowed) 
-		{ 
+
+		<?php if ($items_module_allowed)
+		{
 		?>
 			<td><?php echo form_input(array('name'=>'price','value'=>$item['price'],'size'=>'6'));?></td>
-		<?php 
+		<?php
 		}
 		else
 		{
 		?>
 			<td><?php echo $item['price']; ?></td>
-			<?php echo form_hidden('price',$item['price']); ?> 
+			<?php echo form_hidden('price',$item['price']); ?>
 		<?php
-		} 
+		}
 		?>
 		<td><?php echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2'));?></td>
-		<td><?php echo to_currency($item['price']*$item['quantity']); ?></td>
+		<td><?php echo form_input(array('name'=>'discount','value'=>$item['discount'],'size'=>'3'));?></td>
+		<td><?php echo to_currency($item['price']*$item['quantity']-$item['price']*$item['quantity']*$item['discount']/100); ?></td>
 		<td><?php echo form_submit("edit_item", $this->lang->line('sales_edit_item'));?></td>
 		</tr>
 		</form>
@@ -119,7 +121,7 @@ else
 	<div id='sale_details'>
 		<div class="float_left" style="width:38%;"><?php echo $this->lang->line('sales_sub_total'); ?>:</div>
 		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo $subtotal; ?></div>
-		
+
 		<?php foreach($taxes as $name=>$value) { ?>
 		<div class="float_left" style='width:38%;'><?php echo $name; ?>:</div>
 		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo to_currency($value); ?></div>
@@ -163,14 +165,14 @@ $(document).ready(function()
 			return row[1];
 		}
     });
-       
+
     $("#item").result(function(event, data, formatted)
     {
 		$("#add_item_form").submit();
     });
-    
+
 	$('#item').focus();
-	
+
 	$('#item').blur(function()
     {
     	$(this).attr('value',"<?php echo $this->lang->line('sales_start_typing_item_name'); ?>");
@@ -179,8 +181,8 @@ $(document).ready(function()
 	$('#item,#customer').click(function()
     {
     	$(this).attr('value','');
-    });  
-    
+    });
+
     $("#customer").autocomplete('<?php echo site_url("sales/customer_search"); ?>',
     {
     	minChars:0,
@@ -190,7 +192,7 @@ $(document).ready(function()
 			return row[1];
 		}
     });
-    
+
     $("#customer").result(function(event, data, formatted)
     {
 		$("#select_customer_form").submit();
@@ -200,7 +202,7 @@ $(document).ready(function()
     {
     	$(this).attr('value',"<?php echo $this->lang->line('sales_start_typing_customer_name'); ?>");
     });
-    
+
     $("#finish_sale_button").click(function()
     {
     	if (confirm('<?php echo $this->lang->line("sales_confirm_finish_sale"); ?>'))
@@ -215,7 +217,7 @@ function post_item_form_submit(response)
 	if(response.success)
 	{
 		$("#item").attr("value",response.item_id);
-		$("#add_item_form").submit();		
+		$("#add_item_form").submit();
 	}
 }
 
@@ -224,7 +226,7 @@ function post_person_form_submit(response)
 	if(response.success)
 	{
 		$("#customer").attr("value",response.person_id);
-		$("#select_customer_form").submit();		
+		$("#select_customer_form").submit();
 	}
 }
 

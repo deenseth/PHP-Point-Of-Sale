@@ -10,6 +10,7 @@ $lang['sales_total']='Total';
 $lang['sales_tax_percent']='Tax %';
 $lang['sales_price']='Price';
 $lang['sales_quantity']='Qty.';
+$lang['sales_discount']='Disc %';
 $lang['sales_edit']='Edit';
 $lang['sales_edit_item']='Edit Item';
 $lang['sales_find_or_scan_item']='Find/Scan Item';

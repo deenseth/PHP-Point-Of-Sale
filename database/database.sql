@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Jan 02, 2010 at 05:10 PM
+-- Generation Time: Feb 24, 2010 at 01:13 PM
 -- Server version: 5.1.39
 -- PHP Version: 5.3.0
 -- 
@@ -28,7 +28,7 @@ CREATE TABLE `phppos_app_config` (
 
 INSERT INTO `phppos_app_config` (`key`, `value`) VALUES ('address', '123 Nowhere street'),
 ('company', 'PHP Point Of Sale, Inc'),
-('default_tax_rate', '8'),
+('default_tax_rate', '10'),
 ('email', 'admin@phppointofsale.com'),
 ('fax', ''),
 ('phone', '555-555-5555'),
@@ -142,7 +142,8 @@ INSERT INTO `phppos_modules` (`name_lang_key`, `desc_lang_key`, `sort`, `module_
 ('module_employees', 'module_employees_desc', 5, 'employees'),
 ('module_items', 'module_items_desc', 2, 'items'),
 ('module_reports', 'module_reports_desc', 3, 'reports'),
-('module_sales', 'module_sales_desc', 4, 'sales');
+('module_sales', 'module_sales_desc', 4, 'sales'),
+('module_suppliers', 'module_suppliers_desc', 3, 'suppliers');
 
 -- --------------------------------------------------------
 
@@ -164,13 +165,13 @@ CREATE TABLE `phppos_people` (
   `comments` text NOT NULL,
   `person_id` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`person_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phppos_people`
 -- 
 
-INSERT INTO `phppos_people` (`first_name`, `last_name`, `phone_number`, `email`, `address_1`, `address_2`, `city`, `state`, `zip`, `country`, `comments`, `person_id`) VALUES ('John', 'Doe', '555-555-5555', 'admin@phppointofsale', 'Address 1', '', '', '', '', '', '', 1);
+INSERT INTO `phppos_people` (`first_name`, `last_name`, `phone_number`, `email`, `address_1`, `address_2`, `city`, `state`, `zip`, `country`, `comments`, `person_id`) VALUES ('John', 'Doe', '555-555-5555', 'admin@phppointofsale.com', 'Address 1', '', '', '', '', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -194,7 +195,8 @@ INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES ('config', 1)
 ('employees', 1),
 ('items', 1),
 ('reports', 1),
-('sales', 1);
+('sales', 1),
+('suppliers', 1);
 
 -- --------------------------------------------------------
 
@@ -230,6 +232,7 @@ CREATE TABLE `phppos_sales_items` (
   `quantity_purchased` int(10) NOT NULL DEFAULT '0',
   `item_cost_price` decimal(15,2) NOT NULL,
   `item_unit_price` double(15,2) NOT NULL,
+  `discount_percent` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`sale_id`,`item_id`),
   KEY `item_id` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -276,6 +279,24 @@ CREATE TABLE `phppos_sessions` (
 
 -- 
 -- Dumping data for table `phppos_sessions`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `phppos_suppliers`
+-- 
+
+CREATE TABLE `phppos_suppliers` (
+  `person_id` int(10) NOT NULL,
+  `account_number` varchar(255) DEFAULT NULL,
+  UNIQUE KEY `account_number` (`account_number`),
+  KEY `person_id` (`person_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `phppos_suppliers`
 -- 
 
 
@@ -328,3 +349,9 @@ ALTER TABLE `phppos_sales_items`
 ALTER TABLE `phppos_sales_items_taxes`
   ADD CONSTRAINT `phppos_sales_items_taxes_ibfk_1` FOREIGN KEY (`sale_id`) REFERENCES `phppos_sales_items` (`sale_id`),
   ADD CONSTRAINT `phppos_sales_items_taxes_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `phppos_sales_items` (`item_id`);
+
+-- 
+-- Constraints for table `phppos_suppliers`
+-- 
+ALTER TABLE `phppos_suppliers`
+  ADD CONSTRAINT `phppos_suppliers_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `phppos_people` (`person_id`);

@@ -131,7 +131,7 @@ class Supplier extends Person
 		$this->db->where_in('person_id',$supplier_ids);
 		if ($this->db->delete('suppliers'))
 		{
-			$success = parent::delete_list($suppliers_ids);
+			$success = parent::delete_list($supplier_ids);
 		}
 		
 		$this->db->trans_complete();		

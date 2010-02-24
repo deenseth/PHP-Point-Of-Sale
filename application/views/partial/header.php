@@ -19,6 +19,12 @@
 	<script src="<?php echo base_url();?>js/thickbox.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
 	<script src="<?php echo base_url();?>js/common.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
 	<script src="<?php echo base_url();?>js/manage_tables.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
+<style type="text/css">
+html {
+    overflow: auto;
+}
+</style>
+
 </head>
 <body>
 <div id="menubar">
@@ -26,12 +32,12 @@
 		<div id="menubar_company_info">
 		<span id="company_title"><?php echo $this->config->item('company'); ?></span><br />
 		<span style='font-size:8pt;'><?php echo $this->lang->line('common_powered_by').' PHP Point Of Sale'; ?></span>
-		</div>
-		
+	</div>
+
 		<div id="menubar_navigation">
 			<div class="menu_item">
 				<a href="<?php echo site_url('home');?>">
-				<img src="<?php echo base_url().'images/menubar/home.gif';?>" border="0" alt="Menubar Image" /></a><br />
+				<img src="<?php echo base_url().'images/menubar/home.png';?>" border="0" alt="Menubar Image" /></a><br />
 				<a href="<?php echo site_url("home");?>"><?php echo $this->lang->line("module_home") ?></a>
 			</div>
 
@@ -41,19 +47,19 @@
 			?>
 			<div class="menu_item">
 				<a href="<?php echo site_url("$module->module_id");?>">
-				<img src="<?php echo base_url().'images/menubar/'.$module->module_id.'.gif';?>" border="0" alt="Menubar Image" /></a><br />
+				<img src="<?php echo base_url().'images/menubar/'.$module->module_id.'.png';?>" border="0" alt="Menubar Image" /></a><br />
 				<a href="<?php echo site_url("$module->module_id");?>"><?php echo $this->lang->line("module_".$module->module_id) ?></a>
 			</div>
 			<?php
 			}
 			?>
 		</div>
-		
+
 		<div id="menubar_footer">
 		<?php echo $this->lang->line('common_welcome')." $user_info->first_name $user_info->last_name! | "; ?>
 		<?php echo anchor("home/logout",$this->lang->line("common_logout")); ?>
 		</div>
-		
+
 		<div id="menubar_date">
 		<?php echo date('F d, Y') ?>
 		</div>

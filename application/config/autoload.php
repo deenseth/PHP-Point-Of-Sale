@@ -91,11 +91,11 @@ $autoload['config'] = array();
 |
 |	$autoload['language'] = array('lang1', 'lang2');
 |
-| NOTE: Do not include the "_lang" part of your file.  For example 
+| NOTE: Do not include the "_lang" part of your file.  For example
 | "codeigniter_lang.php" would be referenced as array('codeigniter');
 |
 */
-$autoload['language'] = array('common', 'config', 'customers', 'employees', 'error', 'items', 'login', 'module', 'reports', 'sales');
+$autoload['language'] = array('common', 'config', 'customers', 'employees', 'error', 'items', 'login', 'module', 'reports', 'sales','suppliers');
 
 
 /*
@@ -108,7 +108,7 @@ $autoload['language'] = array('common', 'config', 'customers', 'employees', 'err
 |
 */
 
-$autoload['model'] = array('Appconfig','Person','Customer','Employee','Module','Item', 'Item_taxes', 'Sale');
+$autoload['model'] = array('Appconfig','Person','Customer','Employee','Module','Item', 'Item_taxes', 'Sale','Supplier');
 
 
 /*

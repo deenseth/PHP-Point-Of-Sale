@@ -109,6 +109,16 @@ a.none
 	line-height:3.3;
 }
 
+#home_module_list
+{
+	position: relative;
+}
+
+.module_item
+{
+	padding: 10px;
+}
+
 #config_wrapper
 {
 	text-align:center;

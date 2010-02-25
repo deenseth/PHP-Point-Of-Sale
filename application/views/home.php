@@ -1,3 +1,19 @@
 <?php $this->load->view("partial/header"); ?>
-<h2>Welcome to the alpha version of PHP Point Of Sale. You will find things not done/broken. Please provide any feedback <a href="http://forums.phppointofsale.com">at the forums</a>
+<br />
+<h3><?php echo $this->lang->line('common_welcome_message'); ?></h3>
+<div id="home_module_list">
+	<?php
+	foreach($allowed_modules->result() as $module)
+	{
+	?>
+	<div class="module_item">
+		<a href="<?php echo site_url("$module->module_id");?>">
+		<img src="<?php echo base_url().'images/menubar/'.$module->module_id.'.png';?>" border="0" alt="Menubar Image" /></a><br />
+		<a href="<?php echo site_url("$module->module_id");?>"><?php echo $this->lang->line("module_".$module->module_id) ?></a>
+		 - <?php echo $this->lang->line('module_'.$module->module_id.'_desc');?>
+	</div>
+	<?php
+	}
+	?>
+</div>
 <?php $this->load->view("partial/footer"); ?>

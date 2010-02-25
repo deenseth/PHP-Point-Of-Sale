@@ -36,4 +36,6 @@ $lang['reports_this_year'] = 'This Year';
 $lang['reports_last_year'] = 'Last Year';
 $lang['reports_all_time'] = 'All Time';
 $lang['reports_detailed_sales_report'] = 'Detailed Sales Report';
+$lang['reports_comments'] = 'Comments';
+$lang['reports_discount'] = 'Discount';
 ?>

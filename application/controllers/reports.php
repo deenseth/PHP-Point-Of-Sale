@@ -182,11 +182,11 @@ class Reports extends Secure_area
 		
 		foreach($report_data['summary'] as $key=>$row)
 		{
-			$summary_data[] = array($row['sale_id'], $row['sale_date'], $row['items_purchased'], $row['employee_name'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
+			$summary_data[] = array($row['sale_id'], $row['sale_date'], $row['items_purchased'], $row['employee_name'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']), $row['comment']);
 			
 			foreach($report_data['details'][$key] as $drow)
 			{
-				$details_data[$key][] = array($drow['name'], $drow['category'], $drow['quantity_purchased'], to_currency($drow['subtotal']), to_currency($drow['total']), to_currency($drow['tax']),to_currency($drow['profit']));
+				$details_data[$key][] = array($drow['name'], $drow['category'], $drow['quantity_purchased'], to_currency($drow['subtotal']), to_currency($drow['total']), to_currency($drow['tax']),to_currency($drow['profit']), $drow['discount_percent'].'%');
 			}
 		}
 
@@ -230,11 +230,11 @@ class Reports extends Secure_area
 		
 		foreach($report_data['summary'] as $key=>$row)
 		{
-			$summary_data[] = array($row['sale_id'], $row['sale_date'], $row['items_purchased'], $row['customer_name'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
+			$summary_data[] = array($row['sale_id'], $row['sale_date'], $row['items_purchased'], $row['customer_name'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']), $row['comment']);
 			
 			foreach($report_data['details'][$key] as $drow)
 			{
-				$details_data[$key][] = array($drow['name'], $drow['category'], $drow['quantity_purchased'], to_currency($drow['subtotal']), to_currency($drow['total']), to_currency($drow['tax']),to_currency($drow['profit']));
+				$details_data[$key][] = array($drow['name'], $drow['category'], $drow['quantity_purchased'], to_currency($drow['subtotal']), to_currency($drow['total']), to_currency($drow['tax']),to_currency($drow['profit']), $drow['discount_percent'].'%');
 			}
 		}
 

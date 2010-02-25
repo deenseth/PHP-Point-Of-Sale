@@ -119,15 +119,15 @@ else
 	?>
 
 	<div id='sale_details'>
-		<div class="float_left" style="width:38%;"><?php echo $this->lang->line('sales_sub_total'); ?>:</div>
+		<div class="float_left" style="width:55%;"><?php echo $this->lang->line('sales_sub_total'); ?>:</div>
 		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo $subtotal; ?></div>
 
 		<?php foreach($taxes as $name=>$value) { ?>
-		<div class="float_left" style='width:38%;'><?php echo $name; ?>:</div>
+		<div class="float_left" style='width:55%;'><?php echo $name; ?>:</div>
 		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo to_currency($value); ?></div>
 		<?php }; ?>
 
-		<div class="float_left" style='width:38%;'><?php echo $this->lang->line('sales_total'); ?>:</div>
+		<div class="float_left" style='width:55%;'><?php echo $this->lang->line('sales_total'); ?>:</div>
 		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo $total; ?></div>
 	</div>
 	<?php

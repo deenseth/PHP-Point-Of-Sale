@@ -25,7 +25,6 @@ class Config extends Secure_area
 		'default_tax_1_name'=>$this->input->post('default_tax_1_name'),		
 		'default_tax_2_rate'=>$this->input->post('default_tax_2_rate'),	
 		'default_tax_2_name'=>$this->input->post('default_tax_2_name'),		
-		'tax_cumulative' => $this->input->post('tax_cumulative') ? 1 : 0,
 		'return_policy'=>$this->input->post('return_policy')	
 		);
 		

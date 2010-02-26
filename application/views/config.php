@@ -76,17 +76,6 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_tax_cumulative').':', 'tax_cumulative',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_checkbox(array(
-		'name'=>'tax_cumulative',
-		'id'=>'tax_cumulative',
-		'value'=>'tax_cumulative',
-		'checked'=>$this->config->item('tax_cumulative')));?>
-	</div>
-</div>
-
-<div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('common_email').':', 'email',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(

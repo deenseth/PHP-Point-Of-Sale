@@ -42,16 +42,37 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_default_tax_rate').':', 'default_tax_rate',array('class'=>'wide required')); ?>
+<?php echo form_label($this->lang->line('config_default_tax_rate_1').':', 'default_tax_1_rate',array('class'=>'wide required')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
-		'name'=>'default_tax_rate',
-		'id'=>'default_tax_rate',
+		'name'=>'default_tax_1_rate',
+		'id'=>'default_tax_1_rate',
 		'size'=>'4',
-		'value'=>$this->config->item('default_tax_rate')));?>
+		'value'=>$this->config->item('default_tax_1_rate')));?>
 	</div>
 </div>
 
+<div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('config_default_tax_rate_2').':', 'default_tax_1_rate',array('class'=>'wide')); ?>
+	<div class='form_field'>
+	<?php echo form_input(array(
+		'name'=>'default_tax_2_rate',
+		'id'=>'default_tax_2_rate',
+		'size'=>'4',
+		'value'=>$this->config->item('default_tax_2_rate')));?>
+	</div>
+</div>
+
+<div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('config_tax_cumulative').':', 'tax_cumulative',array('class'=>'wide')); ?>
+	<div class='form_field'>
+	<?php echo form_checkbox(array(
+		'name'=>'tax_cumulative',
+		'id'=>'tax_cumulative',
+		'value'=>'tax_cumulative',
+		'checked'=>$this->config->item('tax_cumulative')));?>
+	</div>
+</div>
 
 <div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('common_email').':', 'email',array('class'=>'wide')); ?>

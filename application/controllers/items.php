@@ -66,7 +66,8 @@ class Items extends Secure_area implements iData_controller
 
 		$data['suppliers']=$suppliers;
 		$data['selected_supplier'] = $this->Item->get_info($item_id)->supplier_id;
-		$data['default_tax_rate']=($item_id==-1) ? $this->Appconfig->get('default_tax_rate') : '';
+		$data['default_tax_1_rate']=($item_id==-1) ? $this->Appconfig->get('default_tax_1_rate') : '';
+		$data['default_tax_2_rate']=($item_id==-1) ? $this->Appconfig->get('default_tax_2_rate') : '';
 		$this->load->view("items/form",$data);
 	}
 	

@@ -21,7 +21,9 @@ class Config extends Secure_area
 		'email'=>$this->input->post('email'),
 		'fax'=>$this->input->post('fax'),
 		'website'=>$this->input->post('website'),
-		'default_tax_rate'=>$this->input->post('default_tax_rate'),		
+		'default_tax_1_rate'=>$this->input->post('default_tax_1_rate'),		
+		'default_tax_2_rate'=>$this->input->post('default_tax_2_rate'),	
+		'tax_cumulative' => $this->input->post('tax_cumulative') ? 1 : 0,
 		'return_policy'=>$this->input->post('return_policy')	
 		);
 		

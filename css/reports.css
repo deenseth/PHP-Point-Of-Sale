@@ -2,7 +2,10 @@
 {
 	margin-bottom: 3px;
 }
-
+.report 
+{
+	font-size: .85em;
+}
 #report_summary
 {
 	margin: 0 auto;

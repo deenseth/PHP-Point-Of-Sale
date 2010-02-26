@@ -105,6 +105,8 @@ class Sales extends Secure_area
 		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
 		$comment = $this->input->post('comment');
 		$emp_info=$this->Employee->get_info($employee_id);
+		$payment_type = $this->input->post('payment_type');
+		$data['payment_type']=$this->input->post('payment_type');
 		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
 
 		if($customer_id!=-1)
@@ -114,7 +116,7 @@ class Sales extends Secure_area
 		}
 
 		//SAVE sale to database
-		$data['sale_id']='POS '.$this->Sale->save($data['cart'], $customer_id,$employee_id,$comment);
+		$data['sale_id']='POS '.$this->Sale->save($data['cart'], $customer_id,$employee_id,$comment,$payment_type);
 
 		$this->load->view("sales/receipt",$data);
 		$this->sale_lib->clear_all();
@@ -130,6 +132,13 @@ class Sales extends Secure_area
 		$data['taxes']=$this->sale_lib->get_taxes();
 		$data['total']=$this->sale_lib->get_total();
 		$data['items_module_allowed'] = $this->Employee->has_permission('items', $person_info->person_id);
+		$data['payment_options']=array(
+			$this->lang->line('sales_cash') => $this->lang->line('sales_cash'),
+			$this->lang->line('sales_check') => $this->lang->line('sales_check'),
+			$this->lang->line('sales_debit') => $this->lang->line('sales_debit'),
+			$this->lang->line('sales_credit') => $this->lang->line('sales_credit')
+		);
+
 		$customer_id=$this->sale_lib->get_customer();
 		if($customer_id!=-1)
 		{
@@ -139,6 +148,13 @@ class Sales extends Secure_area
 		$this->load->view("sales/register",$data);
 	}
 
+    function cancel_sale()
+    {
+        //$this->load->view("sales/receipt",$data);
+    	$this->sale_lib->clear_all();
+    	$this->_reload();
+
+    }
 
 }
 ?>

@@ -42,21 +42,27 @@
 	}
 	?>
 	<tr>
-	<td colspan="4" style='text-align:right;border-top:2px solid #000000;'><?php echo $this->lang->line('sales_sub_total'); ?></td>
-	<td style='text-align:right;border-top:2px solid #000000;'><?php echo $subtotal; ?></td>
+	<td colspan="3" style='text-align:right;border-top:2px solid #000000;'><?php echo $this->lang->line('sales_sub_total'); ?></td>
+	<td colspan="2" style='text-align:right;border-top:2px solid #000000;'><?php echo $subtotal; ?></td>
 	</tr>
 
 	<?php foreach($taxes as $name=>$value) { ?>
 		<tr>
-			<td colspan="4" style='text-align:right;'><?php echo $name; ?>:</td>
-			<td style='text-align:right;'><?php echo to_currency($value); ?></td>
+			<td colspan="3" style='text-align:right;'><?php echo $name; ?>:</td>
+			<td colspan="2" style='text-align:right;'><?php echo to_currency($value); ?></td>
 		</tr>
 	<?php }; ?>
 
 	<tr>
-	<td colspan="4" style='text-align:right;'><?php echo $this->lang->line('sales_total'); ?></td>
-	<td style='text-align:right'><?php echo $total; ?></td>
+	<td colspan="3" style='text-align:right;'><?php echo $this->lang->line('sales_total'); ?></td>
+	<td colspan="2" style='text-align:right'><?php echo $total; ?></td>
 	</tr>
+
+	<tr>
+	<td colspan="3" style='text-align:right;'><?php echo $this->lang->line('sales_payment'); ?></td>
+	<td colspan="2" style='text-align:right'><?php echo $payment_type; ?></td>
+	</tr>
+
 	</table>
 
 	<div id="sale_return_policy">
@@ -66,5 +72,10 @@
 	<?php echo "<img src='index.php?c=barcode&barcode=$sale_id&text=$sale_id&width=250&height=50' />"; ?>
 	</div>
 </div>
-
 <?php $this->load->view("partial/footer"); ?>
+<script type="text/javascript">
+$(window).load(function()
+{
+	window.print(); 
+});
+</script> 

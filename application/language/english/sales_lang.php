@@ -12,6 +12,7 @@ $lang['sales_price']='Price';
 $lang['sales_quantity']='Qty.';
 $lang['sales_discount']='Disc %';
 $lang['sales_edit']='Edit';
+$lang['sales_payment']='Payment Type';
 $lang['sales_edit_item']='Edit Item';
 $lang['sales_find_or_scan_item']='Find/Scan Item';
 $lang['sales_find_or_scan_item_or_receipt']='Find/Scan Item OR Receipt';
@@ -31,4 +32,9 @@ $lang['sales_id']='Sale ID';
 $lang['sales_sale']='Sale';
 $lang['sales_return']='Return';
 $lang['sales_confirm_finish_sale'] = 'Are you sure you want to submit this sale? This cannot be undone.';
+$lang['sales_confirm_cancel_sale'] = 'Are you sure you want to clear this sale? All items will cleared.';
+$lang['sales_cash'] = 'Cash';
+$lang['sales_check'] = 'Check';
+$lang['sales_debit'] = 'Debit Card';
+$lang['sales_credit'] = 'Credit Card';
 ?>

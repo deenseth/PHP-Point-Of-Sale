@@ -41,8 +41,8 @@ else
 <th style="width:30%;"><?php echo $this->lang->line('sales_item_name'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_price'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_quantity'); ?></th>
-<th style="width:15%;"><?php echo $this->lang->line('sales_discount'); ?></th>
-<th style="width:11%;"><?php echo $this->lang->line('sales_total'); ?></th>
+<th style="width:11%;"><?php echo $this->lang->line('sales_discount'); ?></th>
+<th style="width:15%;"><?php echo $this->lang->line('sales_total'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_edit'); ?></th>
 </tr>
 </thead>
@@ -136,13 +136,30 @@ else
 	?>
 	<div id="finish_sale">
 		<?php echo form_open("sales/complete",array('id'=>'finish_sale_form')); ?>
+		<br>
 		<label id="comment_label" for="comment"><?php echo $this->lang->line('common_comments'); ?>:</label>
 		<?php echo form_textarea(array('name'=>'comment','value'=>'','rows'=>'4','cols'=>'23'));?>
+		<br><br>
+		<table width="100%"><tr><td>
+		<?php
+			echo $this->lang->line('sales_payment').':   ';?>
+		</td><td>
+		<?php
+		    echo form_dropdown('payment_type',$payment_options);?>
+        </td>
+        </tr></table>
+        <br>
 		<?php echo "<div class='small_button' id='finish_sale_button' style='float:right;margin-top:5px;'><span>".$this->lang->line('sales_complete_sale')."</span></div>";
 		?>
 		</div>
 
 		</form>
+
+	    <?php echo form_open("sales/cancel_sale",array('id'=>'cancel_sale_form')); ?>
+			    <div class='small_button' id='cancel_sale_button' style='float:left;margin-top:5px;'>
+					<span>Cancel Sale</span>
+				</div>
+        </form>
 	</div>
 	<?php
 	}
@@ -210,6 +227,16 @@ $(document).ready(function()
     		$('#finish_sale_form').submit();
     	}
     });
+
+    $("#cancel_sale_button").click(function()
+    {
+    	if (confirm('<?php echo $this->lang->line("sales_confirm_cancel_sale"); ?>'))
+    	{
+    		$('#cancel_sale_form').submit();
+    	}
+    });
+
+
 });
 
 function post_item_form_submit(response)

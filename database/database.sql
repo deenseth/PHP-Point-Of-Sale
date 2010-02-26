@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Feb 26, 2010 at 09:42 AM
+-- Generation Time: Feb 26, 2010 at 02:07 PM
 -- Server version: 5.1.39
 -- PHP Version: 5.3.0
 -- 
@@ -28,7 +28,7 @@ CREATE TABLE `phppos_app_config` (
 
 INSERT INTO `phppos_app_config` (`key`, `value`) VALUES ('address', '123 Nowhere street'),
 ('company', 'PHP Point Of Sale, Inc'),
-('default_tax_rate', '10'),
+('default_tax_rate', '8'),
 ('email', 'admin@phppointofsale.com'),
 ('fax', ''),
 ('phone', '555-555-5555'),
@@ -167,7 +167,7 @@ CREATE TABLE `phppos_people` (
   `comments` text NOT NULL,
   `person_id` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`person_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phppos_people`
@@ -212,6 +212,7 @@ CREATE TABLE `phppos_sales` (
   `employee_id` int(10) NOT NULL DEFAULT '0',
   `comment` text NOT NULL,
   `sale_id` int(10) NOT NULL AUTO_INCREMENT,
+  `payment_type` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`sale_id`),
   KEY `customer_id` (`customer_id`),
   KEY `employee_id` (`employee_id`)

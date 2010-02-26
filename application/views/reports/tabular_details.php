@@ -2,7 +2,7 @@
 <div id="page_title" style="margin-bottom:8px;"><?php echo $title ?></div>
 <div id="page_subtitle" style="margin-bottom:8px;"><?php echo $subtitle ?></div>
 <div id="table_holder">
-	<table class="tablesorter" id="sortable_table">
+	<table class="tablesorter report" id="sortable_table">
 		<thead>
 			<tr>
 				<th>+</th>

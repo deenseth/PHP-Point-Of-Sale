@@ -45,10 +45,16 @@ echo form_open('config/save/',array('id'=>'config_form'));
 <?php echo form_label($this->lang->line('config_default_tax_rate_1').':', 'default_tax_1_rate',array('class'=>'wide required')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
+		'name'=>'default_tax_1_name',
+		'id'=>'default_tax_1_name',
+		'size'=>'10',
+		'value'=>$this->config->item('default_tax_1_name') ? $this->config->item('default_tax_1_name') : $this->lang->line('items_sales_tax_1')));?>
+		
+	<?php echo form_input(array(
 		'name'=>'default_tax_1_rate',
 		'id'=>'default_tax_1_rate',
 		'size'=>'4',
-		'value'=>$this->config->item('default_tax_1_rate')));?>
+		'value'=>$this->config->item('default_tax_1_rate')));?>%
 	</div>
 </div>
 
@@ -56,10 +62,16 @@ echo form_open('config/save/',array('id'=>'config_form'));
 <?php echo form_label($this->lang->line('config_default_tax_rate_2').':', 'default_tax_1_rate',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
+		'name'=>'default_tax_2_name',
+		'id'=>'default_tax_2_name',
+		'size'=>'10',
+		'value'=>$this->config->item('default_tax_2_name') ? $this->config->item('default_tax_2_name') : $this->lang->line('items_sales_tax_2')));?>
+		
+	<?php echo form_input(array(
 		'name'=>'default_tax_2_rate',
 		'id'=>'default_tax_2_rate',
 		'size'=>'4',
-		'value'=>$this->config->item('default_tax_2_rate')));?>
+		'value'=>$this->config->item('default_tax_2_rate')));?>%
 	</div>
 </div>
 

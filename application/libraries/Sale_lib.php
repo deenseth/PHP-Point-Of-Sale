@@ -156,29 +156,32 @@ class Sale_lib
 		$this->empty_cart();
 		$this->delete_customer();
 	}
-
+	
 	function get_taxes()
 	{
 		$taxes = array();
+
+		//Make taxes cummulative.
+		$cummulator=0;
 		foreach($this->get_cart() as $item_id=>$item)
 		{
 			$tax_info = $this->CI->Item_taxes->get_info($item_id);
-			
+
 			foreach($tax_info as $tax)
 			{
 				$name = $tax['percent'].'% ' . $tax['name'];
-				$tax_amount=($item['price']*$item['quantity']-$item['price']*$item['quantity']*$item['discount']/100)*(($tax['percent'])/100);
-				
-				
+				$tax_amount=( (($item['price']*$item['quantity']) - ($item['price']*$item['quantity'])*$item['discount']/100) + $cummulator) * (($tax['percent'])/100);
+
 				if (!isset($taxes[$name]))
 				{
 					$taxes[$name] = 0;
 				}
 				$taxes[$name] += $tax_amount;
+			    $cummulator+= $this->CI->Appconfig->get('tax_cumulative') ? $tax_amount : 0;
 			}
 		}
-		
-		return $taxes;
+
+		return $taxes;	
 	}
 
 	function get_subtotal()

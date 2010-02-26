@@ -58,13 +58,28 @@ class Items extends Secure_area implements iData_controller
 	{
 		$data['item_info']=$this->Item->get_info($item_id);
 		$data['item_tax_info']=$this->Item_taxes->get_info($item_id);
+		$suppliers = array('' => $this->lang->line('items_none'));
+		foreach($this->Supplier->get_all()->result_array() as $row)
+		{
+			$suppliers[$row['person_id']] = $row['first_name'] .' '. $row['last_name'];
+		}
+
+		$data['suppliers']=$suppliers;
+		$data['selected_supplier'] = $this->Item->get_info($item_id)->supplier_id;
 		$data['default_tax_rate']=($item_id==-1) ? $this->Appconfig->get('default_tax_rate') : '';
 		$this->load->view("items/form",$data);
 	}
 	
 	function bulk_edit()
 	{
-		$this->load->view("items/form_bulk");
+		$data = array();
+		$suppliers = array('' => $this->lang->line('items_none'));
+		foreach($this->Supplier->get_all()->result_array() as $row)
+		{
+			$suppliers[$row['person_id']] = $row['first_name'] .' '. $row['last_name'];
+		}
+		$data['suppliers'] = $suppliers;
+		$this->load->view("items/form_bulk", $data);
 	}
 	
 	function save($item_id=-1)
@@ -73,6 +88,7 @@ class Items extends Secure_area implements iData_controller
 		'name'=>$this->input->post('name'),
 		'description'=>$this->input->post('description'),
 		'category'=>$this->input->post('category'),
+		'supplier_id'=>$this->input->post('supplier_id')=='' ? null:$this->input->post('supplier_id'),
 		'item_number'=>$this->input->post('item_number')=='' ? null:$this->input->post('item_number'),
 		'cost_price'=>$this->input->post('cost_price'),
 		'unit_price'=>$this->input->post('unit_price'),
@@ -122,7 +138,12 @@ class Items extends Secure_area implements iData_controller
 		
 		foreach($_POST as $key=>$value)
 		{
-			if($value!='' and !(in_array($key, array('item_ids', 'tax_names', 'tax_percents'))))
+			//This field is nullable, so treat it differently
+			if ($key == 'supplier_id')
+			{
+				$item_data["$key"]=$value == '' ? null : $value;
+			}
+			elseif($value!='' and !(in_array($key, array('item_ids', 'tax_names', 'tax_percents'))))
 			{
 				$item_data["$key"]=$value;
 			}

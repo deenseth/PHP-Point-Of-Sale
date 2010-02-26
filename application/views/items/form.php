@@ -54,6 +54,13 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 </div>
 
 <div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('items_supplier').':', 'supplier',array('class'=>'required wide')); ?>
+	<div class='form_field'>
+	<?php echo form_dropdown('supplier_id', $suppliers, $selected_supplier);?>
+	</div>
+</div>
+
+<div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('items_cost_price').':', 'cost_price',array('class'=>'required wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(

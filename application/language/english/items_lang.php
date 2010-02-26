@@ -50,5 +50,7 @@ $lang['items_unit_price_number']='Unit price must be a number';
 $lang['items_cost_price_number']='Cost price must be a number';
 $lang['items_quantity_number']='Quantity must be a number';
 $lang['items_reorder_level_number']='Reorder level must be a number';
+$lang['items_none'] = 'None';
+$lang['items_supplier'] = 'Supplier';
 
 ?>

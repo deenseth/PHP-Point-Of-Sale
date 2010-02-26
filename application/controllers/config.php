@@ -25,7 +25,8 @@ class Config extends Secure_area
 		'default_tax_1_name'=>$this->input->post('default_tax_1_name'),		
 		'default_tax_2_rate'=>$this->input->post('default_tax_2_rate'),	
 		'default_tax_2_name'=>$this->input->post('default_tax_2_name'),		
-		'return_policy'=>$this->input->post('return_policy')	
+		'return_policy'=>$this->input->post('return_policy'),
+		'print_after_sale'=>$this->input->post('print_after_sale')	
 		);
 		
 		if($this->Appconfig->batch_save($batch_save_data))

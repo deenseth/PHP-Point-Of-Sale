@@ -73,9 +73,16 @@
 	</div>
 </div>
 <?php $this->load->view("partial/footer"); ?>
+
+<?php if ($this->Appconfig->get('print_after_sale'))
+{
+?>
 <script type="text/javascript">
 $(window).load(function()
 {
 	window.print(); 
 });
 </script> 
+<?php
+}
+?>

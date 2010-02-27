@@ -80,7 +80,7 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 	<?php echo form_input(array(
 		'name'=>'tax_names[]',
 		'id'=>'tax_name_1',
-		'size'=>'10',
+		'size'=>'8',
 		'value'=> isset($item_tax_info[0]['name']) ? $item_tax_info[0]['name'] : $this->config->item('default_tax_1_name'))
 	);?>
 	</div>
@@ -101,7 +101,7 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 	<?php echo form_input(array(
 		'name'=>'tax_names[]',
 		'id'=>'tax_name_2',
-		'size'=>'10',
+		'size'=>'8',
 		'value'=> isset($item_tax_info[1]['name']) ? $item_tax_info[1]['name'] : $this->config->item('default_tax_1_name'))
 	);?>
 	</div>

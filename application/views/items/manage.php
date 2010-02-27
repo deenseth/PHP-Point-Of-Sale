@@ -19,7 +19,7 @@ $(document).ready(function()
     		return false;
     	}
     	
-    	$(this).attr('href',$(this).attr('href')+'/'+selected.join(','));
+    	$(this).attr('href','index.php/items/generate_barcodes/'+selected.join(','));
     });
 }); 
 

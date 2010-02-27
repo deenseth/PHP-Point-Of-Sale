@@ -53,5 +53,6 @@ $lang['items_quantity_number']='Quantity must be a number';
 $lang['items_reorder_level_number']='Reorder level must be a number';
 $lang['items_none'] = 'None';
 $lang['items_supplier'] = 'Supplier';
-
+$lang['items_generate_barcodes'] = 'Generate Barcodes';
+$lang['items_must_select_item_for_barcode'] = 'You must select at least 1 item to generate barcodes';
 ?>

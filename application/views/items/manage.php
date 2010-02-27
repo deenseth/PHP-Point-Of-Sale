@@ -9,6 +9,18 @@ $(document).ready(function()
     enable_search('<?php echo site_url("$controller_name/suggest")?>','<?php echo $this->lang->line("common_confirm_search")?>');
     enable_delete('<?php echo $this->lang->line($controller_name."_confirm_delete")?>','<?php echo $this->lang->line($controller_name."_none_selected")?>');
     enable_bulk_edit('<?php echo $this->lang->line($controller_name."_none_selected")?>');
+    
+    $('#generate_barcodes').click(function()
+    {
+    	var selected = get_selected_values();
+    	if (selected.length == 0)
+    	{
+    		alert('<?php echo $this->lang->line('items_must_select_item_for_barcode'); ?>');
+    		return false;
+    	}
+    	
+    	$(this).attr('href',$(this).attr('href')+'/'+selected.join(','));
+    });
 }); 
 
 function init_table_sorting()
@@ -87,6 +99,7 @@ function post_bulk_form_submit(response)
 	<ul>
 		<li class="float_left"><span><?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('id'=>'delete')); ?></span></li>
 		<li class="float_left"><span><?php echo anchor("$controller_name/bulk_edit/width:$form_width",$this->lang->line("items_bulk_edit"),array('id'=>'bulk_edit','title'=>$this->lang->line('items_edit_multiple_items'))); ?></span></li>
+		<li class="float_left"><span><?php echo anchor("$controller_name/generate_barcodes",$this->lang->line("items_generate_barcodes"),array('id'=>'generate_barcodes', 'target' =>'_blank','title'=>$this->lang->line('items_generate_barcodes'))); ?></span></li>
 		<li class="float_right">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
 		<?php echo form_open("$controller_name/search",array('id'=>'search_form')); ?>

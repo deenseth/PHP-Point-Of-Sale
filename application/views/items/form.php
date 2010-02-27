@@ -102,7 +102,7 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 		'name'=>'tax_names[]',
 		'id'=>'tax_name_2',
 		'size'=>'8',
-		'value'=> isset($item_tax_info[1]['name']) ? $item_tax_info[1]['name'] : $this->config->item('default_tax_1_name'))
+		'value'=> isset($item_tax_info[1]['name']) ? $item_tax_info[1]['name'] : $this->config->item('default_tax_2_name'))
 	);?>
 	</div>
 	<div class='form_field'>

@@ -48,7 +48,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 		'name'=>'default_tax_1_name',
 		'id'=>'default_tax_1_name',
 		'size'=>'10',
-		'value'=>$this->config->item('default_tax_1_name') ? $this->config->item('default_tax_1_name') : $this->lang->line('items_sales_tax_1')));?>
+		'value'=>$this->config->item('default_tax_1_name')!==FALSE ? $this->config->item('default_tax_1_name') : $this->lang->line('items_sales_tax_1')));?>
 		
 	<?php echo form_input(array(
 		'name'=>'default_tax_1_rate',
@@ -65,7 +65,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 		'name'=>'default_tax_2_name',
 		'id'=>'default_tax_2_name',
 		'size'=>'10',
-		'value'=>$this->config->item('default_tax_2_name') ? $this->config->item('default_tax_2_name') : $this->lang->line('items_sales_tax_2')));?>
+		'value'=>$this->config->item('default_tax_2_name')!==FALSE ? $this->config->item('default_tax_2_name') : $this->lang->line('items_sales_tax_2')));?>
 		
 	<?php echo form_input(array(
 		'name'=>'default_tax_2_rate',

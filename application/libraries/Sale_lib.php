@@ -188,7 +188,7 @@ class Sale_lib
 		{
 		    $subtotal+=($item['price']*$item['quantity']-$item['price']*$item['quantity']*$item['discount']/100);
 		}
-		return to_currency($subtotal);
+		return $subtotal;
 	}
 
 	function get_total()
@@ -204,7 +204,7 @@ class Sale_lib
 			$total+=$tax;
 		}
 
-		return to_currency($total);
+		return $total;
 	}
 }
 ?>

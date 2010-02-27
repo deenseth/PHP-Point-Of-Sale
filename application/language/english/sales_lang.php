@@ -37,4 +37,6 @@ $lang['sales_cash'] = 'Cash';
 $lang['sales_check'] = 'Check';
 $lang['sales_debit'] = 'Debit Card';
 $lang['sales_credit'] = 'Credit Card';
+$lang['sales_amount_tendered'] = 'Amount Tendered';
+$lang['sales_change_due'] = 'Change Due';
 ?>

@@ -107,6 +107,12 @@ class Sales extends Secure_area
 		$emp_info=$this->Employee->get_info($employee_id);
 		$payment_type = $this->input->post('payment_type');
 		$data['payment_type']=$this->input->post('payment_type');
+		
+		if ($this->input->post('amount_tendered'))
+		{
+			$data['amount_tendered'] = $this->input->post('amount_tendered');
+			$data['amount_change'] = to_currency($data['amount_tendered'] - $data['total']);
+		}
 		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
 
 		if($customer_id!=-1)

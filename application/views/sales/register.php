@@ -120,7 +120,7 @@ else
 
 	<div id='sale_details'>
 		<div class="float_left" style="width:55%;"><?php echo $this->lang->line('sales_sub_total'); ?>:</div>
-		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo $subtotal; ?></div>
+		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo to_currency($subtotal); ?></div>
 
 		<?php foreach($taxes as $name=>$value) { ?>
 		<div class="float_left" style='width:55%;'><?php echo $name; ?>:</div>
@@ -128,7 +128,7 @@ else
 		<?php }; ?>
 
 		<div class="float_left" style='width:55%;'><?php echo $this->lang->line('sales_total'); ?>:</div>
-		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo $total; ?></div>
+		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo to_currency($total); ?></div>
 	</div>
 	<?php
 	if(count($cart) > 0)
@@ -147,7 +147,20 @@ else
 		<?php
 		    echo form_dropdown('payment_type',$payment_options);?>
         </td>
-        </tr></table>
+        </tr>
+        
+        <tr>
+        <td>
+        <?php
+			echo $this->lang->line('sales_amount_tendered').':   ';?>
+		</td><td>
+		<?php
+		    echo form_input(array('name'=>'amount_tendered','value'=>'','size'=>'10'));
+		?>
+        </td>
+        </tr>
+        
+        </table>
         <br>
 		<?php echo "<div class='small_button' id='finish_sale_button' style='float:right;margin-top:5px;'><span>".$this->lang->line('sales_complete_sale')."</span></div>";
 		?>

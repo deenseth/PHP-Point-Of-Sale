@@ -43,7 +43,7 @@
 	?>
 	<tr>
 	<td colspan="3" style='text-align:right;border-top:2px solid #000000;'><?php echo $this->lang->line('sales_sub_total'); ?></td>
-	<td colspan="2" style='text-align:right;border-top:2px solid #000000;'><?php echo $subtotal; ?></td>
+	<td colspan="2" style='text-align:right;border-top:2px solid #000000;'><?php echo to_currency($subtotal); ?></td>
 	</tr>
 
 	<?php foreach($taxes as $name=>$value) { ?>
@@ -55,7 +55,7 @@
 
 	<tr>
 	<td colspan="3" style='text-align:right;'><?php echo $this->lang->line('sales_total'); ?></td>
-	<td colspan="2" style='text-align:right'><?php echo $total; ?></td>
+	<td colspan="2" style='text-align:right'><?php echo to_currency($total); ?></td>
 	</tr>
 
 	<tr>
@@ -63,6 +63,21 @@
 	<td colspan="2" style='text-align:right'><?php echo $payment_type; ?></td>
 	</tr>
 
+	<?php if(isset($amount_change))
+	{
+	?>
+		<tr>
+		<td colspan="3" style='text-align:right;'><?php echo $this->lang->line('sales_amount_tendered'); ?></td>
+		<td colspan="2" style='text-align:right'><?php echo to_currency($amount_tendered); ?></td>
+		</tr>
+		
+		<tr>
+		<td colspan="3" style='text-align:right;'><?php echo $this->lang->line('sales_change_due'); ?></td>
+		<td colspan="2" style='text-align:right'><?php echo $amount_change; ?></td>
+		</tr>
+	<?php
+	}
+	?>
 	</table>
 
 	<div id="sale_return_policy">

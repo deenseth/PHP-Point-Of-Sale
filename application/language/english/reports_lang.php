@@ -41,4 +41,12 @@ $lang['reports_detailed_sales_report'] = 'Detailed Sales Report';
 $lang['reports_comments'] = 'Comments';
 $lang['reports_discount'] = 'Discount';
 $lang['reports_payment_type'] = 'Payment Type';
+$lang['reports_sales'] = 'Sales';
+$lang['reports_categories'] = 'Categories';
+$lang['reports_customers'] = 'Customers';
+$lang['reports_suppliers'] = 'Suppliers';
+$lang['reports_items'] = 'Items';
+$lang['reports_employees'] = 'Employees';
+$lang['reports_customer'] = 'Customer';
+$lang['reports_employee'] = 'Employee';
 ?>

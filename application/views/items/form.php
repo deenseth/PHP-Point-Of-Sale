@@ -3,34 +3,24 @@
 <?php
 echo form_open('items/find_item_info/'.$item_info->item_id,array('id'=>'item_number_form'));
 ?>
-<fieldset id="item_number_info">
-<legend><?php echo $this->lang->line("items_number_information"); ?></legend>
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_item_number').':', 'name',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'scan_item_number',
-		'id'=>'scan_item_number',
-		'value'=>$item_info->item_number)
-	);?>
-	</div>
-</div>
-<?php
-echo form_submit(array(
-	'name'=>'submit',
-	'id'=>'submit',
-	'value'=>$this->lang->line('items_retrive_item_info'),
-	'class'=>'submit_button float_right')
-);
-?>
-<div id="info_provided_by"></div>
-</fieldset>
 <?php
 echo form_close();
 echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 ?>
 <fieldset id="item_basic_info">
 <legend><?php echo $this->lang->line("items_basic_information"); ?></legend>
+
+<div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('items_item_number').':', 'name',array('class'=>'wide')); ?>
+	<div class='form_field'>
+	<?php echo form_input(array(
+		'name'=>'item_number',
+		'id'=>'item_number',
+		'value'=>$item_info->item_number)
+	);?>
+	</div>
+</div>
+
 <div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('items_name').':', 'name',array('class'=>'required wide')); ?>
 	<div class='form_field'>
@@ -170,7 +160,6 @@ echo form_submit(array(
 );
 ?>
 </fieldset>
-<input type='hidden' name='item_number' id='item_number' value='<?php echo $item_info->item_number; ?>' />
 <?php 
 echo form_close();
 ?>

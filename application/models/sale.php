@@ -1,7 +1,13 @@
 <?php
 class Sale extends Model
 {
-
+	public function get_info($sale_id)
+	{
+		$this->db->from('sales');
+		$this->db->where('sale_id',$sale_id);
+		return $this->db->get();
+	}
+	
 	function exists($sale_id)
 	{
 		$this->db->from('sales');

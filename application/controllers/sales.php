@@ -127,6 +127,34 @@ class Sales extends Secure_area
 		$this->load->view("sales/receipt",$data);
 		$this->sale_lib->clear_all();
 	}
+	
+	function receipt($sale_id)
+	{
+		$sale_info = $this->Sale->get_info($sale_id)->row_array();
+		$this->sale_lib->copy_entire_sale($sale_id);
+		$data['cart']=$this->sale_lib->get_cart();
+		$data['subtotal']=$this->sale_lib->get_subtotal();
+		$data['taxes']=$this->sale_lib->get_taxes();
+		$data['total']=$this->sale_lib->get_total();
+		$data['receipt_title']=$this->lang->line('sales_receipt');
+		$data['transaction_time']= date('m/d/Y h:i:s a', strtotime($sale_info['sale_time']));
+		$customer_id=$this->sale_lib->get_customer();
+		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
+		$emp_info=$this->Employee->get_info($employee_id);
+		$data['payment_type']=$sale_info['payment_type'];
+		
+		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
+
+		if($customer_id!=-1)
+		{
+			$cust_info=$this->Customer->get_info($customer_id);
+			$data['customer']=$cust_info->first_name.' '.$cust_info->last_name;
+		}
+		$data['sale_id']='POS '.$sale_id;
+		$this->load->view("sales/receipt",$data);
+		$this->sale_lib->clear_all();
+
+	}
 
 	function _reload($data=array())
 	{

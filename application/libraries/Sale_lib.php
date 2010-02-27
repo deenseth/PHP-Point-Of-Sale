@@ -127,7 +127,20 @@ class Sale_lib
 		}
 		$this->set_customer($this->CI->Sale->get_customer($sale_id)->person_id);
 	}
+	
+	function copy_entire_sale($sale_id)
+	{
+		$this->empty_cart();
+		$this->delete_customer();
 
+		foreach($this->CI->Sale->get_sale_items($sale_id)->result() as $row)
+		{
+			$this->add_item($row->item_id,$row->quantity_purchased,$row->discount_percent,$row->item_unit_price);
+		}
+		$this->set_customer($this->CI->Sale->get_customer($sale_id)->person_id);
+
+	}
+	
 	function delete_item($item_id)
 	{
 		$items=$this->get_cart();

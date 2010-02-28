@@ -168,51 +168,9 @@ echo form_close();
 //validation and submit handling
 $(document).ready(function()
 {	
-	//hack to get focus to work
-	setTimeout(function()
-	{
-		$("#scan_item_number").focus();
-	},100);
-	
 	$("#category").autocomplete("<?php echo site_url('items/suggest_category');?>",{max:100,minChars:0,delay:10});
-    $("#category").result(function(event, data, formatted)
-    {
-    });
+    $("#category").result(function(event, data, formatted){});
 	$("#category").search();
-	
-	$('#item_number_form').ajaxForm(
-	{
-		beforeSubmit:function()
-		{
-			$('#scan_item_number').addClass('loading');
-		},
-		success:function(response)
-		{
-			$('#scan_item_number').removeClass('loading');
-			
-			if(typeof response.provider!='undefined')
-			{
-				$('#name').val(response.name);
-				$('#category').val(response.category);
-				$('#description').val(response.description);
-				$('#unit_price').val(response.unit_price);
-				$('#tax_percent').val(response.tax_percent);
-				var a = document.createElement("a");
-				a.setAttribute("href",response.url);
-				a.setAttribute("target","_blank");
-				a.appendChild(document.createTextNode(response.provider));
-				$('#info_provided_by').html("<?php echo $this->lang->line('items_info_provided_by');?> ");
-				$('#info_provided_by').append(a);
-				$('#info_provided_by').show();
-	
-			}
-			else
-			{
-				$('#info_provided_by').html("<?php echo $this->lang->line('items_cannot_find_item');?> ");
-			}
-		},
-		dataType:'json'
-	});
 	
 	
 	$('#item_form').validate({

@@ -191,7 +191,6 @@ $(document).ready(function()
     	minChars:0,
     	max:100,
        	delay:10,
-       	highlight: false,
        	selectFirst: false,
     	formatItem: function(row) {
 			return row[1];

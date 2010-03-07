@@ -23,7 +23,7 @@ function enable_search(suggest_url,confirm_search_message)
     	$(this).attr('value','');
     });
 
-    $("#search").autocomplete(suggest_url,{max:100,delay:10});
+    $("#search").autocomplete(suggest_url,{max:100,delay:10, selectFirst: false});
     $("#search").result(function(event, data, formatted)
     {
 		do_search(true);

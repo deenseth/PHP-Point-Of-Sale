@@ -14,8 +14,7 @@ $(document).ready(function()
 </script>
 </head>
 <body>
-<h1>PHP Point Of Sale 10.0 Alpha 7</h1>
-<h3>Username/Password = admin/pointofsale
+<h1>PHP Point Of Sale 10.0</h1>
 <?php echo form_open('login') ?>
 <div id="container">
 <?php echo validation_errors(); ?>

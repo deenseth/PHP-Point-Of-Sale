@@ -15,6 +15,15 @@ $(document).ready(function()
 </head>
 <body>
 <h1>PHP Point Of Sale 10.0</h1>
+<?php
+if ($_SERVER['HTTP_HOST'] == 'demo.phppointofsale.com')
+{
+?>
+<h2>Username = admin</h2>
+<h2>Password = pointofsale</h2>
+<?php
+}
+?>
 <?php echo form_open('login') ?>
 <div id="container">
 <?php echo validation_errors(); ?>

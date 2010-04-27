@@ -112,7 +112,7 @@ class Sales extends Secure_area
 		if ($this->input->post('amount_tendered'))
 		{
 			$data['amount_tendered'] = $this->input->post('amount_tendered');
-			$data['amount_change'] = to_currency($data['amount_tendered'] - $data['total']);
+			$data['amount_change'] = to_currency($data['amount_tendered'] - round($data['total'], 2));
 		}
 		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
 

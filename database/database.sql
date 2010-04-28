@@ -45,6 +45,7 @@ INSERT INTO `phppos_app_config` (`key`, `value`) VALUES ('address', '123 Nowhere
 CREATE TABLE `phppos_customers` (
   `person_id` int(10) NOT NULL,
   `account_number` varchar(255) DEFAULT NULL,
+  `taxable` int(1) NOT NULL DEFAULT '1',
   UNIQUE KEY `account_number` (`account_number`),
   KEY `person_id` (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

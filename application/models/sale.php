@@ -56,16 +56,19 @@ class Sale extends Model
 			$item_data = array('quantity'=>$cur_item_info->quantity - $item['quantity']);
 			$this->Item->save($item_data,$item_id);
 
-
-
-			foreach($this->Item_taxes->get_info($item_id) as $row)
+			$customer = $this->Customer->get_info($customer_id);
+			
+			if ($customer_id == -1 or $customer->taxable)
 			{
-				$this->db->insert('sales_items_taxes', array(
-					'sale_id' 	=>$sale_id,
-					'item_id' 	=>$item_id,
-					'name'		=>$row['name'],
-					'percent' 	=>$row['percent']
-				));
+				foreach($this->Item_taxes->get_info($item_id) as $row)
+				{
+					$this->db->insert('sales_items_taxes', array(
+						'sale_id' 	=>$sale_id,
+						'item_id' 	=>$item_id,
+						'name'		=>$row['name'],
+						'percent' 	=>$row['percent']
+					));
+				}
 			}
 		}
 		$this->db->trans_complete();

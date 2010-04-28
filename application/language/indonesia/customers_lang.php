@@ -12,4 +12,5 @@ $lang['customers_one_or_multiple']='pelanggan';
 $lang['customers_cannot_be_deleted']='pelanggan terpilih tidak bisa dihapus; satu atau lebih dari pelanggan yang dipilih memiliki penjualan.';
 $lang['customers_basic_information']='Informasi Pelanggan';
 $lang['customers_account_number']='Nomor Akun';
+$lang['customers_taxable']='Dapat dikenakan pajak';
 ?>

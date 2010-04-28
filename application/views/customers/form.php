@@ -16,6 +16,14 @@ echo form_open('customers/save/'.$person_info->person_id,array('id'=>'customer_f
 	);?>
 	</div>
 </div>
+
+<div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('customers_taxable').':', 'taxable'); ?>
+	<div class='form_field'>
+	<?php echo form_checkbox('taxable', '1', $person_info->taxable == '' ? TRUE : (boolean)$person_info->taxable);?>
+	</div>
+</div>
+
 <?php
 echo form_submit(array(
 	'name'=>'submit',

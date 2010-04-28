@@ -12,4 +12,5 @@ $lang['customers_one_or_multiple']='customer(s)';
 $lang['customers_cannot_be_deleted']='Could not deleted selected customers, one or more of the selected customers has sales.';
 $lang['customers_basic_information']='Customer Information';
 $lang['customers_account_number']='Account #';
+$lang['customers_taxable']='Taxable';
 ?>

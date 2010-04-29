@@ -1,0 +1,4 @@
+How to Upgrade
+-------------------------
+1. Replace all 10.0 code with the 10.1 directory
+2. Run the database upgrade "database_10.0-10.1.sql" from the database folder

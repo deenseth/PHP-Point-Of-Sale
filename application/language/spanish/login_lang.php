@@ -1,8 +1,8 @@
 <?php
-$lang['login_login']='Login';
-$lang['login_username']='Username';
-$lang['login_password']='Password';
-$lang['login_go']='Go';
-$lang['login_invalid_username_and_password']='Invalid username/password';
-$lang['login_welcome_message']='Welcome to the PHP Point Of Sale System. To continue, please login using your username and password below.';
+$lang['login_login']='Iniciar Sesión';
+$lang['login_username']='Usuario';
+$lang['login_password']='Contraseña';
+$lang['login_go']='Ir';
+$lang['login_invalid_username_and_password']='Usuario/Contraseña inválidos';
+$lang['login_welcome_message']='Bienvenido(a) al Sistema PHP Point Of Sale. Para continuar, inicia sesión usando tu Usuario y Contraseña.';
 ?>

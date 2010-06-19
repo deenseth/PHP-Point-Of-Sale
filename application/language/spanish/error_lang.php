@@ -1,4 +1,4 @@
 <?php
-$lang['error_no_permission_module']='You do not have permission to access the module named';
-$lang['error_unknown']='unknown';
+$lang['error_no_permission_module']='No tienes permiso para accesar el módulo llamado';
+$lang['error_unknown']='desconocido';
 ?>

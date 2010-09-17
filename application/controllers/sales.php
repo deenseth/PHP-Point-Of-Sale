@@ -39,6 +39,27 @@ class Sales extends Secure_area
 		$this->_reload();
 	}
 
+	//Alain Multiple Payments
+	function add_payment()
+	{
+		$data=array();
+		$payment_type=$this->input->post('payment_type');
+		$payment_amount=$this->input->post('amount_tendered');
+		if(!$this->sale_lib->add_payment($payment_type,$payment_amount))
+		{
+			$data['error']='Unable to Add Payment! Please try again!';
+		}
+		$this->_reload($data);
+
+	}
+
+	//Alain Multiple Payments
+	function delete_payment($payment_id)
+	{
+		$this->sale_lib->delete_payment($payment_id);
+		$this->_reload();
+	}
+
 	function add()
 	{
 		$data=array();
@@ -63,7 +84,6 @@ class Sales extends Secure_area
 
 		$this->form_validation->set_rules('price', 'lang:items_price', 'required|numeric');
 		$this->form_validation->set_rules('quantity', 'lang:items_quantity', 'required|integer');
-		$this->form_validation->set_rules('discount', 'lang:items_discount', 'required|integer');
 
 		$price = $this->input->post("price");
 		$quantity = $this->input->post("quantity");
@@ -108,12 +128,9 @@ class Sales extends Secure_area
 		$emp_info=$this->Employee->get_info($employee_id);
 		$payment_type = $this->input->post('payment_type');
 		$data['payment_type']=$this->input->post('payment_type');
-		
-		if ($this->input->post('amount_tendered'))
-		{
-			$data['amount_tendered'] = $this->input->post('amount_tendered');
-			$data['amount_change'] = to_currency($data['amount_tendered'] - round($data['total'], 2));
-		}
+		//Alain Multiple payments
+		$data['payments']=$this->sale_lib->get_payments();
+		$data['amount_change']=to_currency($this->sale_lib->get_amount_due() * -1);
 		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
 
 		if($customer_id!=-1)
@@ -123,17 +140,18 @@ class Sales extends Secure_area
 		}
 
 		//SAVE sale to database
-		$data['sale_id']='POS '.$this->Sale->save($data['cart'], $customer_id,$employee_id,$comment,$payment_type);
+		$data['sale_id']='POS '.$this->Sale->save($data['cart'], $customer_id,$employee_id,$comment,$data['payments']);
 
 		$this->load->view("sales/receipt",$data);
 		$this->sale_lib->clear_all();
 	}
-	
+
 	function receipt($sale_id)
 	{
 		$sale_info = $this->Sale->get_info($sale_id)->row_array();
 		$this->sale_lib->copy_entire_sale($sale_id);
 		$data['cart']=$this->sale_lib->get_cart();
+		$data['payments']=$this->sale_lib->get_payments();
 		$data['subtotal']=$this->sale_lib->get_subtotal();
 		$data['taxes']=$this->sale_lib->get_taxes();
 		$data['total']=$this->sale_lib->get_total();
@@ -143,7 +161,7 @@ class Sales extends Secure_area
 		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
 		$emp_info=$this->Employee->get_info($employee_id);
 		$data['payment_type']=$sale_info['payment_type'];
-		
+		$data['amount_change']=to_currency($this->sale_lib->get_amount_due() * -1);
 		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
 
 		if($customer_id!=-1)
@@ -167,6 +185,10 @@ class Sales extends Secure_area
 		$data['taxes']=$this->sale_lib->get_taxes();
 		$data['total']=$this->sale_lib->get_total();
 		$data['items_module_allowed'] = $this->Employee->has_permission('items', $person_info->person_id);
+		//Alain Multiple Payments
+		$data['payments_total']=$this->sale_lib->get_payments_total();
+		$data['amount_due']=$this->sale_lib->get_amount_due();
+		$data['payments']=$this->sale_lib->get_payments();
 		$data['payment_options']=array(
 			$this->lang->line('sales_cash') => $this->lang->line('sales_cash'),
 			$this->lang->line('sales_check') => $this->lang->line('sales_check'),
@@ -185,7 +207,6 @@ class Sales extends Secure_area
 
     function cancel_sale()
     {
-        //$this->load->view("sales/receipt",$data);
     	$this->sale_lib->clear_all();
     	$this->_reload();
 

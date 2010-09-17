@@ -21,6 +21,97 @@ class Sale_lib
 		$this->CI->session->set_userdata('cart',$cart_data);
 	}
 
+	//Alain Multiple Payments
+	function get_payments()
+	{
+		if(!$this->CI->session->userdata('payments'))
+			$this->set_payments(array());
+
+		return $this->CI->session->userdata('payments');
+	}
+
+	//Alain Multiple Payments
+	function set_payments($payments_data)
+	{
+		$this->CI->session->set_userdata('payments',$payments_data);
+	}
+
+	//Alain Multiple Payments
+	function add_payment($payment_id,$payment_amount)
+	{
+		$payments=$this->get_payments();
+		$payment = array($payment_id=>
+		array(
+			'payment_type'=>$payment_id,
+			'payment_amount'=>$payment_amount
+			)
+		);
+
+		//payment_method already exists, add to payment_amount
+		if(isset($payments[$payment_id]))
+		{
+			$payments[$payment_id]['payment_amount']+=$payment_amount;
+		}
+		else
+		{
+			//add to existing array
+			$payments+=$payment;
+		}
+
+		$this->set_payments($payments);
+		return true;
+
+	}
+
+	//Alain Multiple Payments
+	function edit_payment($payment_id,$payment_amount)
+	{
+		$payments = $this->get_payments();
+		if(isset($payments[$payment_id]))
+		{
+			$payments[$payment_id]['payment_type'] = $payment_id;
+			$payments[$payment_id]['payment_amount'] = $payment_amount;
+			$this->set_payments($payment_id);
+		}
+
+		return false;
+	}
+
+	//Alain Multiple Payments
+	function delete_payment($payment_id)
+	{
+		$payments=$this->get_payments();
+		unset($payments[$payment_id]);
+		$this->set_payments($payments);
+	}
+
+	//Alain Multiple Payments
+	function empty_payments()
+	{
+		$this->CI->session->unset_userdata('payments');
+	}
+
+	//Alain Multiple Payments
+	function get_payments_total()
+	{
+		$subtotal = 0;
+		foreach($this->get_payments() as $payments)
+		{
+		    $subtotal+=$payments['payment_amount'];
+		}
+		return $subtotal;
+	}
+
+	//Alain Multiple Payments
+	function get_amount_due()
+	{
+		$amount_due=0;
+		$payment_total = $this->get_payments_total();
+		$sales_total=$this->get_total();
+		$amount_due=$sales_total - $payment_total;
+		return $amount_due;
+	}
+
 	function get_customer()
 	{
 		if(!$this->CI->session->userdata('customer'))
@@ -127,7 +218,7 @@ class Sale_lib
 		}
 		$this->set_customer($this->CI->Sale->get_customer($sale_id)->person_id);
 	}
-	
+
 	function copy_entire_sale($sale_id)
 	{
 		$this->empty_cart();
@@ -137,10 +228,14 @@ class Sale_lib
 		{
 			$this->add_item($row->item_id,$row->quantity_purchased,$row->discount_percent,$row->item_unit_price);
 		}
+		foreach($this->CI->Sale->get_sale_payments($sale_id)->result() as $row)
+		{
+			$this->add_payment($row->payment_type,$row->payment_amount);
+		}
 		$this->set_customer($this->CI->Sale->get_customer($sale_id)->person_id);
 
 	}
-	
+
 	function delete_item($item_id)
 	{
 		$items=$this->get_cart();
@@ -167,31 +262,33 @@ class Sale_lib
 	{
 		$this->clear_mode();
 		$this->empty_cart();
+		//Alain Multiple Payments
+		$this->empty_payments();
 		$this->delete_customer();
 	}
-	
+
 	function get_taxes()
 	{
 		$customer_id = $this->get_customer();
 		$customer = $this->CI->Customer->get_info($customer_id);
-		
+				   
 		//Do not charge sales tax if we have a customer that is not taxable
 		if (!$customer->taxable and $customer_id!=-1)
 		{
-			return array();
+		   return array();
 		}
-		
+
 		$taxes = array();
 		foreach($this->get_cart() as $item_id=>$item)
 		{
 			$tax_info = $this->CI->Item_taxes->get_info($item_id);
-			
+
 			foreach($tax_info as $tax)
 			{
 				$name = $tax['percent'].'% ' . $tax['name'];
 				$tax_amount=($item['price']*$item['quantity']-$item['price']*$item['quantity']*$item['discount']/100)*(($tax['percent'])/100);
-				
-				
+
+
 				if (!isset($taxes[$name]))
 				{
 					$taxes[$name] = 0;
@@ -199,7 +296,7 @@ class Sale_lib
 				$taxes[$name] += $tax_amount;
 			}
 		}
-		
+
 		return $taxes;
 	}
 

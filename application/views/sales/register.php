@@ -93,6 +93,8 @@ else
 </tbody>
 </table>
 </div>
+
+
 <div id="overall_sale">
 	<?php
 	if(isset($customer))
@@ -130,50 +132,128 @@ else
 		<div class="float_left" style='width:55%;'><?php echo $this->lang->line('sales_total'); ?>:</div>
 		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo to_currency($total); ?></div>
 	</div>
+
+
+
+
 	<?php
+	// Only show this part if there are Items already in the sale.
 	if(count($cart) > 0)
 	{
 	?>
-	<div id="finish_sale">
-		<?php echo form_open("sales/complete",array('id'=>'finish_sale_form')); ?>
-		<br>
-		<label id="comment_label" for="comment"><?php echo $this->lang->line('common_comments'); ?>:</label>
-		<?php echo form_textarea(array('name'=>'comment','value'=>'','rows'=>'4','cols'=>'23'));?>
-		<br><br>
-		<table width="100%"><tr><td>
-		<?php
-			echo $this->lang->line('sales_payment').':   ';?>
-		</td><td>
-		<?php
-		    echo form_dropdown('payment_type',$payment_options);?>
-        </td>
-        </tr>
-        
-        <tr>
-        <td>
-        <?php
-			echo $this->lang->line('sales_amount_tendered').':   ';?>
-		</td><td>
-		<?php
-		    echo form_input(array('name'=>'amount_tendered','value'=>'','size'=>'10'));
-		?>
-        </td>
-        </tr>
-        
-        </table>
-        <br>
-		<?php echo "<div class='small_button' id='finish_sale_button' style='float:right;margin-top:5px;'><span>".$this->lang->line('sales_complete_sale')."</span></div>";
-		?>
-		</div>
 
+    	<div id="Cancel_sale">
+		<?php echo form_open("sales/cancel_sale",array('id'=>'cancel_sale_form')); ?>
+		<div class='small_button' id='cancel_sale_button' style='margin-top:5px;'>
+			<span><?php echo $this->lang->line('sales_cancel_sale'); ?></span>
+		</div>
+    	</form>
+    	</div>
+		<div class="clearfix" style="margin-bottom:1px;">&nbsp;</div>
+		<?php
+		// Only show this part if there is at least one payment entered.
+		if(count($payments) > 0)
+		{
+		?>
+			<div id="finish_sale">
+				<?php echo form_open("sales/complete",array('id'=>'finish_sale_form')); ?>
+				<label id="comment_label" for="comment"><?php echo $this->lang->line('common_comments'); ?>:</label>
+				<?php echo form_textarea(array('name'=>'comment','value'=>'','rows'=>'4','cols'=>'23'));?>
+				<br><br>
+
+				<?php echo "<div class='small_button' id='finish_sale_button' style='float:left;margin-top:5px;'><span>".$this->lang->line('sales_complete_sale')."</span></div>";
+				?>
+			</div>
+			</form>
+		<?php
+		}
+		?>
+
+
+
+    <table width="100%"><tr>
+    <td style="width:55%; "><div class="float_left"><?php echo 'Payments Total:' ?></div></td>
+    <td style="width:45%; text-align:right;"><div class="float_left" style="text-align:right;font-weight:bold;"><?php echo to_currency($payments_total); ?></div></td>
+	</tr>
+	<tr>
+	<td style="width:55%; "><div class="float_left" ><?php echo 'Amount Due:' ?></div></td>
+	<td style="width:45%; text-align:right; "><div class="float_left" style="text-align:right;font-weight:bold;"><?php echo to_currency($amount_due); ?></div></td>
+	</tr></table>
+
+	<div id="Payment_Types" >
+
+		<div style="height:100px;">
+
+			<?php echo form_open("sales/add_payment",array('id'=>'add_payment_form')); ?>
+			<table width="100%">
+			<tr>
+			<td>
+				<?php echo $this->lang->line('sales_payment').':   ';?>
+			</td>
+			<td>
+				<?php echo form_dropdown('payment_type',$payment_options);?>
+			</td>
+			</tr>
+			<tr>
+			<td>
+				<?php echo $this->lang->line('sales_amount_tendered').':   ';?>
+			</td>
+			<td>
+				<?php echo form_input(array('name'=>'amount_tendered','value'=>to_currency_no_money($amount_due),'size'=>'10'));	?>
+			</td>
+			</tr>
+        	</table>
+			<div class='small_button' id='add_payment_button' style='float:left;margin-top:5px;'>
+				<span><?php echo $this->lang->line('sales_add_payment'); ?></span>
+			</div>
+		</div>
 		</form>
 
-	    <?php echo form_open("sales/cancel_sale",array('id'=>'cancel_sale_form')); ?>
-			    <div class='small_button' id='cancel_sale_button' style='float:left;margin-top:5px;'>
-					<span>Cancel Sale</span>
-				</div>
-        </form>
+		<?php
+		// Only show this part if there is at least one payment entered.
+		if(count($payments) > 0)
+		{
+		?>
+	    	<table id="register">
+	    	<thead>
+			<tr>
+			<th style="width:11%;"><?php echo $this->lang->line('common_delete'); ?></th>
+			<th style="width:60%;"><?php echo 'Type'; ?></th>
+			<th style="width:18%;"><?php echo 'Amount'; ?></th>
+
+
+			</tr>
+			</thead>
+			<tbody id="payment_contents">
+			<?php
+				foreach($payments as $payment_id=>$payment)
+				{
+				echo form_open("sales/edit_payment/$payment_id",array('id'=>'edit_payment_form'.$payment_id));
+				?>
+	            <tr>
+	            <td><?php echo anchor("sales/delete_payment/$payment_id",'['.$this->lang->line('common_delete').']');?></td>
+
+
+				<td><?php echo  $payment['payment_type']    ?> </td>
+				<td style="text-align:right;"><?php echo  to_currency($payment['payment_amount'])  ?>  </td>
+
+
+				</tr>
+				</form>
+				<?php
+				}
+				?>
+			</tbody>
+			</table>
+		    <br>
+		<?php
+		}
+		?>
+
+
+
 	</div>
+
 	<?php
 	}
 	?>
@@ -191,7 +271,6 @@ $(document).ready(function()
     	minChars:0,
     	max:100,
        	delay:10,
-       	selectFirst: false,
     	formatItem: function(row) {
 			return row[1];
 		}
@@ -250,6 +329,10 @@ $(document).ready(function()
     	}
     });
 
+	$("#add_payment_button").click(function()
+	{
+	   $('#add_payment_form').submit();
+    });
 
 });
 

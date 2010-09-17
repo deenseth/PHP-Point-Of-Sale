@@ -58,26 +58,27 @@
 	<td colspan="2" style='text-align:right'><?php echo to_currency($total); ?></td>
 	</tr>
 
-	<tr>
-	<td colspan="3" style='text-align:right;'><?php echo $this->lang->line('sales_payment'); ?></td>
-	<td colspan="2" style='text-align:right'><?php echo $payment_type; ?></td>
-	</tr>
+    <tr><td colspan="5">&nbsp;</td></tr>
 
-	<?php if(isset($amount_change))
-	{
-	?>
+	<?php
+		foreach($payments as $payment_id=>$payment)
+	{ ?>
 		<tr>
-		<td colspan="3" style='text-align:right;'><?php echo $this->lang->line('sales_amount_tendered'); ?></td>
-		<td colspan="2" style='text-align:right'><?php echo to_currency($amount_tendered); ?></td>
-		</tr>
-		
-		<tr>
-		<td colspan="3" style='text-align:right;'><?php echo $this->lang->line('sales_change_due'); ?></td>
-		<td colspan="2" style='text-align:right'><?php echo $amount_change; ?></td>
-		</tr>
+		<td colspan="1" style="text-align:right;"><?php echo $this->lang->line('sales_payment'); ?></td>
+		<td colspan="2" style="text-align:right;"><?php echo  $payment['payment_type']    ?> </td>
+		<td colspan="2" style="text-align:right"><?php echo  to_currency($payment['payment_amount'] * -1 )  ?>  </td>
+	    </tr>
 	<?php
 	}
 	?>
+
+    <tr><td colspan="5">&nbsp;</td></tr>
+
+	<tr>
+		<td colspan="3" style='text-align:right;'><?php echo $this->lang->line('sales_change_due'); ?></td>
+		<td colspan="2" style='text-align:right'><?php echo  $amount_change; ?></td>
+	</tr>
+
 	</table>
 
 	<div id="sale_return_policy">
@@ -95,9 +96,9 @@
 <script type="text/javascript">
 $(window).load(function()
 {
-	window.print(); 
+	window.print();
 });
-</script> 
+</script>
 <?php
 }
 ?>

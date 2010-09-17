@@ -277,7 +277,7 @@ CREATE TABLE `phppos_sales_payments` (
   `payment_type` varchar(40) NOT NULL,
   `payment_amount` decimal(15,2) NOT NULL,
   PRIMARY KEY (`sale_id`,`payment_type`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phppos_sales_payments`

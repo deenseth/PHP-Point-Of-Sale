@@ -1,4 +1,12 @@
-<?php $this->load->view("partial/header"); ?>
+<?php 
+//OJB: Check if for excel export process
+if($export_excel == 1){
+	ob_start();
+	$this->load->view("partial/header_excel");
+}else{
+	$this->load->view("partial/header");
+} 
+?>
 <div id="page_title" style="margin-bottom:8px;"><?php echo $title ?></div>
 <div id="page_subtitle" style="margin-bottom:8px;"><?php echo $subtitle ?></div>
 <div id="table_holder">
@@ -53,8 +61,22 @@
 	<div class="summary_row"><?php echo $this->lang->line('reports_'.$name). ': '.to_currency($value); ?></div>
 <?php }?>
 </div>
-<?php $this->load->view("partial/footer"); ?>
-
+<?php 
+if($export_excel == 1){
+	$this->load->view("partial/footer_excel");
+	$content = ob_end_flush();
+	
+	$filename = trim($filename);
+	$filename = str_replace(array(' ', '/', '\\'), '', $title);
+	$filename .= "_Export.xls";
+	header('Content-type: application/ms-excel');
+	header('Content-Disposition: attachment; filename='.$filename);
+	echo $content;
+	die();
+	
+}else{
+	$this->load->view("partial/footer"); 
+?>
 <script type="text/javascript" language="javascript">
 $(document).ready(function()
 {
@@ -75,3 +97,6 @@ $(document).ready(function()
 	
 });
 </script>
+<?php 
+} // end if not is excel export 
+?>

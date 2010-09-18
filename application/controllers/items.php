@@ -204,6 +204,103 @@ class Items extends Secure_area implements iData_controller
 		}
 	}
 	
+	/**
+	 * Display form: Import data from an excel file
+	 * @author: Nguyen OJB
+	 * @since: 10.1
+	 */
+	function excel_import()
+	{
+		$this->load->view("items/excel_import", null);
+	}
+	
+	/**
+	 * Read data from excel file -> save it to databse
+	 * @author: Nguyen OJB
+	 * @since: 10.1
+	 */
+	function do_excel_import()
+	{
+		$msg = "do_excel_import";
+		$failCodes = null;
+		$successCode = null;
+		
+		$config['upload_path'] = './upload/';
+		$config['allowed_types'] = 'xls|xlsx';
+		//$config['max_size']	= '1000';
+		$this->load->library('upload', $config);
+		$result = $this->upload->do_upload('file_path'); // file_path is field name of upload element
+		if(!$result){
+			$msg = $this->upload->display_errors('', '');
+			echo json_encode( array('success'=>false,'message'=>$msg) );
+			return ;
+		}else{
+			$fileInfo = $this->upload->data();
+			$this->load->library('spreadsheetexcelreader');
+			$this->spreadsheetexcelreader->store_extended_info = false;
+			$this->spreadsheetexcelreader->read($fileInfo['full_path']);
+			
+			$rowCount = $this->spreadsheetexcelreader->rowcount(0);
+			if($rowCount > 2){
+				for($i = 3; $i<=$rowCount; $i++){
+					$item_code = $this->spreadsheetexcelreader->val($i, 'A');
+					$item_id = $this->Item->get_item_id($item_code);
+					$item_data = array(
+					'name'			=>	$this->spreadsheetexcelreader->val($i, 'B'),
+					'description'	=>	$this->spreadsheetexcelreader->val($i, 'K'),
+					'category'		=>	$this->spreadsheetexcelreader->val($i, 'C'),
+					//'supplier_id'	=>	null,
+					'item_number'	=>	$this->spreadsheetexcelreader->val($i, 'A'),
+					'cost_price'	=>	$this->spreadsheetexcelreader->val($i, 'E'),
+					'unit_price'	=>	$this->spreadsheetexcelreader->val($i, 'F'),
+					'quantity'		=>	$this->spreadsheetexcelreader->val($i, 'I'),
+					'reorder_level'	=>	$this->spreadsheetexcelreader->val($i, 'J')
+					);
+					
+					if($this->Item->save($item_data,$item_id)) {
+						$items_taxes_data = null;
+						//tax 1
+						if( is_numeric($this->spreadsheetexcelreader->val($i, 'G')) ){
+							$items_taxes_data[] = array('name'=>'Sales Tax 1', 'percent'=>$this->spreadsheetexcelreader->val($i, 'G') );
+						}
+						
+						//taxt 2
+						if( is_numeric($this->spreadsheetexcelreader->val($i, 'H')) ){
+							$items_taxes_data[] = array('name'=>'Sales Tax 2', 'percent'=>$this->spreadsheetexcelreader->val($i, 'H') );
+						}
+						
+						// save tax values
+						if(count($items_taxes_data) > 0){
+							$this->Item_taxes->save($items_taxes_data, $item_id);
+						}
+						$successCode[] = $item_code;
+					}
+					else//insert or update item failure 
+					{	
+						$failCodes[] = $item_code ;
+					}	
+				}
+						
+			} else {
+				// rowCount < 2
+				@unlink($fileInfo['full_path']);
+				echo json_encode( array('success'=>true,'message'=>'Your upload file has no data or not in supported format.') );
+				return;
+			}
+			@unlink($fileInfo['full_path']);			
+		}
+		
+		$success = true;
+		if(count($failCodes) > 1){
+			$msg = "Most items imported. But some were not, here is list of their CODE (" .count($failCodes) ."): ".implode(", ", $failCodes);
+			$success = false;
+		}else{
+			$msg = "Import items successful";
+		}
+		
+		echo json_encode( array('success'=>$success,'message'=>$msg) );
+	}
+	
 	/*
 	get the width for the add/edit form
 	*/

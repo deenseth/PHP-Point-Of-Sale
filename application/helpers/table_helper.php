@@ -75,6 +75,7 @@ function get_items_manage_table($items,$controller)
 	$table='<table class="tablesorter" id="sortable_table">';
 	
 	$headers = array('<input type="checkbox" id="select_all" />', 
+	$CI->lang->line('items_item_number'),
 	$CI->lang->line('items_name'),
 	$CI->lang->line('items_category'),
 	$CI->lang->line('items_cost_price'),
@@ -109,7 +110,7 @@ function get_items_manage_table_data_rows($items,$controller)
 	
 	if($items->num_rows()==0)
 	{
-		$table_data_rows.="<tr><td colspan='8'><div class='warning_message' style='padding:7px;'>".$CI->lang->line('items_no_items_to_display')."</div></tr></tr>";
+		$table_data_rows.="<tr><td colspan='9'><div class='warning_message' style='padding:7px;'>".$CI->lang->line('items_no_items_to_display')."</div></tr></tr>";
 	}
 	
 	return $table_data_rows;
@@ -130,12 +131,13 @@ function get_item_data_row($item,$controller)
 
 	$table_data_row='<tr>';
 	$table_data_row.="<td width='5%'><input type='checkbox' id='item_$item->item_id' value='".$item->item_id."'/></td>";
-	$table_data_row.='<td width="25%">'.$item->name.'</td>';
-	$table_data_row.='<td width="16%">'.$item->category.'</td>';
-	$table_data_row.='<td width="16%">'.to_currency($item->cost_price).'</td>';
-	$table_data_row.='<td width="16%">'.to_currency($item->unit_price).'</td>';
-	$table_data_row.='<td width="16%">'.$tax_percents.'</td>';	
-	$table_data_row.='<td width="16%">'.$item->quantity.'</td>';
+	$table_data_row.='<td width="18%">'.$item->item_number.'</td>';
+	$table_data_row.='<td width="17%">'.$item->name.'</td>';
+	$table_data_row.='<td width="14%">'.$item->category.'</td>';
+	$table_data_row.='<td width="14%">'.to_currency($item->cost_price).'</td>';
+	$table_data_row.='<td width="14%">'.to_currency($item->unit_price).'</td>';
+	$table_data_row.='<td width="14%">'.$tax_percents.'</td>';	
+	$table_data_row.='<td width="14%">'.$item->quantity.'</td>';
 	$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$item->item_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
 	$table_data_row.='</tr>';
 	

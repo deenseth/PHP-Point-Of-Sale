@@ -21,7 +21,8 @@
 
 	<table id="receipt_items">
 	<tr>
-	<th style="width:50%;"><?php echo $this->lang->line('items_item'); ?></th>
+	<th style="width:25%;"><?php echo $this->lang->line('sales_item_number'); ?></th>
+	<th style="width:25%;"><?php echo $this->lang->line('items_item'); ?></th>
 	<th style="width:17%;"><?php echo $this->lang->line('common_price'); ?></th>
 	<th style="width:16%;text-align:center;"><?php echo $this->lang->line('sales_quantity'); ?></th>
 	<th style="width:16%;text-align:center;"><?php echo $this->lang->line('sales_discount'); ?></th>
@@ -32,6 +33,7 @@
 	{
 	?>
 		<tr>
+		<td><?php echo $item['item_number']; ?></td>
 		<td><span class='long_name'><?php echo $item['name']; ?></span><span class='short_name'><?php echo character_limiter($item['name'],10); ?></span></td>
 		<td><?php echo to_currency($item['price']); ?></td>
 		<td style='text-align:center;'><?php echo $item['quantity']; ?></td>
@@ -42,29 +44,29 @@
 	}
 	?>
 	<tr>
-	<td colspan="3" style='text-align:right;border-top:2px solid #000000;'><?php echo $this->lang->line('sales_sub_total'); ?></td>
+	<td colspan="4" style='text-align:right;border-top:2px solid #000000;'><?php echo $this->lang->line('sales_sub_total'); ?></td>
 	<td colspan="2" style='text-align:right;border-top:2px solid #000000;'><?php echo to_currency($subtotal); ?></td>
 	</tr>
 
 	<?php foreach($taxes as $name=>$value) { ?>
 		<tr>
-			<td colspan="3" style='text-align:right;'><?php echo $name; ?>:</td>
+			<td colspan="4" style='text-align:right;'><?php echo $name; ?>:</td>
 			<td colspan="2" style='text-align:right;'><?php echo to_currency($value); ?></td>
 		</tr>
 	<?php }; ?>
 
 	<tr>
-	<td colspan="3" style='text-align:right;'><?php echo $this->lang->line('sales_total'); ?></td>
+	<td colspan="4" style='text-align:right;'><?php echo $this->lang->line('sales_total'); ?></td>
 	<td colspan="2" style='text-align:right'><?php echo to_currency($total); ?></td>
 	</tr>
 
-    <tr><td colspan="5">&nbsp;</td></tr>
+    <tr><td colspan="6">&nbsp;</td></tr>
 
 	<?php
 		foreach($payments as $payment_id=>$payment)
 	{ ?>
 		<tr>
-		<td colspan="1" style="text-align:right;"><?php echo $this->lang->line('sales_payment'); ?></td>
+		<td colspan="2" style="text-align:right;"><?php echo $this->lang->line('sales_payment'); ?></td>
 		<td colspan="2" style="text-align:right;"><?php echo  $payment['payment_type']    ?> </td>
 		<td colspan="2" style="text-align:right"><?php echo  to_currency($payment['payment_amount'] * -1 )  ?>  </td>
 	    </tr>
@@ -72,10 +74,10 @@
 	}
 	?>
 
-    <tr><td colspan="5">&nbsp;</td></tr>
+    <tr><td colspan="6">&nbsp;</td></tr>
 
 	<tr>
-		<td colspan="3" style='text-align:right;'><?php echo $this->lang->line('sales_change_due'); ?></td>
+		<td colspan="4" style='text-align:right;'><?php echo $this->lang->line('sales_change_due'); ?></td>
 		<td colspan="2" style='text-align:right'><?php echo  $amount_change; ?></td>
 	</tr>
 

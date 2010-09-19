@@ -38,6 +38,7 @@ else
 <thead>
 <tr>
 <th style="width:11%;"><?php echo $this->lang->line('common_delete'); ?></th>
+<th style="width:30%;"><?php echo $this->lang->line('sales_item_number'); ?></th>
 <th style="width:30%;"><?php echo $this->lang->line('sales_item_name'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_price'); ?></th>
 <th style="width:11%;"><?php echo $this->lang->line('sales_quantity'); ?></th>
@@ -64,6 +65,7 @@ else
 	?>
 		<tr>
 		<td><?php echo anchor("sales/delete_item/$item_id",'['.$this->lang->line('common_delete').']');?></td>
+		<td><?php echo $item['item_number']; ?></td>
 		<td><?php echo $item['name']; ?></td>
 
 		<?php if ($items_module_allowed)

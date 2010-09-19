@@ -3,6 +3,7 @@ $lang['sales_register']='Sales Register';
 $lang['sales_mode']='Register Mode';
 $lang['sales_new_item'] = 'New Item';
 $lang['sales_item_name'] = 'Item Name';
+$lang['sales_item_number'] = 'Item #';
 $lang['sales_new_customer'] = 'New Customer';
 $lang['sales_customer'] = 'Customer';
 $lang['sales_no_items_in_cart']='There are no items in the cart';
@@ -41,4 +42,5 @@ $lang['sales_debit'] = 'Debit Card';
 $lang['sales_credit'] = 'Credit Card';
 $lang['sales_amount_tendered'] = 'Amount Tendered';
 $lang['sales_change_due'] = 'Change Due';
+$lang['sales_payment_not_cover_total'] = 'Payment Amount does not cover Total';
 ?>

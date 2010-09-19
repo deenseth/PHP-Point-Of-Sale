@@ -154,6 +154,7 @@ class Sale_lib
 		$item = array($item_id=>
 		array(
 			'name'=>$this->CI->Item->get_info($item_id)->name,
+			'item_number'=>$this->CI->Item->get_info($item_id)->item_number,
 			'quantity'=>$quantity,
             'discount'=>$discount,
 			'price'=>$price!=null ? $price: $this->CI->Item->get_info($item_id)->unit_price

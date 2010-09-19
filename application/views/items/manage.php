@@ -34,7 +34,7 @@ function init_table_sorting()
 			headers: 
 			{ 
 				0: { sorter: false}, 
-				7: { sorter: false} 
+				8: { sorter: false} 
 			} 
 
 		}); 

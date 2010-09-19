@@ -87,8 +87,16 @@ class Employees extends Person_controller
 			}
 			else //previous employee
 			{
-				echo json_encode(array('success'=>true,'message'=>$this->lang->line('employees_successful_updating').' '.
-				$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>$employee_id));
+				if ($_SERVER['HTTP_HOST'] == 'demo.phppointofsale.com' && $employee_id == 1)
+				{
+					echo json_encode(array('success'=>false,'message'=>$this->lang->line('employees_error_updating_demo_admin').' '.
+					$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>-1));
+				}
+				else
+				{
+					echo json_encode(array('success'=>true,'message'=>$this->lang->line('employees_successful_updating').' '.
+					$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>$employee_id));
+				}
 			}
 		}
 		else//failure

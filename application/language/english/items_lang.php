@@ -55,4 +55,5 @@ $lang['items_none'] = 'None';
 $lang['items_supplier'] = 'Supplier';
 $lang['items_generate_barcodes'] = 'Generate Barcodes';
 $lang['items_must_select_item_for_barcode'] = 'You must select at least 1 item to generate barcodes';
+$lang['items_excel_import_failed'] = 'Excel import failed';
 ?>

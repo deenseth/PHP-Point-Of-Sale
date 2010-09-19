@@ -224,21 +224,17 @@ class Items extends Secure_area implements iData_controller
 		$msg = "do_excel_import";
 		$failCodes = null;
 		$successCode = null;
-		
-		$config['upload_path'] = './upload/';
-		$config['allowed_types'] = 'xls|xlsx';
-		//$config['max_size']	= '1000';
-		$this->load->library('upload', $config);
-		$result = $this->upload->do_upload('file_path'); // file_path is field name of upload element
-		if(!$result){
-			$msg = $this->upload->display_errors('', '');
+		if ($_FILES['file_path']['error']!=UPLOAD_ERR_OK)
+		{
+			$msg = $this->lang->line('items_excel_import_failed');
 			echo json_encode( array('success'=>false,'message'=>$msg) );
 			return ;
-		}else{
-			$fileInfo = $this->upload->data();
+		}
+		else
+		{
 			$this->load->library('spreadsheetexcelreader');
 			$this->spreadsheetexcelreader->store_extended_info = false;
-			$this->spreadsheetexcelreader->read($fileInfo['full_path']);
+			$success = $this->spreadsheetexcelreader->read($_FILES['file_path']['tmp_name']);
 			
 			$rowCount = $this->spreadsheetexcelreader->rowcount(0);
 			if($rowCount > 2){
@@ -283,11 +279,9 @@ class Items extends Secure_area implements iData_controller
 						
 			} else {
 				// rowCount < 2
-				@unlink($fileInfo['full_path']);
 				echo json_encode( array('success'=>true,'message'=>'Your upload file has no data or not in supported format.') );
 				return;
 			}
-			@unlink($fileInfo['full_path']);			
 		}
 		
 		$success = true;

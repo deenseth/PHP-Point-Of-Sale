@@ -119,6 +119,17 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('config_language').':', 'language',array('class'=>'wide required')); ?>
+	<div class='form_field'>
+	<?php echo form_dropdown('language', array(
+		'english'  => 'English',
+		'indonesia'    => 'Indonesia',
+		'spanish'   => 'Spanish'), $this->config->item('language'));
+		?>
+	</div>
+</div>
+
+<div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('config_printe_after_sale').':', 'print_after_sale',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_checkbox(array(

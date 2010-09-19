@@ -3,7 +3,7 @@ echo form_open_multipart('items/do_excel_import/',array('id'=>'item_form'));
 ?>
 <div id="required_fields_message">Max import data from execel sheet</div>
 <ul id="error_message_box"></ul>
-
+<b><a href="<?php echo base_url(). '/'.'Import-PHPPOS.xls'; ?>">Download Import Excel Template</a></b>
 <fieldset id="item_basic_info">
 <legend>Import</legend>
 

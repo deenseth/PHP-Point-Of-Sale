@@ -41,4 +41,5 @@ $lang['sales_debit'] = 'Debit Card';
 $lang['sales_credit'] = 'Credit Card';
 $lang['sales_amount_tendered'] = 'Amount Tendered';
 $lang['sales_change_due'] = 'Change Due';
+$lang['sales_payment_not_cover_total'] = 'Payment Amount does not cover Total';
 ?>

@@ -5,6 +5,18 @@ echo form_open('suppliers/save/'.$person_info->person_id,array('id'=>'supplier_f
 <ul id="error_message_box"></ul>
 <fieldset id="supplier_basic_info">
 <legend><?php echo $this->lang->line("suppliers_basic_information"); ?></legend>
+
+<div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('suppliers_company_name').':', 'company_name'); ?>
+	<div class='form_field'>
+	<?php echo form_input(array(
+		'name'=>'company_name',
+		'id'=>'company_name_input',
+		'value'=>$person_info->company_name)
+	);?>
+	</div>
+</div>
+
 <?php $this->load->view("people/form_basic_info"); ?>
 <div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('suppliers_account_number').':', 'account_number'); ?>

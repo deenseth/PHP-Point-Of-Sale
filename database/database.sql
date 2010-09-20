@@ -312,6 +312,7 @@ CREATE TABLE `phppos_sessions` (
 
 CREATE TABLE `phppos_suppliers` (
   `person_id` int(10) NOT NULL,
+  `company_name` VARCHAR( 255 ) NOT NULL,
   `account_number` varchar(255) DEFAULT NULL,
   UNIQUE KEY `account_number` (`account_number`),
   KEY `person_id` (`person_id`)

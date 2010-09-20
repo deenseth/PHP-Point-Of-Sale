@@ -147,6 +147,17 @@ class Supplier extends Person
 		
 		$this->db->from('suppliers');
 		$this->db->join('people','suppliers.person_id=people.person_id');	
+		$this->db->like("company_name",$search);
+		$this->db->order_by("company_name", "asc");		
+		$by_company_name = $this->db->get();
+		foreach($by_company_name->result() as $row)
+		{
+			$suggestions[]=$row->company_name;		
+		}
+
+		
+		$this->db->from('suppliers');
+		$this->db->join('people','suppliers.person_id=people.person_id');	
 		$this->db->like('first_name', $search); 
 		$this->db->or_like('last_name', $search);
 		$this->db->or_like("CONCAT(`first_name`,' ',`last_name`)",$search);		
@@ -231,6 +242,7 @@ class Supplier extends Person
 		$this->db->from('suppliers');
 		$this->db->join('people','suppliers.person_id=people.person_id');		
 		$this->db->like('first_name', $search);
+		$this->db->or_like('company_name', $search); 
 		$this->db->or_like('last_name', $search); 
 		$this->db->or_like('email', $search); 
 		$this->db->or_like('phone_number', $search);

@@ -52,7 +52,7 @@ else
 if(count($cart)==0)
 {
 ?>
-<tr><td colspan='7'>
+<tr><td colspan='8'>
 <div class='warning_message' style='padding:7px;'><?php echo $this->lang->line('sales_no_items_in_cart'); ?></div>
 </tr></tr>
 <?php

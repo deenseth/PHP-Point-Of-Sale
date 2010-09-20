@@ -138,6 +138,20 @@ class Sales extends Secure_area
 			$cust_info=$this->Customer->get_info($customer_id);
 			$data['customer']=$cust_info->first_name.' '.$cust_info->last_name;
 		}
+		
+		$total_payments = 0;
+		
+		foreach($data['payments'] as $payment)
+		{
+			$total_payments += $payment['payment_amount'];
+		}
+		
+		if (($this->sale_lib->get_mode() == 'sale') && ($total_payments <  $data['total'] ))
+		{
+			$data['error'] = $this->lang->line('sales_payment_not_cover_total');
+			$this->_reload($data);
+			return false;
+		}
 
 		//SAVE sale to database
 		$data['sale_id']='POS '.$this->Sale->save($data['cart'], $customer_id,$employee_id,$comment,$data['payments']);

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Sep 17, 2010 at 11:46 AM
+-- Generation Time: Sep 20, 2010 at 11:01 AM
 -- Server version: 5.1.39
 -- PHP Version: 5.3.1
 -- 
@@ -95,7 +95,7 @@ CREATE TABLE `phppos_items` (
   PRIMARY KEY (`item_id`),
   UNIQUE KEY `item_number` (`item_number`),
   KEY `phppos_items_ibfk_1` (`supplier_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
 -- Dumping data for table `phppos_items`
@@ -168,7 +168,7 @@ CREATE TABLE `phppos_people` (
   `comments` text NOT NULL,
   `person_id` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`person_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- 
 -- Dumping data for table `phppos_people`
@@ -217,7 +217,7 @@ CREATE TABLE `phppos_sales` (
   PRIMARY KEY (`sale_id`),
   KEY `customer_id` (`customer_id`),
   KEY `employee_id` (`employee_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
 -- Dumping data for table `phppos_sales`
@@ -312,7 +312,7 @@ CREATE TABLE `phppos_sessions` (
 
 CREATE TABLE `phppos_suppliers` (
   `person_id` int(10) NOT NULL,
-  `company_name` VARCHAR( 255 ) NOT NULL,
+  `company_name` varchar(255) NOT NULL,
   `account_number` varchar(255) DEFAULT NULL,
   UNIQUE KEY `account_number` (`account_number`),
   KEY `person_id` (`person_id`)
@@ -378,6 +378,12 @@ ALTER TABLE `phppos_sales_items`
 ALTER TABLE `phppos_sales_items_taxes`
   ADD CONSTRAINT `phppos_sales_items_taxes_ibfk_1` FOREIGN KEY (`sale_id`) REFERENCES `phppos_sales_items` (`sale_id`),
   ADD CONSTRAINT `phppos_sales_items_taxes_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `phppos_sales_items` (`item_id`);
+
+-- 
+-- Constraints for table `phppos_sales_payments`
+-- 
+ALTER TABLE `phppos_sales_payments`
+  ADD CONSTRAINT `phppos_sales_payments_ibfk_1` FOREIGN KEY (`sale_id`) REFERENCES `phppos_sales` (`sale_id`);
 
 -- 
 -- Constraints for table `phppos_suppliers`

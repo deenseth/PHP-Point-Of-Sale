@@ -7,7 +7,7 @@ echo form_open('suppliers/save/'.$person_info->person_id,array('id'=>'supplier_f
 <legend><?php echo $this->lang->line("suppliers_basic_information"); ?></legend>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('suppliers_company_name').':', 'company_name'); ?>
+<?php echo form_label($this->lang->line('suppliers_company_name').':', 'company_name', array('class'=>'required')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
 		'name'=>'company_name',
@@ -62,13 +62,14 @@ $(document).ready(function()
  		wrapper: "li",
 		rules: 
 		{
+			company_name: "required",
 			first_name: "required",
 			last_name: "required",
     		email: "email"
    		},
 		messages: 
 		{
-     		first_name: "<?php echo $this->lang->line('common_first_name_required'); ?>",
+     		company_name: "<?php echo $this->lang->line('suppliers_company_name_required'); ?>",
      		last_name: "<?php echo $this->lang->line('common_last_name_required'); ?>",
      		email: "<?php echo $this->lang->line('common_email_invalid_format'); ?>"
 		}

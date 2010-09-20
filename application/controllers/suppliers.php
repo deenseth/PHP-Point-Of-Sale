@@ -21,7 +21,7 @@ class Suppliers extends Person_controller
 	function search()
 	{
 		$search=$this->input->post('search');
-		$data_rows=get_people_manage_table_data_rows($this->Supplier->search($search),$this);
+		$data_rows=get_supplier_manage_table_data_rows($this->Supplier->search($search),$this);
 		echo $data_rows;
 	}
 	
@@ -102,6 +102,16 @@ class Suppliers extends Person_controller
 		{
 			echo json_encode(array('success'=>false,'message'=>$this->lang->line('suppliers_cannot_be_deleted')));
 		}
+	}
+	
+	/*
+	Gets one row for a supplier manage table. This is called using AJAX to update one row.
+	*/
+	function get_row()
+	{
+		$person_id = $this->input->post('row_id');
+		$data_row=get_supplier_data_row($this->Supplier->get_info($person_id),$this);
+		echo $data_row;
 	}
 	
 	/*

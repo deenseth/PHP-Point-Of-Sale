@@ -146,7 +146,7 @@ class Sales extends Secure_area
 			$total_payments += $payment['payment_amount'];
 		}
 		
-		if (($this->sale_lib->get_mode() == 'sale') && ($total_payments <  $data['total'] ))
+		if (($this->sale_lib->get_mode() == 'sale') && ($total_payments <  to_currency_no_money($data['total'])))
 		{
 			$data['error'] = $this->lang->line('sales_payment_not_cover_total');
 			$this->_reload($data);

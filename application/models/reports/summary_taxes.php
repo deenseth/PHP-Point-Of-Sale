@@ -18,7 +18,7 @@ class Summary_taxes extends Report
 		$this->db->from('sales_items_temp');
 		$this->db->where('sale_date BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
 		$this->db->group_by('item_tax_percent');
-		$this->db->order_by('item_tax_percent');
+		$this->db->order_by('tax DESC');
 
 		return $this->db->get()->result_array();		
 	}

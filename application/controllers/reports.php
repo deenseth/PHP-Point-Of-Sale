@@ -191,6 +191,31 @@ class Reports extends Secure_area
 		$this->load->view("reports/tabular",$data);
 	}
 	
+	//Summary taxes report
+	function summary_taxes($start_date, $end_date, $export_excel=0)
+	{
+		$this->load->model('reports/Summary_taxes');
+		$model = $this->Summary_taxes;
+		$tabular_data = array();
+		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
+		
+		foreach($report_data as $row)
+		{
+			$tabular_data[] = array($row['item_tax_percent'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']));
+		}
+
+		$data = array(
+			"title" => $this->lang->line('reports_taxes_summary_report'),
+			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
+			"headers" => $model->getDataColumns(),
+			"data" => $tabular_data,
+			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
+			"export_excel" => $export_excel
+		);
+
+		$this->load->view("reports/tabular",$data);
+	}
+	
 	function specific_customer_input()
 	{
 		$data = $this->_get_common_report_data();

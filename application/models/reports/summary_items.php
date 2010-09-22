@@ -9,12 +9,12 @@ class Summary_items extends Report
 	
 	public function getDataColumns()
 	{
-		return array($this->lang->line('reports_item'), $this->lang->line('reports_subtotal'), $this->lang->line('reports_total'), $this->lang->line('reports_tax'),$this->lang->line('reports_profit'));
+		return array($this->lang->line('reports_item'),$this->lang->line('reports_quantity_purchased'), $this->lang->line('reports_subtotal'), $this->lang->line('reports_total'), $this->lang->line('reports_tax'),$this->lang->line('reports_profit'));
 	}
 	
 	public function getData(array $inputs)
 	{
-		$this->db->select('name, sum(subtotal) as subtotal, sum(total) as total, sum(tax) as tax, sum(profit) as profit');
+		$this->db->select('name, sum(quantity_purchased) as quantity_purchased, sum(subtotal) as subtotal, sum(total) as total, sum(tax) as tax, sum(profit) as profit');
 		$this->db->from('sales_items_temp');
 		$this->db->join('items', 'sales_items_temp.item_id = items.item_id');
 		$this->db->where('sale_date BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');

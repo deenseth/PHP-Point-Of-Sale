@@ -52,4 +52,5 @@ $lang['reports_taxes'] = 'Taxes';
 $lang['reports_customer'] = 'Customer';
 $lang['reports_employee'] = 'Employee';
 $lang['reports_tax_percent'] = 'Tax Percent';
+$lang['reports_quantity_purchased'] = 'Quantity Purchased';
 ?>

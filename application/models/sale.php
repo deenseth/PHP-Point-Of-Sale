@@ -93,7 +93,12 @@ class Sale extends Model
 			}
 		}
 		$this->db->trans_complete();
-
+		
+		if ($this->db->trans_status() === FALSE)
+		{
+			return -1;
+		}
+		
 		return $sale_id;
 	}
 

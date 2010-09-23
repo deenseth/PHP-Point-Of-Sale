@@ -1,4 +1,11 @@
 <?php $this->load->view("partial/header"); ?>
+<?php
+if (isset($error_message))
+{
+	echo '<h1 style="text-align: center;">'.$error_message.'</h1>';
+	exit;
+}
+?>
 <div id="receipt_wrapper">
 	<div id="receipt_header">
 		<div id="company_name"><?php echo $this->config->item('company'); ?></div>

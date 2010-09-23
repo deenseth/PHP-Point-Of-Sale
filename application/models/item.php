@@ -184,6 +184,16 @@ class Item extends Model
 		{
 			$suggestions[]=$row->item_id.'|'.$row->name;		
 		}
+		
+		$this->db->from('items');
+		$this->db->like('item_number', $search); 
+		$this->db->order_by("item_number", "asc");		
+		$by_item_number = $this->db->get();
+		foreach($by_item_number->result() as $row)
+		{
+			$suggestions[]=$row->item_id.'|'.$row->item_number;		
+		}
+		
 		//only return $limit suggestions
 		if(count($suggestions > $limit))
 		{

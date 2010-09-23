@@ -77,7 +77,13 @@ class Employees extends Person_controller
 			$employee_data=array('username'=>$this->input->post('username'));
 		}
 		
-		if($this->Employee->save($person_data,$employee_data,$permission_data,$employee_id))
+		if ($_SERVER['HTTP_HOST'] == 'demo.phppointofsale.com' && $employee_id == 1)
+		{
+			//failure
+			echo json_encode(array('success'=>false,'message'=>$this->lang->line('employees_error_updating_demo_admin').' '.
+			$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>-1));
+		}
+		elseif($this->Employee->save($person_data,$employee_data,$permission_data,$employee_id))
 		{
 			//New employee
 			if($employee_id==-1)
@@ -87,16 +93,8 @@ class Employees extends Person_controller
 			}
 			else //previous employee
 			{
-				if ($_SERVER['HTTP_HOST'] == 'demo.phppointofsale.com' && $employee_id == 1)
-				{
-					echo json_encode(array('success'=>false,'message'=>$this->lang->line('employees_error_updating_demo_admin').' '.
-					$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>-1));
-				}
-				else
-				{
-					echo json_encode(array('success'=>true,'message'=>$this->lang->line('employees_successful_updating').' '.
-					$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>$employee_id));
-				}
+				echo json_encode(array('success'=>true,'message'=>$this->lang->line('employees_successful_updating').' '.
+				$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>$employee_id));
 			}
 		}
 		else//failure

@@ -133,7 +133,7 @@ class Sale extends Model
 		INNER JOIN ".$this->db->dbprefix('sales')." USING (sale_id)
 		INNER JOIN ".$this->db->dbprefix('items')." USING (item_id)
 		LEFT OUTER JOIN ".$this->db->dbprefix('suppliers')." ON  ".$this->db->dbprefix('items').'.supplier_id='.$this->db->dbprefix('suppliers').'.person_id'."
-		LEFT OUTER JOIN ".$this->db->dbprefix('sales_items_taxes')." USING (sale_id, item_id)
+		LEFT OUTER JOIN ".$this->db->dbprefix('sales_items_taxes')." USING (sale_id, item_id, line)
 		GROUP BY sale_id, item_id, line)");
 
 		//Update null item_tax_percents to be 0 instead of null
@@ -146,7 +146,6 @@ class Sale extends Model
 
 		//Update null subtotals to be equal to the total as these don't have tax
 		$this->db->query('UPDATE '.$this->db->dbprefix('sales_items_temp'). ' SET total=subtotal WHERE total IS NULL');
-
 	}
 }
 ?>

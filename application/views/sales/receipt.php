@@ -40,6 +40,13 @@
 		<td style='text-align:center;'><?php echo $item['discount']; ?></td>
 		<td style='text-align:right;'><?php echo to_currency($item['price']*$item['quantity']-$item['price']*$item['quantity']*$item['discount']/100); ?></td>
 		</tr>
+
+	    <tr>
+	    <td colspan="2" align="center"><?php echo $item['description']; ?></td>
+		<td colspan="2" ><?php echo $item['serialnumber']; ?></td>
+		<td colspan="2"><?php echo '&nbsp;'; ?></td>
+	    </tr>
+
 	<?php
 	}
 	?>

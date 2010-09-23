@@ -85,6 +85,8 @@ class Sales extends Secure_area
 		$this->form_validation->set_rules('price', 'lang:items_price', 'required|numeric');
 		$this->form_validation->set_rules('quantity', 'lang:items_quantity', 'required|integer');
 
+        $description = $this->input->post("description");
+        $serialnumber = $this->input->post("serialnumber");
 		$price = $this->input->post("price");
 		$quantity = $this->input->post("quantity");
 		$discount = $this->input->post("discount");
@@ -92,7 +94,7 @@ class Sales extends Secure_area
 
 		if ($this->form_validation->run() != FALSE)
 		{
-			$this->sale_lib->edit_item($item_id,$quantity,$discount,$price);
+			$this->sale_lib->edit_item($item_id,$description,$serialnumber,$quantity,$discount,$price);
 		}
 		else
 		{
@@ -138,14 +140,14 @@ class Sales extends Secure_area
 			$cust_info=$this->Customer->get_info($customer_id);
 			$data['customer']=$cust_info->first_name.' '.$cust_info->last_name;
 		}
-		
+
 		$total_payments = 0;
-		
+
 		foreach($data['payments'] as $payment)
 		{
 			$total_payments += $payment['payment_amount'];
 		}
-		
+
 		if (($this->sale_lib->get_mode() == 'sale') && ($total_payments <  to_currency_no_money($data['total'])))
 		{
 			$data['error'] = $this->lang->line('sales_payment_not_cover_total');

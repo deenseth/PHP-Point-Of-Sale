@@ -66,7 +66,26 @@ else
 		<tr>
 		<td><?php echo anchor("sales/delete_item/$item_id",'['.$this->lang->line('common_delete').']');?></td>
 		<td><?php echo $item['item_number']; ?></td>
-		<td><?php echo $item['name']; ?></td>
+		<td style="align:center;"><?php echo $item['name']; ?><br>
+
+		<?php
+        	if($item['allow_alt_description']==1)
+        	{
+        		echo form_input(array('name'=>'description','value'=>$item['description'],'size'=>'10'));
+        	}
+        	else
+        	{
+				echo $item['description'];
+        		echo form_hidden('description',$item['description']);
+        	}
+		?>
+		<br>
+		<?php
+        	if($item['is_serialized']==1)
+        	{
+				echo form_input(array('name'=>'serialnumber','value'=>$item['serialnumber'],'size'=>'10'));
+			}
+		?></td>
 
 		<?php if ($items_module_allowed)
 		{
@@ -82,7 +101,21 @@ else
 		<?php
 		}
 		?>
-		<td><?php echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2'));?></td>
+
+		<td>
+		<?php
+        	if($item['is_serialized']==1)
+        	{
+        		echo $item['quantity'];
+        		echo form_hidden('quantity',$item['quantity']);
+        	}
+        	else
+        	{
+        		echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2'));
+        	}
+		?>
+		</td>
+
 		<td><?php echo form_input(array('name'=>'discount','value'=>$item['discount'],'size'=>'3'));?></td>
 		<td><?php echo to_currency($item['price']*$item['quantity']-$item['price']*$item['quantity']*$item['discount']/100); ?></td>
 		<td><?php echo form_submit("edit_item", $this->lang->line('sales_edit_item'));?></td>

@@ -54,14 +54,17 @@ class Sale extends Model
 			$this->db->insert('sales_payments',$sales_payments_data);
 		}
 
-		foreach($items as $item_id=>$item)
+		foreach($items as $line=>$item)
 		{
-			$cur_item_info = $this->Item->get_info($item_id);
+			$cur_item_info = $this->Item->get_info($item['item_id']);
 
 			$sales_items_data = array
 			(
 				'sale_id'=>$sale_id,
-				'item_id'=>$item_id,
+				'item_id'=>$item['item_id'],
+				'line'=>$item['line'],
+				'description'=>$item['description'],
+				'serialnumber'=>$item['serialnumber'],
 				'quantity_purchased'=>$item['quantity'],
 				'discount_percent'=>$item['discount'],
 				'item_cost_price' => $cur_item_info->cost_price,
@@ -72,16 +75,17 @@ class Sale extends Model
 
 			//Update stock quantity
 			$item_data = array('quantity'=>$cur_item_info->quantity - $item['quantity']);
-			$this->Item->save($item_data,$item_id);
-			
+			$this->Item->save($item_data,$item['item_id']);
+
 			$customer = $this->Customer->get_info($customer_id);
  			if ($customer_id == -1 or $customer->taxable)
  			{
-				foreach($this->Item_taxes->get_info($item_id) as $row)
+				foreach($this->Item_taxes->get_info($item['item_id']) as $row)
 				{
 					$this->db->insert('sales_items_taxes', array(
 						'sale_id' 	=>$sale_id,
-						'item_id' 	=>$item_id,
+						'item_id' 	=>$item['item_id'],
+						'line'      =>$item['line'],
 						'name'		=>$row['name'],
 						'percent' 	=>$row['percent']
 					));

@@ -138,7 +138,7 @@ class Sale_lib
 		$this->CI->session->set_userdata('sale_mode',$mode);
 	}
 
-	function add_item($item_id,$quantity=1,$discount=0,$price=null,$tax=null)
+	function add_item($item_id,$quantity=1,$discount=0,$price=null,$tax=null,$description=null,$serialnumber=null)
 	{
 		//make sure item exists
 		if(!$this->CI->Item->exists($item_id))
@@ -150,21 +150,62 @@ class Sale_lib
 				return false;
 		}
 
+
+		//Alain Serialization and Description
+
+		//Get all items in the cart so far...
 		$items = $this->get_cart();
-		$item = array($item_id=>
+
+        //We need to loop through all items in the cart.
+        //If the item is already there, get it's key($updatekey).
+        //We also need to get the next key that we are going to use in case we need to add the
+        //item to the cart. Since items can be deleted, we can't use a count. we use the highest key + 1.
+
+        $maxkey=0;                       //Highest key so far
+        $itemalreadyinsale=FALSE;        //We did not find the item yet.
+		$insertkey=0;                    //Key to use for new entry.
+		$updatekey=0;                    //Key to use to update(quantity)
+
+		foreach ($items as $item)
+		{
+            //We primed the loop so maxkey is 0 the first time.
+            //Also, we have stored the key in the element itself so we can compare.
+
+			if($maxkey <= $item['line'])
+			{
+				$maxkey = $item['line'];
+			}
+
+			if($item['item_id']==$item_id)
+			{
+				$itemalreadyinsale=TRUE;
+				$updatekey=$item['line'];
+			}
+		}
+
+		$insertkey=$maxkey+1;
+
+		//array/cart records are identified by $insertkey and item_id is just another field.
+		$item = array(($insertkey)=>
 		array(
+			'item_id'=>$item_id,
+			'line'=>$insertkey,
 			'name'=>$this->CI->Item->get_info($item_id)->name,
 			'item_number'=>$this->CI->Item->get_info($item_id)->item_number,
+			'description'=>$description!=null ? $description: $this->CI->Item->get_info($item_id)->description,
+			'serialnumber'=>$serialnumber!=null ? $serialnumber: '',
+			'allow_alt_description'=>$this->CI->Item->get_info($item_id)->allow_alt_description,
+			'is_serialized'=>$this->CI->Item->get_info($item_id)->is_serialized,
 			'quantity'=>$quantity,
             'discount'=>$discount,
 			'price'=>$price!=null ? $price: $this->CI->Item->get_info($item_id)->unit_price
 			)
 		);
 
-		//Item already exists, add to quantity
-		if(isset($items[$item_id]))
+		//Item already exists and is not serialized, add to quantity
+		if($itemalreadyinsale && ($this->CI->Item->get_info($item_id)->is_serialized ==0) )
 		{
-			$items[$item_id]['quantity']+=$quantity;
+			$items[$updatekey]['quantity']+=$quantity;
 		}
 		else
 		{
@@ -177,11 +218,13 @@ class Sale_lib
 
 	}
 
-	function edit_item($item_id,$quantity,$discount,$price)
+	function edit_item($item_id,$description,$serialnumber,$quantity,$discount,$price)
 	{
 		$items = $this->get_cart();
 		if(isset($items[$item_id]))
 		{
+			$items[$item_id]['description'] = $description;
+			$items[$item_id]['serialnumber'] = $serialnumber;
 			$items[$item_id]['quantity'] = $quantity;
 			$items[$item_id]['discount'] = $discount;
 			$items[$item_id]['price'] = $price;
@@ -215,7 +258,7 @@ class Sale_lib
 
 		foreach($this->CI->Sale->get_sale_items($sale_id)->result() as $row)
 		{
-			$this->add_item($row->item_id,-$row->quantity_purchased,$row->discount_percent,$row->item_unit_price);
+			$this->add_item($row->item_id,-$row->quantity_purchased,$row->discount_percent,$row->item_unit_price,null,$row->description,$row->serialnumber);
 		}
 		$this->set_customer($this->CI->Sale->get_customer($sale_id)->person_id);
 	}
@@ -227,7 +270,7 @@ class Sale_lib
 
 		foreach($this->CI->Sale->get_sale_items($sale_id)->result() as $row)
 		{
-			$this->add_item($row->item_id,$row->quantity_purchased,$row->discount_percent,$row->item_unit_price);
+			$this->add_item($row->item_id,$row->quantity_purchased,$row->discount_percent,$row->item_unit_price,null,$row->description,$row->serialnumber);
 		}
 		foreach($this->CI->Sale->get_sale_payments($sale_id)->result() as $row)
 		{
@@ -272,7 +315,7 @@ class Sale_lib
 	{
 		$customer_id = $this->get_customer();
 		$customer = $this->CI->Customer->get_info($customer_id);
-				   
+
 		//Do not charge sales tax if we have a customer that is not taxable
 		if (!$customer->taxable and $customer_id!=-1)
 		{
@@ -282,7 +325,7 @@ class Sale_lib
 		$taxes = array();
 		foreach($this->get_cart() as $item_id=>$item)
 		{
-			$tax_info = $this->CI->Item_taxes->get_info($item_id);
+			$tax_info = $this->CI->Item_taxes->get_info($item['item_id']);
 
 			foreach($tax_info as $tax)
 			{

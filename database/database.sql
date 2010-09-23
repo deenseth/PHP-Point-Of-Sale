@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Sep 20, 2010 at 11:01 AM
+-- Generation Time: Sep 23, 2010 at 01:25 PM
 -- Server version: 5.1.39
 -- PHP Version: 5.3.1
 -- 
@@ -92,6 +92,8 @@ CREATE TABLE `phppos_items` (
   `quantity` int(10) NOT NULL DEFAULT '0',
   `reorder_level` int(10) NOT NULL DEFAULT '0',
   `item_id` int(10) NOT NULL AUTO_INCREMENT,
+  `allow_alt_description` tinyint(1) NOT NULL,
+  `is_serialized` tinyint(1) NOT NULL,
   PRIMARY KEY (`item_id`),
   UNIQUE KEY `item_number` (`item_number`),
   KEY `phppos_items_ibfk_1` (`supplier_id`)
@@ -233,11 +235,14 @@ CREATE TABLE `phppos_sales` (
 CREATE TABLE `phppos_sales_items` (
   `sale_id` int(10) NOT NULL DEFAULT '0',
   `item_id` int(10) NOT NULL DEFAULT '0',
+  `description` varchar(30) DEFAULT NULL,
+  `serialnumber` varchar(30) DEFAULT NULL,
+  `line` int(3) NOT NULL DEFAULT '0',
   `quantity_purchased` int(10) NOT NULL DEFAULT '0',
   `item_cost_price` decimal(15,2) NOT NULL,
   `item_unit_price` double(15,2) NOT NULL,
   `discount_percent` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`sale_id`,`item_id`),
+  PRIMARY KEY (`sale_id`,`item_id`,`line`),
   KEY `item_id` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -255,9 +260,10 @@ CREATE TABLE `phppos_sales_items` (
 CREATE TABLE `phppos_sales_items_taxes` (
   `sale_id` int(10) NOT NULL,
   `item_id` int(10) NOT NULL,
+  `line` int(3) NOT NULL DEFAULT '0',
   `name` varchar(255) NOT NULL,
   `percent` double(15,2) NOT NULL,
-  PRIMARY KEY (`sale_id`,`item_id`,`name`,`percent`),
+  PRIMARY KEY (`sale_id`,`item_id`,`line`,`name`,`percent`),
   KEY `item_id` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

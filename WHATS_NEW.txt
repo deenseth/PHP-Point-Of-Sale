@@ -1,0 +1,5 @@
+* New Summary Taxes Report
+* Ability to add item level description at sale
+* Ability to add serial number for an item at sale
+* Added Quantity Purchased to Items Report
+* Bug Fixes and better error detection

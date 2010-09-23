@@ -201,7 +201,7 @@ class Reports extends Secure_area
 		
 		foreach($report_data as $row)
 		{
-			$tabular_data[] = array($row['item_tax_percent'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']));
+			$tabular_data[] = array($row['percent'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']));
 		}
 
 		$data = array(

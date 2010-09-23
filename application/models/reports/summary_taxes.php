@@ -14,13 +14,19 @@ class Summary_taxes extends Report
 	
 	public function getData(array $inputs)
 	{
-		$this->db->select('CONCAT(item_tax_percent,"%") as item_tax_percent, sum(subtotal) as subtotal, sum(total) as total, sum(tax) as tax', false);
-		$this->db->from('sales_items_temp');
-		$this->db->where('sale_date BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
-		$this->db->group_by('item_tax_percent');
-		$this->db->order_by('tax DESC');
-
-		return $this->db->get()->result_array();		
+		$query = $this->db->query("SELECT percent, SUM(subtotal) as subtotal, sum(total) as total, sum(tax) as tax 
+		FROM (SELECT name, CONCAT( percent,  '%' ) AS percent, (
+		item_unit_price * quantity_purchased - item_unit_price * quantity_purchased * discount_percent /100
+		) AS subtotal, ROUND( (
+		item_unit_price * quantity_purchased - item_unit_price * quantity_purchased * discount_percent /100
+		) * ( 1 + ( percent /100 ) ) , 2 ) AS total, ROUND( (
+		item_unit_price * quantity_purchased - item_unit_price * quantity_purchased * discount_percent /100
+		) * ( percent /100 ) , 2 ) AS tax
+		FROM ".$this->db->dbprefix('sales_items_taxes')."
+		JOIN ".$this->db->dbprefix('sales_items')." USING(sale_id,item_id,line)) as temp_taxes
+		GROUP BY percent");
+		
+		return $query->result_array();
 	}
 	
 	public function getSummaryData(array $inputs)

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Sep 23, 2010 at 01:25 PM
+-- Generation Time: Sep 23, 2010 at 07:39 PM
 -- Server version: 5.1.39
 -- PHP Version: 5.3.1
 -- 
@@ -89,8 +89,8 @@ CREATE TABLE `phppos_items` (
   `description` varchar(255) NOT NULL,
   `cost_price` double(15,2) NOT NULL,
   `unit_price` double(15,2) NOT NULL,
-  `quantity` int(10) NOT NULL DEFAULT '0',
-  `reorder_level` int(10) NOT NULL DEFAULT '0',
+  `quantity` double(15,2) NOT NULL DEFAULT '0.00',
+  `reorder_level` double(15,2) NOT NULL DEFAULT '0.00',
   `item_id` int(10) NOT NULL AUTO_INCREMENT,
   `allow_alt_description` tinyint(1) NOT NULL,
   `is_serialized` tinyint(1) NOT NULL,
@@ -238,7 +238,7 @@ CREATE TABLE `phppos_sales_items` (
   `description` varchar(30) DEFAULT NULL,
   `serialnumber` varchar(30) DEFAULT NULL,
   `line` int(3) NOT NULL DEFAULT '0',
-  `quantity_purchased` int(10) NOT NULL DEFAULT '0',
+  `quantity_purchased` double(15,2) NOT NULL DEFAULT '0.00',
   `item_cost_price` decimal(15,2) NOT NULL,
   `item_unit_price` double(15,2) NOT NULL,
   `discount_percent` int(11) NOT NULL DEFAULT '0',

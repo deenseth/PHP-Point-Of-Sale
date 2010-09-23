@@ -15,3 +15,8 @@ ADD PRIMARY KEY ( `sale_id` , `item_id` , `line` , `name` , `percent` );
 
 ALTER TABLE `phppos_sales_items` ADD `description` VARCHAR( 30 ) NULL AFTER `item_id` ,
 ADD `serialnumber` VARCHAR( 30 ) NULL AFTER `description` ;
+
+ALTER TABLE `phppos_items` CHANGE `quantity` `quantity` DOUBLE( 15, 2 ) NOT NULL DEFAULT '0',
+CHANGE `reorder_level` `reorder_level` DOUBLE( 15, 2 ) NOT NULL DEFAULT '0';
+
+ALTER TABLE `phppos_sales_items` CHANGE `quantity_purchased` `quantity_purchased` DOUBLE( 15, 2 ) NOT NULL DEFAULT '0';

@@ -83,7 +83,7 @@ class Sales extends Secure_area
 		$data= array();
 
 		$this->form_validation->set_rules('price', 'lang:items_price', 'required|numeric');
-		$this->form_validation->set_rules('quantity', 'lang:items_quantity', 'required|integer');
+		$this->form_validation->set_rules('quantity', 'lang:items_quantity', 'required|numeric');
 
         $description = $this->input->post("description");
         $serialnumber = $this->input->post("serialnumber");

@@ -2,6 +2,6 @@
 * Ability to add item level description at sale
 * Ability to add serial number for an item at sale
 * Ability to search by item number in the sales interface
-* Quanity can now be entered as a decimal in the sales interface
+* Quantity can now be entered as a decimal in the sales interface
 * Added Quantity Purchased to Items Report
 * Bug Fixes and better error detection

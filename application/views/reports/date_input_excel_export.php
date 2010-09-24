@@ -22,6 +22,12 @@ if(isset($error))
 		<?php echo form_dropdown('end_day',$days, $selected_day, 'id="end_day"'); ?>
 		<?php echo form_dropdown('end_year',$years, $selected_year, 'id="end_year"'); ?>
 	</div>
+	
+	<div>
+		Export to Excel: <input type="radio" name="export_excel" id="export_excel_yes" value='1' /> Yes
+		<input type="radio" name="export_excel" id="export_excel_no" value='0' checked='checked' /> No
+	</div>
+
 <?php
 echo form_button(array(
 	'name'=>'generate_report',
@@ -37,17 +43,23 @@ echo form_button(array(
 $(document).ready(function()
 {
 	$("#generate_report").click(function()
-	{		
+	{
+		var export_excel = 0;
+		if ($("#export_excel_yes").attr('checked'))
+		{
+			export_excel = 1;
+		}
+		
 		if ($("#simple_radio").attr('checked'))
 		{
-			window.location = window.location+'/'+$("#report_date_range_simple option:selected").val();
+			window.location = window.location+'/'+$("#report_date_range_simple option:selected").val() + '/' + export_excel;
 		}
 		else
 		{
 			var start_date = $("#start_year").val()+'-'+$("#start_month").val()+'-'+$('#start_day').val();
 			var end_date = $("#end_year").val()+'-'+$("#end_month").val()+'-'+$('#end_day').val();
 	
-			window.location = window.location+'/'+start_date + '/'+ end_date;
+			window.location = window.location+'/'+start_date + '/'+ end_date + '/' + export_excel;
 		}
 	});
 	

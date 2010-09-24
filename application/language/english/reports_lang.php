@@ -55,4 +55,6 @@ $lang['reports_tax_percent'] = 'Tax Percent';
 $lang['reports_quantity_purchased'] = 'Quantity Purchased';
 $lang['reports_serial_number'] = 'Serial #';
 $lang['reports_description'] = 'Description';
+$lang['reports_date'] = 'Date';
+$lang['reports_sales_amount'] = 'Sales amount';
 ?>

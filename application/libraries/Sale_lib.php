@@ -218,16 +218,16 @@ class Sale_lib
 
 	}
 
-	function edit_item($item_id,$description,$serialnumber,$quantity,$discount,$price)
+	function edit_item($line,$description,$serialnumber,$quantity,$discount,$price)
 	{
 		$items = $this->get_cart();
-		if(isset($items[$item_id]))
+		if(isset($items[$line]))
 		{
-			$items[$item_id]['description'] = $description;
-			$items[$item_id]['serialnumber'] = $serialnumber;
-			$items[$item_id]['quantity'] = $quantity;
-			$items[$item_id]['discount'] = $discount;
-			$items[$item_id]['price'] = $price;
+			$items[$line]['description'] = $description;
+			$items[$line]['serialnumber'] = $serialnumber;
+			$items[$line]['quantity'] = $quantity;
+			$items[$line]['discount'] = $discount;
+			$items[$line]['price'] = $price;
 			$this->set_cart($items);
 		}
 
@@ -280,10 +280,10 @@ class Sale_lib
 
 	}
 
-	function delete_item($item_id)
+	function delete_item($line)
 	{
 		$items=$this->get_cart();
-		unset($items[$item_id]);
+		unset($items[$line]);
 		$this->set_cart($items);
 	}
 
@@ -323,7 +323,7 @@ class Sale_lib
 		}
 
 		$taxes = array();
-		foreach($this->get_cart() as $item_id=>$item)
+		foreach($this->get_cart() as $line=>$item)
 		{
 			$tax_info = $this->CI->Item_taxes->get_info($item['item_id']);
 

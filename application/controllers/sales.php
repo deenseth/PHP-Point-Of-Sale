@@ -78,7 +78,7 @@ class Sales extends Secure_area
 		$this->_reload($data);
 	}
 
-	function edit_item($item_id)
+	function edit_item($line)
 	{
 		$data= array();
 
@@ -94,7 +94,7 @@ class Sales extends Secure_area
 
 		if ($this->form_validation->run() != FALSE)
 		{
-			$this->sale_lib->edit_item($item_id,$description,$serialnumber,$quantity,$discount,$price);
+			$this->sale_lib->edit_item($line,$description,$serialnumber,$quantity,$discount,$price);
 		}
 		else
 		{

@@ -71,18 +71,18 @@ class Suppliers extends Person_controller
 			if($supplier_id==-1)
 			{
 				echo json_encode(array('success'=>true,'message'=>$this->lang->line('suppliers_successful_adding').' '.
-				$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>$supplier_data['person_id']));
+				$supplier_data['company_name'],'person_id'=>$supplier_data['person_id']));
 			}
 			else //previous supplier
 			{
 				echo json_encode(array('success'=>true,'message'=>$this->lang->line('suppliers_successful_updating').' '.
-				$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>$supplier_id));
+				$supplier_data['company_name'],'person_id'=>$supplier_id));
 			}
 		}
 		else//failure
 		{	
 			echo json_encode(array('success'=>false,'message'=>$this->lang->line('suppliers_error_adding_updating').' '.
-			$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>-1));
+			$supplier_data['company_name'],'person_id'=>-1));
 		}
 	}
 	

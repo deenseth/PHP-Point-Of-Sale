@@ -36,7 +36,7 @@ class Reports extends Secure_area
 	function date_input_excel_export()
 	{
 		$data = $this->_get_common_report_data();
-		$this->load->view("reports/date_input",$data);	
+		$this->load->view("reports/date_input_excel_export",$data);	
 	}
 	
 	//Summary sales report

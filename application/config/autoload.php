@@ -52,7 +52,7 @@ $autoload['libraries'] = array('database','session','form_validation','session',
 */
 
 //sale
-$autoload['helper'] = array('form','url','table','text','currency');
+$autoload['helper'] = array('form','url','table','text','currency', 'html');
 
 
 /*

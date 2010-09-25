@@ -1,5 +1,9 @@
 <?php
 require_once ("secure_area.php");
+require_once (APPPATH."libraries/phpgraphlib.php");
+require_once (APPPATH."libraries/phpgraphlib_stacked.php");
+require_once (APPPATH."libraries/phpgraphlib_pie.php");
+
 class Reports extends Secure_area 
 {	
 	function __construct()
@@ -222,93 +226,37 @@ class Reports extends Secure_area
 	{
 		$this->load->model('reports/Summary_sales');
 		$model = $this->Summary_sales;
-		$tabular_data = array();
+
+		$data = array(
+			"title" => $this->lang->line('reports_sales_summary_report'),
+			"image" => "reports/graphical_summary_sales_graph/$start_date/$end_date",
+			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
+			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
+		);
+
+		$this->load->view("reports/graphical",$data);
+	}
+	
+	//The actual graph
+	function graphical_summary_sales_graph($start_date, $end_date)
+	{
+		$this->load->model('reports/Summary_sales');
+		$model = $this->Summary_sales;
 		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
 		
+		$graph_data = array();
 		foreach($report_data as $row)
 		{
-			$tabular_data[] = array($row['sale_date'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
+			$graph_data[$row['sale_date']] = $row['total'];
 		}
 
 		$data = array(
 			"title" => $this->lang->line('reports_sales_summary_report'),
-			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
-			"xaxis_label" => $this->lang->line('reports_date'),
-			"yaxis_label" => $this->lang->line('reports_sales_amount'),
-			"data" => $tabular_data,
-			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
+			"data" => $graph_data
 		);
 
-		$this->load->view("reports/line_graph",$data);
-	}
-	
-	//Graphical summary categories report
-	function graphical_summary_categories($start_date, $end_date)
-	{
-		$this->load->model('reports/Summary_categories');
-		$model = $this->Summary_categories;
-		$tabular_data = array();
-		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
-		
-		foreach($report_data as $row)
-		{
-			$tabular_data[] = array($row['category'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
-		}
+		$this->load->view("reports/graphs/line",$data);
 
-		$data = array(
-			"title" => $this->lang->line('reports_categories_summary_report'),
-			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
-			"data" => $tabular_data,
-			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
-		);
-
-		$this->load->view("reports/pie_chart",$data);
-	}
-	
-	//Graphical summary customers report
-	function graphical_summary_customers($start_date, $end_date)
-	{
-		$this->load->model('reports/Summary_customers');
-		$model = $this->Summary_customers;
-		$tabular_data = array();
-		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
-		
-		foreach($report_data as $row)
-		{
-			$tabular_data[] = array($row['customer'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
-		}
-
-		$data = array(
-			"title" => $this->lang->line('reports_customers_summary_report'),
-			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
-			"data" => $tabular_data,
-			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
-		);
-
-		$this->load->view("reports/pie_chart",$data);
-	}
-	
-	//Graphical summary suppliers report
-	function graphical_summary_suppliers($start_date, $end_date)
-	{
-		$this->load->model('reports/Summary_suppliers');
-		$model = $this->Summary_suppliers;
-		$tabular_data = array();
-		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
-		
-		foreach($report_data as $row)
-		{
-			$tabular_data[] = array($row['supplier'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
-		}
-
-		$data = array(
-			"title" => $this->lang->line('reports_suppliers_summary_report'),
-			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
-			"data" => $tabular_data,
-			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
-		);
-
-		$this->load->view("reports/pie_chart",$data);
 	}
 	
 	//Graphical summary items report
@@ -316,68 +264,73 @@ class Reports extends Secure_area
 	{
 		$this->load->model('reports/Summary_items');
 		$model = $this->Summary_items;
-		$tabular_data = array();
-		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
-		
-		foreach($report_data as $row)
-		{
-			$tabular_data[] = array(character_limiter($row['name'], 16), $row['quantity_purchased'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
-		}
 
 		$data = array(
-			"title" => $this->lang->line('reports_items_summary_report'),
+			"title" => $this->lang->line('reports_sales_summary_report'),
+			"image" => "reports/graphical_summary_items_graph/$start_date/$end_date",
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
-			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
 		);
-		
-		$this->load->view("reports/bar_graph",$data);
+
+		$this->load->view("reports/graphical",$data);
 	}
 	
-	//Graphical summary employees report
-	function graphical_summary_employees($start_date, $end_date)
+	//The actual graph
+	function graphical_summary_items_graph($start_date, $end_date)
 	{
-		$this->load->model('reports/Summary_employees');
-		$model = $this->Summary_employees;
-		$tabular_data = array();
+		$this->load->model('reports/Summary_items');
+		$model = $this->Summary_items;
 		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
 		
+		$graph_data = array();
 		foreach($report_data as $row)
 		{
-			$tabular_data[] = array($row['employee'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
+			$graph_data[$row['name']] = $row['total'];
 		}
 
 		$data = array(
-			"title" => $this->lang->line('reports_employees_summary_report'),
-			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
-			"data" => $tabular_data,
-			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
+			"title" => $this->lang->line('reports_sales_summary_report'),
+			"data" => $graph_data
 		);
 
-		$this->load->view("reports/pie_chart",$data);
+		$this->load->view("reports/graphs/bar",$data);
 	}
 	
-	//Graphical summary taxes report
-	function graphical_summary_taxes($start_date, $end_date)
+	//Graphical summary customers report
+	function graphical_summary_customers($start_date, $end_date)
 	{
-		$this->load->model('reports/Summary_taxes');
-		$model = $this->Summary_taxes;
-		$tabular_data = array();
-		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
-		
-		foreach($report_data as $row)
-		{
-			$tabular_data[] = array($row['percent'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']));
-		}
+		$this->load->model('reports/Summary_customers');
+		$model = $this->Summary_customers;
 
 		$data = array(
-			"title" => $this->lang->line('reports_taxes_summary_report'),
+			"title" => $this->lang->line('reports_customers_summary_report'),
+			"image" => "reports/graphical_summary_customers_graph/$start_date/$end_date",
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
-			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
 		);
 
-		$this->load->view("reports/pie_chart",$data);
+		$this->load->view("reports/graphical",$data);
+	}
+	
+	//The actual graph
+	function graphical_summary_customers_graph($start_date, $end_date)
+	{
+		$this->load->model('reports/Summary_customers');
+		$model = $this->Summary_customers;
+		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
+		
+		$graph_data = array();
+		foreach($report_data as $row)
+		{
+			$graph_data[$row['customer']] = $row['total'];
+		}
+		
+		$data = array(
+			"title" => $this->lang->line('reports_customers_summary_report'),
+			"data" => $graph_data
+		);
+
+		$this->load->view("reports/graphs/pie",$data);
 	}
 	
 	function specific_customer_input()

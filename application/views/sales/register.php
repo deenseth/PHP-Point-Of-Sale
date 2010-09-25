@@ -59,12 +59,12 @@ if(count($cart)==0)
 }
 else
 {
-	foreach($cart as $item_id=>$item)
+	foreach($cart as $line=>$item)
 	{
-		echo form_open("sales/edit_item/$item_id");
+		echo form_open("sales/edit_item/$line");
 	?>
 		<tr>
-		<td><?php echo anchor("sales/delete_item/$item_id",'['.$this->lang->line('common_delete').']');?></td>
+		<td><?php echo anchor("sales/delete_item/$line",'['.$this->lang->line('common_delete').']');?></td>
 		<td><?php echo $item['item_number']; ?></td>
 		<td style="align:center;"><?php echo $item['name']; ?><br>
 

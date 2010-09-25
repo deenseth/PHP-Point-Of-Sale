@@ -41,8 +41,17 @@ class Sales extends Secure_area
 
 	//Alain Multiple Payments
 	function add_payment()
-	{
+	{		
 		$data=array();
+		$this->form_validation->set_rules('amount_tendered', 'lang:sales_amount_tendered', 'numeric');
+
+		if ($this->form_validation->run() == FALSE)
+		{
+			$data['error']=$this->lang->line('sales_must_enter_numeric');
+ 			$this->_reload($data);
+ 			return;
+		}
+
 		$payment_type=$this->input->post('payment_type');
 		$payment_amount=$this->input->post('amount_tendered');
 		if(!$this->sale_lib->add_payment($payment_type,$payment_amount))

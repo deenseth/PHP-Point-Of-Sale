@@ -59,33 +59,16 @@ if(count($cart)==0)
 }
 else
 {
-	foreach($cart as $line=>$item)
+		foreach($cart as $line=>$item)
 	{
 		echo form_open("sales/edit_item/$line");
 	?>
 		<tr>
 		<td><?php echo anchor("sales/delete_item/$line",'['.$this->lang->line('common_delete').']');?></td>
 		<td><?php echo $item['item_number']; ?></td>
-		<td style="align:center;"><?php echo $item['name']; ?><br>
+		<td style="align:center;"><?php echo $item['name']; ?></td>
 
-		<?php
-        	if($item['allow_alt_description']==1)
-        	{
-        		echo form_input(array('name'=>'description','value'=>$item['description'],'size'=>'10'));
-        	}
-        	else
-        	{
-				echo $item['description'];
-        		echo form_hidden('description',$item['description']);
-        	}
-		?>
-		<br>
-		<?php
-        	if($item['is_serialized']==1)
-        	{
-				echo form_input(array('name'=>'serialnumber','value'=>$item['serialnumber'],'size'=>'10'));
-			}
-		?></td>
+
 
 		<?php if ($items_module_allowed)
 		{
@@ -120,7 +103,53 @@ else
 		<td><?php echo to_currency($item['price']*$item['quantity']-$item['price']*$item['quantity']*$item['discount']/100); ?></td>
 		<td><?php echo form_submit("edit_item", $this->lang->line('sales_edit_item'));?></td>
 		</tr>
-		</form>
+		<tr>
+		<td style="color:#2F4F4F";><?php echo $this->lang->line('sales_description_abbrv').':';?></td>
+		<td colspan=2 style="text-align:left;">
+
+		<?php
+        	if($item['allow_alt_description']==1)
+        	{
+        		echo form_input(array('name'=>'description','value'=>$item['description'],'size'=>'20'));
+        	}
+        	else
+        	{
+				if ($item['description']!='')
+				{
+					echo $item['description'];
+        			echo form_hidden('description',$item['description']);
+        		}
+        		else
+        		{
+        			echo 'None';
+        			echo form_hidden('description','');
+        		}
+        	}
+		?>
+		</td>
+		<td>&nbsp;</td>
+		<td style="color:#2F4F4F";>
+		<?php
+        	if($item['is_serialized']==1)
+        	{
+				echo $this->lang->line('sales_serial').':';
+			}
+		?>
+		</td>
+		<td colspan=3 style="text-align:left;">
+		<?php
+        	if($item['is_serialized']==1)
+        	{
+        		echo form_input(array('name'=>'serialnumber','value'=>$item['serialnumber'],'size'=>'20'));
+			}
+		?>
+		</td>
+
+
+		</tr>
+		<tr style="height:3px">
+		<td colspan=8 style="background-color:white"> </td>
+		</tr>		</form>
 	<?php
 	}
 }

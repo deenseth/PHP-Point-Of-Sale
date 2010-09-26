@@ -1,5 +1,5 @@
 <?php
-$bar = new bar_filled( '#E2D66A', '#577261' );
+$bar = new bar_filled( '#4386a1', '#577261' );
 
 $bar_labels = array();
 $bar_values = array();
@@ -21,7 +21,7 @@ $chart->set_x_axis( $x );
 
 $y = new y_axis();
 $y->set_tick_length(7);
-$y->set_range(0, max($data) + 10, 10);
+$y->set_range(0, max($data) + 25, (max($data)+25)/10);
 $chart->set_y_axis( $y );
 $chart->set_bg_colour("#f3f3f3");
 

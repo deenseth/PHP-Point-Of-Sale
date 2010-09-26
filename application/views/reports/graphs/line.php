@@ -19,13 +19,13 @@ $chart->set_title(new title($title));
 $chart->add_element($line);
 
 $x = new x_axis();
-$x->steps(1);
+$x->steps(count($data) > 10 ? (int)(count($data)/4) : 1);
 $x->set_labels_from_array($labels);
 $chart->set_x_axis( $x );
 
 $y = new y_axis();
 $y->set_tick_length(7);
-$y->set_range(0, max($data) + 50, 10);
+$y->set_range(0, max($data) + 25, (max($data)+25)/10);
 $chart->set_y_axis( $y );
 $chart->set_bg_colour("#f3f3f3");
 

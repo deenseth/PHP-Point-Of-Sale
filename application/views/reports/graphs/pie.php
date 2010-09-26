@@ -11,7 +11,7 @@ $pie->set_colours(get_random_colors(count($data)));
 $pie_values = array();
 foreach($data as $label=>$value)
 {
-	$pie_values[] = new pie_value((float)$value, $label);
+	$pie_values[] = new pie_value((float)$value, (string)$label);
 }
 $pie->set_values($pie_values);
 $chart = new open_flash_chart();

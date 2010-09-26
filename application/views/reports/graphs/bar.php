@@ -6,7 +6,7 @@ $bar_values = array();
 
 foreach($data as $label=>$value)
 {
-	$bar_labels[] = $label;
+	$bar_labels[] = (string)$label;
 	$bar_values[] = (float)$value;
 }
 

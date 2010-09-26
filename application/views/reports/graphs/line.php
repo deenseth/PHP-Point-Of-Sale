@@ -4,7 +4,7 @@ $labels = array();
 foreach($data as $label=>$value)
 {
     $line_data[] = (float)$value;
-	$labels[] = $label;
+	$labels[] = (string)$label;
 }
 
 $hol = new hollow_dot();

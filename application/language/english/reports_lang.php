@@ -58,5 +58,4 @@ $lang['reports_description'] = 'Description';
 $lang['reports_date'] = 'Date';
 $lang['reports_sales_amount'] = 'Sales amount';
 $lang['reports_revenue'] = 'Revenue';
-
 ?>

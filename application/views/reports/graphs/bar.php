@@ -28,5 +28,18 @@ $chart->set_bg_colour("#f3f3f3");
 $chart->add_element($bar);
 $chart->set_bg_colour( '#FFFFFF' );
 
+if (isset($yaxis_label))
+{
+	$y_legend = new y_legend($yaxis_label );
+	$y_legend->set_style( '{font-size: 20px; color: #000000}' );
+	$chart->set_y_legend( $y_legend );
+}
+
+if (isset($xaxis_label))
+{
+	$x_legend = new x_legend($xaxis_label );
+	$x_legend->set_style( '{font-size: 20px; color: #000000}' );
+	$chart->set_x_legend( $x_legend );
+}
 echo $chart->toPrettyString();
 ?>

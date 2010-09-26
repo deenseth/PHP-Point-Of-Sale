@@ -29,6 +29,19 @@ $y->set_range(0, max($data) + 25, (max($data)+25)/10);
 $chart->set_y_axis( $y );
 $chart->set_bg_colour("#f3f3f3");
 
+if (isset($yaxis_label))
+{
+	$y_legend = new y_legend($yaxis_label );
+	$y_legend->set_style( '{font-size: 20px; color: #000000}' );
+	$chart->set_y_legend( $y_legend );
+}
+
+if (isset($xaxis_label))
+{
+	$x_legend = new x_legend($xaxis_label );
+	$x_legend->set_style( '{font-size: 20px; color: #000000}' );
+	$chart->set_x_legend( $x_legend );
+}
 
 echo $chart->toPrettyString();
 ?>

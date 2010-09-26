@@ -249,6 +249,8 @@ class Reports extends Secure_area
 
 		$data = array(
 			"title" => $this->lang->line('reports_sales_summary_report'),
+			"yaxis_label"=>$this->lang->line('reports_revenue'),
+			"xaxis_label"=>$this->lang->line('reports_date'),
 			"data" => $graph_data
 		);
 
@@ -287,6 +289,8 @@ class Reports extends Secure_area
 
 		$data = array(
 			"title" => $this->lang->line('reports_items_summary_report'),
+			"yaxis_label"=>$this->lang->line('reports_revenue'),
+			"xaxis_label"=>$this->lang->line('reports_items'),
 			"data" => $graph_data
 		);
 
@@ -469,6 +473,8 @@ class Reports extends Secure_area
 		
 		$data = array(
 			"title" => $this->lang->line('reports_customers_summary_report'),
+			"yaxis_label"=>$this->lang->line('reports_revenue'),
+			"xaxis_label"=>$this->lang->line('reports_customers'),
 			"data" => $graph_data
 		);
 

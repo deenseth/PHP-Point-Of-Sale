@@ -25,7 +25,7 @@ $chart->set_x_axis( $x );
 
 $y = new y_axis();
 $y->set_tick_length(7);
-$y->set_range(0, max($data) + 25, (max($data)+25)/10);
+$y->set_range(0, (count($data) > 0 ? max($data) : 0) + 25, ((count($data) > 0 ? max($data) : 0)+25)/10);
 $chart->set_y_axis( $y );
 $chart->set_bg_colour("#f3f3f3");
 

@@ -8,7 +8,7 @@ $this->load->view("partial/header");
 <script type="text/javascript">
 swfobject.embedSWF(
 "<?php echo base_url(); ?>open-flash-chart.swf", "chart",
-"600", "350", "9.0.0", "expressInstall.swf",
+"775", "420", "9.0.0", "expressInstall.swf",
 {"data-file":"<?php echo $data_file; ?>"} )
 </script>
 <?php

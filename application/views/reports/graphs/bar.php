@@ -1,10 +1,32 @@
 <?php
-$graph=new PHPGraphLib(600,400);
-$graph->setDataCurrency("dollar");
-$graph->setDataValues(true);
-$graph->addData($data);
-$graph->setTitle($title);
-$graph->setGradient("blue", "black");
-$graph->setBarOutlineColor("black");
-$graph->createGraph();
+$bar = new bar_filled( '#E2D66A', '#577261' );
+
+$bar_labels = array();
+$bar_values = array();
+
+foreach($data as $label=>$value)
+{
+	$bar_labels[] = $label;
+	$bar_values[] = (float)$value;
+}
+
+$bar->set_values($bar_values);
+
+$chart = new open_flash_chart();
+$chart->set_title(new title($title));
+$x = new x_axis();
+$x->steps(1);
+$x->set_labels_from_array($bar_labels);
+$chart->set_x_axis( $x );
+
+$y = new y_axis();
+$y->set_tick_length(7);
+$y->set_range(0, max($data) + 10, 10);
+$chart->set_y_axis( $y );
+$chart->set_bg_colour("#f3f3f3");
+
+$chart->add_element($bar);
+$chart->set_bg_colour( '#FFFFFF' );
+
+echo $chart->toPrettyString();
 ?>

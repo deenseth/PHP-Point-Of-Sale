@@ -19,3 +19,8 @@
 #report_summary .summary_row
 {
 }
+
+#chart_wrapper
+{
+	text-align: center;
+}

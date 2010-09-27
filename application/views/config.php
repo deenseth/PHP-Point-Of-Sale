@@ -192,7 +192,6 @@ $(document).ready(function()
     			number:true
     		},
     		email:"email",
-    		website:"url",
     		return_policy: "required"    		
    		},
 		messages: 
@@ -206,7 +205,6 @@ $(document).ready(function()
     			number:"<?php echo $this->lang->line('config_default_tax_rate_number'); ?>"
     		},
      		email: "<?php echo $this->lang->line('common_email_invalid_format'); ?>",
-     		website:"<?php echo $this->lang->line('config_company_website_url'); ?>",
      		return_policy:"<?php echo $this->lang->line('config_return_policy_required'); ?>"
 	
 		}

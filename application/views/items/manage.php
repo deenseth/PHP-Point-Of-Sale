@@ -1,7 +1,7 @@
 <?php $this->load->view("partial/header"); ?>
 <script type="text/javascript">
-$(document).ready(function() 
-{ 
+$(document).ready(function()
+{
     init_table_sorting();
     enable_select_all();
     enable_checkboxes();
@@ -9,7 +9,7 @@ $(document).ready(function()
     enable_search('<?php echo site_url("$controller_name/suggest")?>','<?php echo $this->lang->line("common_confirm_search")?>');
     enable_delete('<?php echo $this->lang->line($controller_name."_confirm_delete")?>','<?php echo $this->lang->line($controller_name."_none_selected")?>');
     enable_bulk_edit('<?php echo $this->lang->line($controller_name."_none_selected")?>');
-    
+
     $('#generate_barcodes').click(function()
     {
     	var selected = get_selected_values();
@@ -18,10 +18,26 @@ $(document).ready(function()
     		alert('<?php echo $this->lang->line('items_must_select_item_for_barcode'); ?>');
     		return false;
     	}
-    	
+
     	$(this).attr('href','index.php/items/generate_barcodes/'+selected.join(','));
     });
-}); 
+
+    $("#low_inventory").click(function()
+    {
+    	$('#items_filter_form').submit();
+    });
+
+    $("#is_serialized").click(function()
+    {
+    	$('#items_filter_form').submit();
+    });
+
+    $("#no_description").click(function()
+    {
+    	$('#items_filter_form').submit();
+    });
+
+});
 
 function init_table_sorting()
 {
@@ -29,15 +45,15 @@ function init_table_sorting()
 	if($('.tablesorter tbody tr').length >1)
 	{
 		$("#sortable_table").tablesorter(
-		{ 
-			sortList: [[1,0]], 
-			headers: 
-			{ 
-				0: { sorter: false}, 
-				8: { sorter: false} 
-			} 
+		{
+			sortList: [[1,0]],
+			headers:
+			{
+				0: { sorter: false},
+				8: { sorter: false}
+			}
 
-		}); 
+		});
 	}
 }
 
@@ -45,7 +61,7 @@ function post_item_form_submit(response)
 {
 	if(!response.success)
 	{
-		set_feedback(response.message,'error_message',true);	
+		set_feedback(response.message,'error_message',true);
 	}
 	else
 	{
@@ -53,8 +69,8 @@ function post_item_form_submit(response)
 		if(jQuery.inArray(response.item_id,get_visible_checkbox_ids()) != -1)
 		{
 			update_row(response.item_id,'<?php echo site_url("$controller_name/get_row")?>');
-			set_feedback(response.message,'success_message',false);	
-			
+			set_feedback(response.message,'success_message',false);
+
 		}
 		else //refresh entire table
 		{
@@ -62,7 +78,7 @@ function post_item_form_submit(response)
 			{
 				//highlight new row
 				hightlight_row(response.item_id);
-				set_feedback(response.message,'success_message',false);		
+				set_feedback(response.message,'success_message',false);
 			});
 		}
 	}
@@ -72,7 +88,7 @@ function post_bulk_form_submit(response)
 {
 	if(!response.success)
 	{
-		set_feedback(response.message,'error_message',true);	
+		set_feedback(response.message,'error_message',true);
 	}
 	else
 	{
@@ -81,9 +97,28 @@ function post_bulk_form_submit(response)
 		{
 			update_row(selected_item_ids[k],'<?php echo site_url("$controller_name/get_row")?>');
 		}
-		set_feedback(response.message,'success_message',false);	
+		set_feedback(response.message,'success_message',false);
 	}
 }
+
+function show_hide_search_filter(search_filter_section, switchImgTag) {
+        var ele = document.getElementById(search_filter_section);
+        var imageEle = document.getElementById(switchImgTag);
+        var elesearchstate = document.getElementById('search_section_state');
+        if(ele.style.display == "block")
+        {
+                ele.style.display = "none";
+				imageEle.innerHTML = '<img src=" <?php echo base_url()?>images/plus.png" style="border:0;outline:none;padding:0px;margin:0px;position:relative;top:-5px;" >';
+                elesearchstate.value="none";
+        }
+        else
+        {
+                ele.style.display = "block";
+                imageEle.innerHTML = '<img src=" <?php echo base_url()?>images/minus.png" style="border:0;outline:none;padding:0px;margin:0px;position:relative;top:-5px;" >';
+                elesearchstate.value="block";
+        }
+}
+
 </script>
 
 <div id="title_bar">
@@ -99,6 +134,25 @@ function post_bulk_form_submit(response)
 		?>
 	</div>
 </div>
+
+<div id="titleTextImg" style="background-color:#EEEEEE;height:20px;position:relative;">
+	<div style="float:left;vertical-align:text-top;">Search Options :</div>
+	<a id="imageDivLink" href="javascript:show_hide_search_filter('search_filter_section', 'imageDivLink');" style="outline:none;">
+	<img src="
+	<?php echo isset($search_section_state)?  ( ($search_section_state)? base_url().'images/minus.png' : base_url().'images/plus.png') : base_url().'images/plus.png';?>" style="border:0;outline:none;padding:0px;margin:0px;position:relative;top:-5px;"></a>
+</div>
+
+<div id="search_filter_section" style="display: <?php echo isset($search_section_state)?  ( ($search_section_state)? 'block' : 'none') : 'none';?>;background-color:#EEEEEE;">
+	<?php echo form_open("$controller_name/refresh",array('id'=>'items_filter_form')); ?>
+	<?php echo form_label($this->lang->line('items_low_inventory_items').' '.':', 'low_inventory');?>
+	<?php echo form_checkbox(array('name'=>'low_inventory','id'=>'low_inventory','value'=>1,'checked'=> isset($low_inventory)?  ( ($low_inventory)? 1 : 0) : 0)).' | ';?>
+	<?php echo form_label($this->lang->line('items_serialized_items').' '.':', 'is_serialized');?>
+	<?php echo form_checkbox(array('name'=>'is_serialized','id'=>'is_serialized','value'=>1,'checked'=> isset($is_serialized)?  ( ($is_serialized)? 1 : 0) : 0)).' | ';?>
+	<?php echo form_label($this->lang->line('items_no_description_items').' '.':', 'no_description');?>
+	<?php echo form_checkbox(array('name'=>'no_description','id'=>'no_description','value'=>1,'checked'=> isset($no_description)?  ( ($no_description)? 1 : 0) : 0)).' | ';?>
+	<input type="hidden" name="search_section_state" id="search_section_state" value="<?php echo isset($search_section_state)?  ( ($search_section_state)? 'block' : 'none') : 'none';?>" />
+	</form>
+</div>
 <div id="table_action_header">
 	<ul>
 		<li class="float_left"><span><?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('id'=>'delete')); ?></span></li>
@@ -112,6 +166,7 @@ function post_bulk_form_submit(response)
 		</li>
 	</ul>
 </div>
+
 <div id="table_holder">
 <?php echo $manage_table; ?>
 </div>

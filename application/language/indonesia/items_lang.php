@@ -58,4 +58,7 @@ $lang['items_must_select_item_for_barcode'] = 'Anda harus memilih setidaknya 1 i
 $lang['items_excel_import_failed'] = 'Excel import failed';
 $lang['items_allow_alt_desciption'] = 'Allow Alternate Description';
 $lang['items_is_serialized'] = 'Item has Serial Number';
+$lang['items_low_inventory_items'] = 'Low Inventory Items';
+$lang['items_serialized_items'] = 'Serialized Items';
+$lang['items_no_description_items'] = 'No Description Items';
 ?>

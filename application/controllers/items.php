@@ -16,6 +16,22 @@ class Items extends Secure_area implements iData_controller
 		$this->load->view('items/manage',$data);
 	}
 
+	function refresh()
+	{
+		$low_inventory=$this->input->post('low_inventory');
+		$is_serialized=$this->input->post('is_serialized');
+		$no_description=$this->input->post('no_description');
+
+		$data['search_section_state']=$this->input->post('search_section_state');
+		$data['low_inventory']=$this->input->post('low_inventory');
+		$data['is_serialized']=$this->input->post('is_serialized');
+		$data['no_description']=$this->input->post('no_description');
+		$data['controller_name']=strtolower($this->uri->segment(1));
+		$data['form_width']=$this->get_form_width();
+		$data['manage_table']=get_items_manage_table($this->Item->get_all_filtered($low_inventory,$is_serialized,$no_description),$this);
+		$this->load->view('items/manage',$data);
+	}
+
 	function find_item_info()
 	{
 		$item_number=$this->input->post('scan_item_number');

@@ -2,3 +2,4 @@
 * Added summary discount report (and graphical version)
 * Made headings in report listings page stand out more
 * Can now bulk turn on if an item is serialized or has an alternate description
+* Items can be filtered by "Low Inventory", "Serial Number" and "No Description"

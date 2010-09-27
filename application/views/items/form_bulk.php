@@ -128,6 +128,29 @@ echo form_open('items/bulk_update/',array('id'=>'item_form'));
 	);?>
 	</div>
 </div>
+
+<div class="field_row clearfix">
+<?php echo form_label($this->lang->line('items_allow_alt_desciption').':', 'allow_alt_description',array('class'=>'wide')); ?>
+	<div class='form_field'>
+	<?php echo form_checkbox(array(
+		'name'=>'allow_alt_description',
+		'id'=>'allow_alt_description',
+		'value'=>1)
+	);?>
+	</div>
+</div>
+
+<div class="field_row clearfix">
+<?php echo form_label($this->lang->line('items_is_serialized').':', 'is_serialized',array('class'=>'wide')); ?>
+	<div class='form_field'>
+	<?php echo form_checkbox(array(
+		'name'=>'is_serialized',
+		'id'=>'is_serialized',
+		'value'=>1)
+	);?>
+	</div>
+</div>
+
 <?php
 echo form_submit(array(
 	'name'=>'submit',

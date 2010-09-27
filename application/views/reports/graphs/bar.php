@@ -1,4 +1,6 @@
 <?php
+$this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate");
+$this->output->set_header("Pragma: public");
 $bar = new bar_filled( '#4386a1', '#577261' );
 
 $bar_labels = array();

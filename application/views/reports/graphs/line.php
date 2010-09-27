@@ -1,4 +1,6 @@
 <?php
+$this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate");
+$this->output->set_header("Pragma: public");
 $line_data = array();
 $labels = array();
 foreach($data as $label=>$value)

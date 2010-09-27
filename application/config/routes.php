@@ -46,6 +46,8 @@ $route['reports/(summary_:any)/(:any)/(:any)'] = "reports/$1/$2/$3";
 $route['reports/summary_:any'] = "reports/date_input_excel_export";
 $route['reports/(graphical_:any)/(:any)/(:any)'] = "reports/$1/$2/$3";
 $route['reports/graphical_:any'] = "reports/date_input";
+$route['reports/(inventory_:any)/(:any)'] = "reports/$1/$2";
+$route['reports/inventory_:any'] = "reports/excel_export";
 
 $route['reports/(detailed_sales)/(:any)/(:any)'] = "reports/$1/$2/$3";
 $route['reports/detailed_sales'] = "reports/date_input";

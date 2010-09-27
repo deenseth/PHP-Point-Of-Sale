@@ -62,4 +62,15 @@ $lang['reports_discounts'] = 'Discounts';
 $lang['reports_discounts_summary_report'] = 'Discounts Summary Report';
 $lang['reports_discount_percent'] = 'Discount Percent';
 $lang['reports_count'] = 'Count';
+$lang['reports_summary_reports'] = 'Summary Reports';
+$lang['reports_graphical_reports'] = 'Graphical Reports';
+$lang['reports_detailed_reports'] = 'Detailed Reports';
+$lang['reports_inventory_reports'] = 'Inventory Reports';
+$lang['reports_low_inventory'] = 'Low Inventory';
+$lang['reports_inventory_summary'] = ' Inventory Summary';
+$lang['reports_item_number'] = 'Item Number';
+$lang['reports_reorder_level'] = 'Reorder Level';
+$lang['reports_low_inventory_report'] = 'Low Inventory Report';
+$lang['reports_item_name'] = 'Item Name';
+$lang['reports_inventory_summary_report'] = 'Inventory Summary Report';
 ?>

@@ -676,5 +676,56 @@ class Reports extends Secure_area
 		$this->load->view("reports/tabular_details",$data);
 	}
 	
+	function excel_export()
+	{
+		$this->load->view("reports/excel_export",array());		
+	}
+	
+	function inventory_low($export_excel=0)
+	{
+		$this->load->model('reports/Inventory_low');
+		$model = $this->Inventory_low;
+		$tabular_data = array();
+		$report_data = $model->getData(array());
+		foreach($report_data as $row)
+		{
+			$tabular_data[] = array($row['name'], $row['item_number'], $row['description'], $row['quantity'], $row['reorder_level']);
+		}
+
+		$data = array(
+			"title" => $this->lang->line('reports_low_inventory_report'),
+			"subtitle" => '',
+			"headers" => $model->getDataColumns(),
+			"data" => $tabular_data,
+			"summary_data" => $model->getSummaryData(array()),
+			"export_excel" => $export_excel
+		);
+
+		$this->load->view("reports/tabular",$data);	
+	}
+	
+	function inventory_summary($export_excel=0)
+	{
+		$this->load->model('reports/Inventory_summary');
+		$model = $this->Inventory_summary;
+		$tabular_data = array();
+		$report_data = $model->getData(array());
+		foreach($report_data as $row)
+		{
+			$tabular_data[] = array($row['name'], $row['item_number'], $row['description'], $row['quantity'], $row['reorder_level']);
+		}
+
+		$data = array(
+			"title" => $this->lang->line('reports_inventory_summary_report'),
+			"subtitle" => '',
+			"headers" => $model->getDataColumns(),
+			"data" => $tabular_data,
+			"summary_data" => $model->getSummaryData(array()),
+			"export_excel" => $export_excel
+		);
+
+		$this->load->view("reports/tabular",$data);	
+	}
+	
 }
 ?>

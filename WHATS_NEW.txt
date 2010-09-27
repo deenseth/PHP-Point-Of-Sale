@@ -4,3 +4,4 @@
 * Can now bulk turn on if an item is serialized or has an alternate description
 * Items can be filtered by "Low Inventory", "Serial Number" and "No Description"
 * URL doesn't have to start with http:// in config section.
+* Added 2 new reports, Low Inventory and Inventory Summary

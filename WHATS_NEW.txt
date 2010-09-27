@@ -1,1 +1,2 @@
 * Updated missing language keys (in english, but they can easily be fixed)
+* Added summary discount report (and graphical version)

@@ -58,4 +58,8 @@ $lang['reports_description'] = 'Description';
 $lang['reports_date'] = 'Date';
 $lang['reports_sales_amount'] = 'Sales amount';
 $lang['reports_revenue'] = 'Revenue';
+$lang['reports_discounts'] = 'Discounts';
+$lang['reports_discounts_summary_report'] = 'Discounts Summary Report';
+$lang['reports_discount_percent'] = 'Discount Percent';
+$lang['reports_count'] = 'Count';
 ?>

@@ -3,7 +3,7 @@
 <div id="page_title" style="margin-bottom:8px;"><?php echo $this->lang->line('reports_reports'); ?></div>
 <div id="welcome_message"><?php echo $this->lang->line('reports_welcome_message'); ?>
 <ul id="report_list">
-	<li>Graphical Reports
+	<li><h3>Graphical Reports</h3>
 		<ul>
 			<li><a href="<?php echo site_url('reports/graphical_summary_sales');?>"><?php echo $this->lang->line('reports_sales'); ?></a></li>
 			<li><a href="<?php echo site_url('reports/graphical_summary_categories');?>"><?php echo $this->lang->line('reports_categories'); ?></a></li>
@@ -16,7 +16,7 @@
 		</ul>
 	</li>
 	
-	<li>Summary Reports
+	<li><h3>Summary Reports</h3>
 		<ul>
 			<li><a href="<?php echo site_url('reports/summary_sales');?>"><?php echo $this->lang->line('reports_sales'); ?></a></li>
 			<li><a href="<?php echo site_url('reports/summary_categories');?>"><?php echo $this->lang->line('reports_categories'); ?></a></li>
@@ -29,7 +29,7 @@
 		</ul>
 	</li>
 
-	<li>Detailed Reports
+	<li><h3>Detailed Reports</h3>
 		<ul>
 			<li><a href="<?php echo site_url('reports/detailed_sales');?>"><?php echo $this->lang->line('reports_sales'); ?></a></li>
 			<li><a href="<?php echo site_url('reports/specific_customer');?>"><?php echo $this->lang->line('reports_customer'); ?></a></li>

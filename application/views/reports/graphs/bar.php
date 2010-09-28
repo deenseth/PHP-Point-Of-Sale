@@ -28,7 +28,6 @@ $chart->set_y_axis( $y );
 $chart->set_bg_colour("#f3f3f3");
 
 $chart->add_element($bar);
-$chart->set_bg_colour( '#FFFFFF' );
 
 if (isset($yaxis_label))
 {

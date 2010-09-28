@@ -6,7 +6,7 @@ $title = new title($title);
 
 $hbar = new hbar( '#86BBEF' );
 $hbar->set_tooltip($this->lang->line('reports_revenue').': #val#' );
-$labels = array();
+$y_labels = array();
 $max_value = 0;
 foreach($data as $label=>$value)
 {
@@ -14,29 +14,23 @@ foreach($data as $label=>$value)
 	{
 		$max_value = $value;
 	}
-	$labels[] = $label;
-	$hbar->append_value( new hbar_value(0,$value) );
+	$y_labels[] = (string)$label;
+	$hbar->append_value( new hbar_value(0,(float)$value) );
 }
 $chart = new open_flash_chart();
 $chart->set_title( $title );
 $chart->add_element( $hbar );
 
-$step_count = $max_value/10;
+$step_count = $max_value > 0 ? $max_value/10 : 1;
 $x = new x_axis();
 $x->set_offset( false );
-$x->steps($max_value/10);
+$x->set_steps($max_value/10);
 
-$x_labels = array();
-for($k=0;$k<=$max_value;$k+=$step_count)
-{
-	$x_labels[] = (string)$k;
-}
-$x->set_labels_from_array($x_labels);
 $chart->set_x_axis( $x );
 
 $y = new y_axis();
 $y->set_offset( true );
-$y->set_labels($labels);
+$y->set_labels($y_labels);
 $chart->add_y_axis( $y );
 
 if (isset($yaxis_label))

@@ -314,12 +314,12 @@ class Reports extends Secure_area
 
 		$data = array(
 			"title" => $this->lang->line('reports_items_summary_report'),
-			"yaxis_label"=>$this->lang->line('reports_revenue'),
-			"xaxis_label"=>$this->lang->line('reports_items'),
+			"xaxis_label"=>$this->lang->line('reports_revenue'),
+			"yaxis_label"=>$this->lang->line('reports_items'),
 			"data" => $graph_data
 		);
 
-		$this->load->view("reports/graphs/bar",$data);
+		$this->load->view("reports/graphs/hbar",$data);
 	}
 	
 	//Graphical summary customers report
@@ -498,12 +498,12 @@ class Reports extends Secure_area
 		
 		$data = array(
 			"title" => $this->lang->line('reports_customers_summary_report'),
-			"yaxis_label"=>$this->lang->line('reports_revenue'),
-			"xaxis_label"=>$this->lang->line('reports_customers'),
+			"xaxis_label"=>$this->lang->line('reports_revenue'),
+			"yaxis_label"=>$this->lang->line('reports_customers'),
 			"data" => $graph_data
 		);
 
-		$this->load->view("reports/graphs/bar",$data);
+		$this->load->view("reports/graphs/hbar",$data);
 	}
 	
 	//Graphical summary discounts report

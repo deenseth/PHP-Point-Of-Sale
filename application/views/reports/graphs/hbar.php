@@ -49,5 +49,13 @@ if (isset($xaxis_label))
 
 $chart->set_bg_colour("#f3f3f3");
 
+$tooltip = new tooltip();
+$tooltip->set_hover();
+$tooltip->set_stroke( 1 );
+$tooltip->set_colour( "#000000" );
+$tooltip->set_background_colour( "#ffffff" ); 
+$chart->set_tooltip( $tooltip );
+
+
 echo $chart->toPrettyString();
 ?>

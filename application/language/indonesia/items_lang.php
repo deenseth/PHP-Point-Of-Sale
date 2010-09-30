@@ -61,4 +61,9 @@ $lang['items_is_serialized'] = 'Item has Serial Number';
 $lang['items_low_inventory_items'] = 'Low Inventory Items';
 $lang['items_serialized_items'] = 'Serialized Items';
 $lang['items_no_description_items'] = 'No Description Items';
+$lang['items_do_nothing'] = 'Do Nothing';
+$lang['items_change_all_to_serialized'] = 'Change All To Serialized';
+$lang['items_change_all_to_unserialized'] = 'Change All To Unserialized';
+$lang['items_change_all_to_allow_alt_desc'] = ' Allow Alt Desc For All';
+$lang['items_change_all_to_not_allow_allow_desc'] = 'Not Allow Alt Desc For All';
 ?>

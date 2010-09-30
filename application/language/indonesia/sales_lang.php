@@ -47,4 +47,5 @@ $lang['sales_transaction_failed'] = 'Sales Transaction Failed';
 $lang['sales_must_enter_numeric'] = 'Must enter numeric value for amount tendered';
 $lang['sales_serial'] = 'Serial';
 $lang['sales_description_abbrv'] = 'Desc';
+$lang['sales_quantity_less_than_zero'] = 'Warning, selling this item will put quanity at or below zero.';
 ?>

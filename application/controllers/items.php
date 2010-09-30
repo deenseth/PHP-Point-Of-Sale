@@ -112,6 +112,17 @@ class Items extends Secure_area implements iData_controller
 			$suppliers[$row['person_id']] = $row['first_name'] .' '. $row['last_name'];
 		}
 		$data['suppliers'] = $suppliers;
+		
+		$data['allow_alt_desciption_choices'] = array(
+			''=>$this->lang->line('items_do_nothing'), 
+			1 =>$this->lang->line('items_change_all_to_allow_alt_desc'),
+			0 =>$this->lang->line('items_change_all_to_not_allow_allow_desc'));
+				
+		$data['serialization_choices'] = array(
+			''=>$this->lang->line('items_do_nothing'), 
+			1 =>$this->lang->line('items_change_all_to_serialized'),
+			0 =>$this->lang->line('items_change_all_to_unserialized'));
+				
 		$this->load->view("items/form_bulk", $data);
 	}
 

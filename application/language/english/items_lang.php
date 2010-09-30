@@ -56,9 +56,14 @@ $lang['items_supplier'] = 'Supplier';
 $lang['items_generate_barcodes'] = 'Generate Barcodes';
 $lang['items_must_select_item_for_barcode'] = 'You must select at least 1 item to generate barcodes';
 $lang['items_excel_import_failed'] = 'Excel import failed';
-$lang['items_allow_alt_desciption'] = 'Allow Alternate Description';
+$lang['items_allow_alt_desciption'] = 'Allow Alt Description';
 $lang['items_is_serialized'] = 'Item has Serial Number';
 $lang['items_low_inventory_items'] = 'Low Inventory Items';
 $lang['items_serialized_items'] = 'Serialized Items';
 $lang['items_no_description_items'] = 'No Description Items';
+$lang['items_do_nothing'] = 'Do Nothing';
+$lang['items_change_all_to_serialized'] = 'Change All To Serialized';
+$lang['items_change_all_to_unserialized'] = 'Change All To Unserialized';
+$lang['items_change_all_to_allow_alt_desc'] = ' Allow Alt Desc For All';
+$lang['items_change_all_to_not_allow_allow_desc'] = 'Not Allow Alt Desc For All';
 ?>

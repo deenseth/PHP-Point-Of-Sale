@@ -84,6 +84,11 @@ class Sales extends Secure_area
 		{
 			$data['error']=$this->lang->line('sales_unable_to_add_item');
 		}
+		
+		if($this->sale_lib->out_of_stock($item_id_or_number_or_receipt))
+		{
+			$data['warning'] = $this->lang->line('sales_quantity_less_than_zero');
+		}
 		$this->_reload($data);
 	}
 
@@ -109,6 +114,12 @@ class Sales extends Secure_area
 		{
 			$data['error']=$this->lang->line('sales_error_editing_item');
 		}
+		
+		if($this->sale_lib->out_of_stock($this->sale_lib->get_item_id($line)))
+		{
+			$data['warning'] = $this->lang->line('sales_quantity_less_than_zero');
+		}
+
 
 		$this->_reload($data);
 	}

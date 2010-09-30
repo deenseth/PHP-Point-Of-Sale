@@ -217,6 +217,49 @@ class Sale_lib
 		return true;
 
 	}
+	
+	function out_of_stock($item_id)
+	{
+		$item = $this->CI->Item->get_info($item_id);
+		$quanity_added = $this->get_quantity_already_added($item_id);
+		
+		if ($item->quantity - $quanity_added <= 0)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
+	function get_quantity_already_added($item_id)
+	{
+		$items = $this->get_cart();
+		$quanity_already_added = 0;
+		foreach ($items as $item)
+		{
+			if($item['item_id']==$item_id)
+			{
+				$quanity_already_added+=$item['quantity'];
+			}
+		}
+		
+		return $quanity_already_added;
+	}
+	
+	function get_item_id($line_to_get)
+	{
+		$items = $this->get_cart();
+
+		foreach ($items as $line=>$item)
+		{
+			if($line==$line_to_get)
+			{
+				return $item['item_id'];
+			}
+		}
+		
+		return -1;
+	}
 
 	function edit_item($line,$description,$serialnumber,$quantity,$discount,$price)
 	{

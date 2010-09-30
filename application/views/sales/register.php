@@ -5,6 +5,11 @@ if(isset($error))
 {
 	echo "<div class='error_message'>".$error."</div>";
 }
+
+if (isset($warning))
+{
+	echo "<div class='warning_mesage'>".$warning."</div>";
+}
 ?>
 <div id="register_wrapper">
 <?php echo form_open("sales/change_mode",array('id'=>'mode_form')); ?>

@@ -111,6 +111,14 @@ label.required
 	font-weight:bold;
 }
 
+.warning_mesage
+{
+	text-align:center;
+	background-color:#FBEC5D;
+	border:1px solid #da3232;
+	font-weight:bold;
+}
+
 .success_message
 {
 	text-align:center;

@@ -9,5 +9,15 @@ function load_config()
 	}
 	
 	$CI->lang->switch_to($CI->config->item('language'));
+	
+	if (!$CI->config->item('timezone'))
+	{
+		
+	}
+	else
+	{
+		date_default_timezone_set($CI->config->item('timezone'));
+	}
+	
 }
 ?>

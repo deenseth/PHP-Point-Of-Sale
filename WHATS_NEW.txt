@@ -1,3 +1,4 @@
+* Added simple inventory tracking system accessible from the items screen.
 * Using horizontal bar chart for items and customers graphical reports.
 * Added summary discount report (and graphical version)
 * Can now bulk turn on if an item is serialized or has an alternate description

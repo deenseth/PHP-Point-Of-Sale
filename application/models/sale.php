@@ -76,6 +76,20 @@ class Sale extends Model
 			//Update stock quantity
 			$item_data = array('quantity'=>$cur_item_info->quantity - $item['quantity']);
 			$this->Item->save($item_data,$item['item_id']);
+			
+			//Ramel Inventory Tracking
+			//Inventory Count Details
+			$qty_buy = -$item['quantity'];
+			$sale_remarks ='POS '.$sale_id;
+			$inv_data = array
+			(
+				'trans_items'=>$item['item_id'],
+				'trans_user'=>$employee_id,
+				'trans_comment'=>$sale_remarks,
+				'trans_inventory'=>$qty_buy
+			);
+			$this->db->insert('inventory',$inv_data);
+			//------------------------------------Ramel
 
 			$customer = $this->Customer->get_info($customer_id);
  			if ($customer_id == -1 or $customer->taxable)

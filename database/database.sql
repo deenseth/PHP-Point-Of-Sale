@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Sep 23, 2010 at 07:39 PM
--- Server version: 5.1.39
+-- Generation Time: Oct 01, 2010 at 12:06 PM
+-- Server version: 5.1.50
 -- PHP Version: 5.3.1
 -- 
 -- Database: `pos`
@@ -74,6 +74,29 @@ CREATE TABLE `phppos_employees` (
 -- 
 
 INSERT INTO `phppos_employees` (`username`, `password`, `person_id`) VALUES ('admin', '439a6de57d475c1a0ba9bcb1c39f0af6', 1);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `phppos_inventory`
+-- 
+
+CREATE TABLE `phppos_inventory` (
+  `trans_id` int(11) NOT NULL AUTO_INCREMENT,
+  `trans_items` int(11) NOT NULL DEFAULT '0',
+  `trans_user` int(11) NOT NULL DEFAULT '0',
+  `trans_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `trans_comment` text NOT NULL,
+  `trans_inventory` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`trans_id`),
+  KEY `phppos_inventory_ibfk_1` (`trans_items`),
+  KEY `phppos_inventory_ibfk_2` (`trans_user`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- 
+-- Dumping data for table `phppos_inventory`
+-- 
+
 
 -- --------------------------------------------------------
 
@@ -344,6 +367,13 @@ ALTER TABLE `phppos_customers`
 -- 
 ALTER TABLE `phppos_employees`
   ADD CONSTRAINT `phppos_employees_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `phppos_people` (`person_id`);
+
+-- 
+-- Constraints for table `phppos_inventory`
+-- 
+ALTER TABLE `phppos_inventory`
+  ADD CONSTRAINT `phppos_inventory_ibfk_1` FOREIGN KEY (`trans_items`) REFERENCES `phppos_items` (`item_id`),
+  ADD CONSTRAINT `phppos_inventory_ibfk_2` FOREIGN KEY (`trans_user`) REFERENCES `phppos_employees` (`person_id`);
 
 -- 
 -- Constraints for table `phppos_items`

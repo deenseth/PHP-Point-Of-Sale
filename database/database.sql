@@ -165,14 +165,14 @@ CREATE TABLE `phppos_modules` (
 -- Dumping data for table `phppos_modules`
 -- 
 
-INSERT INTO `phppos_modules` (`name_lang_key`, `desc_lang_key`, `sort`, `module_id`) VALUES ('module_config', 'module_config_desc', 6, 'config'),
+INSERT INTO `phppos_modules` (`name_lang_key`, `desc_lang_key`, `sort`, `module_id`) VALUES ('module_config', 'module_config_desc', 8, 'config'),
 ('module_customers', 'module_customers_desc', 1, 'customers'),
-('module_employees', 'module_employees_desc', 5, 'employees'),
+('module_employees', 'module_employees_desc', 7, 'employees'),
 ('module_items', 'module_items_desc', 2, 'items'),
-('module_receivings', 'module_receivings_desc', 4, 'receivings'),
+('module_receivings', 'module_receivings_desc', 5, 'receivings'),
 ('module_reports', 'module_reports_desc', 3, 'reports'),
-('module_sales', 'module_sales_desc', 4, 'sales'),
-('module_suppliers', 'module_suppliers_desc', 3, 'suppliers');
+('module_sales', 'module_sales_desc', 6, 'sales'),
+('module_suppliers', 'module_suppliers_desc', 4, 'suppliers');
 
 -- --------------------------------------------------------
 

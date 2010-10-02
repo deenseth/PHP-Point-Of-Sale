@@ -8,16 +8,14 @@ function load_config()
 		$CI->config->set_item($app_config->key,$app_config->value);
 	}
 	
-	$CI->lang->switch_to($CI->config->item('language'));
-	
-	if (!$CI->config->item('timezone'))
+	if ($CI->config->item('language'))
 	{
-		
+		$CI->lang->switch_to($CI->config->item('language'));
 	}
-	else
+	
+	if ($CI->config->item('timezone'))
 	{
 		date_default_timezone_set($CI->config->item('timezone'));
-	}
-	
+	}	
 }
 ?>

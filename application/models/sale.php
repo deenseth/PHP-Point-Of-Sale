@@ -31,6 +31,7 @@ class Sale extends Model
 		}
 
 		$sales_data = array(
+		'sale_time' => date('Y-m-d H:i:s'),
 		'customer_id'=> $this->Customer->exists($customer_id) ? $customer_id : null,
 		'employee_id'=>$employee_id,
 		'payment_type'=>$payment_types,
@@ -83,12 +84,13 @@ class Sale extends Model
 			$sale_remarks ='POS '.$sale_id;
 			$inv_data = array
 			(
+				'trans_date'=>date('Y-m-d H:i:s'),
 				'trans_items'=>$item['item_id'],
 				'trans_user'=>$employee_id,
 				'trans_comment'=>$sale_remarks,
 				'trans_inventory'=>$qty_buy
 			);
-			$this->db->insert('inventory',$inv_data);
+			$this->Inventory->insert($inv_data);
 			//------------------------------------Ramel
 
 			$customer = $this->Customer->get_info($customer_id);

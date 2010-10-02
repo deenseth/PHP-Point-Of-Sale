@@ -194,14 +194,15 @@ class Items extends Secure_area implements iData_controller
 		$cur_item_info = $this->Item->get_info($item_id);
 		$inv_data = array
 		(
+			'trans_date'=>date('Y-m-d H:i:s'),
 			'trans_items'=>$item_id,
 			'trans_user'=>$employee_id,
 			'trans_comment'=>$this->input->post('trans_comment'),
 			'trans_inventory'=>$this->input->post('newquantity')
 		);
-		$this->db->insert('inventory',$inv_data);
+		$this->Inventory->insert($inv_data);
 		
-	//Update stock quantity
+		//Update stock quantity
 		$item_data = array(
 		'quantity'=>$cur_item_info->quantity + $this->input->post('newquantity')
 		);

@@ -389,7 +389,7 @@ class Items extends Secure_area implements iData_controller
 	*/
 	function get_form_width()
 	{
-		return 460;
+		return 360;
 	}
 }
 ?>

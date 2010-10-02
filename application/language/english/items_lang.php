@@ -72,4 +72,5 @@ $lang['items_change_all_to_serialized'] = 'Change All To Serialized';
 $lang['items_change_all_to_unserialized'] = 'Change All To Unserialized';
 $lang['items_change_all_to_allow_alt_desc'] = ' Allow Alt Desc For All';
 $lang['items_change_all_to_not_allow_allow_desc'] = 'Not Allow Alt Desc For All';
+$lang['items_use_inventory_menu'] = 'Use Inv. Menu';
 ?>

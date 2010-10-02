@@ -224,7 +224,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 		'Pacific/Chatham'=>'(GMT+12:45) Chatham Islands',
 		'Pacific/Tongatapu'=>'(GMT+13:00) Nuku\'alofa',
 		'Pacific/Kiritimati'=>'(GMT+14:00) Kiritimati'
-		), $this->config->item('timezone'));
+		), $this->config->item('timezone') ? $this->config->item('timezone') : date_default_timezone_get());
 		?>
 	</div>
 </div>

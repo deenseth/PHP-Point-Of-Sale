@@ -98,16 +98,6 @@ echo form_open('items/bulk_update/',array('id'=>'item_form'));
 	</div>
 </div>
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_quantity').':', 'quantity',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo 'Quantity Bulk Update Disabled; Use Excel Import'//Ramel Inventory Tracking//echo form_input(array(
-		//'name'=>'quantity',
-		//'id'=>'quantity')
-	//);?>
-	</div>
-</div>
-
-<div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('items_reorder_level').':', 'reorder_level',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(

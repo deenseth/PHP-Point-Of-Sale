@@ -49,6 +49,5 @@ $lang['sales_serial'] = 'Serial';
 $lang['sales_description_abbrv'] = 'Desc';
 $lang['sales_item_out_of_stock'] = 'Item is Out of Stock';
 $lang['sales_item_insufficient_of_stock'] = 'Item is Insufficient of Stock';
-$lang['sales_quantity_less_than_zero'] = 'Warning!, Desired Quantity is Insufficient. Check your Inventory!';
-$lang['sale_return_error_editing_item']='Error: Quantity and Price must be a valid value.';
+$lang['sales_quantity_less_than_zero'] = 'Warning, Desired Quantity is Insufficient. You can still process the sale, but check your inventory';
 ?>

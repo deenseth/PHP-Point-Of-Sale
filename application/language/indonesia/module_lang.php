@@ -22,4 +22,6 @@ $lang['module_items_desc']='Tambah, Update, Hapus, dan Cari produk/items';
 $lang['module_config']='Konfigurasi Toko';
 $lang['module_config_desc']='Ubah konfigurasi toko';
 
+$lang['module_receivings']='Receivings';
+$lang['module_receivings_desc']='Process Purchase orders';
 ?>

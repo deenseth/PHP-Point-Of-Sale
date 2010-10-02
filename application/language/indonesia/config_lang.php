@@ -19,4 +19,5 @@ $lang['config_saved_unsuccessfully']='Konfigurasi tidak berhasil disimpan';
 $lang['config_return_policy_required']='Kebiajak retur wajib diisi';
 $lang['config_printe_after_sale']='Cetak bon setelah penjualan';
 $lang['config_language'] = 'Language';
+$lang['config_timezone'] = 'Timezone';
 ?>

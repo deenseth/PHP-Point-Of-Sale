@@ -61,9 +61,15 @@ $lang['items_is_serialized'] = 'Item has Serial Number';
 $lang['items_low_inventory_items'] = 'Low Inventory Items';
 $lang['items_serialized_items'] = 'Serialized Items';
 $lang['items_no_description_items'] = 'No Description Items';
+$lang['items_inventory_comments']='Comments';
+$lang['items_count']='Update Inventory';
+$lang['items_details_count']='Inventory Count Details';
+$lang['items_add_minus']='Inventory to add/subtract';
+$lang['items_current_quantity']='Current Quantity';
 $lang['items_do_nothing'] = 'Do Nothing';
 $lang['items_change_all_to_serialized'] = 'Change All To Serialized';
 $lang['items_change_all_to_unserialized'] = 'Change All To Unserialized';
 $lang['items_change_all_to_allow_alt_desc'] = ' Allow Alt Desc For All';
 $lang['items_change_all_to_not_allow_allow_desc'] = 'Not Allow Alt Desc For All';
+$lang['items_use_inventory_menu'] = 'Use Inv. Menu';
 ?>

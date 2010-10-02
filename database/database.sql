@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Oct 01, 2010 at 12:06 PM
+-- Generation Time: Oct 01, 2010 at 09:49 PM
 -- Server version: 5.1.50
 -- PHP Version: 5.3.1
 -- 
@@ -169,6 +169,7 @@ INSERT INTO `phppos_modules` (`name_lang_key`, `desc_lang_key`, `sort`, `module_
 ('module_customers', 'module_customers_desc', 1, 'customers'),
 ('module_employees', 'module_employees_desc', 5, 'employees'),
 ('module_items', 'module_items_desc', 2, 'items'),
+('module_receivings', 'module_receivings_desc', 4, 'receivings'),
 ('module_reports', 'module_reports_desc', 3, 'reports'),
 ('module_sales', 'module_sales_desc', 4, 'sales'),
 ('module_suppliers', 'module_suppliers_desc', 3, 'suppliers');
@@ -222,9 +223,58 @@ INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES ('config', 1)
 ('customers', 1),
 ('employees', 1),
 ('items', 1),
+('receivings', 1),
 ('reports', 1),
 ('sales', 1),
 ('suppliers', 1);
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `phppos_receivings`
+-- 
+
+CREATE TABLE `phppos_receivings` (
+  `receiving_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `supplier_id` int(10) DEFAULT NULL,
+  `employee_id` int(10) NOT NULL DEFAULT '0',
+  `comment` text NOT NULL,
+  `receiving_id` int(10) NOT NULL AUTO_INCREMENT,
+  `payment_type` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`receiving_id`),
+  KEY `supplier_id` (`supplier_id`),
+  KEY `employee_id` (`employee_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- 
+-- Dumping data for table `phppos_receivings`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `phppos_receivings_items`
+-- 
+
+CREATE TABLE `phppos_receivings_items` (
+  `receiving_id` int(10) NOT NULL DEFAULT '0',
+  `item_id` int(10) NOT NULL DEFAULT '0',
+  `description` varchar(30) DEFAULT NULL,
+  `serialnumber` varchar(30) DEFAULT NULL,
+  `line` int(3) NOT NULL,
+  `quantity_purchased` int(10) NOT NULL DEFAULT '0',
+  `item_cost_price` decimal(15,2) NOT NULL,
+  `item_unit_price` double(15,2) NOT NULL,
+  `discount_percent` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`receiving_id`,`item_id`, `line`),
+  KEY `item_id` (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- 
+-- Dumping data for table `phppos_receivings_items`
+-- 
+
 
 -- --------------------------------------------------------
 
@@ -393,6 +443,20 @@ ALTER TABLE `phppos_items_taxes`
 ALTER TABLE `phppos_permissions`
   ADD CONSTRAINT `phppos_permissions_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `phppos_employees` (`person_id`),
   ADD CONSTRAINT `phppos_permissions_ibfk_2` FOREIGN KEY (`module_id`) REFERENCES `phppos_modules` (`module_id`);
+
+-- 
+-- Constraints for table `phppos_receivings`
+-- 
+ALTER TABLE `phppos_receivings`
+  ADD CONSTRAINT `phppos_receivings_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `phppos_employees` (`person_id`),
+  ADD CONSTRAINT `phppos_receivings_ibfk_2` FOREIGN KEY (`supplier_id`) REFERENCES `phppos_suppliers` (`person_id`);
+
+-- 
+-- Constraints for table `phppos_receivings_items`
+-- 
+ALTER TABLE `phppos_receivings_items`
+  ADD CONSTRAINT `phppos_receivings_items_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `phppos_items` (`item_id`),
+  ADD CONSTRAINT `phppos_receivings_items_ibfk_2` FOREIGN KEY (`receiving_id`) REFERENCES `phppos_receivings` (`receiving_id`);
 
 -- 
 -- Constraints for table `phppos_sales`

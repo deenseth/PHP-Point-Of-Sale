@@ -22,4 +22,6 @@ $lang['module_items_desc']='Add, Update, Delete, and Search items';
 $lang['module_config']='Store Config';
 $lang['module_config_desc']='Change the store\'s configuration';
 
+$lang['module_receivings']='Receivings';
+$lang['module_receivings_desc']='Process Purchase orders';
 ?>

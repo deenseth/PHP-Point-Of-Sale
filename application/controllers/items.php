@@ -349,7 +349,6 @@ class Items extends Secure_area implements iData_controller
 							$item_id = $this->Item->get_item_id($item_code);
 							$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
 							$emp_info=$this->Employee->get_info($employee_id);
-							//$cur_item_info = $this->Item->get_info($item_id);
 							$comment ='Qty Excel Imported: means BEGIN/RESET/ACTUAL count';
 							$excel_data = array
 								(

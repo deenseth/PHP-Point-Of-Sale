@@ -10,3 +10,4 @@
 * Added warning message if quanity will fall below 0 to sales interface
 * Updated missing language keys (in english, but they can easily be fixed)
 * Made headings in report listings page stand out more
+* Bug Fixes

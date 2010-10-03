@@ -174,17 +174,7 @@ class Sales extends Secure_area
 			$this->_reload($data);
 			return false;
 		}
-		
-		foreach($data['cart'] as $line=>$item)
-		{
-			if ($item['is_serialized'] == true && empty($item['serialnumber']))
-			{
-				$data['error'] = $this->lang->line('sales_one_or_more_items_require_serial_number');
-				$this->_reload($data);
-				return false;
-			}
-		}
-		
+
 		//SAVE sale to database
 		$data['sale_id']='POS '.$this->Sale->save($data['cart'], $customer_id,$employee_id,$comment,$data['payments']);
 		if ($data['sale_id'] == 'POS -1')

@@ -50,5 +50,4 @@ $lang['sales_description_abbrv'] = 'Desc';
 $lang['sales_item_out_of_stock'] = 'Item is Out of Stock';
 $lang['sales_item_insufficient_of_stock'] = 'Item is Insufficient of Stock';
 $lang['sales_quantity_less_than_zero'] = 'Warning, Desired Quantity is Insufficient. You can still process the sale, but check your inventory';
-$lang['sales_one_or_more_items_require_serial_number'] = 'One ore more items require a serial number in order to process sale';
 ?>

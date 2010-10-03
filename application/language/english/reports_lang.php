@@ -73,4 +73,7 @@ $lang['reports_reorder_level'] = 'Reorder Level';
 $lang['reports_low_inventory_report'] = 'Low Inventory Report';
 $lang['reports_item_name'] = 'Item Name';
 $lang['reports_inventory_summary_report'] = 'Inventory Summary Report';
+$lang['reports_payment_type'] = 'Payment Type';
+$lang['reports_payments_summary_report'] = 'Payments Summary Report';
+$lang['reports_payments'] = 'Payments';
 ?>

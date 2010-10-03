@@ -236,6 +236,30 @@ class Reports extends Secure_area
 		$this->load->view("reports/tabular",$data);
 	}
 	
+	function summary_payments($start_date, $end_date, $export_excel=0)
+	{
+		$this->load->model('reports/Summary_payments');
+		$model = $this->Summary_payments;
+		$tabular_data = array();
+		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
+		
+		foreach($report_data as $row)
+		{
+			$tabular_data[] = array($row['payment_type'],to_currency($row['payment_amount']));
+		}
+
+		$data = array(
+			"title" => $this->lang->line('reports_payments_summary_report'),
+			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
+			"headers" => $model->getDataColumns(),
+			"data" => $tabular_data,
+			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
+			"export_excel" => $export_excel
+		);
+
+		$this->load->view("reports/tabular",$data);
+	}
+	
 	//Input for reports that require only a date range. (see routes.php to see that all graphical summary reports route here)
 	function date_input()
 	{
@@ -543,6 +567,44 @@ class Reports extends Secure_area
 		);
 
 		$this->load->view("reports/graphs/bar",$data);
+	}
+	
+	function graphical_summary_payments($start_date, $end_date)
+	{
+		$this->load->model('reports/Summary_payments');
+		$model = $this->Summary_payments;
+
+		$data = array(
+			"title" => $this->lang->line('reports_payments_summary_report'),
+			"data_file" => site_urL("reports/graphical_summary_payments_graph/$start_date/$end_date"),
+			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
+			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
+		);
+
+		$this->load->view("reports/graphical",$data);
+	}
+	
+	//The actual graph data
+	function graphical_summary_payments_graph($start_date, $end_date)
+	{
+		$this->load->model('reports/Summary_payments');
+		$model = $this->Summary_payments;
+		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
+		
+		$graph_data = array();
+		foreach($report_data as $row)
+		{
+			$graph_data[$row['payment_type']] = $row['payment_amount'];
+		}
+		
+		$data = array(
+			"title" => $this->lang->line('reports_payments_summary_report'),
+			"yaxis_label"=>$this->lang->line('reports_revenue'),
+			"xaxis_label"=>$this->lang->line('reports_payment_type'),
+			"data" => $graph_data
+		);
+
+		$this->load->view("reports/graphs/pie",$data);
 	}
 	function specific_customer_input()
 	{

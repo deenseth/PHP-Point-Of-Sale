@@ -77,20 +77,19 @@ class Person extends Model
 	}
 	
 	/*
-	Deletes one Person
+	Deletes one Person (doesn't actually do anything)
 	*/
 	function delete($person_id)
 	{
-		return $this->db->delete('people', array('person_id' => $person_id)); 
+		return true;; 
 	}
 	
 	/*
-	Deletes a list of people
+	Deletes a list of people (doesn't actually do anything)
 	*/
 	function delete_list($person_ids)
 	{	
-		$this->db->where_in('person_id',$person_ids);
-		return $this->db->delete('people');		
+		return true;	
  	}
 	
 }

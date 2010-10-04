@@ -8,6 +8,7 @@ class Item extends Model
 	{
 		$this->db->from('items');
 		$this->db->where('item_id',$item_id);
+		$this->db->where('deleted',0);
 		$query = $this->db->get();
 
 		return ($query->num_rows()==1);
@@ -19,6 +20,7 @@ class Item extends Model
 	function get_all()
 	{
 		$this->db->from('items');
+		$this->db->where('deleted',0);
 		$this->db->order_by("name", "asc");
 		return $this->db->get();
 	}
@@ -38,6 +40,7 @@ class Item extends Model
 		{
 			$this->db->where('description','');
 		}
+		$this->db->where('deleted',0);
 		$this->db->order_by("name", "asc");
 		return $this->db->get();
 	}
@@ -49,6 +52,8 @@ class Item extends Model
 	{
 		$this->db->from('items');
 		$this->db->where('item_id',$item_id);
+		$this->db->where('deleted',0);
+		
 		$query = $this->db->get();
 
 		if($query->num_rows()==1)
@@ -79,6 +84,8 @@ class Item extends Model
 	{
 		$this->db->from('items');
 		$this->db->where('item_number',$item_number);
+		$this->db->where('deleted',0);
+
 		$query = $this->db->get();
 
 		if($query->num_rows()==1)
@@ -96,6 +103,7 @@ class Item extends Model
 	{
 		$this->db->from('items');
 		$this->db->where_in('item_id',$item_ids);
+		$this->db->where('deleted',0);
 		$this->db->order_by("item", "asc");
 		return $this->db->get();
 	}
@@ -133,7 +141,8 @@ class Item extends Model
 	*/
 	function delete($item_id)
 	{
-		return $this->db->delete('items', array('item_id' => $item_id));
+		$this->db->where('item_id', $item_id);
+		return $this->db->update('items', array('deleted' => 1));
 	}
 
 	/*
@@ -142,7 +151,7 @@ class Item extends Model
 	function delete_list($item_ids)
 	{
 		$this->db->where_in('item_id',$item_ids);
-		return $this->db->delete('items');
+		return $this->db->update('items', array('deleted' => 1));
  	}
 
  	/*
@@ -154,6 +163,7 @@ class Item extends Model
 
 		$this->db->from('items');
 		$this->db->like('name', $search);
+		$this->db->where('deleted',0);
 		$this->db->order_by("name", "asc");
 		$by_name = $this->db->get();
 		foreach($by_name->result() as $row)
@@ -163,6 +173,7 @@ class Item extends Model
 
 		$this->db->select('category');
 		$this->db->from('items');
+		$this->db->where('deleted',0);
 		$this->db->distinct();
 		$this->db->like('category', $search);
 		$this->db->order_by("category", "asc");
@@ -174,6 +185,7 @@ class Item extends Model
 
 		$this->db->from('items');
 		$this->db->like('item_number', $search);
+		$this->db->where('deleted',0);
 		$this->db->order_by("item_number", "asc");
 		$by_item_number = $this->db->get();
 		foreach($by_item_number->result() as $row)
@@ -196,6 +208,7 @@ class Item extends Model
 		$suggestions = array();
 
 		$this->db->from('items');
+		$this->db->where('deleted',0);
 		$this->db->like('name', $search);
 		$this->db->order_by("name", "asc");
 		$by_name = $this->db->get();
@@ -205,6 +218,7 @@ class Item extends Model
 		}
 
 		$this->db->from('items');
+		$this->db->where('deleted',0);
 		$this->db->like('item_number', $search);
 		$this->db->order_by("item_number", "asc");
 		$by_item_number = $this->db->get();
@@ -229,6 +243,7 @@ class Item extends Model
 		$this->db->select('category');
 		$this->db->from('items');
 		$this->db->like('category', $search);
+		$this->db->where('deleted', 0);
 		$this->db->order_by("category", "asc");
 		$by_category = $this->db->get();
 		foreach($by_category->result() as $row)
@@ -245,22 +260,22 @@ class Item extends Model
 	function search($search)
 	{
 		$this->db->from('items');
-		$this->db->like('name', $search);
-		$this->db->or_like('item_number', $search);
-		$this->db->or_like('category', $search);
+		$this->db->where("(name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		item_number LIKE '%".$this->db->escape_like_str($search)."%' or 
+		category LIKE '%".$this->db->escape_like_str($search)."%') and deleted=0");
 		$this->db->order_by("name", "asc");
-		return $this->db->get();
+		return $this->db->get();	
 	}
 
 	function get_categories()
 	{
 		$this->db->select('category');
 		$this->db->from('items');
+		$this->db->where('deleted',0);
 		$this->db->distinct();
 		$this->db->order_by("category", "asc");
 
 		return $this->db->get();
 	}
-
 }
 ?>

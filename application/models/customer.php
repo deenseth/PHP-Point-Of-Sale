@@ -215,6 +215,16 @@ class Customer extends Person
 			$suggestions[]=$row->person_id.'|'.$row->first_name.' '.$row->last_name;		
 		}
 		
+		$this->db->from('customers');
+		$this->db->join('people','customers.person_id=people.person_id');	
+		$this->db->like("account_number",$search);
+		$this->db->order_by("account_number", "asc");		
+		$by_account_number = $this->db->get();
+		foreach($by_account_number->result() as $row)
+		{
+			$suggestions[]=$row->person_id.'|'.$row->account_number;
+		}
+
 		//only return $limit suggestions
 		if(count($suggestions > $limit))
 		{

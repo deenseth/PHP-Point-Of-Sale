@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost:8889
--- Generation Time: Oct 01, 2010 at 09:49 PM
+-- Generation Time: Oct 07, 2010 at 12:41 PM
 -- Server version: 5.1.50
 -- PHP Version: 5.3.1
 -- 
@@ -46,6 +46,7 @@ CREATE TABLE `phppos_customers` (
   `person_id` int(10) NOT NULL,
   `account_number` varchar(255) DEFAULT NULL,
   `taxable` int(1) NOT NULL DEFAULT '1',
+  `deleted` int(1) NOT NULL DEFAULT '0',
   UNIQUE KEY `account_number` (`account_number`),
   KEY `person_id` (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -65,6 +66,7 @@ CREATE TABLE `phppos_employees` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `person_id` int(10) NOT NULL,
+  `deleted` int(1) NOT NULL DEFAULT '0',
   UNIQUE KEY `username` (`username`),
   KEY `person_id` (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -73,7 +75,7 @@ CREATE TABLE `phppos_employees` (
 -- Dumping data for table `phppos_employees`
 -- 
 
-INSERT INTO `phppos_employees` (`username`, `password`, `person_id`) VALUES ('admin', '439a6de57d475c1a0ba9bcb1c39f0af6', 1);
+INSERT INTO `phppos_employees` (`username`, `password`, `person_id`, `deleted`) VALUES ('admin', '439a6de57d475c1a0ba9bcb1c39f0af6', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -117,6 +119,7 @@ CREATE TABLE `phppos_items` (
   `item_id` int(10) NOT NULL AUTO_INCREMENT,
   `allow_alt_description` tinyint(1) NOT NULL,
   `is_serialized` tinyint(1) NOT NULL,
+  `deleted` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`item_id`),
   UNIQUE KEY `item_number` (`item_number`),
   KEY `phppos_items_ibfk_1` (`supplier_id`)
@@ -267,7 +270,7 @@ CREATE TABLE `phppos_receivings_items` (
   `item_cost_price` decimal(15,2) NOT NULL,
   `item_unit_price` double(15,2) NOT NULL,
   `discount_percent` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`receiving_id`,`item_id`, `line`),
+  PRIMARY KEY (`receiving_id`,`item_id`,`line`),
   KEY `item_id` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -393,6 +396,7 @@ CREATE TABLE `phppos_suppliers` (
   `person_id` int(10) NOT NULL,
   `company_name` varchar(255) NOT NULL,
   `account_number` varchar(255) DEFAULT NULL,
+  `deleted` int(1) NOT NULL DEFAULT '0',
   UNIQUE KEY `account_number` (`account_number`),
   KEY `person_id` (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

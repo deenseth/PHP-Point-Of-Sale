@@ -147,10 +147,15 @@ class Items extends Secure_area implements iData_controller
 		'item_number'=>$this->input->post('item_number')=='' ? null:$this->input->post('item_number'),
 		'cost_price'=>$this->input->post('cost_price'),
 		'unit_price'=>$this->input->post('unit_price'),
+		'quantity'=>$this->input->post('quantity'),
 		'reorder_level'=>$this->input->post('reorder_level'),
 		'allow_alt_description'=>$this->input->post('allow_alt_description'),
 		'is_serialized'=>$this->input->post('is_serialized')
 		);
+		
+		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
+		$cur_item_info = $this->Item->get_info($item_id);
+
 
 		if($this->Item->save($item_data,$item_id))
 		{
@@ -166,7 +171,16 @@ class Items extends Secure_area implements iData_controller
 				echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_updating').' '.
 				$item_data['name'],'item_id'=>$item_id));
 			}
-
+			
+			$inv_data = array
+			(
+				'trans_date'=>date('Y-m-d H:i:s'),
+				'trans_items'=>$item_id,
+				'trans_user'=>$employee_id,
+				'trans_comment'=>$this->lang->line('items_manually_editing_of_quantity'),
+				'trans_inventory'=>$cur_item_info ? $this->input->post('quantity') - $cur_item_info->quantity : $this->input->post('quantity')
+			);
+			$this->Inventory->insert($inv_data);
 			$items_taxes_data = array();
 			$tax_names = $this->input->post('tax_names');
 			$tax_percents = $this->input->post('tax_percents');

@@ -86,6 +86,19 @@ class Items extends Secure_area implements iData_controller
 		$data['default_tax_2_rate']=($item_id==-1) ? $this->Appconfig->get('default_tax_2_rate') : '';
 		$this->load->view("items/form",$data);
 	}
+	
+	//Ramel Inventory Tracking
+	function inventory($item_id=-1)
+	{
+		$data['item_info']=$this->Item->get_info($item_id);
+		$this->load->view("items/inventory",$data);
+	}
+	
+	function count_details($item_id=-1)
+	{
+		$data['item_info']=$this->Item->get_info($item_id);
+		$this->load->view("items/count_details",$data);
+	} //------------------------------------------- Ramel
 
 	function generate_barcodes($item_ids)
 	{
@@ -112,7 +125,6 @@ class Items extends Secure_area implements iData_controller
 			$suppliers[$row['person_id']] = $row['first_name'] .' '. $row['last_name'];
 		}
 		$data['suppliers'] = $suppliers;
-		
 		$data['allow_alt_desciption_choices'] = array(
 			''=>$this->lang->line('items_do_nothing'), 
 			1 =>$this->lang->line('items_change_all_to_allow_alt_desc'),
@@ -122,7 +134,6 @@ class Items extends Secure_area implements iData_controller
 			''=>$this->lang->line('items_do_nothing'), 
 			1 =>$this->lang->line('items_change_all_to_serialized'),
 			0 =>$this->lang->line('items_change_all_to_unserialized'));
-				
 		$this->load->view("items/form_bulk", $data);
 	}
 
@@ -136,7 +147,6 @@ class Items extends Secure_area implements iData_controller
 		'item_number'=>$this->input->post('item_number')=='' ? null:$this->input->post('item_number'),
 		'cost_price'=>$this->input->post('cost_price'),
 		'unit_price'=>$this->input->post('unit_price'),
-		'quantity'=>$this->input->post('quantity'),
 		'reorder_level'=>$this->input->post('reorder_level'),
 		'allow_alt_description'=>$this->input->post('allow_alt_description'),
 		'is_serialized'=>$this->input->post('is_serialized')
@@ -177,6 +187,39 @@ class Items extends Secure_area implements iData_controller
 
 	}
 	
+	//Ramel Inventory Tracking
+	function save_inventory($item_id=-1)
+	{	
+		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
+		$cur_item_info = $this->Item->get_info($item_id);
+		$inv_data = array
+		(
+			'trans_date'=>date('Y-m-d H:i:s'),
+			'trans_items'=>$item_id,
+			'trans_user'=>$employee_id,
+			'trans_comment'=>$this->input->post('trans_comment'),
+			'trans_inventory'=>$this->input->post('newquantity')
+		);
+		$this->Inventory->insert($inv_data);
+		
+		//Update stock quantity
+		$item_data = array(
+		'quantity'=>$cur_item_info->quantity + $this->input->post('newquantity')
+		);
+		if($this->Item->save($item_data,$item_id))
+		{			
+			echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_updating').' '.
+			$cur_item_info->name,'item_id'=>$item_id));
+			
+		}
+		else//failure
+		{	
+			echo json_encode(array('success'=>false,'message'=>$this->lang->line('items_error_adding_updating').' '.
+			$cur_item_info->name,'item_id'=>-1));
+		}
+
+	}//---------------------------------------------------------------------Ramel
+
 	function bulk_update()
 	{
 		$items_to_update=$this->input->post('item_ids');
@@ -299,6 +342,23 @@ class Items extends Secure_area implements iData_controller
 							$this->Item_taxes->save($items_taxes_data, $item_id);
 						}
 						$successCode[] = $item_code;
+						
+						//Ramel Inventory Tracking
+						//update Inventory count details from Excel Import
+							$item_code = $this->spreadsheetexcelreader->val($i, 'A');
+							$item_id = $this->Item->get_item_id($item_code);
+							$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
+							$emp_info=$this->Employee->get_info($employee_id);
+							$comment ='Qty Excel Imported: means BEGIN/RESET/ACTUAL count';
+							$excel_data = array
+								(
+								'trans_items'=>$item_id,
+								'trans_user'=>$employee_id,
+								'trans_comment'=>$comment,
+								'trans_inventory'=>$this->spreadsheetexcelreader->val($i, 'I')
+								);
+								$this->db->insert('inventory',$excel_data);
+						//------------------------------------------------Ramel
 					}
 					else//insert or update item failure
 					{

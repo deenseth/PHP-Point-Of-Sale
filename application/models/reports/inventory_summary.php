@@ -16,6 +16,7 @@ class Inventory_summary extends Report
 	{
 		$this->db->select('name, item_number, quantity, reorder_level, description');
 		$this->db->from('items');
+		$this->db->where('deleted', 0);	
 		$this->db->order_by('name');
 		
 		return $this->db->get()->result_array();

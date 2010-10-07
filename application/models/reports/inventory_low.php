@@ -16,7 +16,7 @@ class Inventory_low extends Report
 	{
 		$this->db->select('name, item_number, quantity, reorder_level, description');
 		$this->db->from('items');
-		$this->db->where('quantity <= reorder_level');
+		$this->db->where('quantity <= reorder_level and deleted=0');
 		$this->db->order_by('name');
 		
 		return $this->db->get()->result_array();

@@ -1,5 +1,4 @@
 * Added receivings module
-* Added simple inventory tracking system accessible from the items screen.
 * Timezone Support
 * Added 3 new reports, Low Inventory, Inventory Summary, and Payment Types
 * Using horizontal bar chart for items and customers graphical reports.

@@ -147,9 +147,7 @@ function get_items_manage_table($items,$controller)
 	$CI->lang->line('items_unit_price'),
 	$CI->lang->line('items_tax_percents'),
 	$CI->lang->line('items_quantity'),
-	'&nbsp', 
-	'Inventory'//Ramel Inventory Tracking
-	);
+	'&nbsp');
 	
 	$table.='<thead><tr>';
 	foreach($headers as $header)
@@ -177,7 +175,7 @@ function get_items_manage_table_data_rows($items,$controller)
 	
 	if($items->num_rows()==0)
 	{
-		$table_data_rows.="<tr><td colspan='11'><div class='warning_message' style='padding:7px;'>".$CI->lang->line('items_no_items_to_display')."</div></tr></tr>";
+		$table_data_rows.="<tr><td colspan='9'><div class='warning_message' style='padding:7px;'>".$CI->lang->line('items_no_items_to_display')."</div></tr></tr>";
 	}
 	
 	return $table_data_rows;
@@ -197,21 +195,17 @@ function get_item_data_row($item,$controller)
 	$width = $controller->get_form_width();
 
 	$table_data_row='<tr>';
-	$table_data_row.="<td width='3%'><input type='checkbox' id='item_$item->item_id' value='".$item->item_id."'/></td>";
-	$table_data_row.='<td width="15%">'.$item->item_number.'</td>';
-	$table_data_row.='<td width="20%">'.$item->name.'</td>';
+	$table_data_row.="<td width='5%'><input type='checkbox' id='item_$item->item_id' value='".$item->item_id."'/></td>";
+	$table_data_row.='<td width="18%">'.$item->item_number.'</td>';
+	$table_data_row.='<td width="17%">'.$item->name.'</td>';
 	$table_data_row.='<td width="14%">'.$item->category.'</td>';
 	$table_data_row.='<td width="14%">'.to_currency($item->cost_price).'</td>';
 	$table_data_row.='<td width="14%">'.to_currency($item->unit_price).'</td>';
 	$table_data_row.='<td width="14%">'.$tax_percents.'</td>';	
 	$table_data_row.='<td width="14%">'.$item->quantity.'</td>';
 	$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$item->item_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
-	
-	//Ramel Inventory Tracking
-	$table_data_row.='<td width="10%">'.anchor($controller_name."/inventory/$item->item_id/width:$width", $CI->lang->line('common_inv'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_count')))./*'</td>';//inventory count	
-	$table_data_row.='<td width="5%">'*/'&nbsp;&nbsp;&nbsp;&nbsp;'.anchor($controller_name."/count_details/$item->item_id/width:$width", $CI->lang->line('common_det'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_details_count'))).'</td>';//inventory details	
-	
 	$table_data_row.='</tr>';
+	
 	return $table_data_row;
 }
 ?>

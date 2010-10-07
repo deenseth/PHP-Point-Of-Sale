@@ -36,6 +36,4 @@ $lang['common_no_persons_to_display']='There are no people to display';
 $lang['common_return_policy']='Return Policy';
 $lang['common_price']='Price';
 $lang['common_welcome_message']= 'Welcome to PHP Point Of Sale, click a module below to get started!';
-$lang['common_inv']='inv';
-$lang['common_det']='details';
 ?>

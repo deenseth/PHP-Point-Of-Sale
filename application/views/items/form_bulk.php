@@ -98,6 +98,16 @@ echo form_open('items/bulk_update/',array('id'=>'item_form'));
 	</div>
 </div>
 <div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('items_quantity').':', 'quantity',array('class'=>'wide')); ?>
+	<div class='form_field'>
+	<?php echo form_input(array(
+		'name'=>'quantity',
+		'id'=>'quantity')
+	);?>
+	</div>
+</div>
+
+<div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('items_reorder_level').':', 'reorder_level',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
@@ -120,25 +130,17 @@ echo form_open('items/bulk_update/',array('id'=>'item_form'));
 </div>
 
 <div class="field_row clearfix">
-
 <?php echo form_label($this->lang->line('items_allow_alt_desciption').':', 'allow_alt_description',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_dropdown('allow_alt_description', $allow_alt_desciption_choices);?>
-
 	</div>
-
 </div>
 
-
-
 <div class="field_row clearfix">
-
 <?php echo form_label($this->lang->line('items_is_serialized').':', 'is_serialized',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_dropdown('is_serialized', $serialization_choices);?>
-
 	</div>
-
 </div>
 
 <?php

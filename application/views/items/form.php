@@ -120,7 +120,11 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 <div class="field_row clearfix">
 <?php echo form_label($this->lang->line('items_quantity').':', 'quantity',array('class'=>'required wide')); ?>
 	<div class='form_field'>
-	<?php echo $this->lang->line('items_use_inventory_menu'); ?>
+	<?php echo form_input(array(
+		'name'=>'quantity',
+		'id'=>'quantity',
+		'value'=>$item_info->quantity)
+	);?>
 	</div>
 </div>
 

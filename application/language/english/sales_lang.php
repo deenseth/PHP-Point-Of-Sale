@@ -47,7 +47,5 @@ $lang['sales_transaction_failed'] = 'Sales Transaction Failed';
 $lang['sales_must_enter_numeric'] = 'Must enter numeric value for amount tendered';
 $lang['sales_serial'] = 'Serial';
 $lang['sales_description_abbrv'] = 'Desc';
-$lang['sales_item_out_of_stock'] = 'Item is Out of Stock';
-$lang['sales_item_insufficient_of_stock'] = 'Item is Insufficient of Stock';
-$lang['sales_quantity_less_than_zero'] = 'Warning, Desired Quantity is Insufficient. You can still process the sale, but check your inventory';
+$lang['sales_quantity_less_than_zero'] = 'Warning, selling this item will put quanity at or below zero.';
 ?>

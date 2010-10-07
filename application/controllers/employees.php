@@ -111,7 +111,12 @@ class Employees extends Person_controller
 	{
 		$employees_to_delete=$this->input->post('ids');
 		
-		if($this->Employee->delete_list($employees_to_delete))
+		if ($_SERVER['HTTP_HOST'] == 'demo.phppointofsale.com' && in_array(1,$employees_to_delete))
+		{
+			//failure
+			echo json_encode(array('success'=>false,'message'=>$this->lang->line('employees_error_deleting_demo_admin')));
+		}
+		elseif($this->Employee->delete_list($employees_to_delete))
 		{
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('employees_successful_deleted').' '.
 			count($employees_to_delete).' '.$this->lang->line('employees_one_or_multiple')));

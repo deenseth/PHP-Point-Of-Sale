@@ -9,6 +9,7 @@ class Employee extends Person
 		$this->db->from('employees');	
 		$this->db->join('people', 'people.person_id = employees.person_id');
 		$this->db->where('employees.person_id',$person_id);
+		$this->db->where('deleted',0);		
 		$query = $this->db->get();
 		
 		return ($query->num_rows()==1);
@@ -20,6 +21,7 @@ class Employee extends Person
 	function get_all()
 	{
 		$this->db->from('employees');
+		$this->db->where('deleted',0);		
 		$this->db->join('people','employees.person_id=people.person_id');			
 		$this->db->order_by("last_name", "asc");
 		return $this->db->get();		
@@ -33,6 +35,7 @@ class Employee extends Person
 		$this->db->from('employees');	
 		$this->db->join('people', 'people.person_id = employees.person_id');
 		$this->db->where('employees.person_id',$employee_id);
+		$this->db->where('deleted',0);		
 		$query = $this->db->get();
 		
 		if($query->num_rows()==1)
@@ -65,6 +68,7 @@ class Employee extends Person
 		$this->db->from('employees');
 		$this->db->join('people', 'people.person_id = employees.person_id');		
 		$this->db->where_in('employees.person_id',$employee_ids);
+		$this->db->where('deleted',0);		
 		$this->db->order_by("last_name", "asc");
 		return $this->db->get();		
 	}
@@ -133,13 +137,9 @@ class Employee extends Person
 		
 		//Delete permissions
 		if($this->db->delete('permissions', array('person_id' => $employee_id)))
-		{
-			//delete from employee table
-			if($this->db->delete('employees', array('person_id' => $employee_id)))
-			{
-				//delete from person table
-				$success = parent::delete($employee_id);
-			}
+		{	
+			$this->db->where('person_id', $employee_id);
+			$success = $this->db->update('employees', array('deleted' => 1));
 		}
 		$this->db->trans_complete();		
 		return $success;
@@ -165,11 +165,7 @@ class Employee extends Person
 		{
 			//delete from employee table
 			$this->db->where_in('person_id',$employee_ids);
-			if ($this->db->delete('employees'))
-			{
-				//delete from person table
-				$success = parent::delete_list($employee_ids);
-			}
+			$success = $this->db->update('employees', array('deleted' => 1));
 		}
 		$this->db->trans_complete();		
 		return $success;
@@ -184,9 +180,9 @@ class Employee extends Person
 		
 		$this->db->from('employees');
 		$this->db->join('people','employees.person_id=people.person_id');	
-		$this->db->like('first_name', $search); 
-		$this->db->or_like('last_name', $search);
-		$this->db->or_like("CONCAT(`first_name`,' ',`last_name`)",$search);		
+		$this->db->where("(first_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		last_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		CONCAT(`first_name`,' ',`last_name`) LIKE '%".$this->db->escape_like_str($search)."%') and deleted=0");
 		$this->db->order_by("last_name", "asc");		
 		$by_name = $this->db->get();
 		foreach($by_name->result() as $row)
@@ -195,7 +191,8 @@ class Employee extends Person
 		}
 		
 		$this->db->from('employees');
-		$this->db->join('people','employees.person_id=people.person_id');	
+		$this->db->join('people','employees.person_id=people.person_id');
+		$this->db->where('deleted', 0);
 		$this->db->like("email",$search);
 		$this->db->order_by("email", "asc");		
 		$by_email = $this->db->get();
@@ -206,6 +203,7 @@ class Employee extends Person
 		
 		$this->db->from('employees');
 		$this->db->join('people','employees.person_id=people.person_id');	
+		$this->db->where('deleted', 0);
 		$this->db->like("username",$search);
 		$this->db->order_by("username", "asc");		
 		$by_username = $this->db->get();
@@ -217,6 +215,7 @@ class Employee extends Person
 
 		$this->db->from('employees');
 		$this->db->join('people','employees.person_id=people.person_id');	
+		$this->db->where('deleted', 0);
 		$this->db->like("phone_number",$search);
 		$this->db->order_by("phone_number", "asc");		
 		$by_phone = $this->db->get();
@@ -242,12 +241,12 @@ class Employee extends Person
 	{
 		$this->db->from('employees');
 		$this->db->join('people','employees.person_id=people.person_id');		
-		$this->db->like('first_name', $search);
-		$this->db->or_like('last_name', $search); 
-		$this->db->or_like('email', $search); 
-		$this->db->or_like('phone_number', $search);
-		$this->db->or_like("CONCAT(`first_name`,' ',`last_name`)",$search);
-		$this->db->or_like('username', $search);
+		$this->db->where("(first_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		last_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		email LIKE '%".$this->db->escape_like_str($search)."%' or 
+		phone_number LIKE '%".$this->db->escape_like_str($search)."%' or 
+		username LIKE '%".$this->db->escape_like_str($search)."%' or 
+		CONCAT(`first_name`,' ',`last_name`) LIKE '%".$this->db->escape_like_str($search)."%') and deleted=0");		
 		$this->db->order_by("last_name", "asc");
 		
 		return $this->db->get();	
@@ -258,7 +257,7 @@ class Employee extends Person
 	*/
 	function login($username, $password)
 	{
-		$query = $this->db->get_where('employees', array('username' => $username,'password'=>md5($password)), 1);
+		$query = $this->db->get_where('employees', array('username' => $username,'password'=>md5($password), 'deleted'=>0), 1);
 		if ($query->num_rows() ==1)
 		{
 			$row=$query->row();

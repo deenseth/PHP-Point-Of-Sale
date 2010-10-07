@@ -11,3 +11,4 @@
 * Can now search by account number for a cutomer on sale sales screen
 * Updated missing language keys (in english, but they can easily be fixed)
 * Made headings in report listings page stand out more
+* Can now delete customers, items, suppliers, and employees even if data is attached to them

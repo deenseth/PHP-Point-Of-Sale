@@ -99,7 +99,7 @@ class Sale_lib
 		{
 		    $subtotal+=$payments['payment_amount'];
 		}
-		return $subtotal;
+		return to_currency_no_money($subtotal);
 	}
 
 	//Alain Multiple Payments
@@ -108,7 +108,7 @@ class Sale_lib
 		$amount_due=0;
 		$payment_total = $this->get_payments_total();
 		$sales_total=$this->get_total();
-		$amount_due=$sales_total - $payment_total;
+		$amount_due=to_currency_no_money($sales_total - $payment_total);
 		return $amount_due;
 	}
 
@@ -394,7 +394,7 @@ class Sale_lib
 		{
 		    $subtotal+=($item['price']*$item['quantity']-$item['price']*$item['quantity']*$item['discount']/100);
 		}
-		return $subtotal;
+		return to_currency_no_money($subtotal);
 	}
 
 	function get_total()
@@ -410,7 +410,7 @@ class Sale_lib
 			$total+=$tax;
 		}
 
-		return $total;
+		return to_currency_no_money($total);
 	}
 }
 ?>

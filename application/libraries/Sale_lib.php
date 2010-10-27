@@ -220,10 +220,20 @@ class Sale_lib
 	
 	function out_of_stock($item_id)
 	{
+		//make sure item exists
+		if(!$this->CI->Item->exists($item_id))
+		{
+			//try to get item id given an item_number
+			$item_id = $this->CI->Item->get_item_id($item_id);
+
+			if(!$item_id)
+				return false;
+		}
+		
 		$item = $this->CI->Item->get_info($item_id);
 		$quanity_added = $this->get_quantity_already_added($item_id);
 		
-		if ($item->quantity - $quanity_added <= 0)
+		if ($item->quantity - $quanity_added < 0)
 		{
 			return true;
 		}

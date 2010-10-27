@@ -339,6 +339,7 @@ $(document).ready(function()
     {
     	minChars:0,
     	max:100,
+    	selectFirst: false,
        	delay:10,
     	formatItem: function(row) {
 			return row[1];

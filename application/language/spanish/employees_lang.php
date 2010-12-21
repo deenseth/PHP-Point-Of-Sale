@@ -2,7 +2,7 @@
 $lang['employees_employee']='Empleado';
 $lang['employees_new']='Nuevo Empleado';
 $lang['employees_update']='Actualizar Empleado';
-$lang['employees_confirm_delete']='¿Estás seguro(a) quie quieres borrar a los empleados seleccionados?';
+$lang['employees_confirm_delete']='¿Estás seguro(a) que quieres borrar a los empleados seleccionados?';
 $lang['employees_none_selected']='No has seleccionado empleados para borrar';
 $lang['employees_error_adding_updating'] = 'Error al agregar/actualizar empleado';
 $lang['employees_successful_adding']='Has agregado al empleado satisfactoriamente';
@@ -22,5 +22,5 @@ $lang['employees_basic_information']='Información Básica de Empleados';
 $lang['employees_login_info']='Información de Ingreso del Empleado';
 $lang['employees_permission_info']='Permisos y Acceso del Empleado';
 $lang['employees_permission_desc']='Activa las cajas debajo para permitir el acceso a los módulos';
-$lang['employees_error_updating_demo_admin'] = 'You can not change the demo admin user';
+$lang['employees_error_updating_demo_admin'] = 'No puedes cambiar al usuario administrador de demo';
 ?>

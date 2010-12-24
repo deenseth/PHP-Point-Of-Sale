@@ -24,4 +24,8 @@ $lang['module_config_desc']='Change the store\'s configuration';
 
 $lang['module_receivings']='Receivings';
 $lang['module_receivings_desc']='Process Purchase orders';
+
+$lang['module_giftcards']='Gift Cards';
+$lang['module_giftcards_desc']='Add, Update, Delete and Search gift cards';
+
 ?>

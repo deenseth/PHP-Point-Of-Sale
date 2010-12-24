@@ -57,7 +57,7 @@ class Sales extends Secure_area
 		}
 
 		$payment_type=$this->input->post('payment_type');
-		if ( $payment_type == $this->lang->line('sales_gift_card') )
+		if ( $payment_type == $this->lang->line('sales_giftcard') )
 		{
 			$payment_type=$this->input->post('payment_type').':'.$payment_amount=$this->input->post('amount_tendered');
 			$cur_giftcard_value = $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') );

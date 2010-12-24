@@ -214,4 +214,68 @@ function get_item_data_row($item,$controller)
 	$table_data_row.='</tr>';
 	return $table_data_row;
 }
+
+/*
+Gets the html table to manage giftcards.
+*/
+function get_giftcards_manage_table( $giftcards, $controller )
+{
+	$CI =& get_instance();
+	
+	$table='<table class="tablesorter" id="sortable_table">';
+	
+	$headers = array('<input type="checkbox" id="select_all" />', 
+	$CI->lang->line('giftcards_giftcard_number'),
+	$CI->lang->line('giftcards_card_value'),
+	'&nbsp', 
+	);
+	
+	$table.='<thead><tr>';
+	foreach($headers as $header)
+	{
+		$table.="<th>$header</th>";
+	}
+	$table.='</tr></thead><tbody>';
+	$table.=get_giftcards_manage_table_data_rows( $giftcards, $controller );
+	$table.='</tbody></table>';
+	return $table;
+}
+
+/*
+Gets the html data rows for the giftcard.
+*/
+function get_giftcards_manage_table_data_rows( $giftcards, $controller )
+{
+	$CI =& get_instance();
+	$table_data_rows='';
+	
+	foreach($giftcards->result() as $giftcard)
+	{
+		$table_data_rows.=get_giftcard_data_row( $giftcard, $controller );
+	}
+	
+	if($giftcards->num_rows()==0)
+	{
+		$table_data_rows.="<tr><td colspan='11'><div class='warning_message' style='padding:7px;'>".$CI->lang->line('giftcards_no_giftcards_to_display')."</div></tr></tr>";
+	}
+	
+	return $table_data_rows;
+}
+
+function get_giftcard_data_row($giftcard,$controller)
+{
+	$CI =& get_instance();
+	$controller_name=$CI->uri->segment(1);
+	$width = $controller->get_form_width();
+
+	$table_data_row='<tr>';
+	$table_data_row.="<td width='3%'><input type='checkbox' id='giftcard_$giftcard->giftcard_id' value='".$giftcard->giftcard_id."'/></td>";
+	$table_data_row.='<td width="15%">'.$giftcard->giftcard_number.'</td>';
+	$table_data_row.='<td width="20%">'.to_currency($giftcard->value).'</td>';
+	$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$giftcard->giftcard_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
+	
+	$table_data_row.='</tr>';
+	return $table_data_row;
+}
+
 ?>

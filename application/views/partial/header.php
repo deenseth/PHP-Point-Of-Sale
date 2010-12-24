@@ -36,12 +36,6 @@ html {
 	</div>
 
 		<div id="menubar_navigation">
-			<div class="menu_item">
-				<a href="<?php echo site_url('home');?>">
-				<img src="<?php echo base_url().'images/menubar/home.png';?>" border="0" alt="Menubar Image" /></a><br />
-				<a href="<?php echo site_url("home");?>"><?php echo $this->lang->line("module_home") ?></a>
-			</div>
-
 			<?php
 			foreach($allowed_modules->result() as $module)
 			{

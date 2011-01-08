@@ -250,7 +250,8 @@ INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES ('config', 1)
 ('receivings', 1),
 ('reports', 1),
 ('sales', 1),
-('suppliers', 1);
+('suppliers', 1),
+('giftcards', 1);
 
 -- --------------------------------------------------------
 

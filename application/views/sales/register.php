@@ -260,15 +260,15 @@ else
 				<?php echo $this->lang->line('sales_payment').':   ';?>
 			</td>
 			<td>
-				<?php echo form_dropdown('payment_type',$payment_options);?>
+				<?php echo form_dropdown('payment_type',$payment_options,array(),'onchange="if (this.value==\''.$this->lang->line('sales_giftcard').'\') { document.getElementById(\'payment_value_card_number\').innerHTML=\''.$this->lang->line('sales_giftcard_number').'\'; document.getElementById(\'amount_tendered\').value=\'\'; document.getElementById(\'amount_tendered\').focus(); } else { document.getElementById(\'payment_value_card_number\').innerHTML=\''.$this->lang->line('sales_amount_tendered').'\'; }"');?>
 			</td>
 			</tr>
 			<tr>
 			<td>
-				<?php echo $this->lang->line('sales_amount_tendered').':   ';?>
+				<span id="payment_value_card_number"><?php echo $this->lang->line('sales_amount_tendered').':   ';?></span>
 			</td>
 			<td>
-				<?php echo form_input(array('name'=>'amount_tendered','value'=>to_currency_no_money($amount_due),'size'=>'10'));	?>
+				<?php echo form_input(array('name'=>'amount_tendered','id'=>'amount_tendered','value'=>to_currency_no_money($amount_due),'size'=>'10'));	?>
 			</td>
 			</tr>
         	</table>

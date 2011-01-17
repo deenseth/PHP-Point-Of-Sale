@@ -91,28 +91,7 @@ class Giftcards extends Secure_area implements iData_controller
 		$data['giftcards'] = $result;
 		$this->load->view("barcode_sheet", $data);
 	}
-
-	function bulk_edit()
-	{
-		$data = array();
-		$suppliers = array('' => $this->lang->line('giftcards_none'));
-		foreach($this->Supplier->get_all()->result_array() as $row)
-		{
-			$suppliers[$row['person_id']] = $row['first_name'] .' '. $row['last_name'];
-		}
-		$data['suppliers'] = $suppliers;
-		$data['allow_alt_desciption_choices'] = array(
-			''=>$this->lang->line('giftcards_do_nothing'), 
-			1 =>$this->lang->line('giftcards_change_all_to_allow_alt_desc'),
-			0 =>$this->lang->line('giftcards_change_all_to_not_allow_allow_desc'));
-				
-		$data['serialization_choices'] = array(
-			''=>$this->lang->line('giftcards_do_nothing'), 
-			1 =>$this->lang->line('giftcards_change_all_to_serialized'),
-			0 =>$this->lang->line('giftcards_change_all_to_unserialized'));
-		$this->load->view("giftcards/form_bulk", $data);
-	}
-
+	
 	function save($giftcard_id=-1)
 	{
 		$giftcard_data = array(
@@ -137,7 +116,7 @@ class Giftcards extends Secure_area implements iData_controller
 			else //previous giftcard
 			{
 				echo json_encode(array('success'=>true,'message'=>$this->lang->line('giftcards_successful_updating').' '.
-				$giftcard_data['name'],'giftcard_id'=>$giftcard_id));
+				$giftcard_data['giftcard_number'],'giftcard_id'=>$giftcard_id));
 			}
 		}
 		else//failure
@@ -146,47 +125,6 @@ class Giftcards extends Secure_area implements iData_controller
 			$giftcard_data['giftcard_number'],'giftcard_id'=>-1));
 		}
 
-	}
-
-	function bulk_update()
-	{
-		$giftcards_to_update=$this->input->post('giftcard_ids');
-		$giftcard_data = array();
-
-		foreach($_POST as $key=>$value)
-		{
-			//This field is nullable, so treat it differently
-			if ($key == 'supplier_id')
-			{
-				$giftcard_data["$key"]=$value == '' ? null : $value;
-			}
-			elseif($value!='' and !(in_array($key, array('giftcard_ids', 'tax_names', 'tax_percents'))))
-			{
-				$giftcard_data["$key"]=$value;
-			}
-		}
-
-		//Giftcard data could be empty if tax information is being updated
-		if(empty($giftcard_data) || $this->Giftcard->update_multiple($giftcard_data,$giftcards_to_update))
-		{
-			$giftcards_taxes_data = array();
-			$tax_names = $this->input->post('tax_names');
-			$tax_percents = $this->input->post('tax_percents');
-			for($k=0;$k<count($tax_percents);$k++)
-			{
-				if (is_numeric($tax_percents[$k]))
-				{
-					$giftcards_taxes_data[] = array('name'=>$tax_names[$k], 'percent'=>$tax_percents[$k] );
-				}
-			}
-			$this->Giftcard_taxes->save_multiple($giftcards_taxes_data, $giftcards_to_update);
-
-			echo json_encode(array('success'=>true,'message'=>$this->lang->line('giftcards_successful_bulk_edit')));
-		}
-		else
-		{
-			echo json_encode(array('success'=>false,'message'=>$this->lang->line('giftcards_error_updating_multiple')));
-		}
 	}
 
 	function delete()

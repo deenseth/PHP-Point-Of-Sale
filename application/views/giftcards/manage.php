@@ -8,7 +8,6 @@ $(document).ready(function()
     enable_row_selection();
     enable_search('<?php echo site_url("$controller_name/suggest")?>','<?php echo $this->lang->line("common_confirm_search")?>');
     enable_delete('<?php echo $this->lang->line($controller_name."_confirm_delete")?>','<?php echo $this->lang->line($controller_name."_none_selected")?>');
-    enable_bulk_edit('<?php echo $this->lang->line($controller_name."_none_selected")?>');
 
     $("#low_inventory").click(function()
     {
@@ -73,23 +72,6 @@ function post_giftcard_form_submit(response)
 	}
 }
 
-function post_bulk_form_submit(response)
-{
-	if(!response.success)
-	{
-		set_feedback(response.message,'error_message',true);
-	}
-	else
-	{
-		var selected_giftcard_ids=get_selected_values();
-		for(k=0;k<selected_giftcard_ids.length;k++)
-		{
-			update_row(selected_giftcard_ids[k],'<?php echo site_url("$controller_name/get_row")?>');
-		}
-		set_feedback(response.message,'success_message',false);
-	}
-}
-
 function show_hide_search_filter(search_filter_section, switchImgTag) {
         var ele = document.getElementById(search_filter_section);
         var imageEle = document.getElementById(switchImgTag);
@@ -145,7 +127,6 @@ function show_hide_search_filter(search_filter_section, switchImgTag) {
 <div id="table_action_header">
 	<ul>
 		<li class="float_left"><span><?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('id'=>'delete')); ?></span></li>
-		<li class="float_left"><span><?php echo anchor("$controller_name/bulk_edit/width:$form_width",$this->lang->line("giftcards_bulk_edit"),array('id'=>'bulk_edit','title'=>$this->lang->line('giftcards_edit_multiple_giftcards'))); ?></span></li>
 		<li class="float_right">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
 		<?php echo form_open("$controller_name/search",array('id'=>'search_form')); ?>

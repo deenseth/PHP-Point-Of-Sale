@@ -65,7 +65,6 @@ class Giftcards extends Secure_area implements iData_controller
 	function view($giftcard_id=-1)
 	{
 		$data['giftcard_info']=$this->Giftcard->get_info($giftcard_id);
-		$suppliers = array('' => $this->lang->line('giftcards_none'));
 
 		$this->load->view("giftcards/form",$data);
 	}
@@ -98,14 +97,9 @@ class Giftcards extends Secure_area implements iData_controller
 		'giftcard_number'=>$this->input->post('giftcard_number'),
 		'value'=>$this->input->post('value')
 		);
-		
-		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
-		$cur_giftcard_info = $this->Giftcard->get_info($giftcard_id);
 
-
-		if($this->Giftcard->save($giftcard_data,$giftcard_id))
+		if( $this->Giftcard->save( $giftcard_data, $giftcard_id ) )
 		{
-			log_message( 'debug', 'Giftcard save successful.' );
 			//New giftcard
 			if($giftcard_id==-1)
 			{
@@ -175,49 +169,24 @@ class Giftcards extends Secure_area implements iData_controller
 			$success = $this->spreadsheetexcelreader->read($_FILES['file_path']['tmp_name']);
 
 			$rowCount = $this->spreadsheetexcelreader->rowcount(0);
-			if($rowCount > 2){
-				for($i = 3; $i<=$rowCount; $i++){
-					$giftcard_code = $this->spreadsheetexcelreader->val($i, 'A');
-					$giftcard_id = $this->Giftcard->get_giftcard_id($giftcard_code);
-					$giftcard_data = array(
-					'name'			=>	$this->spreadsheetexcelreader->val($i, 'B'),
-					'description'	=>	$this->spreadsheetexcelreader->val($i, 'K'),
-					'category'		=>	$this->spreadsheetexcelreader->val($i, 'C'),
-					//'supplier_id'	=>	null,
-					'giftcard_number'	=>	$this->spreadsheetexcelreader->val($i, 'A'),
-					'cost_price'	=>	$this->spreadsheetexcelreader->val($i, 'E'),
-					'unit_price'	=>	$this->spreadsheetexcelreader->val($i, 'F'),
-					'quantity'		=>	$this->spreadsheetexcelreader->val($i, 'I'),
-					'reorder_level'	=>	$this->spreadsheetexcelreader->val($i, 'J')
-					);
+			if($rowCount > 0)
+			{
+				for($i = 1; $i<=$rowCount; $i++)
+				{
+					$giftcard_data = array( 'giftcard_number' => $this->spreadsheetexcelreader->val( $i, 'A' ), 'value'	=>	$this->spreadsheetexcelreader->val( $i, 'B' ) );
 
-					if($this->Giftcard->save($giftcard_data,$giftcard_id)) {
-						$successCode[] = $giftcard_code;
-						
-						//Ramel Inventory Tracking
-						//update Inventory count details from Excel Import
-							$giftcard_code = $this->spreadsheetexcelreader->val($i, 'A');
-							$giftcard_id = $this->Giftcard->get_giftcard_id($giftcard_code);
-							$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
-							$emp_info=$this->Employee->get_info($employee_id);
-							$comment ='Qty Excel Imported: means BEGIN/RESET/ACTUAL count';
-							$excel_data = array
-								(
-								'trans_giftcards'=>$giftcard_id,
-								'trans_user'=>$employee_id,
-								'trans_comment'=>$comment,
-								'trans_inventory'=>$this->spreadsheetexcelreader->val($i, 'I')
-								);
-								$this->db->insert('inventory',$excel_data);
-						//------------------------------------------------Ramel
+					if( $this->Giftcard->save( $giftcard_data ) )
+					{
+						$successCode[] = $giftcard_data['giftcard_number'];
 					}
 					else//insert or update giftcard failure
 					{
-						$failCodes[] = $giftcard_code ;
+						$failCodes[] = $giftcard_data['giftcard_number'];
 					}
 				}
-
-			} else {
+			}
+			else
+			{
 				// rowCount < 2
 				echo json_encode( array('success'=>true,'message'=>'Your upload file has no data or not in supported format.') );
 				return;

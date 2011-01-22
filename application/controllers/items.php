@@ -10,10 +10,24 @@ class Items extends Secure_area implements iData_controller
 
 	function index()
 	{
-		$data['controller_name']=strtolower($this->uri->segment(1));
-		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_items_manage_table($this->Item->get_all(),$this);
-		$this->load->view('items/manage',$data);
+		$config['base_url'] = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME'].'/items/index/';
+		$config['per_page'] = $this->Appconfig->get('lines_per_page');
+		$config['total_rows'] = $this->Item->count_all_undeleted();
+		
+		if ( is_numeric( $this->uri->segment( 3 ) ) )
+			$offset = $this->uri->segment( 3 );
+		else
+			$offset = 0;
+
+		$this->load->library( 'pagination' );
+
+		$data['controller_name'] = strtolower( $this->uri->segment( 1 ) );
+		$data['form_width'] = $this->get_form_width();
+		$data['manage_table'] = get_items_manage_table( $this->Item->get_all( $config['per_page'], $offset ), $this );
+
+		$this->pagination->initialize( $config );
+
+		$this->load->view( 'items/manage', $data );
 	}
 
 	function refresh()

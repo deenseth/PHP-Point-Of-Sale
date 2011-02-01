@@ -20,4 +20,5 @@ $lang['config_return_policy_required']='Return policy is a required field';
 $lang['config_printe_after_sale']='Print receipt after sale';
 $lang['config_language'] = 'Language';
 $lang['config_timezone'] = 'Timezone';
+$lang['config_mc_api_key'] = 'MailChimp API Key';
 ?>

@@ -65,13 +65,11 @@ class Receivings extends Secure_area
 		$this->form_validation->set_rules('quantity', 'lang:items_quantity', 'required|integer');
 		$this->form_validation->set_rules('discount', 'lang:items_discount', 'required|integer');
 
-
-        $description = $this->input->post("description");
-        $serialnumber = $this->input->post("serialnumber");
+    $description = $this->input->post("description");
+    $serialnumber = $this->input->post("serialnumber");
 		$price = $this->input->post("price");
 		$quantity = $this->input->post("quantity");
 		$discount = $this->input->post("discount");
-
 
 		if ($this->form_validation->run() != FALSE)
 		{

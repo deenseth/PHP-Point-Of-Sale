@@ -182,6 +182,9 @@ class Sale extends Model
 	
 	public function getGiftcardValue( $giftcardNumber )
 	{
+		if ( !$this->Giftcard->exists( $giftcardNumber ) )
+			return 0;
+		
 		$this->db->from('giftcards');
 		$this->db->where('giftcard_number',$giftcardNumber);
 		return $this->db->get()->row()->value;

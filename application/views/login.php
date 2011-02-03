@@ -14,7 +14,7 @@ $(document).ready(function()
 </script>
 </head>
 <body>
-<h1>PHP Point Of Sale 11.0.0.0</h1>
+<h1>PHP Point Of Sale 11.0.0.1</h1>
 <?php
 if ($_SERVER['HTTP_HOST'] == 'demo.phppointofsale.com')
 {

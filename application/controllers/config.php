@@ -14,6 +14,12 @@ class Config extends Secure_area
 		
 	function save()
 	{
+		if (($key = $this->input->post('mc_api_key')) && $this->MCAPI === null) {
+			$this->load->library('MCAPI',  array($key), 'MCAPI');
+			$success = ($this->MCAPI->ping() === "Everything's Chimpy!");
+			$mc_message =  $success ? ' MailChimp Pinged!' : " Unable to connect to MailChimp. Please check your Internet connection.";
+		}
+
 		$batch_save_data=array(
 		'company'=>$this->input->post('company'),
 		'address'=>$this->input->post('address'),
@@ -34,11 +40,11 @@ class Config extends Secure_area
 		
 		if($this->Appconfig->batch_save($batch_save_data))
 		{
-			echo json_encode(array('success'=>true,'message'=>$this->lang->line('config_saved_successfully')));
+			echo json_encode(array('success'=>true,'message'=>$this->lang->line('config_saved_successfully') . $mc_message));
 		}
 		else
 		{
-			echo json_encode(array('success'=>false,'message'=>$this->lang->line('config_saved_unsuccessfully')));
+			echo json_encode(array('success'=>false,'message'=>$this->lang->line('config_saved_unsuccessfully') . $mc_message));
 	
 		}
 	}

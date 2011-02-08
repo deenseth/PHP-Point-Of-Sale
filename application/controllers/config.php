@@ -28,7 +28,8 @@ class Config extends Secure_area
 		'return_policy'=>$this->input->post('return_policy'),
 		'language'=>$this->input->post('language'),
 		'timezone'=>$this->input->post('timezone'),
-		'print_after_sale'=>$this->input->post('print_after_sale')	
+		'print_after_sale'=>$this->input->post('print_after_sale'),
+		'mc_api_key'=>$this->input->post('mc_api_key')	
 		);
 		
 		if($this->Appconfig->batch_save($batch_save_data))

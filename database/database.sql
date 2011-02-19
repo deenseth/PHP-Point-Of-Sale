@@ -34,7 +34,8 @@ INSERT INTO `phppos_app_config` (`key`, `value`) VALUES ('address', '123 Nowhere
 ('phone', '555-555-5555'),
 ('return_policy', 'Test'),
 ('version', '10.0'),
-('website', '');
+('website', ''),
+('lines_per_page', '20');
 
 -- --------------------------------------------------------
 
@@ -250,9 +251,8 @@ INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES ('config', 1)
 ('receivings', 1),
 ('reports', 1),
 ('sales', 1),
-('suppliers', 1),
-('giftcards', 1);
-
+('giftcards', 1),
+('suppliers', 1);
 -- --------------------------------------------------------
 
 -- 

@@ -8,7 +8,6 @@ $(document).ready(function()
     enable_row_selection();
     enable_search('<?php echo site_url("$controller_name/suggest")?>','<?php echo $this->lang->line("common_confirm_search")?>');
     enable_delete('<?php echo $this->lang->line($controller_name."_confirm_delete")?>','<?php echo $this->lang->line($controller_name."_none_selected")?>');
-    enable_bulk_edit('<?php echo $this->lang->line($controller_name."_none_selected")?>');
 
     $("#low_inventory").click(function()
     {
@@ -73,23 +72,6 @@ function post_giftcard_form_submit(response)
 	}
 }
 
-function post_bulk_form_submit(response)
-{
-	if(!response.success)
-	{
-		set_feedback(response.message,'error_message',true);
-	}
-	else
-	{
-		var selected_giftcard_ids=get_selected_values();
-		for(k=0;k<selected_giftcard_ids.length;k++)
-		{
-			update_row(selected_giftcard_ids[k],'<?php echo site_url("$controller_name/get_row")?>');
-		}
-		set_feedback(response.message,'success_message',false);
-	}
-}
-
 function show_hide_search_filter(search_filter_section, switchImgTag) {
         var ele = document.getElementById(search_filter_section);
         var imageEle = document.getElementById(switchImgTag);
@@ -131,21 +113,9 @@ function show_hide_search_filter(search_filter_section, switchImgTag) {
 	<?php echo isset($search_section_state)?  ( ($search_section_state)? base_url().'images/minus.png' : base_url().'images/plus.png') : base_url().'images/plus.png';?>" style="border:0;outline:none;padding:0px;margin:0px;position:relative;top:-5px;"></a>
 </div>
 
-<div id="search_filter_section" style="display: <?php echo isset($search_section_state)?  ( ($search_section_state)? 'block' : 'none') : 'none';?>;background-color:#EEEEEE;">
-	<?php echo form_open("$controller_name/refresh",array('id'=>'giftcards_filter_form')); ?>
-	<?php echo form_label($this->lang->line('giftcards_low_inventory_giftcards').' '.':', 'low_inventory');?>
-	<?php echo form_checkbox(array('name'=>'low_inventory','id'=>'low_inventory','value'=>1,'checked'=> isset($low_inventory)?  ( ($low_inventory)? 1 : 0) : 0)).' | ';?>
-	<?php echo form_label($this->lang->line('giftcards_serialized_giftcards').' '.':', 'is_serialized');?>
-	<?php echo form_checkbox(array('name'=>'is_serialized','id'=>'is_serialized','value'=>1,'checked'=> isset($is_serialized)?  ( ($is_serialized)? 1 : 0) : 0)).' | ';?>
-	<?php echo form_label($this->lang->line('giftcards_no_description_giftcards').' '.':', 'no_description');?>
-	<?php echo form_checkbox(array('name'=>'no_description','id'=>'no_description','value'=>1,'checked'=> isset($no_description)?  ( ($no_description)? 1 : 0) : 0)).' | ';?>
-	<input type="hidden" name="search_section_state" id="search_section_state" value="<?php echo isset($search_section_state)?  ( ($search_section_state)? 'block' : 'none') : 'none';?>" />
-	</form>
-</div>
 <div id="table_action_header">
 	<ul>
 		<li class="float_left"><span><?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('id'=>'delete')); ?></span></li>
-		<li class="float_left"><span><?php echo anchor("$controller_name/bulk_edit/width:$form_width",$this->lang->line("giftcards_bulk_edit"),array('id'=>'bulk_edit','title'=>$this->lang->line('giftcards_edit_multiple_giftcards'))); ?></span></li>
 		<li class="float_right">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
 		<?php echo form_open("$controller_name/search",array('id'=>'search_form')); ?>

@@ -76,6 +76,17 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('config_tax_on_received_inventory').':', 'tax_on_received_inventory',array('class'=>'wide')); ?>
+	<div class='form_field'>
+	<?php echo form_checkbox(array(
+		'name'=>'tax_on_received_inventory',
+		'id'=>'tax_on_received_inventory',
+		'value'=>'1',
+		'checked'=>$this->config->item('tax_on_received_inventory')));?>
+	</div>
+</div>
+
+<div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('common_email').':', 'email',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
@@ -230,7 +241,17 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_printe_after_sale').':', 'print_after_sale',array('class'=>'wide')); ?>
+<?php echo form_label($this->lang->line('config_lines_per_page').':', 'lines_per_page',array('class'=>'wide required')); ?>
+	<div class='form_field'>
+	<?php echo form_input(array(
+		'name'=>'lines_per_page',
+		'id'=>'lines_per_page',
+		'value'=>$this->config->item('lines_per_page')));?>
+	</div>
+</div>
+
+<div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('config_print_after_sale').':', 'print_after_sale',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_checkbox(array(
 		'name'=>'print_after_sale',
@@ -285,7 +306,8 @@ $(document).ready(function()
 		{
 			company: "required",
 			address: "required",
-    		phone: "required",
+    	phone: "required",
+    	lines_per_page: "required",
     		default_tax_rate:
     		{
     			required:true,
@@ -299,6 +321,7 @@ $(document).ready(function()
      		company: "<?php echo $this->lang->line('config_company_required'); ?>",
      		address: "<?php echo $this->lang->line('config_address_required'); ?>",
      		phone: "<?php echo $this->lang->line('config_phone_required'); ?>",
+     		lines_per_page: "<?php echo $this->lang->line('config_lines_per_page_required'); ?>",
      		default_tax_rate:
     		{
     			required:"<?php echo $this->lang->line('config_default_tax_rate_required'); ?>",

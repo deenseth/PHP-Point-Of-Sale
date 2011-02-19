@@ -28,20 +28,6 @@ class Giftcard extends Model
 	function get_all_filtered()
 	{
 		$this->db->from('giftcards');
-		/*
-		if ($low_inventory !=0 )
-		{
-			$this->db->where('quantity <=','reorder_level');
-		}
-		if ($is_serialized !=0 )
-		{
-			$this->db->where('is_serialized',1);
-		}
-		if ($no_description!=0 )
-		{
-			$this->db->where('description','');
-		}
-		*/
 		$this->db->where('deleted',0);
 		$this->db->order_by("giftcard_number", "asc");
 		return $this->db->get();

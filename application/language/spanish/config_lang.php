@@ -17,7 +17,10 @@ $lang['config_company_website_url']='Sitio Web no es un URL estándard (http://.
 $lang['config_saved_successfully']='Configuración guardada satisfactoriamente';
 $lang['config_saved_unsuccessfully']='Configuración no guardada';
 $lang['config_return_policy_required']='Política de Reintegro es un campo requerido';
-$lang['config_printe_after_sale']='Imprimir recibo después de una venta';
-$lang['config_language'] = 'Idioma';
-$lang['config_timezone'] = 'Zona horaria';
+$lang['config_print_after_sale']='Imprimir recibo después de una venta';
+$lang['config_language'] = 'Language';
+$lang['config_timezone'] = 'Timezone';
+$lang['config_lines_per_page'] = '';
+$lang['config_lines_per_page_required'] = '';
+$lang['config_tax_on_received_inventory'] = '';
 ?>

@@ -65,7 +65,6 @@ class Giftcards extends Secure_area implements iData_controller
 	function view($giftcard_id=-1)
 	{
 		$data['giftcard_info']=$this->Giftcard->get_info($giftcard_id);
-		$suppliers = array('' => $this->lang->line('giftcards_none'));
 
 		$this->load->view("giftcards/form",$data);
 	}
@@ -91,42 +90,16 @@ class Giftcards extends Secure_area implements iData_controller
 		$data['giftcards'] = $result;
 		$this->load->view("barcode_sheet", $data);
 	}
-
-	function bulk_edit()
-	{
-		$data = array();
-		$suppliers = array('' => $this->lang->line('giftcards_none'));
-		foreach($this->Supplier->get_all()->result_array() as $row)
-		{
-			$suppliers[$row['person_id']] = $row['first_name'] .' '. $row['last_name'];
-		}
-		$data['suppliers'] = $suppliers;
-		$data['allow_alt_desciption_choices'] = array(
-			''=>$this->lang->line('giftcards_do_nothing'), 
-			1 =>$this->lang->line('giftcards_change_all_to_allow_alt_desc'),
-			0 =>$this->lang->line('giftcards_change_all_to_not_allow_allow_desc'));
-				
-		$data['serialization_choices'] = array(
-			''=>$this->lang->line('giftcards_do_nothing'), 
-			1 =>$this->lang->line('giftcards_change_all_to_serialized'),
-			0 =>$this->lang->line('giftcards_change_all_to_unserialized'));
-		$this->load->view("giftcards/form_bulk", $data);
-	}
-
+	
 	function save($giftcard_id=-1)
 	{
 		$giftcard_data = array(
 		'giftcard_number'=>$this->input->post('giftcard_number'),
 		'value'=>$this->input->post('value')
 		);
-		
-		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
-		$cur_giftcard_info = $this->Giftcard->get_info($giftcard_id);
 
-
-		if($this->Giftcard->save($giftcard_data,$giftcard_id))
+		if( $this->Giftcard->save( $giftcard_data, $giftcard_id ) )
 		{
-			log_message( 'debug', 'Giftcard save successful.' );
 			//New giftcard
 			if($giftcard_id==-1)
 			{
@@ -137,7 +110,7 @@ class Giftcards extends Secure_area implements iData_controller
 			else //previous giftcard
 			{
 				echo json_encode(array('success'=>true,'message'=>$this->lang->line('giftcards_successful_updating').' '.
-				$giftcard_data['name'],'giftcard_id'=>$giftcard_id));
+				$giftcard_data['giftcard_number'],'giftcard_id'=>$giftcard_id));
 			}
 		}
 		else//failure
@@ -146,47 +119,6 @@ class Giftcards extends Secure_area implements iData_controller
 			$giftcard_data['giftcard_number'],'giftcard_id'=>-1));
 		}
 
-	}
-
-	function bulk_update()
-	{
-		$giftcards_to_update=$this->input->post('giftcard_ids');
-		$giftcard_data = array();
-
-		foreach($_POST as $key=>$value)
-		{
-			//This field is nullable, so treat it differently
-			if ($key == 'supplier_id')
-			{
-				$giftcard_data["$key"]=$value == '' ? null : $value;
-			}
-			elseif($value!='' and !(in_array($key, array('giftcard_ids', 'tax_names', 'tax_percents'))))
-			{
-				$giftcard_data["$key"]=$value;
-			}
-		}
-
-		//Giftcard data could be empty if tax information is being updated
-		if(empty($giftcard_data) || $this->Giftcard->update_multiple($giftcard_data,$giftcards_to_update))
-		{
-			$giftcards_taxes_data = array();
-			$tax_names = $this->input->post('tax_names');
-			$tax_percents = $this->input->post('tax_percents');
-			for($k=0;$k<count($tax_percents);$k++)
-			{
-				if (is_numeric($tax_percents[$k]))
-				{
-					$giftcards_taxes_data[] = array('name'=>$tax_names[$k], 'percent'=>$tax_percents[$k] );
-				}
-			}
-			$this->Giftcard_taxes->save_multiple($giftcards_taxes_data, $giftcards_to_update);
-
-			echo json_encode(array('success'=>true,'message'=>$this->lang->line('giftcards_successful_bulk_edit')));
-		}
-		else
-		{
-			echo json_encode(array('success'=>false,'message'=>$this->lang->line('giftcards_error_updating_multiple')));
-		}
 	}
 
 	function delete()
@@ -237,49 +169,24 @@ class Giftcards extends Secure_area implements iData_controller
 			$success = $this->spreadsheetexcelreader->read($_FILES['file_path']['tmp_name']);
 
 			$rowCount = $this->spreadsheetexcelreader->rowcount(0);
-			if($rowCount > 2){
-				for($i = 3; $i<=$rowCount; $i++){
-					$giftcard_code = $this->spreadsheetexcelreader->val($i, 'A');
-					$giftcard_id = $this->Giftcard->get_giftcard_id($giftcard_code);
-					$giftcard_data = array(
-					'name'			=>	$this->spreadsheetexcelreader->val($i, 'B'),
-					'description'	=>	$this->spreadsheetexcelreader->val($i, 'K'),
-					'category'		=>	$this->spreadsheetexcelreader->val($i, 'C'),
-					//'supplier_id'	=>	null,
-					'giftcard_number'	=>	$this->spreadsheetexcelreader->val($i, 'A'),
-					'cost_price'	=>	$this->spreadsheetexcelreader->val($i, 'E'),
-					'unit_price'	=>	$this->spreadsheetexcelreader->val($i, 'F'),
-					'quantity'		=>	$this->spreadsheetexcelreader->val($i, 'I'),
-					'reorder_level'	=>	$this->spreadsheetexcelreader->val($i, 'J')
-					);
+			if($rowCount > 0)
+			{
+				for($i = 1; $i<=$rowCount; $i++)
+				{
+					$giftcard_data = array( 'giftcard_number' => $this->spreadsheetexcelreader->val( $i, 'A' ), 'value'	=>	$this->spreadsheetexcelreader->val( $i, 'B' ) );
 
-					if($this->Giftcard->save($giftcard_data,$giftcard_id)) {
-						$successCode[] = $giftcard_code;
-						
-						//Ramel Inventory Tracking
-						//update Inventory count details from Excel Import
-							$giftcard_code = $this->spreadsheetexcelreader->val($i, 'A');
-							$giftcard_id = $this->Giftcard->get_giftcard_id($giftcard_code);
-							$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
-							$emp_info=$this->Employee->get_info($employee_id);
-							$comment ='Qty Excel Imported: means BEGIN/RESET/ACTUAL count';
-							$excel_data = array
-								(
-								'trans_giftcards'=>$giftcard_id,
-								'trans_user'=>$employee_id,
-								'trans_comment'=>$comment,
-								'trans_inventory'=>$this->spreadsheetexcelreader->val($i, 'I')
-								);
-								$this->db->insert('inventory',$excel_data);
-						//------------------------------------------------Ramel
+					if( $this->Giftcard->save( $giftcard_data ) )
+					{
+						$successCode[] = $giftcard_data['giftcard_number'];
 					}
 					else//insert or update giftcard failure
 					{
-						$failCodes[] = $giftcard_code ;
+						$failCodes[] = $giftcard_data['giftcard_number'];
 					}
 				}
-
-			} else {
+			}
+			else
+			{
 				// rowCount < 2
 				echo json_encode( array('success'=>true,'message'=>'Your upload file has no data or not in supported format.') );
 				return;

@@ -11,11 +11,16 @@ class Config extends Secure_area
 	{
 		$this->load->view("config");
 	}
+	
+	function mailchimpinfo()
+	{
+		$this->load->view('mailchimpinfo');
+	}
 		
 	function save()
 	{
 		if (($key = $this->input->post('mc_api_key')) && $this->MCAPI === null) {
-			$this->load->library('MCAPI',  array($key), 'MCAPI');
+			$this->load->library('MCAPI',  array('api_key'=>$key), 'MCAPI');
 			$success = ($this->MCAPI->ping() === "Everything's Chimpy!");
 			$mc_message =  $success ? ' MailChimp Pinged!' : " Unable to connect to MailChimp. Please check your Internet connection.";
 		}

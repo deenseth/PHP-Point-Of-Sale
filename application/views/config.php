@@ -241,7 +241,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 		'value'=>$this->config->item('mc_api_key')));?>
 	</div>
 	<div class='form_field' style="height: 20px; padding-top: 5px;">
-		<a href="#">Learn More</a>
+		<a href="index.php/config/mailchimpinfo" target="_blank">Learn More</a>
    	</div>
 </div>
 

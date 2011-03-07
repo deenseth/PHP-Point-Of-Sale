@@ -35,7 +35,6 @@ class MailChimp extends MCAPI
     		$key = $config;
     	}
     	
-    	$this->api_key = $key;
-    	$this->is_secure = $secure;
+    	parent::__construct($key, $secure);
     }
 }

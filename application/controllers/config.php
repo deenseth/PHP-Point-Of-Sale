@@ -19,10 +19,11 @@ class Config extends Secure_area
 		
 	function save()
 	{
-		if (($key = $this->input->post('mc_api_key')) && $this->MCAPI === null) {
-			$this->load->library('MCAPI',  array('api_key'=>$key), 'MCAPI');
-			$success = ($this->MCAPI->ping() === "Everything's Chimpy!");
-			$mc_message =  $success ? ' MailChimp Pinged!' : " Unable to connect to MailChimp. Please check your Internet connection.";
+		if ($key = $this->input->post('mc_api_key')) {
+			$this->load->library('MailChimp',  array('api_key'=>$key), 'MailChimp');
+			$success = ($this->MailChimp->ping() === "Everything's Chimpy!");
+			$mc_message =  $success ? 'Connected to MailChimp! ' 
+			                        : "Unable to connect to MailChimp. Please check your connection and your API key. ";
 		}
 
 		$batch_save_data=array(
@@ -45,11 +46,11 @@ class Config extends Secure_area
 		
 		if($this->Appconfig->batch_save($batch_save_data))
 		{
-			echo json_encode(array('success'=>true,'message'=>$this->lang->line('config_saved_successfully') . $mc_message));
+			echo json_encode(array('success'=>true,'message'=>$mc_message . $this->lang->line('config_saved_successfully')));
 		}
 		else
 		{
-			echo json_encode(array('success'=>false,'message'=>$this->lang->line('config_saved_unsuccessfully') . $mc_message));
+			echo json_encode(array('success'=>false,'message'=>$mc_message . $this->lang->line('config_saved_unsuccessfully')));
 	
 		}
 	}

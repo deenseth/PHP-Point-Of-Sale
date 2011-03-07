@@ -39,7 +39,13 @@ class MCAPI {
     function MCAPI($apikey, $secure=false) {
         $this->secure = $secure;
         $this->apiUrl = parse_url("http://api.mailchimp.com/" . $this->version . "/?output=php");
-        $this->api_key = $apikey;
+        
+        // NOTE: This is a change made to support CodeIgniter autoloading
+        if (is_array($apikey)) {
+            $this->api_key = array_shift($apikey);
+        } else {
+        	$this->api_key = $apikey;
+        }
     }
     function setTimeout($seconds){
         if (is_int($seconds)){

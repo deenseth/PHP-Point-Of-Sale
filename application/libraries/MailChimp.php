@@ -15,26 +15,39 @@ require_once('MCAPI.php');
 
 class MailChimp extends MCAPI
 {
-    function __construct($config)
+	private $MCAPI;
+	
+    function __construct($config=null)
     {
-        $secure = false;
-        
-    	// determine where API key is
-    	if (is_array($config)) {
-	    	if (isset($config['api_key'])) {
-	    		$key = $config['api_key'];
+    	if ($config) {
+	        $secure = false;
+	        
+	    	// determine where API key is
+	    	if (is_array($config)) {
+		    	if (isset($config['api_key'])) {
+		    		$key = $config['api_key'];
+		    	} else {
+		    		$key = array_shift($config);
+		    	}
+		    	
+		    	if (isset($config['secure'])) {
+		    		$secure = $config['secure'];
+		    	}
+		    	
 	    	} else {
-	    		$key = array_shift($config);
+	    		$key = $config;
 	    	}
 	    	
-	    	if (isset($config['secure'])) {
-	    		$secure = $config['secure'];
-	    	}
-	    	
-    	} else {
-    		$key = $config;
+	    	$this->MCAPI = parent::__construct($key, $secure);
     	}
-    	
-    	parent::__construct($key, $secure);
+    }
+    
+    function __call($name, $args)
+    {
+    	if ($this->MCAPI && method_exists($this->MCAPI, $name)) {
+    	   call_user_func(array($this->MCAPI, $name), $args);
+    	} else {    	
+    	   call_user_func(array($this, $name), $args);
+    	}
     }
 }

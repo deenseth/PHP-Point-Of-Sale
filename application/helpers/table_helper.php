@@ -11,6 +11,7 @@ function get_people_manage_table($people,$controller)
 	$CI->lang->line('common_last_name'),
 	$CI->lang->line('common_first_name'),
 	$CI->lang->line('common_email'),
+	$CI->lang->line('common_emailgroups'),
 	$CI->lang->line('common_phone_number'),
 	'&nbsp');
 	
@@ -53,12 +54,25 @@ function get_person_data_row($person,$controller)
 	$width = $controller->get_form_width();
 
 	$table_data_row='<tr>';
-	$table_data_row.="<td width='5%'><input type='checkbox' id='person_$person->person_id' value='".$person->person_id."'/></td>";
-	$table_data_row.='<td width="20%">'.character_limiter($person->last_name,13).'</td>';
-	$table_data_row.='<td width="20%">'.character_limiter($person->first_name,13).'</td>';
-	$table_data_row.='<td width="30%">'.mailto($person->email,character_limiter($person->email,22)).'</td>';
-	$table_data_row.='<td width="20%">'.character_limiter($person->phone_number,13).'</td>';		
-	$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$person->person_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
+
+	if ($key = $CI->config->item('mc_api_key')) {
+		$table_data_row.="<td width='5%'><input type='checkbox' id='person_$person->person_id' value='".$person->person_id."'/></td>";
+	    $table_data_row.='<td width="20%">'.character_limiter($person->last_name,13).'</td>';
+	    $table_data_row.='<td width="20%">'.character_limiter($person->first_name,13).'</td>';
+	    $table_data_row.='<td width="15%">'.mailto($person->email,character_limiter($person->email,22)).'</td>';
+	    $table_data_row.='<td width="10%">test</td>';
+	    $table_data_row.='<td width="15%">'.character_limiter($person->phone_number,13).'</td>';        
+	    $table_data_row.='<td width="5%">'.anchor($controller_name."/view/$person->person_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';
+	}  else {
+		$table_data_row.="<td width='5%'><input type='checkbox' id='person_$person->person_id' value='".$person->person_id."'/></td>";
+	    $table_data_row.='<td width="20%">'.character_limiter($person->last_name,13).'</td>';
+	    $table_data_row.='<td width="20%">'.character_limiter($person->first_name,13).'</td>';
+	    $table_data_row.='<td width="30%">'.mailto($person->email,character_limiter($person->email,22)).'</td>';
+	    $table_data_row.='<td width="20%">'.character_limiter($person->phone_number,13).'</td>';        
+	    $table_data_row.='<td width="5%">'.anchor($controller_name."/view/$person->person_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';
+	}
+	
+	
 	$table_data_row.='</tr>';
 	
 	return $table_data_row;

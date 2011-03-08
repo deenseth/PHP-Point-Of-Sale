@@ -8,7 +8,7 @@ function checkbox_click(event)
 	}
 	else
 	{
-		$(event.target).parent().parent().find("td").removeClass();		
+		$(event.target).parent().parent().find("td").removeClass('selected').removeClass('over');		
 	}
 }
 
@@ -205,7 +205,7 @@ function enable_select_all()
 			$("#sortable_table tbody :checkbox").each(function()
 			{
 				$(this).attr('checked',false);
-				$(this).parent().parent().find("td").removeClass();				
+				$(this).parent().parent().find("td").removeClass('selected').removeClass('over');				
 			});    	
 		}
 	 });	
@@ -232,7 +232,8 @@ function enable_row_selection(rows)
 		{
 			if(!$(this).find("td").hasClass("selected"))
 			{
-				$(this).find("td").removeClass();
+				$(this).find("td").removeClass('selected');
+				$(this).find("td").removeClass('over');
 			}
 		}
 	);
@@ -250,7 +251,8 @@ function enable_row_selection(rows)
 		}
 		else
 		{
-			$(this).find("td").removeClass();
+			$(this).find("td").removeClass('selected');
+			$(this).find("td").removeClass('over');
 		}
 	});
 }

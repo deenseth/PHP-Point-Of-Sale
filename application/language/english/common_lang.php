@@ -38,5 +38,5 @@ $lang['common_price']='Price';
 $lang['common_welcome_message']= 'Welcome to PHP Point Of Sale, click a module below to get started!';
 $lang['common_inv']='inv';
 $lang['common_det']='details';
-$lang['common_emailgroups']='Groups/Lists';
+$lang['common_emailgroups']='Email Lists';
 ?>

@@ -16,6 +16,9 @@ require_once('MCAPI.php');
 class MailChimp extends MCAPI
 {
 	private $MCAPI;
+	private $lists;
+	private $ids_lists = array();
+	private $lists_groups = array();
 	
     function __construct($config=null)
     {
@@ -49,5 +52,58 @@ class MailChimp extends MCAPI
     	} else {    	
     	   call_user_func(array($this, $name), $args);
     	}
+    }
+    
+    function tableListing($email)
+    {
+    	$lists = $this->lists();
+    	$listIDs = $this->listsForEmail($email);
+    	
+    	$names = array();
+    	
+    	$html = '<ul>';
+        
+    	if ($listIDs) {
+	    	foreach ($listIDs as $id)
+	    	{
+	    		$html .= '<li>'.$this->ids_lists[$id]['name'].'</li>';
+	    	}
+    	}
+        
+    	$html .= '</ul>';
+    	
+    	return $html;
+    }
+    
+    /**
+     * Efficient wrapper for MCAPI::lists()
+     */
+    function lists()
+    {
+    	if ($this->lists) {
+    		return $this->lists;
+    	}
+    	
+    	$lists = parent::lists();
+    	$this->lists = $lists['data'];
+    	
+    	foreach ($this->lists as $list) {
+    		$this->ids_lists[$list['id']] = $list;
+    	}
+    	
+    	return $this->lists;
+    }
+    
+    /**
+     * Efficient wrapper for MCAPI:listInterestGroupings()
+     * @see application/libraries/MCAPI#listInterestGroupings()
+     */
+    function listInterestGroupings($id)
+    {
+    	if (isset($this->lists_groups[$id])) {
+    		return $this->lists_groups[$id];
+    	}
+    	
+    	return parent::listInterestGroupings($id);
     }
 }

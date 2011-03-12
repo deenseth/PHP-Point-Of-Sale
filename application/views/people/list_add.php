@@ -28,14 +28,29 @@ function listadd_submit(){
 
 
 </script>
-<form id="listadd-form">
-<?php foreach ($personids as $id) { ?>
-    <?php echo form_hidden('personid[]', $id);?>
-<? } ?>
-<?php foreach ($lists as $list) { ?>
-    <?php echo form_checkbox($list['name'], $list['name'], 0);?>
-    <?php echo form_label($list['name'], $list['name']);?>
-    <br/>
-<? } ?>
-</form>
-<button id="listadd-submit" onclick="listadd_submit()">Submit</button>
+
+<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/list-form.css" />
+
+<div id="list-form-wrapper">
+    <h2><?php echo $this->lang->line('common_list_add');?></h2>
+    <div id='list-form-wrapper-left'>
+        <p class='helpertext'><?=$this->lang->line('common_list_add_helpertext')?></p>
+    </div>
+    <div id='list-form-wrapper-right'>
+        <div id='list-form-wrapper-right-top'>
+            <form id="listadd-form">
+            <?php foreach ($personids as $id) { ?>
+                <?php echo form_hidden('personid[]', $id);?>
+            <? } ?>
+            <?php foreach ($lists as $list) { ?>
+                <?php echo form_checkbox($list['name'], $list['name'], 0);?>
+                <?php echo form_label($list['name'], $list['name']);?>
+                <br/>
+            <? } ?>
+            </form>
+        </div>
+        <div id='list-form-wrapper-right-bottom'>
+            <button id="listadd-submit" class="submit_button float_right" onclick="listadd_submit()">Submit</button>
+        </div>
+    </div>
+</div>

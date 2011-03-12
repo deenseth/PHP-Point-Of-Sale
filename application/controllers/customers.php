@@ -64,7 +64,10 @@ class Customers extends Person_controller
         foreach ($this->input->post('personid') as $customerid) 
         {
             $customer = $this->Customer->get_info($customerid);
-            
+            if (!$customer->email) {
+                $unremoved++;
+                continue;
+            }
             foreach ($lists as $list)
             {
                 if ($this->input->post($list['name'])) {
@@ -124,7 +127,10 @@ class Customers extends Person_controller
         foreach ($this->input->post('personid') as $customerid) 
         {
             $customer = $this->Customer->get_info($customerid);
-            
+            if (!$customer->email) {
+                $unadded++;
+                continue;
+            }
             foreach ($lists as $list)
             {
                 if ($this->input->post($list['name'])) {

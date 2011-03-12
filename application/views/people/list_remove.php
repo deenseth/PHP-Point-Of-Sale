@@ -28,14 +28,30 @@ function listremove_submit(){
 
 
 </script>
-<form id="listremove-form">
-<?php foreach ($personids as $id) { ?>
-    <?php echo form_hidden('personid[]', $id);?>
-<? } ?>
-<?php foreach ($lists as $list) { ?>
-    <?php echo form_checkbox($list['name'], $list['name'], 0);?>
-    <?php echo form_label($list['name'], $list['name']);?>
-    <br/>
-<? } ?>
-</form>
-<button id="listremove-submit" onclick="listremove_submit()">Submit</button>
+
+<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/list-form.css" />
+
+<div id="list-form-wrapper">
+    <h2><?php echo $this->lang->line('common_list_remove');?></h2>
+    <div id='list-form-wrapper-left'>
+        <p class='helpertext'><?=$this->lang->line('common_list_remove_helpertext');?></p>
+    </div>
+    <div id='list-form-wrapper-right'>
+        <div id='list-form-wrapper-right-top'>
+        <form id="listremove-form" class="float_right">
+            <?php foreach ($personids as $id) { ?>
+                <?php echo form_hidden('personid[]', $id);?>
+            <? } ?>
+            <?php foreach ($lists as $list) { ?>
+                <?php echo form_checkbox($list['name'], $list['name'], 0);?>
+                <?php echo form_label($list['name'], $list['name']);?>
+                <br/>
+            <? } ?>
+        </form>
+        </div>
+        <div id='list-form-wrapper-right-bottom'>
+            <button id="listremove-submit" class="submit_button float_right" onclick="listremove_submit()">Submit</button>
+        </div>
+    </div>
+    <div class="clear"><!--  --></div>
+</div>

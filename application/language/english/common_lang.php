@@ -40,5 +40,7 @@ $lang['common_inv']='inv';
 $lang['common_det']='details';
 $lang['common_emailgroups']='E-Mail Lists';
 $lang['common_list_add']='Add to Mailing List';
+$lang['common_list_add_helpertext']='Select any of your mailing lists to subscribe the selected email addresses to. Any list that each email is already subscribed to will be counted as an unsuccessful addition.';
 $lang['common_list_remove']='Remove from Mailing List';
+$lang['common_list_remove_helpertext']='Select any of your mailing lists to unsubscribe the selected email addresses from. Each email address that is not already subscribed will to each list will count as an unsuccessful removal.';
 ?>

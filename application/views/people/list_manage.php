@@ -69,17 +69,49 @@ function listremove_submit(){
             <?php foreach ($personids as $id) { ?>
                 <?php echo form_hidden('personid[]', $id);?>
             <? } ?>
+            
+            <div class="list" id="header">
+                <p class="descriptor" id="lists-descriptor">Lists</p>
+                <div class="list-groups">
+                    <p class="descriptor">Groups</p>
+                </div>
+                <div class="clear"><!--  --></div>
+            </div>
+            
             <?php foreach ($lists as $list) { 
-                $boxdata = array(  'name'        => $list['name'],
+            $boxdata = array(  'name'        => $list['name'],
                                 'id'          => $list['name'],
                                 'value'       => $list['name'],
                                 'checked'     => false,
                                 );
             ?>
+            
+            <div class="list">
+                <div class="list-main">
                 <?php echo form_checkbox($boxdata);?>
                 <?php echo form_label($list['name'], $list['name']);?>
-                <br/>
+                </div>
+                <? if (count($list['groupings'])) { ?>
+                <div class='list-groups'>
+                <? foreach ($list['groupings'] as $grouping) { ?>
+                    <p class="grouping"><?=$grouping['name']?></p>
+                    <?php foreach ($grouping['groups'] as $group) {
+                    $boxdata = array(   'name'        => $group['name'],
+                                        'id'          => $group['name'],
+                                        'value'       => $list['name'].'>>>'.$group['name'],
+                                        'checked'     => false,
+                                        );
+                    ?>
+                    <?php echo form_checkbox($boxdata);?>
+                    <?php echo form_label($group['name'], $group['name']);?>
+                    <? } ?>
+                <? } ?>
+                </div>
+                <? } ?>
+                <div class="clear"><!--  --></div>
+            </div>
             <? } ?>
+            
             </form>
         </div>
         <div id='list-form-wrapper-right-bottom'>

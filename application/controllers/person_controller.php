@@ -51,7 +51,16 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
         
         if ($key = $this->config->item('mc_api_key')) {
             $this->load->library('MailChimp', array($key) , 'MailChimp');
-            $data['lists']=$this->MailChimp->lists();
+            $lists=$this->MailChimp->lists();
+            // add groups to lists
+            foreach ($lists as &$list) 
+            {
+                $list['groupings'] = array();
+                if ($groupings = $this->MailChimp->listInterestGroupings($list['id'])) {
+                    $list['groupings'] = $groupings;
+                }
+            }
+            $data['lists']=$lists;
         }
         
         $data['removeAjaxUrl']=site_url(strtolower($this->uri->segment(1)).'/listremoveajax');

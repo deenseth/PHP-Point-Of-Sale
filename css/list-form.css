@@ -49,7 +49,7 @@
 #list-form-wrapper p.helpertext{
 	font-size: 14px;
 	line-height: 24px;
-	margin-top: 40px;
+	margin-top: 30px;
 }
 
 #list-form-wrapper label{
@@ -67,4 +67,8 @@
 
 button{
 	cursor: pointer;
+}
+
+#listadd-submit{
+	margin-left: 10px;
 }

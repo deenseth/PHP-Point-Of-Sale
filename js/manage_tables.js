@@ -44,7 +44,7 @@ function enable_search(suggest_url,confirm_search_message)
 enable_search.enabled=false;
 
 
-function list_add(url, complaint)
+function list_manage(url, complaint)
 {
 	var checked = $('#sortable_table td :checked').length
 	if (checked < 1) {
@@ -59,25 +59,7 @@ function list_add(url, complaint)
 		
 	});
 	
-	tb_show('Add to Mailing List', url + '/personids:' + personids.join(','));
-}
-
-function list_remove(url, complaint)
-{
-	var checked = $('#sortable_table td :checked').length
-	if (checked < 1) {
-		alert(complaint);
-		return;
-	}
-	
-	var personids = new Array();
-	
-	$('#sortable_table td :checked').each(function() {
-		personids.push($(this).attr('value'));
-		
-	});
-	
-	tb_show('Remove from Mailing List', url + '/personids:' + personids.join(','));
+	tb_show('Manage Subscriptions', url + '/personids:' + personids.join(','));
 }
 
 function do_search(show_feedback,on_complete)

@@ -39,8 +39,7 @@ $lang['common_welcome_message']= 'Welcome to PHP Point Of Sale, click a module b
 $lang['common_inv']='inv';
 $lang['common_det']='details';
 $lang['common_emailgroups']='E-Mail Lists';
-$lang['common_list_add']='Add to Mailing List';
-$lang['common_list_add_helpertext']='Select any of your mailing lists to subscribe the selected email addresses to. Any list that each email is already subscribed to will be counted as an unsuccessful addition.';
-$lang['common_list_remove']='Remove from Mailing List';
-$lang['common_list_remove_helpertext']='Select any of your mailing lists to unsubscribe the selected email addresses from. Each email address that is not already subscribed will to each list will count as an unsuccessful removal.';
+$lang['common_list_manage']='Manage Subscriptions';
+$lang['common_list_manage_helpertext']='Select the lists and groups you would like to manage for the emails you selected. Click "unsubscribe" to remove the selected lists and groups. Click "subscribe" to add them to the lists and groups you selected.';
+$lang['common_list_manage_none_added']='Please select at least one person to manage subscriptions';
 ?>

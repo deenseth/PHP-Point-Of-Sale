@@ -42,9 +42,9 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
 	}
 	
    /*
-    Displays the form associated with removal of people from a mailing list
+    Displays the form associated with subscription management
      */
-    function listremove()
+    function listmanage()
     {
         // grab person ids from url -- via regex, in spite of jwz
         $data['personids']=explode(',', preg_replace('/.*personids:([\d,]+).*/', '$1', uri_string()));
@@ -54,9 +54,10 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
             $data['lists']=$this->MailChimp->lists();
         }
         
-        $data['ajaxUrl']=site_url(strtolower($this->uri->segment(1)).'/listremoveajax');
+        $data['removeAjaxUrl']=site_url(strtolower($this->uri->segment(1)).'/listremoveajax');
+        $data['addAjaxUrl']=site_url(strtolower($this->uri->segment(1)).'/listaddajax');
         
-        $this->load->view("people/list_remove",$data);
+        $this->load->view("people/list_manage",$data);
     }
     
     /*

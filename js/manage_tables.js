@@ -44,23 +44,24 @@ function enable_search(suggest_url,confirm_search_message)
 enable_search.enabled=false;
 
 
-function enable_list_add_check(complaint)
+function list_add(url, caption)
 {
-	if (!enable_list_add_check.enabled) {
-		enable_list_add_check.enabled=true;
+	var checked = $('#sortable_table td :checked').length
+	if (checked < 1) {
+		alert(complaint);
+		return;
 	}
 	
-	$('#list-add').click(function(){
-		var checked = $('#sortable_table td :checked').length
-		if (checked < 1) {
-			alert(complaint);
-			tb_remove();
-		}
+	var customerids = new Array();
+	
+	$('#sortable_table td :checked').each(function() {
+		customerids.push($(this).attr('value'));
+		
 	});
 	
-	
+	tb_show('Add to Mailing List', url + '/customerids:' + customerids.join(','));
+		
 }
-enable_list_add_check.enabled=false;
 
 function do_search(show_feedback,on_complete)
 {	

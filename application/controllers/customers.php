@@ -31,15 +31,53 @@ class Customers extends Person_controller
 	 */
 	function listadd()
 	{
-	   $customers=$this->input->post('ids'); 
+	    // grab customer ids from url -- via regex, in spite of jwz
+	    $data['personids']=explode(',', preg_replace('/.*customerids:([\d,]+).*/', '$1', uri_string()));  
 	   
+	    if ($key = $this->config->item('mc_api_key')) {
+	        $this->load->library('MailChimp', array($key) , 'MailChimp');
+	        $data['lists']=$this->MailChimp->lists();
+	    }
+	   
+	    $data['ajaxUrl']=site_url(strtolower($this->uri->segment(1)).'/listaddajax');
+	    
+	    $this->load->view("people/list_add",$data);
+	   
+	}
+	
+	function listaddajax()
+	{
 	   if ($key = $this->config->item('mc_api_key')) {
-	       $this->load->library('MailChimp', array($key) , 'MailChimp');
-	       $data['lists']=$this->MailChimp->lists();
-	   }
-	   
-	   $this->load->view("people/list_add",$data);
-	   
+            $this->load->library('MailChimp', array($key) , 'MailChimp');
+            $data['lists']=$this->MailChimp->lists();
+        } else {
+            echo '0:You don\'t have a MailChimp API registered.';
+        }
+        
+        $lists = $this->MailChimp->lists();
+        
+        $added = 0;
+        $unadded = 0;
+        
+        foreach ($this->input->post('personid') as $customerid) 
+        {
+            $customer = $this->Customer->get_info($customerid);
+            
+            foreach ($lists as $list)
+            {
+                if ($this->input->post($list['name'])) {
+                    if ($this->MailChimp->listSubscribe($list['id'], $customer->email, null, 'html', false)) {
+                        $added++;
+                    } else {
+                        $unadded++;
+                    }
+                        
+                }
+            }
+        }
+        $addedText = $added > 0 ? "{$added} Added." : '';
+        $unaddedText = $unadded > 0 ? "Unable to add {$unadded}." : '';
+        echo "1:{$addedText} {$unaddedText}"; 
 	}
 	
 	/*

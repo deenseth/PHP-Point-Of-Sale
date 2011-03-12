@@ -42,8 +42,14 @@ function listremove_submit(){
             <?php foreach ($personids as $id) { ?>
                 <?php echo form_hidden('personid[]', $id);?>
             <? } ?>
-            <?php foreach ($lists as $list) { ?>
-                <?php echo form_checkbox($list['name'], $list['name'], 0);?>
+            <?php foreach ($lists as $list) { 
+                $boxdata = array(  'name'        => $list['name'],
+                                'id'          => $list['name'],
+                                'value'       => $list['name'],
+                                'checked'     => false,
+                                );
+            ?>
+                <?php echo form_checkbox($boxdata);?>
                 <?php echo form_label($list['name'], $list['name']);?>
                 <br/>
             <? } ?>

@@ -64,3 +64,7 @@
     padding: 10px;
 	width: 290px;
 }
+
+button{
+	cursor: pointer;
+}

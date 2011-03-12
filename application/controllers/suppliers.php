@@ -9,6 +9,7 @@ class Suppliers extends Person_controller
 	
 	function index()
 	{
+	    $data['mailchimp']=($this->config->item('mc_api_key') !== null);
 		$data['controller_name']=strtolower($this->uri->segment(1));
 		$data['form_width']=$this->get_form_width();
 		$data['manage_table']=get_supplier_manage_table($this->Supplier->get_all(),$this);

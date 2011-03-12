@@ -52,14 +52,14 @@ function list_add(url, complaint)
 		return;
 	}
 	
-	var customerids = new Array();
+	var personids = new Array();
 	
 	$('#sortable_table td :checked').each(function() {
-		customerids.push($(this).attr('value'));
+		personids.push($(this).attr('value'));
 		
 	});
 	
-	tb_show('Add to Mailing List', url + '/customerids:' + customerids.join(','));
+	tb_show('Add to Mailing List', url + '/personids:' + personids.join(','));
 }
 
 function list_remove(url, complaint)
@@ -70,14 +70,14 @@ function list_remove(url, complaint)
 		return;
 	}
 	
-	var customerids = new Array();
+	var personids = new Array();
 	
 	$('#sortable_table td :checked').each(function() {
-		customerids.push($(this).attr('value'));
+		personids.push($(this).attr('value'));
 		
 	});
 	
-	tb_show('Remove from Mailing List', url + '/customerids:' + customerids.join(','));
+	tb_show('Remove from Mailing List', url + '/personids:' + personids.join(','));
 }
 
 function do_search(show_feedback,on_complete)

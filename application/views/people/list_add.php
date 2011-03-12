@@ -29,7 +29,6 @@ function listadd_submit(){
 
 </script>
 <form id="listadd-form">
-<?php echo form_hidden('isPost', '1');?>
 <?php foreach ($personids as $id) { ?>
     <?php echo form_hidden('personid[]', $id);?>
 <? } ?>

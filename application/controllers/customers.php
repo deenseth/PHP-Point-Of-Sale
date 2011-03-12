@@ -77,8 +77,9 @@ class Customers extends Person_controller
                 }
             }
         }
-        $removedText = $removed > 0 ? "{$removed} Removed." : '';
-        $unremovedText = $unremoved > 0 ? "Unable to remove {$unremoved}." : '';
+        $s = $removed > 1 ? 's':'';
+        $removedText = $removed > 0 ? "{$removed} Removal{$s}." : '';
+        $unremovedText = $unremoved > 0 ? "{$unremoved} Unsuccessful." : '';
         echo "1:{$removedText} {$unremovedText}"; 
 	}
 	
@@ -136,8 +137,9 @@ class Customers extends Person_controller
                 }
             }
         }
-        $addedText = $added > 0 ? "{$added} Added." : '';
-        $unaddedText = $unadded > 0 ? "Unable to add {$unadded}." : '';
+        $s = $added > 1 ? 's':'';
+        $addedText = $added > 0 ? "{$added} Addition{$s}." : '';
+        $unaddedText = $unadded > 0 ? "{$unadded} Unsuccessful." : '';
         echo "1:{$addedText} {$unaddedText}"; 
 	}
 	

@@ -29,7 +29,6 @@ function listremove_submit(){
 
 </script>
 <form id="listremove-form">
-<?php echo form_hidden('isPost', '1');?>
 <?php foreach ($personids as $id) { ?>
     <?php echo form_hidden('personid[]', $id);?>
 <? } ?>

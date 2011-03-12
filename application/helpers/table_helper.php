@@ -71,10 +71,10 @@ function get_person_data_row($person,$controller)
 		}
 		
 		$table_data_row.="<td width='5%'><input type='checkbox' id='person_$person->person_id' value='".$person->person_id."'/></td>";
-	    $table_data_row.='<td width="20%">'.character_limiter($person->last_name,13).'</td>';
-	    $table_data_row.='<td width="20%">'.character_limiter($person->first_name,13).'</td>';
+	    $table_data_row.='<td width="19%">'.character_limiter($person->last_name,13).'</td>';
+	    $table_data_row.='<td width="19%">'.character_limiter($person->first_name,13).'</td>';
 	    $table_data_row.='<td width="15%">'.mailto($person->email,character_limiter($person->email,22)).'</td>';
-	    $table_data_row.='<td width="10%" class="email-lists">'.$CI->MailChimp->tableListing($person->email).'</td>';
+	    $table_data_row.='<td width="12%" class="email-lists">'.$CI->MailChimp->tableListing($person->email).'</td>';
 	    $table_data_row.='<td width="15%">'.character_limiter($person->phone_number,13).'</td>';        
 	    $table_data_row.='<td width="5%">'.anchor($controller_name."/view/$person->person_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';
 	}  else {

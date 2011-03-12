@@ -27,7 +27,64 @@ class Customers extends Person_controller
 	}
 	
 	/*
-	Responsible for adding customers to a particular mailing list
+	Displays the form associated with removal of customers from a mailing list
+	 */
+	function listremove()
+	{
+	    // grab customer ids from url -- via regex, in spite of jwz
+        $data['personids']=explode(',', preg_replace('/.*customerids:([\d,]+).*/', '$1', uri_string()));
+        
+	    if ($key = $this->config->item('mc_api_key')) {
+            $this->load->library('MailChimp', array($key) , 'MailChimp');
+            $data['lists']=$this->MailChimp->lists();
+        }
+        
+        $data['ajaxUrl']=site_url(strtolower($this->uri->segment(1)).'/listremoveajax');
+        
+        $this->load->view("people/list_remove",$data);
+	}
+	
+	/*
+	Ajax call responsible for removing customers from selected mailing list
+	 */
+	function listremoveajax()
+	{
+	    if ($key = $this->config->item('mc_api_key')) {
+            $this->load->library('MailChimp', array($key) , 'MailChimp');
+            $data['lists']=$this->MailChimp->lists();
+        } else {
+            echo '0:You don\'t have a MailChimp API registered.';
+        }
+        
+        $lists = $this->MailChimp->lists();
+        
+        $removed = 0;
+        $unremoved = 0;
+        
+        foreach ($this->input->post('personid') as $customerid) 
+        {
+            $customer = $this->Customer->get_info($customerid);
+            
+            foreach ($lists as $list)
+            {
+                if ($this->input->post($list['name'])) {
+                    if ($this->MailChimp->listUnsubscribe($list['id'], $customer->email, null, 'html', false)) {
+                        $removed++;
+                    } else {
+                        $unremoved++;
+                    }
+                        
+                }
+            }
+        }
+        $removedText = $removed > 0 ? "{$removed} Removed." : '';
+        $unremovedText = $unremoved > 0 ? "Unable to remove {$unremoved}." : '';
+        echo "1:{$removedText} {$unremovedText}"; 
+	}
+	
+	
+	/*
+	Responsible for displaying the form responseible for adding customers to a particular mailing list
 	 */
 	function listadd()
 	{
@@ -44,6 +101,10 @@ class Customers extends Person_controller
 	    $this->load->view("people/list_add",$data);
 	   
 	}
+	
+	/*
+	Ajax call responsible for adding customers to selected mailing list
+	 */
 	
 	function listaddajax()
 	{

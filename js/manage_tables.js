@@ -44,7 +44,7 @@ function enable_search(suggest_url,confirm_search_message)
 enable_search.enabled=false;
 
 
-function list_add(url, caption)
+function list_add(url, complaint)
 {
 	var checked = $('#sortable_table td :checked').length
 	if (checked < 1) {
@@ -60,7 +60,24 @@ function list_add(url, caption)
 	});
 	
 	tb_show('Add to Mailing List', url + '/customerids:' + customerids.join(','));
+}
+
+function list_remove(url, complaint)
+{
+	var checked = $('#sortable_table td :checked').length
+	if (checked < 1) {
+		alert(complaint);
+		return;
+	}
+	
+	var customerids = new Array();
+	
+	$('#sortable_table td :checked').each(function() {
+		customerids.push($(this).attr('value'));
 		
+	});
+	
+	tb_show('Remove from Mailing List', url + '/customerids:' + customerids.join(','));
 }
 
 function do_search(show_feedback,on_complete)

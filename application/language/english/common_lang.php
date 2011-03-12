@@ -40,4 +40,5 @@ $lang['common_inv']='inv';
 $lang['common_det']='details';
 $lang['common_emailgroups']='E-Mail Lists';
 $lang['common_list_add']='Add to Mailing List';
+$lang['common_list_remove']='Remove from Mailing List';
 ?>

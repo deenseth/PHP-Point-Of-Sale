@@ -43,6 +43,25 @@ function enable_search(suggest_url,confirm_search_message)
 }
 enable_search.enabled=false;
 
+
+function enable_list_add_check(complaint)
+{
+	if (!enable_list_add_check.enabled) {
+		enable_list_add_check.enabled=true;
+	}
+	
+	$('#list-add').click(function(){
+		var checked = $('#sortable_table td :checked').length
+		if (checked < 1) {
+			alert(complaint);
+			tb_remove();
+		}
+	});
+	
+	
+}
+enable_list_add_check.enabled=false;
+
 function do_search(show_feedback,on_complete)
 {	
 	//If search is not enabled, don't do anything

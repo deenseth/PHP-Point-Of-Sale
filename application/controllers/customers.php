@@ -9,6 +9,7 @@ class Customers extends Person_controller
 	
 	function index()
 	{
+	    $data['mailchimp']=($this->config->item('mc_api_key') !== null);
 		$data['controller_name']=strtolower($this->uri->segment(1));
 		$data['form_width']=$this->get_form_width();
 		$data['manage_table']=get_people_manage_table($this->Customer->get_all(),$this);
@@ -23,6 +24,22 @@ class Customers extends Person_controller
 		$search=$this->input->post('search');
 		$data_rows=get_people_manage_table_data_rows($this->Customer->search($search),$this);
 		echo $data_rows;
+	}
+	
+	/*
+	Responsible for adding customers to a particular mailing list
+	 */
+	function listadd()
+	{
+	   $customers=$this->input->post('ids'); 
+	   
+	   if ($key = $this->config->item('mc_api_key')) {
+	       $this->load->library('MailChimp', array($key) , 'MailChimp');
+	       $data['lists']=$this->MailChimp->lists();
+	   }
+	   
+	   $this->load->view("people/list_add",$data);
+	   
 	}
 	
 	/*

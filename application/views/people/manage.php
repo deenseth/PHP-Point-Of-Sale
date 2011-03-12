@@ -8,6 +8,7 @@ $(document).ready(function()
     enable_search('<?php echo site_url("$controller_name/suggest")?>','<?php echo $this->lang->line("common_confirm_search")?>');
     enable_email('<?php echo site_url("$controller_name/mailto")?>');
     enable_delete('<?php echo $this->lang->line($controller_name."_confirm_delete")?>','<?php echo $this->lang->line($controller_name."_none_selected")?>');
+    enable_list_add_check('<?php echo $this->lang->line($controller_name."_none_selected_add")?>');
 }); 
 
 function init_table_sorting()
@@ -69,6 +70,9 @@ function post_person_form_submit(response)
 	<ul>
 		<li class="float_left"><span><?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('id'=>'delete')); ?></span></li>
 		<li class="float_left"><span><a href="#" id="email"><?php echo $this->lang->line("common_email");?></a></span></li>
+		<?php if ($mailchimp) { ?>
+		<li class="float_left"><span><?php echo anchor($controller_name."/listadd/", $this->lang->line("common_list_add"), array('id'=>'list-add', 'class'=>'thickbox'))?></span></li>
+		<? } ?>
 		<li class="float_right">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
 		<?php echo form_open("$controller_name/search",array('id'=>'search_form')); ?>

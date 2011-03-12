@@ -25,8 +25,6 @@ class Config extends Secure_area
 			$mc_message =  $success ? 'Connected to MailChimp! ' 
 			                        : "Unable to connect to MailChimp. Please check your connection and your API key. ";
             $validated_api_key = $success ? $this->input->post('mc_api_key') : '';
-		} else {
-			$validated_api_key = $this->config->item('mc_api_key');
 		}
 
 		$batch_save_data=array(

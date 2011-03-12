@@ -164,12 +164,12 @@ function get_supplier_data_row($supplier,$controller)
             $CI->load->library('MailChimp', array('api_key'=>$key), 'MailChimp');
         }
         $table_data_row.="<td width='5%'><input type='checkbox' id='person_$supplier->person_id' value='".$supplier->person_id."'/></td>";
-        $table_data_row.='<td width="15%">'.character_limiter($supplier->company_name,13).'</td>';
-        $table_data_row.='<td width="15%">'.character_limiter($supplier->last_name,13).'</td>';
-        $table_data_row.='<td width="15%">'.character_limiter($supplier->first_name,13).'</td>';
+        $table_data_row.='<td width="14%">'.character_limiter($supplier->company_name,13).'</td>';
+        $table_data_row.='<td width="14%">'.character_limiter($supplier->last_name,13).'</td>';
+        $table_data_row.='<td width="14%">'.character_limiter($supplier->first_name,13).'</td>';
         $table_data_row.='<td width="20%">'.mailto($supplier->email,character_limiter($supplier->email,22)).'</td>';
+        $table_data_row.='<td width="13%" class="email-lists">'.$CI->MailChimp->tableListing($supplier->email).'</td>';
         $table_data_row.='<td width="15%">'.character_limiter($supplier->phone_number,13).'</td>';      
-        $table_data_row.='<td width="10%" class="email-lists">'.$CI->MailChimp->tableListing($person->email).'</td>';
         $table_data_row.='<td width="5%">'.anchor($controller_name."/view/$supplier->person_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';      
 	} else {
 		$table_data_row.="<td width='5%'><input type='checkbox' id='person_$supplier->person_id' value='".$supplier->person_id."'/></td>";

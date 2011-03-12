@@ -129,3 +129,7 @@ td.email-lists
 {
 	font-size: 10px;
 }
+
+td.email-lists ul li{
+	list-style-position: inside;
+}

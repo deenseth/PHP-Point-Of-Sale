@@ -11,7 +11,7 @@ foreach ($lists as $list) {
 $boxdata = array(  'name'        => $list['name'],
                     'id'          => $list['name'],
                     'value'       => $list['name'],
-                    'checked'     => false,
+                    'checked'     => $CI->MailChimp->isEmailSubscribedToList($list['id'], $email),
                     );
 ?>
 
@@ -35,7 +35,7 @@ $boxdata = array(  'name'        => $list['name'],
                         $boxdata = array(   'name'        => str_replace(' ', '_', $list['name'].'---'.$grouping['name'].'---'.$group['name']),
                                             'id'          => $group['name'],
                                             'value'       => 1,
-                                            'checked'     => false,
+                                            'checked'     => $CI->MailChimp->isEmailSubscribedToGroup($list['id'], $grouping['name'], $group['name'], $email),
                                             );
                         echo form_checkbox($boxdata);
                         break;
@@ -43,7 +43,7 @@ $boxdata = array(  'name'        => $list['name'],
                         $boxdata = array(   'name'        => str_replace(' ', '_', $list['name'].'---'.$grouping['name'].'---'.$group['name']),
                                             'id'          => $group['name'],
                                             'value'       => 1,
-                                            'checked'     => false,
+                                            'checked'     => $CI->MailChimp->isEmailSubscribedToGroup($list['id'], $grouping['name'], $group['name'], $email),
                                             );
                         echo form_radio($boxdata);
                         break;
@@ -56,8 +56,11 @@ $boxdata = array(  'name'        => $list['name'],
                     echo form_label($group['name'], $group['name']);
                 } 
             } 
-            if ($grouping['form_field'] == 'dropdown') {
-                echo form_dropdown($grouping['name'], $options, '');
+            if ($grouping['form_field'] == 'dropdown') {                
+                $defaultValue = $CI->MailChimp->isEmailSubscribedToGroup($list['id'], $grouping['name'], $group['name'], $email) 
+                              ? str_replace(' ', '_', $list['name'].'---'.$grouping['name'].'---'.$group['name'])
+                              : '';   
+                echo form_dropdown($grouping['name'], $options, $defaultValue);
             } ?>
         </div>
     <? } ?>

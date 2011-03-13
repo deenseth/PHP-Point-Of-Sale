@@ -248,5 +248,45 @@ class MailChimp extends MCAPI
         }
         
         return ($added > 0); 
-    }    
+    }
+
+    function isEmailSubscribedToList($listId, $email)
+    {
+        if (!$email) {
+            return false;
+        }
+        
+        $response = $this->listMemberInfo($listId, $email);
+        
+        return ($response['success'] > 0);
+        
+    }
+    
+    function isEmailSubscribedToGroup($listId, $groupingName, $groupName, $email)
+    {
+        if (!$email) {
+            return false;
+        }
+        
+        $response = $this->listMemberInfo($listId, $email);
+        
+        if ($response['success'] == 0) {
+            return false;
+        }
+        
+        $individual = array_shift($response['data']);
+        
+        if (!isset($individual['merges']) || count($individual['merges']['GROUPINGS']) == 0) {
+            return false; 
+        }
+        
+        foreach ($individual['merges']['GROUPINGS'] as $grouping)
+        {
+            if ($grouping['name'] == $groupingName) {
+                return (substr_count($grouping['groups'], $groupName) > 0);
+            }
+        }
+        
+        return false;
+    }
 }

@@ -19,5 +19,5 @@ if ($key = $this->config->item('mc_api_key')) {
         </div>
         <div class="clear"><!--  --></div>
     </div>
-    <?=$this->load->view('partial/list_manage_form.php')?>
+    <?=$this->load->view('partial/list_manage_form.php', array('email'=>$email))?>
 </div>

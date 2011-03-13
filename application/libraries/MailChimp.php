@@ -19,6 +19,7 @@ class MailChimp extends MCAPI
 	private $lists;
 	private $ids_lists = array();
 	private $lists_groups = array();
+	private $listsWithGroups = array();
 	
     function __construct($config=null)
     {
@@ -131,8 +132,16 @@ class MailChimp extends MCAPI
     	return parent::listInterestGroupings($id);
     }
     
+    /**
+     * Return lists with groupings already added
+     * @return array $lists
+     */
     function listsWithGroups()
     {
+        if ($this->listsWithGroups) {
+            return $this->listsWithGroups;
+        }
+        
         // add groups to lists
         $lists = $this->lists();
         foreach ($lists as &$list) 
@@ -142,6 +151,102 @@ class MailChimp extends MCAPI
                 $list['groupings'] = $groupings;
             }
         }
+        
+        $this->listsWithGroups = $lists;
+        
         return $lists;
     }
+    
+    /**
+     * Use form data to assign lists, groups to a given person
+     * @param int $personid
+     * @return bool $success 
+     */
+    function handleSubscriptionForPerson($personid)
+    {
+        $CI =& get_instance();
+        
+        $person = $CI->Person->get_info($personid);
+        if (!$person->email) {
+            return true;
+        }
+        foreach ($this->listsWithGroups() as $list)
+        {
+            $response = $this->listMemberInfo($list['id'], $person->email);
+            $individual = array_shift($response['data']);
+            $merge_vars = $individual['merges'];
+            $selected = false;
+            if (!$merge_vars['GROUPINGS']) {
+                $merge_vars['GROUPINGS'] = array();
+            }
+            
+            if ($CI->input->post($list['name'])) {
+                $selected = true;
+            } else {
+                
+                foreach($list['groupings'] as $grouping) 
+                {
+                    if ($grouping['form_field'] == 'dropdown') {
+                        $val = $CI->input->post($grouping['name']);
+                        if ($val !== 0 && $val !== null) {
+                            $selected = true;
+                            $group = end(explode('---', $val));
+                            foreach ($merge_vars['GROUPINGS'] as &$chimpGrouping)
+                            {
+                                $changed = true;
+                                if (substr_count($chimpGrouping['groups'], $group)) {
+                                    break;
+                                }
+                                $chimpGrouping['groups'] = $group;
+                                break;
+                            }
+                        }
+                        continue;
+                    }
+                    
+                    foreach ($grouping['groups'] as $group)
+                    {
+                        $changed = false;
+                        if ($CI->input->post(str_replace(' ', '_', $list['name'].'---'.$grouping['name'].'---'.$group['name'])) == 1) {
+                            $selected = true;
+                            foreach ($merge_vars['GROUPINGS'] as &$chimpGrouping)
+                            {
+                                if ($chimpGrouping['name'] == $grouping['name']) {
+                                    $changed = true;
+                                    if (substr_count($chimpGrouping['groups'], $group['name'])) {
+                                         break;
+                                    }
+                                    $comma = strlen($chimpGrouping['groups'] > 0)  ? ',':''; 
+                                    
+                                    $chimpGrouping['groups'] .= $comma.$group['name'];
+                                    break;
+                                }
+                            }
+                            
+                            if (!$changed) {
+                                $merge_vars['GROUPINGS'][] = array('name'=>$grouping['name'],
+                                                                   'groups'=>$grouping['name']);
+                            }
+                            
+                        }
+                        
+                        
+                        
+                    }
+                }
+            }
+            
+            $mv = (count($merge_vars['GROUPINGS']) > 0) ? $merge_vars : null;
+            
+            if ($selected) {
+                if ($this->listSubscribe($list['id'], $person->email, $mv, 'html', false, true)) {
+                    $added++;
+                } else {
+                    $unadded++;
+                }
+            }        
+        }
+        
+        return ($added > 0); 
+    }    
 }

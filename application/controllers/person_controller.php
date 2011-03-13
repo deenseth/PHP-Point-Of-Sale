@@ -66,7 +66,7 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
             echo '0:You don\'t have a MailChimp API registered.';
         }
         
-        $lists = $this->MailChimp->lists();
+        $lists = $this->MailChimp->listsWithGroupings();
         
         $removed = 0;
         $unremoved = 0;
@@ -83,10 +83,6 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
                 $response = $this->MailChimp->listMemberInfo($list['id'], $person->email);
                 $individual = array_shift($response['data']);
                 $merge_vars = $individual['merges'];
-                $list['groupings'] = array();
-                if ($groupings = $this->MailChimp->listInterestGroupings($list['id'])) {
-                    $list['groupings'] = $groupings;
-                }
                 
                 if ($this->input->post($list['name'])) {
                     if ($this->MailChimp->listUnsubscribe($list['id'], $person->email, null, 'html', false)) {
@@ -150,27 +146,7 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
         echo "1:{$removedText} {$unremovedText}"; 
     }
     
-    
-    /*
-    Responsible for displaying the form responseible for adding people to a particular mailing list
-     */
-    function listadd()
-    {
-        // grab person ids from url -- via regex, in spite of jwz
-        $data['personids']=explode(',', preg_replace('/.*personids:([\d,]+).*/', '$1', uri_string()));  
-       
-        if ($key = $this->config->item('mc_api_key')) {
-            $this->load->library('MailChimp', array($key) , 'MailChimp');
-            $data['lists']=$this->MailChimp->lists();
-        }
-       
-        $data['ajaxUrl']=site_url(strtolower($this->uri->segment(1)).'/listaddajax');
-        
-        $this->load->view("people/list_add",$data);
-       
-    }
-    
-    /*
+   /*
     Ajax call responsible for adding people to selected mailing list
      */
     
@@ -183,102 +159,21 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
             echo '0:You don\'t have a MailChimp API registered.';
         }
         
-        $lists = $this->MailChimp->lists();
+        $lists = $this->MailChimp->listsWithGroups();
         
         $added = 0;
         $unadded = 0;
         
         foreach ($this->input->post('personid') as $personid) 
         {
-            $person = $this->Person->get_info($personid);
-            if (!$person->email) {
+            if ($this->MailChimp->handleSubscriptionForPerson($personid)) {
+                $added++;
+            } else {
                 $unadded++;
-                continue;
-            }
-            foreach ($lists as $list)
-            {
-                $response = $this->MailChimp->listMemberInfo($list['id'], $person->email);
-                $individual = array_shift($response['data']);
-                $merge_vars = $individual['merges'];
-                $selected = false;
-                if (!$merge_vars['GROUPINGS']) {
-                    $merge_vars['GROUPINGS'] = array();
-                }
-                
-                
-                $list['groupings'] = array();
-                if ($groupings = $this->MailChimp->listInterestGroupings($list['id'])) {
-                    $list['groupings'] = $groupings;
-                }
-                
-                if ($this->input->post($list['name'])) {
-                    $selected = true;
-                } else {
-                    
-                    foreach($list['groupings'] as $grouping) 
-                    {
-                        if ($grouping['form_field'] == 'dropdown') {
-                            $val = $this->input->post($grouping['name']);
-                            if ($val !== 0 && $val !== null) {
-                                $selected = true;
-                                $group = end(explode('---', $val));
-                                foreach ($merge_vars['GROUPINGS'] as &$chimpGrouping)
-                                {
-                                    $changed = true;
-                                    if (substr_count($chimpGrouping['groups'], $group)) {
-                                        break;
-                                    }
-                                    $chimpGrouping['groups'] = $group;
-                                    break;
-                                }
-                            }
-                            continue;
-                        }
-                        
-                        foreach ($grouping['groups'] as $group)
-                        {
-                            $changed = false;
-                            if ($this->input->post(str_replace(' ', '_', $list['name'].'---'.$grouping['name'].'---'.$group['name'])) == 1) {
-                                $selected = true;
-                                foreach ($merge_vars['GROUPINGS'] as &$chimpGrouping)
-                                {
-                                    if ($chimpGrouping['name'] == $grouping['name']) {
-                                        $changed = true;
-                                        if (substr_count($chimpGrouping['groups'], $group['name'])) {
-                                             break;
-                                        }
-                                        $comma = strlen($chimpGrouping['groups'] > 0)  ? ',':''; 
-                                        
-                                        $chimpGrouping['groups'] .= $comma.$group['name'];
-                                        break;
-                                    }
-                                }
-                                
-                                if (!$changed) {
-                                    $merge_vars['GROUPINGS'][] = array('name'=>$grouping['name'],
-                                                                       'groups'=>$grouping['name']);
-                                }
-                                
-                            }
-                            
-                            
-                            
-                        }
-                    }
-                }
-                
-                $mv = (count($merge_vars['GROUPINGS']) > 0) ? $merge_vars : null;
-                
-                if ($selected) {
-                    if ($this->MailChimp->listSubscribe($list['id'], $person->email, $mv, 'html', false, true)) {
-                        $added++;
-                    } else {
-                        $unadded++;
-                    }
-                }
-                        
             }
         }
+        
+        
         $s = $added > 1 ? 's':'';
         $addedText = $added > 0 ? "{$added} Addition{$s}." : '';
         $unaddedText = $unadded > 0 ? "{$unadded} Unsuccessful." : '';

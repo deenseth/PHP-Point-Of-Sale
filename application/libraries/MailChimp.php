@@ -162,7 +162,7 @@ class MailChimp extends MCAPI
      * @param int $personid
      * @return bool $success 
      */
-    function handleSubscriptionForPerson($personid)
+    function handleSubscriptionForPerson($personid, $update_existing=false)
     {
         $CI =& get_instance();
         
@@ -182,56 +182,80 @@ class MailChimp extends MCAPI
             
             if ($CI->input->post($list['name'])) {
                 $selected = true;
-            } else {
+            } 
                 
-                foreach($list['groupings'] as $grouping) 
+            foreach($list['groupings'] as $grouping) 
+            {
+                if ($grouping['form_field'] == 'dropdown') {
+                    $val = $CI->input->post($grouping['name']);
+                    if ($val !== 0 && $val !== null) {
+                        $selected = true;
+                        $group = end(explode('---', $val));
+                        foreach ($merge_vars['GROUPINGS'] as &$chimpGrouping)
+                        {
+                            $changed = true;
+                            if (substr_count($chimpGrouping['groups'], $group)) {
+                                break;
+                            }
+                            $chimpGrouping['groups'] = $group;
+                            break;
+                        }
+                    }
+                    continue;
+                }
+                
+                if ($update_existing) {
+                    $groupList = '';
+                }
+                
+                foreach ($grouping['groups'] as $group)
                 {
-                    if ($grouping['form_field'] == 'dropdown') {
-                        $val = $CI->input->post($grouping['name']);
-                        if ($val !== 0 && $val !== null) {
-                            $selected = true;
-                            $group = end(explode('---', $val));
-                            foreach ($merge_vars['GROUPINGS'] as &$chimpGrouping)
-                            {
+                    
+                    $changed = false;
+                    if ($CI->input->post(str_replace(' ', '_', $list['name'].'---'.$grouping['name'].'---'.$group['name'])) == 1) {
+                        $selected = true;
+                        
+                        if ($update_existing) {
+                            $changed = true;
+                            $groupList = ($groupList == '') ? $group['name'] : ','.$group['name'];
+                            continue;
+                        }
+                        
+                        foreach ($merge_vars['GROUPINGS'] as &$chimpGrouping)
+                        {
+                            if ($chimpGrouping['name'] == $grouping['name']) {
                                 $changed = true;
-                                if (substr_count($chimpGrouping['groups'], $group)) {
-                                    break;
+                                if (substr_count($chimpGrouping['groups'], $group['name'])) {
+                                     break;
                                 }
-                                $chimpGrouping['groups'] = $group;
+                                $comma = strlen($chimpGrouping['groups'] > 0)  ? ',':''; 
+                                
+                                $chimpGrouping['groups'] .= $comma.$group['name'];
                                 break;
                             }
                         }
-                        continue;
+                        
+                        if (!$changed) {
+                            $merge_vars['GROUPINGS'][] = array('name'=>$grouping['name'],
+                                                               'groups'=>$group['name']);
+                        }
+                    }
+                }
+                
+                if($update_existing) {
+                    $found = false;
+                    foreach($merge_vars['GROUPINGS'] as &$oldgrouping)
+                    {
+                        if ($oldgrouping['name'] == $grouping['name']) {
+                            $oldgrouping['groups'] = $groupList;
+                            $found = true;
+                            break;
+                        }
                     }
                     
-                    foreach ($grouping['groups'] as $group)
-                    {
-                        $changed = false;
-                        if ($CI->input->post(str_replace(' ', '_', $list['name'].'---'.$grouping['name'].'---'.$group['name'])) == 1) {
-                            $selected = true;
-                            foreach ($merge_vars['GROUPINGS'] as &$chimpGrouping)
-                            {
-                                if ($chimpGrouping['name'] == $grouping['name']) {
-                                    $changed = true;
-                                    if (substr_count($chimpGrouping['groups'], $group['name'])) {
-                                         break;
-                                    }
-                                    $comma = strlen($chimpGrouping['groups'] > 0)  ? ',':''; 
-                                    
-                                    $chimpGrouping['groups'] .= $comma.$group['name'];
-                                    break;
-                                }
-                            }
-                            
-                            if (!$changed) {
-                                $merge_vars['GROUPINGS'][] = array('name'=>$grouping['name'],
-                                                                   'groups'=>$grouping['name']);
-                            }
-                            
-                        }
-                        
-                        
-                        
+                    if (!$found) {
+                        $merge_vars['GROUPINGS'][] = array('name'=>$grouping['name'],
+                                                           'groups'=>$groupList);
                     }
                 }
             }
@@ -240,6 +264,12 @@ class MailChimp extends MCAPI
             
             if ($selected) {
                 if ($this->listSubscribe($list['id'], $person->email, $mv, 'html', false, true)) {
+                    $added++;
+                } else {
+                    $unadded++;
+                }
+            } else if ($update_existing) {
+                if ($this->listUnsubscribe($list['id'], $person->email, false, false, false)) {
                     $added++;
                 } else {
                     $unadded++;

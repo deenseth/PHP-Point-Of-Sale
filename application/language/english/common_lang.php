@@ -42,4 +42,6 @@ $lang['common_emailgroups']='E-Mail Lists';
 $lang['common_list_manage']='Manage Subscriptions';
 $lang['common_list_manage_helpertext']='Select the lists and groups you would like to manage for the emails you selected. Click "unsubscribe" to remove the selected lists and groups. Click "subscribe" to add them to the lists and groups you selected.';
 $lang['common_list_manage_none_added']='Please select at least one person to manage subscriptions';
+$lang['common_successful_subscription']='Mailing list subscriptions successful!';
+$lang['common_unsuccessful_subscription']='Mailing list subscriptions unsuccessful.';
 ?>

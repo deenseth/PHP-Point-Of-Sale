@@ -71,13 +71,40 @@ class Customers extends Person_controller
 			//New customer
 			if($customer_id==-1)
 			{
-				echo json_encode(array('success'=>true,'message'=>$this->lang->line('customers_successful_adding').' '.
-				$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>$customer_data['person_id']));
+			    $subscriptionInfo = '';
+			    if ($key = $this->config->item('mc_api_key')) {
+                    $this->load->library('MailChimp', array($key) , 'MailChimp');
+                    
+    			    if ($this->MailChimp->handleSubscriptionForPerson($customer_data['person_id'])) {
+                        $subscriptionInfo = $this->lang->line('common_successful_subscription');
+                    } else {
+                        $subscriptionInfo = $this->lang->line('common_unsuccessful_subscription');
+                    }
+			    }
+			    
+			    echo json_encode(array('success'=>true,
+				                       'message'=>$this->lang->line('customers_successful_adding').' '.
+                                				$person_data['first_name'].' '.
+                                				$person_data['last_name'].' '.
+                                				$subscriptionInfo,
+                        			   'person_id'=>$customer_data['person_id']));
 			}
 			else //previous customer
 			{
+			    $subscriptionInfo = '';
+                if ($key = $this->config->item('mc_api_key')) {
+                    $this->load->library('MailChimp', array($key) , 'MailChimp');
+                    
+                    if ($this->MailChimp->handleSubscriptionForPerson($customer_id)) {
+                        $subscriptionInfo = $this->lang->line('common_successful_subscription');
+                    } else {
+                        $subscriptionInfo = $this->lang->line('common_unsuccessful_subscription');
+                    }
+                }
+			    
 				echo json_encode(array('success'=>true,'message'=>$this->lang->line('customers_successful_updating').' '.
-				$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>$customer_id));
+				$person_data['first_name'].' '.$person_data['last_name'].'. '.
+				$subscriptionInfo.' ','person_id'=>$customer_id));
 			}
 		}
 		else//failure

@@ -95,13 +95,46 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
             }
             foreach ($lists as $list)
             {
+                $response = $this->MailChimp->listMemberInfo($list['id'], $person->email);
+                $individual = array_shift($response['data']);
+                $merge_vars = $individual['merges'];
+                $list['groupings'] = array();
+                if ($groupings = $this->MailChimp->listInterestGroupings($list['id'])) {
+                    $list['groupings'] = $groupings;
+                }
+                
                 if ($this->input->post($list['name'])) {
                     if ($this->MailChimp->listUnsubscribe($list['id'], $person->email, null, 'html', false)) {
                         $removed++;
                     } else {
                         $unremoved++;
+                    }   
+                } else {
+                    
+                    foreach($list['groupings'] as $grouping) 
+                    {
+                        $changed = false;
+                        foreach ($grouping['groups'] as $group)
+                        {
+                            if ($this->input->post(str_replace(' ', '_', $list['name'].'---'.$grouping['name'].'---'.$group['name'])) == 1) {
+                                foreach ($merge_vars['GROUPINGS'] as &$chimpGrouping)
+                                {
+                                    if ($chimpGrouping['name'] == $grouping['name']) {
+                                        $chimpGrouping['groups'] = str_replace($group['name'], '', $chimpGrouping['groups']);
+                                        $chimpGrouping['groups'] = str_replace(',,', ',', $chimpGrouping['groups']);
+                                        $changed = true;
+                                    }
+                                }
+                            }
+                        }
+                        if ($changed) {
+                            if ($this->MailChimp->listUpdateMember($list['id'], $person->email, $merge_vars)) {
+                                $removed++;
+                            } else {
+                                $unremoved++;
+                            }
+                        }
                     }
-                        
                 }
             }
         }

@@ -1,6 +1,14 @@
 <script type="text/javascript">
 
-function listadd_submit(){
+function listadd_submit()
+{
+
+	var checked = $('#listmanage-form :checked').length
+    if (checked < 1) {
+        alert('Please select at least one list or group to manage. If you changed your mind, press escape.');
+        return;
+    }
+	
     $.ajax({url: '<?=$addAjaxUrl?>', 
             data: $('#listmanage-form').serialize(),
             type: 'POST',
@@ -26,7 +34,15 @@ function listadd_submit(){
            });
 }
 
-function listremove_submit(){
+function listremove_submit()
+{
+
+	var checked = $('#listmanage-form :checked').length
+    if (checked < 1) {
+        alert('Please select at least one list or group to manage. If you changed your mind, press escape.');
+        return;
+    }
+    
     $.ajax({url: '<?=$removeAjaxUrl?>', 
             data: $('#listmanage-form').serialize(),
             type: 'POST',
@@ -96,9 +112,9 @@ function listremove_submit(){
                 <? foreach ($list['groupings'] as $grouping) { ?>
                     <p class="grouping"><?=$grouping['name']?></p>
                     <?php foreach ($grouping['groups'] as $group) {
-                    $boxdata = array(   'name'        => $group['name'],
+                    $boxdata = array(   'name'        => str_replace(' ', '_', $list['name'].'---'.$grouping['name'].'---'.$group['name']),
                                         'id'          => $group['name'],
-                                        'value'       => $list['name'].'>>>'.$group['name'],
+                                        'value'       => 1,
                                         'checked'     => false,
                                         );
                     ?>

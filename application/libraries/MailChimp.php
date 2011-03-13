@@ -130,4 +130,18 @@ class MailChimp extends MCAPI
     	
     	return parent::listInterestGroupings($id);
     }
+    
+    function listsWithGroups()
+    {
+        // add groups to lists
+        $lists = $this->lists();
+        foreach ($lists as &$list) 
+        {
+            $list['groupings'] = array();
+            if ($groupings = $this->listInterestGroupings($list['id'])) {
+                $list['groupings'] = $groupings;
+            }
+        }
+        return $lists;
+    }
 }

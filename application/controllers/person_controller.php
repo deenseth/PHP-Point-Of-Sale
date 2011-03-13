@@ -48,21 +48,6 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
     {
         // grab person ids from url -- via regex, in spite of jwz
         $data['personids']=explode(',', preg_replace('/.*personids:([\d,]+).*/', '$1', uri_string()));
-        
-        if ($key = $this->config->item('mc_api_key')) {
-            $this->load->library('MailChimp', array($key) , 'MailChimp');
-            $lists=$this->MailChimp->lists();
-            // add groups to lists
-            foreach ($lists as &$list) 
-            {
-                $list['groupings'] = array();
-                if ($groupings = $this->MailChimp->listInterestGroupings($list['id'])) {
-                    $list['groupings'] = $groupings;
-                }
-            }
-            $data['lists']=$lists;
-        }
-        
         $data['removeAjaxUrl']=site_url(strtolower($this->uri->segment(1)).'/listremoveajax');
         $data['addAjaxUrl']=site_url(strtolower($this->uri->segment(1)).'/listaddajax');
         

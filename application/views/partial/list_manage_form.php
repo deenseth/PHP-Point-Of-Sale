@@ -1,4 +1,13 @@
-<?php foreach ($lists as $list) { 
+<?php
+if ($key = $this->config->item('mc_api_key')) {
+    $CI =& get_instance();
+    $CI->load->library('MailChimp', array($key) , 'MailChimp');
+    $lists=$CI->MailChimp->listsWithGroups();
+} else {
+    return;
+}
+
+foreach ($lists as $list) { 
 $boxdata = array(  'name'        => $list['name'],
                     'id'          => $list['name'],
                     'value'       => $list['name'],
@@ -52,6 +61,7 @@ $boxdata = array(  'name'        => $list['name'],
             } ?>
         </div>
     <? } ?>
+        <div class="clear"><!--  --></div>
     </div>
     <? } ?>
     <div class="clear"><!--  --></div>

@@ -130,3 +130,11 @@ p#lists-descriptor{
 #header .list-groups{
 	border-left: none;
 }
+
+.list-group{
+	margin-bottom: 5px;
+}
+
+.list-group label{
+	margin: 0 3px;
+}

@@ -114,18 +114,39 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
                     foreach($list['groupings'] as $grouping) 
                     {
                         $changed = false;
-                        foreach ($grouping['groups'] as $group)
-                        {
-                            if ($this->input->post(str_replace(' ', '_', $list['name'].'---'.$grouping['name'].'---'.$group['name'])) == 1) {
+                        
+                        if ($grouping['form_field'] == 'dropdown') {
+                            $val = $this->input->post($grouping['name']);
+                            if ($val !== 0 && $val !== null) {
+                                $selected = true;
+                                $group = end(explode('---', $val));
+                                $changed = true;
                                 foreach ($merge_vars['GROUPINGS'] as &$chimpGrouping)
                                 {
-                                    if ($chimpGrouping['name'] == $grouping['name']) {
-                                        $chimpGrouping['groups'] = str_replace($group['name'], '', $chimpGrouping['groups']);
-                                        $chimpGrouping['groups'] = str_replace(',,', ',', $chimpGrouping['groups']);
-                                        $changed = true;
+                                    if (substr_count($chimpGrouping['groups'], $group)) {
+                                        $chimpGrouping['groups'] = substr_replace($group, '', $chimpGrouping['groups']);
+                                    }
+                                    break;
+                                }
+                            }
+                        } else {
+                        
+                            foreach ($grouping['groups'] as $group)
+                            {
+                                if ($this->input->post(str_replace(' ', '_', 
+                                                      $list['name'].'---'.$grouping['name'].'---'.$group['name'])) == 1) {
+                                    foreach ($merge_vars['GROUPINGS'] as &$chimpGrouping)
+                                    {
+                                        if ($chimpGrouping['name'] == $grouping['name']) {
+                                            $chimpGrouping['groups'] = str_replace($group['name'], '', $chimpGrouping['groups']);
+                                            $chimpGrouping['groups'] = str_replace(',,', ',', $chimpGrouping['groups']);
+                                            $changed = true;
+                                            break;
+                                        }
                                     }
                                 }
                             }
+                        
                         }
                         if ($changed) {
                             if ($this->MailChimp->listUpdateMember($list['id'], $person->email, $merge_vars)) {
@@ -191,14 +212,86 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
             }
             foreach ($lists as $list)
             {
+                $response = $this->MailChimp->listMemberInfo($list['id'], $person->email);
+                $individual = array_shift($response['data']);
+                $merge_vars = $individual['merges'];
+                $selected = false;
+                if (!$merge_vars['GROUPINGS']) {
+                    $merge_vars['GROUPINGS'] = array();
+                }
+                
+                
+                $list['groupings'] = array();
+                if ($groupings = $this->MailChimp->listInterestGroupings($list['id'])) {
+                    $list['groupings'] = $groupings;
+                }
+                
                 if ($this->input->post($list['name'])) {
-                    if ($this->MailChimp->listSubscribe($list['id'], $person->email, null, 'html', false)) {
+                    $selected = true;
+                } else {
+                    
+                    foreach($list['groupings'] as $grouping) 
+                    {
+                        if ($grouping['form_field'] == 'dropdown') {
+                            $val = $this->input->post($grouping['name']);
+                            if ($val !== 0 && $val !== null) {
+                                $selected = true;
+                                $group = end(explode('---', $val));
+                                foreach ($merge_vars['GROUPINGS'] as &$chimpGrouping)
+                                {
+                                    $changed = true;
+                                    if (substr_count($chimpGrouping['groups'], $group)) {
+                                        break;
+                                    }
+                                    $chimpGrouping['groups'] = $group;
+                                    break;
+                                }
+                            }
+                            continue;
+                        }
+                        
+                        foreach ($grouping['groups'] as $group)
+                        {
+                            $changed = false;
+                            if ($this->input->post(str_replace(' ', '_', $list['name'].'---'.$grouping['name'].'---'.$group['name'])) == 1) {
+                                $selected = true;
+                                foreach ($merge_vars['GROUPINGS'] as &$chimpGrouping)
+                                {
+                                    if ($chimpGrouping['name'] == $grouping['name']) {
+                                        $changed = true;
+                                        if (substr_count($chimpGrouping['groups'], $group['name'])) {
+                                             break;
+                                        }
+                                        $comma = strlen($chimpGrouping['groups'] > 0)  ? ',':''; 
+                                        
+                                        $chimpGrouping['groups'] .= $comma.$group['name'];
+                                        break;
+                                    }
+                                }
+                                
+                                if (!$changed) {
+                                    $merge_vars['GROUPINGS'][] = array('name'=>$grouping['name'],
+                                                                       'groups'=>$grouping['name']);
+                                }
+                                
+                            }
+                            
+                            
+                            
+                        }
+                    }
+                }
+                
+                $mv = (count($merge_vars['GROUPINGS']) > 0) ? $merge_vars : null;
+                
+                if ($selected) {
+                    if ($this->MailChimp->listSubscribe($list['id'], $person->email, $mv, 'html', false, true)) {
                         $added++;
                     } else {
                         $unadded++;
                     }
-                        
                 }
+                        
             }
         }
         $s = $added > 1 ? 's':'';

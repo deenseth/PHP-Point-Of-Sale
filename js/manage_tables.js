@@ -244,6 +244,12 @@ function enable_row_selection(rows)
 		function row_over()
 		{
 			$(this).find("td").addClass('over').css("backgroundColor","");
+			if ($(this).find("td.email-lists ul").length > 0 && $(this).find("td.email-lists ul").height() >= 25) {
+				$(this).find("td.email-lists").css('height', 'auto')
+				$(this).find("td.email-lists ul").css('height', 'auto')
+				$(this).height($(this).find("td.email-lists ul").height())
+			}
+			
 			$(this).css("cursor","pointer");
 		},
 		
@@ -251,7 +257,14 @@ function enable_row_selection(rows)
 		{
 			if(!$(this).find("td").hasClass("selected"))
 			{
+				if ($(this).find("td.email-lists ul").length > 0) {
+					$(this).find("td.email-lists").css('height', '25px')
+					$(this).find("td.email-lists ul").css('height', '25px')
+					$(this).height('25px')
+				}
+				
 				$(this).find("td").removeClass('selected');
+				$(this).find("td.email-lists").css('overflow', 'hidden')
 				$(this).find("td").removeClass('over');
 			}
 		}

@@ -61,16 +61,40 @@ class MailChimp extends MCAPI
     	
     	$names = array();
     	
-    	$html = '<ul>';
+    	$html = '';
         
     	if ($listIDs) {
+    	    $html .= '<ul>';
 	    	foreach ($listIDs as $id)
 	    	{
-	    		$html .= '<li>'.$this->ids_lists[$id]['name'].'</li>';
+	    		$html .= '<li>'.$this->ids_lists[$id]['name'];
+	    		
+	    		$response = $this->listMemberInfo($id, $email);
+                $individual = array_shift($response['data']);
+                $merge_vars = $individual['merges'];
+                $groups = array();
+                foreach ($merge_vars['GROUPINGS'] as $grouping)
+                {
+                    if ($grouping['groups']) {
+                        foreach (explode(',', $grouping['groups']) as $group)
+                        {
+                            $groups[] = $grouping['name'].': '.$group;
+                        }
+                    }
+                }
+                if ($groups) {
+                    $html .= '<ul>';
+    	    		foreach ($groups as $line)
+    	    		{
+    	    		    $html .= "<li>{$line}</li>";
+    	    		}
+    	    		$html .= '</ul>';
+                }
+                
+	    		$html .= '</li>';
 	    	}
+	    	$html .= '</ul>';
     	}
-        
-    	$html .= '</ul>';
     	
     	return $html;
     }

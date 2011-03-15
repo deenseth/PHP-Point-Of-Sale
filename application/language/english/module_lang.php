@@ -31,4 +31,7 @@ $lang['module_giftcards_desc']='Add, Update, Delete and Search gift cards';
 $lang['module_mailchimp']='MailChimp';
 $lang['module_mailchimp_desc']='Manage & report on mailing lists & campaigns.';
 
+$lang['module_mailchimp_not_activated']='Get MailChimp!';
+$lang['module_mailchimp_not_activated_desc']='Take your customer, partner, and employee communications to the next level. If you have an account, enter your API key in the configuration screen.';
+
 ?>

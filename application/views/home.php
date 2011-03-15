@@ -15,5 +15,14 @@
 	<?php
 	}
 	?>
+	
+	<? if ($this->config->item('mc_api_key') == null) { ?>
+	<div class="module_item">
+        <a href="http://mailchimp.com/">
+        <img src="<?php echo base_url().'images/menubar/mailchimp_blurred.png';?>" border="0" alt="Menubar Image" /></a><br />
+        <a href="http://mailchimp.com"><?php echo $this->lang->line("module_mailchimp_not_activated") ?></a>
+         - <?php echo $this->lang->line('module_mailchimp_not_activated_desc');?>
+    </div>
+	<? } ?>
 </div>
 <?php $this->load->view("partial/footer"); ?>

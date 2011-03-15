@@ -71,7 +71,7 @@ class Suppliers extends Person_controller
 			//New supplier
 			if($supplier_id==-1)
 			{
-			$subscriptionInfo = '';
+			    $subscriptionInfo = '';
                 if ($key = $this->config->item('mc_api_key')) {
                     $this->load->library('MailChimp', array($key) , 'MailChimp');
                     

@@ -19,7 +19,7 @@ class Secure_area extends Controller
 			redirect('no_access/'.$module_id);
 		}
 		
-		//load mailchimp integration
+		//load mailchimpdash integration
 		if($key = $this->Appconfig->get('mc_api_key')) {
 			$this->load->library('MCAPI',  array($key), 'MCAPI');
 			if ($this->MCAPI->ping() !== 'Everything\'s Chimpy!') {

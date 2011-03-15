@@ -28,10 +28,10 @@ $lang['module_receivings_desc']='Process Purchase orders';
 $lang['module_giftcards']='Gift Cards';
 $lang['module_giftcards_desc']='Add, Update, Delete and Search gift cards';
 
-$lang['module_mailchimp']='MailChimp';
-$lang['module_mailchimp_desc']='Manage &amp; report on mailing lists &amp; campaigns.';
+$lang['module_mailchimpdash']='MailChimp';
+$lang['module_mailchimpdash_desc']='Manage &amp; report on mailing lists &amp; campaigns.';
 
-$lang['module_mailchimp_not_activated']='Get MailChimp!';
-$lang['module_mailchimp_not_activated_desc']='Take your customer, partner, and employee communications to the next level. If you have an account, enter your API key in the configuration screen.';
+$lang['module_mailchimpdash_not_activated']='Get MailChimp!';
+$lang['module_mailchimpdash_not_activated_desc']='Take your customer, partner, and employee communications to the next level. If you have an account, enter your API key in the configuration screen.';
 
 ?>

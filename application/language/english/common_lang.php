@@ -44,4 +44,6 @@ $lang['common_list_manage_helpertext']='Select the lists and groups you would li
 $lang['common_list_manage_none_added']='Please select at least one person to manage subscriptions';
 $lang['common_successful_subscription']='Mailing list subscriptions successful!';
 $lang['common_unsuccessful_subscription']='Mailing list subscriptions unsuccessful.';
+$lang['common_mailchimp_dashboard']='MailChimp Dashboard';
+$lang['common_mailchimp_dashboard_desc']='Manage your communications where you manage everything else!';
 ?>

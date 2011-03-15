@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `phppos_giftcards` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
 
 INSERT INTO `phppos_modules` (`name_lang_key`, `desc_lang_key`, `sort`, `module_id`) VALUES
-('module_giftcards', 'module_giftcards_desc', 9, 'giftcards');
+('module_giftcards', 'module_giftcards_desc', 9, 'giftcards'),
+('module_mailchimp', 'module_mailchimp_desc', 10, 'mailchimp');
 
 INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES ('giftcards',1);

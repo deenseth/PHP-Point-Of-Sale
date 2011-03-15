@@ -31,7 +31,7 @@ class Secure_area extends Controller
 		
 		//load up global data
 		$logged_in_employee_info=$this->Employee->get_logged_in_employee_info();
-		$data['allowed_modules']=$this->Module->get_allowed_modules($logged_in_employee_info->person_id);
+		$data['allowed_modules']=$this->Module->get_allowed_modules($logged_in_employee_info->person_id, ($key != null));
 		$data['user_info']=$logged_in_employee_info;
 		$this->load->vars($data);
 	}

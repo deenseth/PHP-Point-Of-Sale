@@ -46,4 +46,9 @@ $lang['common_successful_subscription']='Mailing list subscriptions successful!'
 $lang['common_unsuccessful_subscription']='Mailing list subscriptions unsuccessful.';
 $lang['common_mailchimp_dashboard']='MailChimp Dashboard';
 $lang['common_mailchimp_dashboard_desc']='Manage your communications where you manage everything else!';
+$lang['common_mailchimp_dashboard_rejected']='No MailChimp API key found. Please set one in your config screen.';
+$lang['common_mailchimp_dashboard_lists']='List Management';
+$lang['common_mailchimp_dashboard_lists_helper']='Select a list to view your subscribers';
+$lang['common_mailchimp_dashboard_listbuttons']='Your Lists';
+
 ?>

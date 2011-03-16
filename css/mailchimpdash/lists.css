@@ -1,0 +1,22 @@
+#lists{
+	margin: 25px 0;
+}
+
+#lists #lists-buttons{
+	background: #cccccc;
+	border: 1px solid #dddd22;
+	padding: 10px 20px;
+}
+
+#lists-buttons legend{
+	background-color: #ffffff;
+	border: 1px solid #333333;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 2px 5px;
+}
+
+#lists #lists-buttons a.button
+{
+	margin-right: 15px;
+}

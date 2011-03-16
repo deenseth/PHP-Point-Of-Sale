@@ -25,5 +25,28 @@ class Mailchimpdash extends Secure_area
         $this->load->view("mailchimpdash/lists", $data);
     }
     
+    function listsajax()
+    {
+        if ($id = $this->input->post('listid')) { 
+            if ($start = $this->input->post('start')) {
+                $members = $this->MailChimp->listMembers($id, 'subscribed', NULL, $start, 25);
+            } else {
+                $members = $this->MailChimp->listMembers($id, 'subscribed', NULL, 0, 25);
+            }
+        } else { 
+            $data['message'] = $this->lang->line('common_list_error');
+        }
+        
+        if ($members) {
+            
+        } else { 
+            $data['message'] = $this->lang->line('common_list_nomembers');
+        }
+        
+        $data['members'] = $members['data'];
+        
+        $this->load->view("mailchimpdash/listsajax",$data);
+    }
+    
 }
 ?>

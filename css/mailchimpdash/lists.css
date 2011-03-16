@@ -5,10 +5,10 @@
 #lists #lists-buttons{
 	background: #cccccc;
 	border: 1px solid #dddd22;
-	padding: 10px 20px;
+	padding: 10px 20px 0 10px;
 }
 
-#lists-buttons legend{
+#lists #lists-buttons legend{
 	background-color: #ffffff;
 	border: 1px solid #333333;
 	font-size: 11px;
@@ -18,5 +18,17 @@
 
 #lists #lists-buttons a.button
 {
-	margin-right: 15px;
+	margin: 0 15px 15px 0;
+}
+
+#lists #lists-view{
+	background-color:#f7f7f7;
+	border: 1px solid #cccccc;
+	display: none;
+	margin-top: 15px;
+	padding: 10px 20px;
+}
+
+#lists-loading{
+	text-align: center;
 }

@@ -91,6 +91,31 @@ class Person extends Model
 	{	
 		return true;	
  	}
-	
+ 	
+ 	/*
+ 	Gets a person by email address
+ 	 */
+ 	function get_by_email($email)
+ 	{
+ 	    $this->db->from('people');
+        $this->db->where('email',$email);
+        return $this->db->get()->row();    
+ 	}
+ 	
+ 	/*
+ 	Determines the type of person
+ 	 */
+ 	function get_person_type($id)
+ 	{
+ 	    if ($customer = $this->Customer->get_info($id)) {
+ 	        return 'Customer';
+ 	    } else if ($supplier = $this->Supplier->get_info($id)) {
+ 	        return 'Supplier';
+ 	    } else if ($employee = $this->Employee->get_info($id)) {
+ 	        return 'Employee';
+ 	    } else {
+ 	        return 'Person';
+ 	    }
+ 	}   
 }
 ?>

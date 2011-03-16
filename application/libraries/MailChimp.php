@@ -55,20 +55,24 @@ class MailChimp extends MCAPI
     	}
     }
     
-    function tableListing($email)
+    function tableListing($email, $listid=null)
     {
-    	$lists = $this->lists();
+        if ($listid) {
+           $lists = $this->lists(array('id'=>$listid)); 
+        } else {
+    	   $lists = $this->lists();
+        }
     	$listIDs = $this->listsForEmail($email);
     	
     	$names = array();
     	
     	$html = '';
         
-    	if ($listIDs) {
-    	    $html .= '<ul>';
+    	if ($listIDs) { 
+	        $html .= $listid ? '' : '<ul>';
 	    	foreach ($listIDs as $id)
 	    	{
-	    		$html .= '<li>'.$this->ids_lists[$id]['name'];
+	    		$html .= $listid ? '' : '<li>'.$this->ids_lists[$id]['name'];
 	    		
 	    		$response = $this->listMemberInfo($id, $email);
                 $individual = array_shift($response['data']);
@@ -92,7 +96,7 @@ class MailChimp extends MCAPI
     	    		$html .= '</ul>';
                 }
                 
-	    		$html .= '</li>';
+	    		$html .= $listid ? '' : '</li>';
 	    	}
 	    	$html .= '</ul>';
     	}

@@ -12,7 +12,7 @@
         <? } ?>
     </fieldset>
     <div id='lists-view'>
-    
+        <div id="lists-loading"><img id="lists-loading" src="<?=base_url()?>images/spinner_small.gif" /></div>
     </div>
 </div>
 <?php $this->load->view("partial/footer"); ?>

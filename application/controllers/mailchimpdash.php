@@ -44,6 +44,7 @@ class Mailchimpdash extends Secure_area
         }
         
         $data['members'] = $members['data'];
+        $data['listid'] = $id;
         
         $this->load->view("mailchimpdash/listsajax",$data);
     }

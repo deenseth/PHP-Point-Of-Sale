@@ -3,7 +3,7 @@
 <? } else { ?>
 
 <? foreach ($members as $member) { ?>
-<p><?=$member['email']?></p>
+    <?=display_email_data($member, $listid)?>
 <? } ?>
 
 <? } ?> 

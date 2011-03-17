@@ -10,9 +10,15 @@
     </tbody>
 </table>
 <div id="lists-nav-buttons">
-    <a class="button pill left" id="nav-button-prev">Previous</a>
-    <div id="lists-nav-buttons-info">Viewing N of M members</div>
-    <a class="button pill right" id="nav-button-next">Next</a>
+    <? if ($start > 0) { ?>
+    <a class="button pill left" id="nav-button-prev" onClick="listPage('<?=$listid?>', <?=$start-25?>)">Previous</a>
+    <? } ?>
+    <div id="lists-nav-buttons-info" style="<?=$style?>>">
+        Viewing <?=$visible?> of <?=$total?> members
+    </div>
+    <? if ($start+25 < $total) { ?>
+    <a class="button pill right" id="nav-button-next" onClick="listPage('<?=$listid?>', <?=$start+25?>)">Next</a>
+    <? } ?>
     <div class="clear"><!--  --></div>
 </div>
 

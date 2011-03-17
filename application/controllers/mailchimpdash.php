@@ -30,7 +30,6 @@ class Mailchimpdash extends Secure_area
         if ($id = $this->input->post('listid')) { 
             if ($start = $this->input->post('start')) {
                 $members = $this->MailChimp->listMembers($id, 'subscribed', NULL, $start, 25);
-                var_dump($members);
             } else {
                 $members = $this->MailChimp->listMembers($id, 'subscribed', NULL, 0, 25);
             }
@@ -44,8 +43,29 @@ class Mailchimpdash extends Secure_area
             $data['message'] = $this->lang->line('common_list_nomembers');
         }
         
+        $data['total'] = $members['total'];
+        $data['start'] = $start;        
+        
+        if ($members['total'] > $start+25) {
+            $data['visible'] = ($start+1)." through ".$start+25;
+        } else {
+            $data['visible'] = ($start+1)." through ".$members['total'];
+        }
+        
         $data['members'] = $members['data'];
+        
         $data['listid'] = $id;
+        
+        // style for info bar at bottom;
+        if ($start == 0 && $members['total'] <= 25) { 
+            $style = 'width: 860px; float; none;';
+        } else if ($members['total'] <= 25) {
+            $style = 'margin-right: 127px;';
+        } else if ($start == 0) {
+            $style = 'margin-left: 127px;';
+        }
+        
+        $data['style'] = $style; 
         
         $this->load->view("mailchimpdash/listsajax",$data);
     }

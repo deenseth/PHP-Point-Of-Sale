@@ -8,6 +8,13 @@ function thickit(dom)
 	return false;
 }
 
+function listPage(listId, slice)
+{
+	var url = document.location.href + 'ajax';
+	var lv = $('#lists-view');
+	lv.load(url, {listid: listId, start: slice});
+}
+
 $(document).ready(function(){
 	
 	$('#lists-buttons .button').click(function(){

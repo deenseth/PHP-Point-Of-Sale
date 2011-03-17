@@ -50,5 +50,16 @@ class Mailchimpdash extends Secure_area
         $this->load->view("mailchimpdash/listsajax",$data);
     }
     
+    function listremoveajax()
+    {
+        $listID = $this->input->post('listid');
+        $email = $this->input->post('email');
+        
+        if ($result = $this->MailChimp->listUnsubscribe($listID, $email, false, false, false)) {
+            echo json_encode(array('success'=>true,'message'=>"Unsubscribed {$email} from list"));
+        } else {
+            echo json_encode(array('success'=>false,'message'=>"Could not unsubscribe {$email} from list"));
+        }
+    }    
 }
 ?>

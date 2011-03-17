@@ -9,5 +9,12 @@
 <? } ?>
     </tbody>
 </table>
+<div id="lists-nav-buttons">
+    <a class="button pill left" id="nav-button-prev">Previous</a>
+    <div id="lists-nav-buttons-info">Viewing N of M members</div>
+    <a class="button pill right" id="nav-button-next">Next</a>
+    <div class="clear"><!--  --></div>
+</div>
+
 
 <? } ?> 

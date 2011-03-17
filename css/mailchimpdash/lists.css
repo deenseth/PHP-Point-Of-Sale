@@ -55,3 +55,31 @@
 #lists-members{
 	width: 860px;
 }
+
+#lists-nav-buttons{
+	margin-top: 10px;
+}
+
+#lists-nav-buttons .button{
+	font-size: 14px;
+	width: 100px;
+}
+
+#lists-nav-buttons-info{
+	float: left;
+	font-size: 10px;
+	margin: 0 auto;
+	padding-top: 10px;
+	text-align: center;
+	width: 600px;
+}
+
+#nav-button-prev{
+	float: left;
+}
+
+#nav-button-next{
+	border-left: 1px solid #CACACA;
+	float: right;
+	text-align: right;
+}

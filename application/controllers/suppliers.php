@@ -40,7 +40,8 @@ class Suppliers extends Person_controller
 	*/
 	function view($supplier_id=-1)
 	{
-		$data['person_info']=$this->Supplier->get_info($supplier_id);
+	    $email=preg_replace('/.*email:([^\/]*)\/.*/', '$1', uri_string());
+		$data['person_info']=$supplier_id == -1 ? $this->Supplier->get_by_email($email) : $this->Supplier->get_info($supplier_id);
 		$this->load->view("suppliers/form",$data);
 	}
 	

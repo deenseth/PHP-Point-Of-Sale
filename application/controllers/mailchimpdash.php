@@ -30,6 +30,7 @@ class Mailchimpdash extends Secure_area
         if ($id = $this->input->post('listid')) { 
             if ($start = $this->input->post('start')) {
                 $members = $this->MailChimp->listMembers($id, 'subscribed', NULL, $start, 25);
+                var_dump($members);
             } else {
                 $members = $this->MailChimp->listMembers($id, 'subscribed', NULL, 0, 25);
             }

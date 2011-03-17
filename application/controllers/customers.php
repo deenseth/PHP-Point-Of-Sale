@@ -40,7 +40,8 @@ class Customers extends Person_controller
 	*/
 	function view($customer_id=-1)
 	{
-		$data['person_info']=$this->Customer->get_info($customer_id);
+        $email=preg_replace('/.*email:([^\/]*)\/.*/', '$1', uri_string());
+		$data['person_info']=$customer_id == -1 ? $this->Customer->get_by_email($email) : $this->Customer->get_info($customer_id);
 		$this->load->view("customers/form",$data);
 	}
 	

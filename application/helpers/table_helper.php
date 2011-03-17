@@ -57,16 +57,12 @@ function get_people_manage_table_data_rows($people,$controller)
 	return $table_data_rows;
 }
 
-function get_person_data_row($person,$controller=null, $listid = null)
+function get_person_data_row($person,$controller)
 {
 	$CI =& get_instance();
 	$controller_name=$CI->uri->segment(1);
 	
-	if ($controller) {
-	   $width = $controller->get_form_width();
-	}
-	
-    $controller = ($controller) ? $controller :  $CI->Person->get_person_type($person->id);
+    $width = $controller->get_form_width();
 	
 	$table_data_row='<tr>';
 
@@ -79,7 +75,7 @@ function get_person_data_row($person,$controller=null, $listid = null)
 	    $table_data_row.='<td width="19%">'.character_limiter($person->last_name,13).'</td>';
 	    $table_data_row.='<td width="19%">'.character_limiter($person->first_name,13).'</td>';
 	    $table_data_row.='<td width="15%">'.mailto($person->email,character_limiter($person->email,22)).'</td>';
-	    $table_data_row.='<td width="12%" class="email-lists">'.$CI->MailChimp->tableListing($person->email, $listid).'</td>';
+	    $table_data_row.='<td width="12%" class="email-lists">'.$CI->MailChimp->tableListing($person->email).'</td>';
 	    $table_data_row.='<td width="15%">'.character_limiter($person->phone_number,13).'</td>';        
 	    $table_data_row.='<td width="5%">'.anchor($controller_name."/view/$person->person_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';
 	}  else {

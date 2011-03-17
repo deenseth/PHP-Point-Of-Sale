@@ -26,9 +26,32 @@
 	border: 1px solid #cccccc;
 	display: none;
 	margin-top: 15px;
-	padding: 10px 20px;
+	padding: 10px;
 }
 
 #lists-loading{
 	text-align: center;
+}
+
+#lists-members{
+	border-collapse: collapse;
+}
+
+#lists-members tr{
+	border-bottom: 1px solid #333333;
+}
+
+#lists-members td{
+	border-bottom: 1px solid #333333;
+	padding: 7px 5px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#lists-members td.action{
+	text-align: right;
+}
+
+#lists-members{
+	width: 860px;
 }

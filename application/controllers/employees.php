@@ -40,7 +40,8 @@ class Employees extends Person_controller
 	*/
 	function view($employee_id=-1)
 	{
-		$data['person_info']=$this->Employee->get_info($employee_id);
+	    $email=preg_replace('/.*email:([^\/]*)\/.*/', '$1', uri_string());
+		$data['person_info']=$employee_id == -1 ? $this->Employee->get_by_email($email) : $this->Employee->get_info($employee_id);
 		$data['all_modules']=$this->Module->get_all_modules();
 		$this->load->view("employees/form",$data);
 	}

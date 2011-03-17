@@ -99,7 +99,9 @@ class Person extends Model
  	{
  	    $this->db->from('people');
         $this->db->where('email',$email);
-        return $this->db->get()->row();    
+        if ($result = $this->db->get()) {
+            return $result->row();
+        }      
  	}
  	
  	/*
@@ -107,15 +109,23 @@ class Person extends Model
  	 */
  	function get_person_type($id)
  	{
- 	    if ($customer = $this->Customer->get_info($id)) {
+ 	    $customer = $this->Customer->get_info($id);
+ 	    if ($customer->person_id != '') {
  	        return 'Customer';
- 	    } else if ($supplier = $this->Supplier->get_info($id)) {
- 	        return 'Supplier';
- 	    } else if ($employee = $this->Employee->get_info($id)) {
- 	        return 'Employee';
- 	    } else {
- 	        return 'Person';
  	    }
+ 	    
+        $supplier = $this->Supplier->get_info($id);
+ 	    if ($supplier->person_id != '') {
+ 	        return 'Supplier';
+ 	    }
+ 	    
+        $employee = $this->Employee->get_info($id);
+ 	    if ($employee->person_id != '') {
+ 	        return 'Employee';
+ 	    }
+ 	     
+        return 'Person';
+ 	  
  	}   
 }
 ?>

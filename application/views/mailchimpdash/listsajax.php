@@ -4,10 +4,19 @@
 <input type="hidden" value="<?=$listid?>" id="listid"/>
 <input type="hidden" value="<?=$start?>" id="slice"/>
 <table id='lists-members'>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Email</th>
+    <th class="actions">Actions</th>
     <tbody>
 <? foreach ($members as $member) { ?>
-    <?=display_email_data($member, $listid, $filters)?>
+    <? if ($row = display_email_data($member, $listid, $filters)) { ?>
+        <?=$row?>
+    <? $rowSeen = true; } ?>
 <? } ?>
+    <? if (!$rowSeen) { ?>
+    <tr><td colspan="4"><em>No users found given your filter settings for this grouping</em></td></tr>
+    <? } ?>
     </tbody>
 </table>
 <div id="lists-nav-buttons">

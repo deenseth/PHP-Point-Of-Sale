@@ -48,6 +48,15 @@
 	border-bottom: 1px solid #333333;
 }
 
+#lists-members th{
+	text-align: center;
+}
+
+#lists-members th.actions{
+    padding-right: 10px;
+	text-align: right;
+}
+
 #lists-members td{
 	border-bottom: 1px solid #333333;
 	padding: 7px 5px;
@@ -92,7 +101,7 @@
 }
 
 #lists-options div{
-	width: 250px;
+	width: 175px;
 }
 
 #lists-options-customers-wrapper{
@@ -105,5 +114,11 @@
 }
 
 #lists-options-employees-wrapper{
+    float: left;
+    margin-left: 50px;
+}
+
+
+#lists-options-persons-wrapper{
 	float: right;
 }

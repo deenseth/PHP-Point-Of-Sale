@@ -30,6 +30,10 @@
         <input type="checkbox" value="0" id="lists-options-employees"></input>
         <label for="lists-options-employees">Employees</label>
     </div>
+    <div id='lists-options-persons-wrapper'>
+        <input type="checkbox" value="0" id="lists-options-persons"></input>
+        <label for="lists-options-persons" title="List subscribers not currently in this system">Subscriber Only</label>
+    </div>
 </div>
 
 <div id="feedback_bar"></div>

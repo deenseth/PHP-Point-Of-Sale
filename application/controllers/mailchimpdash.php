@@ -98,6 +98,7 @@ class Mailchimpdash extends Secure_area
     
     function campaigns()
     {
+        $this->load->view('mailchimpdash/campaigns',$data);
     }
     
 }

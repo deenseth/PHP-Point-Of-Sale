@@ -9,5 +9,10 @@
         <p><?=anchor(current_url().'/lists', 'List Management')?></p>
         <div class="clear"><!--  --></div>
     </div>
+    <div class="dashboard-link">
+        <?=anchor(current_url().'/campaigns', '<img src="'.base_url().'/images/campaign.png" alt=""/>')?>
+        <p><?=anchor(current_url().'/campaigns', 'Campaign Management')?></p>
+        <div class="clear"><!--  --></div>
+    </div>
 </div>
 <?php $this->load->view("partial/footer"); ?>

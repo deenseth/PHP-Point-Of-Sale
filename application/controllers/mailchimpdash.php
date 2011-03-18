@@ -95,5 +95,10 @@ class Mailchimpdash extends Secure_area
             echo json_encode(array('success'=>false,'message'=>"Could not unsubscribe {$email} from list"));
         }
     }    
+    
+    function campaigns()
+    {
+    }
+    
 }
 ?>

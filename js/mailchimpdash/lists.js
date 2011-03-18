@@ -12,7 +12,32 @@ function listPage(listId, slice)
 {
 	var url = document.location.href + 'ajax';
 	var lv = $('#lists-view');
-	lv.load(url, {listid: listId, start: slice});
+	var filters = getFilters();
+	lv.load(url, {listid: listId, start: slice, filters: filters});
+}
+
+var filters = '';
+function getFilters()
+{
+	filters = '';
+	$('#lists-options input').each(function(){
+		if ($(this).is(':checked')) {
+			if (filters != '') {
+				filters += ',';
+			}
+			filters += $(this).attr('id').replace(/lists-options-/, '');
+		}
+	});
+	return filters;
+}
+
+function reloadFilters()
+{
+	var slice = $('#slice').val();
+	var listid = $('#listid').val();
+	if (typeof(slice) != undefined && typeof(listid) != undefined) {
+		listPage(listid, slice);
+	}
 }
 
 $(document).ready(function(){
@@ -30,14 +55,14 @@ $(document).ready(function(){
 		if (lv.is(':hidden')) {
 		
 			lv.slideDown(1000, function() {
-				lv.load(url, {listid: id});
+				listPage(id, 0)
 			});
 			
 		} else {
 			
 			lv.slideUp(1000, function() {
 				lv.html('<div id="lists-loading"><img id="lists-loading" src="'+imageurl+'images/spinner_small.gif" /></div>');
-				lv.load(url, {listid: id});
+				listPage(id, 0)
 				lv.slideDown(1000);
 			});
 						
@@ -47,4 +72,30 @@ $(document).ready(function(){
 		return false;
 	});
 	
+	$('input[type="checkbox"]').click(function(){reloadFilters();});
+	
 });
+
+
+function listremove(obj)
+{
+	var emailval = $(obj).parent('td').parent('tr').find('td.email a').attr('href').replace(/mailto:/, '');
+	var listidval = $('#listid').val();
+	var url = document.location.href.replace(/mailchimpdash.*/, 'mailchimpdash/listremoveajax');
+	$.post(url,
+			{email: emailval, 
+			 listid: listidval 
+			},
+			function(response){
+				if (response.success) {
+				  set_feedback(response.message, 'success_message', false);
+				  $(obj).parent('td').parent('tr').fadeOut(250);
+			  } else {
+				  set_feedback(response.message, 'error_message', true);
+			  }
+			},
+		  "json"
+	  );
+	
+}
+

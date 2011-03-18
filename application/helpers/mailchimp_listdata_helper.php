@@ -1,29 +1,16 @@
 <?php
 
-function display_email_data(array $listMember, $list)
+function display_email_data($person, $list, $filters)
 {
     $CI =& get_instance();
-    
-    $person = $CI->Person->get_by_email($listMember['email']);
-    
     $persontype = $CI->Person->get_person_type($person->person_id);
     
+    if ($filters && substr_count($filters, $persontype)) {
+        return '';
+    } 
+    
     if ($persontype !== 'Person') {
-        $controller_name = strtolower($persontype).'s';
-        
-        $table_data_row='<tr>';
-        $table_data_row.='<td width="13%">'.character_limiter($person->last_name,13).'</td>';
-        $table_data_row.='<td width="13%">'.character_limiter($person->first_name,13).'</td>';
-        $table_data_row.='<td width="24%" class="email">'.mailto($person->email,character_limiter($person->email,22)).'</td>';
-        $table_data_row.='<td width="50%" class="action">'
-                       .anchor($controller_name."/view/$person->person_id/width:500", $CI->lang->line($controller_name.'_update'),
-                            array('class'=>'thickbox button pill left','title'=>$CI->lang->line($controller_name.'_update'), 
-                            'onClick'=>'thickit(this); return false;'))
-                       .'<a class="negative button remove pill right"' 
-                       .' onClick="listremove(this)">'
-                       .'Remove</a>'
-                       .'</td>';
-        $table_data_row.='</tr>';
+        return display_email_data_for_person($person, $persontype);
     } else {
         $table_data_row='<tr>';
         $table_data_row.='<td width="12%">'.character_limiter($person->last_name,13).'</td>';
@@ -42,4 +29,26 @@ function display_email_data(array $listMember, $list)
     
     return $table_data_row;
     
+}
+
+function display_email_data_for_person($person, $persontype)
+{
+    $CI =& get_instance();
+    
+    $controller_name = strtolower($persontype).'s';
+    
+    $table_data_row='<tr>';
+    $table_data_row.='<td width="13%">'.character_limiter($person->last_name,13).'</td>';
+    $table_data_row.='<td width="13%">'.character_limiter($person->first_name,13).'</td>';
+    $table_data_row.='<td width="24%" class="email">'.mailto($person->email,character_limiter($person->email,22)).'</td>';
+    $table_data_row.='<td width="50%" class="action">'
+                   .anchor($controller_name."/view/$person->person_id/width:500", $CI->lang->line($controller_name.'_update'),
+                        array('class'=>'thickbox button pill left','title'=>$CI->lang->line($controller_name.'_update'), 
+                        'onClick'=>'thickit(this); return false;'))
+                   .'<a class="negative button remove pill right"' 
+                   .' onClick="listremove(this)">'
+                   .'Remove</a>'
+                   .'</td>';
+    $table_data_row.='</tr>';
+    return $table_data_row;
 }

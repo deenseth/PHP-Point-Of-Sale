@@ -52,7 +52,21 @@ class Mailchimpdash extends Secure_area
             $data['visible'] = ($start+1)." through ".$members['total'];
         }
         
-        $data['members'] = $members['data'];
+        if ($filters = $this->input->post('filters')) {
+            $filters = explode(',', $filters);
+            $data['filters'] = $filters;
+        }
+        
+        $data['members'] = array();
+        foreach ($members['data'] as $member) 
+        {
+            $person = $this->Person->get_by_email($member['email']);
+            
+            if (!$filters 
+                || in_array(strtolower($this->Person->get_person_type($person->person_id)).'s', $filters)) { 
+                $data['members'][] = $person;
+            }
+        }
         
         $data['listid'] = $id;
         

@@ -64,3 +64,21 @@ function display_email_data_for_person($person, $persontype)
     $table_data_row.='</tr>';
     return $table_data_row;
 }
+
+
+function display_campaign_data(array $campaign)
+{    
+    $html = '<div class="campaign" id="campaign-'.$campaign['id'].'">';
+    $html.= '   <div class="campaign-header">';
+    $html.= '       <div class="campaign-header-left">' . $campaign['title'] . '</div>';
+    $html.= '       <div class="campaign-header-right"><div class="resizer" style="background-image: url('.base_url().'images/plus.png);" onClick="expand(this)" ></div><p>'.$campaign['listname'].' List | '. ucfirst($campaign['type']) . ' Report | </p></div>';
+    $html.= '       <div class="clear"><!-- --></div>';
+    $html.= '   </div>';
+    $html.= '   <div class="campaign-body">';
+    
+    $html.= '   </div>';
+    $html.= '</div>';
+    return $html; 
+    
+    
+}

@@ -323,4 +323,21 @@ class MailChimp extends MCAPI
         
         return false;
     }
+    
+    function campaigns()
+    {
+        $campaigns = parent::campaigns();
+        
+        if (!$this->lists) {
+            $this->lists();
+        }
+        
+        foreach ($campaigns['data'] as &$campaign)
+        {
+            $campaign['listname'] = ($name = $this->ids_lists[$campaign['list_id']]['name']) ? $name : "No";
+        }
+        
+        return $campaigns;
+        
+    }
 }

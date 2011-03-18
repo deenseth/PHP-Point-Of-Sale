@@ -1,0 +1,49 @@
+.campaign{
+	-webkit-border-top-left-radius: 20px;
+	-webkit-border-top-right-radius: 20px;
+	-moz-border-radius-topleft: 20px;
+	-moz-border-radius-topright: 20px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	border: 2px solid #003366;
+	background-color: #cccc00;
+	margin-top: 10px;
+	padding: 10px 20px;
+}
+
+.campaign-header-left{
+	float: left;
+}
+
+.campaign-header-right{
+	float: right;
+	text-align: right;
+}
+
+.campaign-body{
+	background-color: #ccffff;
+	border: 1px solid #333333;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	display: none;
+	margin-top: 10px;
+	min-height: 50px;
+	padding: 10px;
+}
+
+.campaign:last-child{
+	margin-bottom: 20px;
+}
+
+.campaign-header-right p{
+	float: right;
+}
+
+.resizer{
+	background-position: -4px -8px;
+	cursor: pointer;
+	float: right;
+	height: 20px;
+	width: 20px;
+}

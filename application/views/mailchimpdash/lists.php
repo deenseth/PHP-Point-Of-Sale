@@ -38,5 +38,21 @@ function listremove(obj)
         <div id="lists-loading"><img id="lists-loading" src="<?=base_url()?>images/spinner_small.gif" /></div>
     </div>
 </div>
+<fieldset id='lists-options'>
+    <legend>Filter by:</legend>
+    <div id='lists-options-customers-wrapper'>
+        <input type="checkbox" value="0" id="lists-options-customers"></input>
+        <label for="lists-options-customers">Customers</label>
+    </div>
+    <div id='lists-options-suppliers-wrapper'>
+        <input type="checkbox" value="0" id="lists-options-suppliers"></input>
+        <label for="lists-options-suppliers">Suppliers</label>
+    </div>
+    <div id='lists-options-employees-wrapper'>
+        <input type="checkbox" value="0" id="lists-options-employees"></input>
+        <label for="lists-options-employees">Employees</label>
+    </div>
+</div>
+
 <div id="feedback_bar"></div>
 <?php $this->load->view("partial/footer"); ?>

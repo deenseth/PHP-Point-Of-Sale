@@ -2,13 +2,20 @@
 	margin: 25px 0;
 }
 
-#lists #lists-buttons{
+#lists #lists-buttons, #lists-options{
 	background: #cccccc;
 	border: 1px solid #dddd22;
-	padding: 10px 20px 0 10px;
+	padding: 10px 10px 0 10px;
 }
 
-#lists #lists-buttons legend{
+#lists-options {
+	font-size: 16px;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+#lists #lists-buttons legend, #lists-options legend{
 	background-color: #ffffff;
 	border: 1px solid #333333;
 	font-size: 11px;
@@ -82,4 +89,21 @@
 	border-left: 1px solid #CACACA;
 	float: right;
 	text-align: right;
+}
+
+#lists-options div{
+	width: 250px;
+}
+
+#lists-options-customers-wrapper{
+	float: left;
+}
+
+#lists-options-suppliers-wrapper{
+	float: left;
+	margin-left: 50px;
+}
+
+#lists-options-employees-wrapper{
+	float: right;
 }

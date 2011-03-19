@@ -137,9 +137,9 @@ class Mailchimpdash extends Secure_area
                 }
                 break;
             case 'send':
-                $cid = $this->input->post('cid');
-                if ($cid && $this->MailChimp->campaignSend($cid)) {
-                    echo json_encode(array('success'=>true, 'message'=>'Campaign successfully send'));
+                $result = ($cid = $this->input->post('cid')) ? $this->MailChimp->campaignSendNow($cid) : false;
+                if ($cid && $result) {
+                    echo json_encode(array('success'=>true, 'message'=>'Campaign successfully sent'));
                 } else {
                     echo json_encode(array('success'=>false, 'message'=>'Could not send campaign'));
                 }

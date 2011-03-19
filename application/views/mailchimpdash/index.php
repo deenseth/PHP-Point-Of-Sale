@@ -14,5 +14,10 @@
         <p><?=anchor(current_url().'/campaigns', 'Campaign Management')?></p>
         <div class="clear"><!--  --></div>
     </div>
+    <div class="dashboard-link">
+        <?=anchor(current_url().'/reports', '<img src="'.base_url().'/images/reports.png" alt=""/>')?>
+        <p><?=anchor(current_url().'/reports', 'Campaign Reports')?></p>
+        <div class="clear"><!--  --></div>
+    </div>
 </div>
 <?php $this->load->view("partial/footer"); ?>

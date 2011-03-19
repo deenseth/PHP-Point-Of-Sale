@@ -177,5 +177,10 @@ class Mailchimpdash extends Secure_area
         $data['cid'] = $cid;
         $this->load->view('mailchimpdash/campaignschedule',$data);
     }
+    
+    function reports()
+    {
+        $this->load->view('mailchimpdash/reports',$data);
+    }
 }
 ?>

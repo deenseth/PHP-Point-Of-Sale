@@ -1,3 +1,13 @@
+function thickit(dom)
+{
+	var t = dom.title || dom.name || null;
+	var a = dom.href || dom.alt;
+	var g = dom.rel || false;
+	tb_show(t,a,g);
+	dom.blur();
+	return false;
+}
+
 function expand(dom) 
 {
 	var ele = $(dom);
@@ -12,7 +22,6 @@ function expand(dom)
 
 function campaignPause(campaignId)
 {
-	json = {cid:campaignId};
 	var url = document.location.href.replace(/\/campaigns.*/, '/campaignajax/pause');
 	$.post(url, {cid: campaignId}, function(response){
 		if (typeof(response) != 'object') {
@@ -30,7 +39,6 @@ function campaignPause(campaignId)
 
 function campaignResume(campaignId)
 {
-	json = {cid:campaignId};
 	var url = document.location.href.replace(/\/campaigns.*/, '/campaignajax/resume');
 	$.post(url, {cid: campaignId}, function(response){
 		if (typeof(response) != 'object') {
@@ -52,7 +60,6 @@ function campaignDelete(campaignId)
 		return;
 	}
 	
-	json = {cid:campaignId};
 	var url = document.location.href.replace(/\/campaigns.*/, '/campaignajax/delete');
 	$.post(url, {cid: campaignId}, function(response){
 		if (typeof(response) != 'object') {
@@ -75,7 +82,10 @@ function campaignDelete(campaignId)
 
 function campaignSend(campaignId)
 {
-	json = {cid:campaignId};
+	if (!confirm("This will send your campaign right now. Are you sure?")) {
+		return;
+	}
+	
 	var url = document.location.href.replace(/\/campaigns.*/, '/campaignajax/send');
 	$.post(url, {cid: campaignId}, function(response){
 		if (typeof(response) != 'object') {
@@ -93,7 +103,6 @@ function campaignSend(campaignId)
 
 function campaignSchedule(campaignId)
 {
-	json = {cid:campaignId};
 	var url = document.location.href.replace(/\/campaigns.*/, '/campaignajax/schedule');
 	$.post(url, {cid: campaignId}, function(response){
 		if (typeof(response) != 'object') {

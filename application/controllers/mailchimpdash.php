@@ -142,8 +142,9 @@ class Mailchimpdash extends Secure_area
                 break;
             case 'sendtest':
                 $cid = $this->input->post('cid');
-                $emails = explode(',', str_replace(' ', '', $this->input->post('emails')));
-                if ($cid && $this->MailChimp->campaignSendTest($cid, $emails)) {
+                $emails = explode(',', preg_replace('/\s+/', '', $this->input->post('emails')));
+                $result = $this->MailChimp->campaignSendTest($cid, $emails);
+                if ($cid && $result) {
                     echo json_encode(array('success'=>true, 'message'=>'Test campaign successfully sent'));
                 } else {
                     echo json_encode(array('success'=>false, 'message'=>'Could not send test campaign'));
@@ -159,6 +160,12 @@ class Mailchimpdash extends Secure_area
                 }
                 break;
         }
+    }
+    
+    function configuretest($cid)
+    {
+        $data['campaignid'] = $cid;
+        $this->load->view('mailchimpdash/configuretest',$data);
     }
     
 }

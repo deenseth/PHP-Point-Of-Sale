@@ -157,7 +157,7 @@ class Mailchimpdash extends Secure_area
             case 'schedule':
                 $cid = $this->input->post('cid');
                 $scheduletime = $this->input->post('scheduletime');
-                if ($cid && $this->MailChimp->campaignSendTest($cid, $emails)) {
+                if ($cid && $scheduletime && $this->MailChimp->campaignSchedule($cid, $scheduletime)) {
                     echo json_encode(array('success'=>true, 'message'=>'Campaign successfully scheduled'));
                 } else {
                     echo json_encode(array('success'=>false, 'message'=>'Could not schedule campaign'));
@@ -172,5 +172,10 @@ class Mailchimpdash extends Secure_area
         $this->load->view('mailchimpdash/configuretest',$data);
     }
     
+    function campaignschedule($cid)
+    {
+        $data['cid'] = $cid;
+        $this->load->view('mailchimpdash/campaignschedule',$data);
+    }
 }
 ?>

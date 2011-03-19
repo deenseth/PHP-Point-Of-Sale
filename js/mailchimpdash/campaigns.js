@@ -99,21 +99,6 @@ function campaignSend(campaignId)
 			set_feedback(data.message, 'error_message', true);
 		}
 	});
-}
-
-function campaignSchedule(campaignId)
-{
-	var url = document.location.href.replace(/\/campaigns.*/, '/campaignajax/schedule');
-	$.post(url, {cid: campaignId}, function(response){
-		if (typeof(response) != 'object') {
-			var data = JSON.parse(response);
-		} else {
-			var data = response;
-		}
-		if (data.success) {
-			set_feedback(data.message, 'success_message', false);
-		} else {
-			set_feedback(data.message, 'error_message', true);
-		}
-	});
+	
+	tb_remove();
 }

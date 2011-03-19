@@ -18,10 +18,12 @@ class Mailchimpdash extends Secure_area
         $this->load->view("mailchimpdash/index");
     }
     
-    function lists()
+    function lists($list_id = null)
     {
         $data['lists'] = $this->MailChimp->lists();
-        
+        if ($list_id) {
+            $data['list_id'] = $list_id;
+        } 
         $this->load->view("mailchimpdash/lists", $data);
     }
     

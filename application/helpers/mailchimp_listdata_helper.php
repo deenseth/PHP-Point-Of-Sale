@@ -73,7 +73,11 @@ function display_campaign_data(array $campaign)
     
     $html = '<div class="campaign" id="campaign-'.$campaign['id'].'">';
     $html.= '   <div class="campaign-header">';
-    $html.= '       <div class="campaign-header-left">' . $campaign['title'] . '</div>';
+    if ($campaign['archive_url']) {
+        $html.= '       <div class="campaign-header-left">' . anchor($campaign['archive_url'], $campaign['title'], array('target'=>'_blank', 'title'=>'Click to View')) . '</div>';
+    } else { 
+        $html.= '       <div class="campaign-header-left">' . $campaign['title'] . '</div>';
+    }
     $html.= '       <div class="campaign-header-right"><div class="resizer" style="background-image: url('.base_url().'images/plus.png);" onClick="expand(this)" ></div><p>'.$campaign['listname'].' List | '. ucfirst($campaign['type']) . ' Report | </p></div>';
     $html.= '       <div class="clear"><!-- --></div>';
     $html.= '   </div>';

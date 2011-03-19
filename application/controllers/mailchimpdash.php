@@ -98,9 +98,13 @@ class Mailchimpdash extends Secure_area
         }
     }    
     
-    function campaigns()
+    function campaigns($page=1)
     {
-        $response = $this->MailChimp->campaigns();
+        $slice = ($page-1)*25;
+        $response = $this->MailChimp->campaigns(array(), $slice);
+        $data['total'] = $response['total'];
+        $data['slice'] = $response['slice'];
+        $data['page'] = $page;
         $data['campaigns'] = $response['data'];
         $this->load->view('mailchimpdash/campaigns',$data);
     }

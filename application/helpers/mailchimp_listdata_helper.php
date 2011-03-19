@@ -75,7 +75,7 @@ function display_campaign_data(array $campaign)
     } else {
         $sent = "<span class='sent'>Not Scheduled</span>" ;
     }
-    $status = ucfirst($campaign['status']);
+    $status = $campaign['status'] == 'schedule' ? "Scheduled" : ucfirst($campaign['status']);
     $listLink = $campaign['listname'] == "No" ? $campaign['listname']. ' List' 
                 : anchor(base_url().'index.php/mailchimpdash/lists/'.$campaign['list_id'], 
                           $campaign['listname']. ' List', array('target'=>'_blank'));
@@ -98,8 +98,9 @@ function display_campaign_data(array $campaign)
     $html.= '       </div>';
     $html.= '       <div class="campaign-body-right">';
     if (!$was_sent) {
+        $scheduleButton = $campaign['status'] == 'schedule' ? 'Reschedule Campaign' : 'Schedule Campaign';
         $html.= '           <div class="button-wrapper"><a class="button pill" onClick="campaignSend(\''.$campaign['id'].'\')">Send Campaign Now</a></div>';
-        $html.= '           <div class="button-wrapper"><a class="button pill">Schedule Campaign</a></div>';
+        $html.= '           <div class="button-wrapper"><a class="button pill">'.$scheduleButton.'</a></div>';
         $html.= '           <div class="button-wrapper"><a class="button pill" onClick="thickit(this); return false;" href="'.base_url().'/index.php/mailchimpdash/configuretest/'.$campaign['id'].'/width:420,height:300">Send Test Campaign</a></div>';
         if ($campaign['type'] == 'auto' || $campaign['type'] == 'rss') {
             if ($campaign['status'] != 'paused') {

@@ -73,11 +73,7 @@ function display_campaign_data(array $campaign)
     
     $html = '<div class="campaign" id="campaign-'.$campaign['id'].'">';
     $html.= '   <div class="campaign-header">';
-    if ($campaign['archive_url']) {
-        $html.= '       <div class="campaign-header-left">' . anchor($campaign['archive_url'], $campaign['title'], array('target'=>'_blank', 'title'=>'Click to View')) . '</div>';
-    } else { 
-        $html.= '       <div class="campaign-header-left">' . $campaign['title'] . '</div>';
-    }
+    $html.= '       <div class="campaign-header-left">' . anchor('https://us2.admin.mailchimp.com/campaigns/wizard/setup?id='.$campaign['web_id'], $campaign['title'], array('target'=>'_blank', 'title'=>'Click to Manage')) . ' ('.anchor($campaign['archive_url'], 'View Archive', array('target'=>'_blank')).')</div>';
     $html.= '       <div class="campaign-header-right"><div class="resizer" style="background-image: url('.base_url().'images/plus.png);" onClick="expand(this)" ></div><p>'.$campaign['listname'].' List | '. ucfirst($campaign['type']) . ' Report | </p></div>';
     $html.= '       <div class="clear"><!-- --></div>';
     $html.= '   </div>';

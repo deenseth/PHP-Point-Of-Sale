@@ -68,6 +68,9 @@ function display_email_data_for_person($person, $persontype)
 
 function display_campaign_data(array $campaign)
 {    
+    $sent = $campaign['send_time'] ? "<span class='info'>Send Time:</span> {$campaign['send_time']}" : "<span class='sent'>Not Scheduled</span>" ;
+    $status = ucfirst($campaign['status']);
+    
     $html = '<div class="campaign" id="campaign-'.$campaign['id'].'">';
     $html.= '   <div class="campaign-header">';
     $html.= '       <div class="campaign-header-left">' . $campaign['title'] . '</div>';
@@ -75,7 +78,18 @@ function display_campaign_data(array $campaign)
     $html.= '       <div class="clear"><!-- --></div>';
     $html.= '   </div>';
     $html.= '   <div class="campaign-body">';
-    
+    $html.= "       <p class='campaign-body-header'><span class='info'>Created:</span> {$campaign['create_time']} | <span class='info'>Status:</span> {$status} | {$sent} | <span class='info'>Emails Sent To:</span> <span class='sent'>{$campaign['emails_sent']}</span></p>";
+    $html.= '       <div class="campaign-body-left">';
+    $html.= "           <p class='campaign-body-email-from'>From: \"{$campaign['from_name']}\" &lt;{$campaign['from_email']}&gt;</p>";
+    $html.= "           <p class='campaign-body-email-subject'>Subject: \"{$campaign['subject']}\"</p>";
+    $html.= "           <p class='campaign-body-segment-text'>{$campaign['segment_text']}</p>";
+    $html.= '       </div>';
+    $html.= '       <div class="campaign-body-right">';
+    $html.= '           <div class="button-wrapper"><a class="button pill">Send Campaign Now</a></div>';
+    $html.= '           <div class="button-wrapper"><a class="button pill">Schedule Campaign</a></div>';
+    $html.= '           <div class="button-wrapper"><a class="button pill negative">Pause Campaign</a></div>';
+    $html.= '       </div>';
+    $html.= '       <div class="clear"><!-- --></div>';
     $html.= '   </div>';
     $html.= '</div>';
     return $html; 

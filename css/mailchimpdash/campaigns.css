@@ -6,7 +6,7 @@
 	border-top-left-radius: 20px;
 	border-top-right-radius: 20px;
 	border: 2px solid #003366;
-	background-color: #cccc00;
+	background-color: #ffffcc;
 	margin-top: 10px;
 	padding: 10px 20px;
 }
@@ -21,7 +21,7 @@
 }
 
 .campaign-body{
-	background-color: #ccffff;
+	background-color: #ffffff;
 	border: 1px solid #333333;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
@@ -46,4 +46,39 @@
 	float: right;
 	height: 20px;
 	width: 20px;
+}
+
+
+span.sent{
+	color: #dd2222;
+	font-weight: bold;
+}
+
+span.info{
+    color: #a5a5a5;
+}
+
+.campaign-body-header{
+	margin-bottom: 10px;
+	text-align: right;
+}
+
+.campaign-body-left{
+	float: left;
+	width: 600px;
+}
+
+.campaign-body-right{
+	float: right;
+	width: 200px;
+}
+
+.button-wrapper{
+	margin-top: 10px;
+	text-align: right;
+}
+
+.button-wrapper a{
+	text-align: center;
+	width: 125px;
 }

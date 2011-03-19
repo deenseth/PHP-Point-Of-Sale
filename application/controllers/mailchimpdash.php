@@ -105,5 +105,61 @@ class Mailchimpdash extends Secure_area
         $this->load->view('mailchimpdash/campaigns',$data);
     }
     
+    function campaignajax($method)
+    {
+        switch ($method) {
+            case 'pause':
+                $cid = $this->input->post('cid');
+                if ($cid && $this->MailChimp->campaignPause($cid)) {
+                    echo json_encode(array('success'=>true, 'message'=>'Campaign successfully paused'));
+                } else {
+                    echo json_encode(array('success'=>false, 'message'=>'Could not pause campaign'));
+                }
+                break;
+            case 'resume':
+                $cid = $this->input->post('cid');
+                if ($cid && $this->MailChimp->campaignResume($cid)) {
+                    echo json_encode(array('success'=>true, 'message'=>'Campaign successfully resumed'));
+                } else {
+                    echo json_encode(array('success'=>false, 'message'=>'Could not resume campaign'));
+                }
+                break;
+            case 'delete':
+                $cid = $this->input->post('cid');
+                if ($cid && $this->MailChimp->campaignDelete($cid)) {
+                    echo json_encode(array('success'=>true, 'message'=>'Campaign successfully deleted'));
+                } else {
+                    echo json_encode(array('success'=>false, 'message'=>'Could not delete campaign'));
+                }
+                break;
+            case 'send':
+                $cid = $this->input->post('cid');
+                if ($cid && $this->MailChimp->campaignSend($cid)) {
+                    echo json_encode(array('success'=>true, 'message'=>'Campaign successfully send'));
+                } else {
+                    echo json_encode(array('success'=>false, 'message'=>'Could not send campaign'));
+                }
+                break;
+            case 'sendtest':
+                $cid = $this->input->post('cid');
+                $emails = explode(',', str_replace(' ', '', $this->input->post('emails')));
+                if ($cid && $this->MailChimp->campaignSendTest($cid, $emails)) {
+                    echo json_encode(array('success'=>true, 'message'=>'Test campaign successfully sent'));
+                } else {
+                    echo json_encode(array('success'=>false, 'message'=>'Could not send test campaign'));
+                }
+                break;
+            case 'schedule':
+                $cid = $this->input->post('cid');
+                $scheduletime = $this->input->post('scheduletime');
+                if ($cid && $this->MailChimp->campaignSendTest($cid, $emails)) {
+                    echo json_encode(array('success'=>true, 'message'=>'Campaign successfully scheduled'));
+                } else {
+                    echo json_encode(array('success'=>false, 'message'=>'Could not schedule campaign'));
+                }
+                break;
+        }
+    }
+    
 }
 ?>

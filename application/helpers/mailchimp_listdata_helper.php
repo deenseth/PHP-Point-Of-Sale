@@ -67,12 +67,21 @@ function display_email_data_for_person($person, $persontype)
 
 
 function display_campaign_data(array $campaign)
-{    
-    $sent = $campaign['send_time'] ? "<span class='info'>Send Time:</span> {$campaign['send_time']}" : "<span class='sent'>Not Scheduled</span>" ;
+{
+    $is_scheduled = $campaign['status'] == 'schedule';
+    $was_sent = $campaign['status'] == 'sent';
+    if ($campaign['send_time']) {
+        $sent = "<span class='info'>Send Time:</span> {$campaign['send_time']}" ;
+    } else {
+        $sent = "<span class='sent'>Not Scheduled</span>" ;
+    }
     $status = ucfirst($campaign['status']);
     $listLink = $campaign['listname'] == "No" ? $campaign['listname']. ' List' 
                 : anchor(base_url().'index.php/mailchimpdash/lists/'.$campaign['list_id'], 
                           $campaign['listname']. ' List', array('target'=>'_blank'));
+    $fromName = $campaign['from_name'] == '' ? "(No Name Provided)" : $campaign['from_name'];
+    $fromEmail = $campaign['from_email'] == '' ? "(None Email Provided)" : $campaign['from_email'];
+    $subject = $campaign['subject'] == '' ? "(No Subject Provided)" : $campaign['subject'];
     
     $html = '<div class="campaign" id="campaign-'.$campaign['id'].'">';
     $html.= '   <div class="campaign-header">';
@@ -83,14 +92,24 @@ function display_campaign_data(array $campaign)
     $html.= '   <div class="campaign-body">';
     $html.= "       <p class='campaign-body-header'><span class='info'>Created:</span> {$campaign['create_time']} | <span class='info'>Status:</span> {$status} | {$sent} | <span class='info'>Emails Sent To:</span> <span class='sent'>{$campaign['emails_sent']}</span></p>";
     $html.= '       <div class="campaign-body-left">';
-    $html.= "           <p class='campaign-body-email-from'>From: \"{$campaign['from_name']}\" &lt;{$campaign['from_email']}&gt;</p>";
-    $html.= "           <p class='campaign-body-email-subject'>Subject: \"{$campaign['subject']}\"</p>";
+    $html.= "           <p class='campaign-body-email-from'>From: \"{$fromName}\" &lt;{$fromEmail}&gt;</p>";
+    $html.= "           <p class='campaign-body-email-subject'>Subject: \"{$subject}\"</p>";
     $html.= "           <p class='campaign-body-segment-text'>{$campaign['segment_text']}</p>";
     $html.= '       </div>';
     $html.= '       <div class="campaign-body-right">';
-    $html.= '           <div class="button-wrapper"><a class="button pill">Send Campaign Now</a></div>';
-    $html.= '           <div class="button-wrapper"><a class="button pill">Schedule Campaign</a></div>';
-    $html.= '           <div class="button-wrapper"><a class="button pill negative">Pause Campaign</a></div>';
+    if (!$was_sent) {
+        $html.= '           <div class="button-wrapper"><a class="button pill" onClick="campaignSend(\''.$campaign['id'].'\')">Send Campaign Now</a></div>';
+        $html.= '           <div class="button-wrapper"><a class="button pill">Schedule Campaign</a></div>';
+        $html.= '           <div class="button-wrapper"><a class="button pill">Send Test Campaign</a></div>';
+        if ($campaign['type'] == 'auto' || $campaign['type'] == 'rss') {
+            if ($campaign['status'] != 'paused') {
+                $html.= '           <div class="button-wrapper"><a class="button pill negative" onClick="campaignPause(\''.$campaign['id'].'\')">Pause Campaign</a></div>';
+            } else {
+                $html.= '           <div class="button-wrapper"><a class="button pill" onClick="campaignResume(\''.$campaign['id'].'\')">Unpause Campaign</a></div>';
+            }
+        }
+    }
+    $html .= '      <div class="button-wrapper"><a class="button pill negative" onClick="campaignDelete(\''.$campaign['id'].'\')">Delete Campaign</a></div>';
     $html.= '       </div>';
     $html.= '       <div class="clear"><!-- --></div>';
     $html.= '   </div>';

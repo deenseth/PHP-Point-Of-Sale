@@ -86,7 +86,12 @@ function listremove(obj)
 			{email: emailval, 
 			 listid: listidval 
 			},
-			function(response){
+			function(data){
+				if (typeof(data) != 'object') {
+					var response = JSON.parse(data);
+				} else {
+					var response = data;
+				}
 				if (response.success) {
 				  set_feedback(response.message, 'success_message', false);
 				  $(obj).parent('td').parent('tr').fadeOut(250);

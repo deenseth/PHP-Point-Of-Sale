@@ -6,4 +6,5 @@
 <? foreach ($campaigns as $campaign) { ?>
 <?=display_campaign_data($campaign)?>
 <? } ?>
+<div id="feedback_bar"></div>
 <?php $this->load->view("partial/footer"); ?>

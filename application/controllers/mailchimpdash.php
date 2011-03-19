@@ -204,7 +204,58 @@ class Mailchimpdash extends Secure_area
                 break;
             }
         }
+        
+        $data['campaignStats'] = $this->MailChimp->campaignStats($cid);
+        $data['campaignAdvice'] = $this->MailChimp->campaignAdvice($cid);
+        $data['vipReportUrl'] = $this->MailChimp->campaignShareReport($cid);
+        $data['drilldownReportData'] = $this->_getDrilldownReportData($cid);
         $this->load->view('mailchimpdash/report',$data);
+    }
+    
+    private function _getDrilldownReportData($cid)
+    {
+        $stats =    array('Customer'    =>  array('sent'=>0, 'hard'=>0, 'soft'=>0, 'unsubscribes'=>0),
+                          'Employee'    =>  array('sent'=>0, 'hard'=>0, 'soft'=>0, 'unsubscribes'=>0),
+                          'Supplier'    =>  array('sent'=>0, 'hard'=>0, 'soft'=>0, 'unsubscribes'=>0),
+                          'None'        =>  array('sent'=>0, 'hard'=>0, 'soft'=>0, 'unsubscribes'=>0),
+                         );
+        $response = $this->MailChimp->campaignMembers($cid);
+        if ($response['total'] > 10000) {
+            $secondResponse = $this->MailChimp->campaignMembers($cid, null, 1000, $response['total'] - 1000);
+            $members = array_merge($response['data'], $secondResponse['data']);
+        } else {
+            $members = $response['data'];
+        }
+        
+        foreach ($members as $member)
+        {
+            if ($person = $this->Person->get_by_email($member['email'])) {
+                if (($type = $this->Person->get_person_type($person->id)) && ($type != 'Person')) {
+                    $stats[$type][$member['status']]++;
+                } else {
+                    $stats['None'][$member['status']]++;
+                }
+            } else {
+                $stats['None'][$member['status']]++;
+            }
+        }
+        
+        $unsubscribes = $this->MailChimp->campaignUnsubscribes($cid, 0, $response['total']);
+
+        foreach ($unsubscribes as $unsub)
+        {
+            if ($person = $this->Person->get_by_email($unsub['email'])) {
+                if (($type = $this->Person->get_person_type($person->id)) && ($type != 'Person')) {
+                    $stats[$type]['unsubscribes']++;
+                } else {
+                    $stats['None']['unsubscribes']++;
+                }
+            } else {
+                $stats['None']['unsubscribes']++;
+            }
+        }
+        
+        return $stats;
     }
 }
 ?>

@@ -178,9 +178,33 @@ class Mailchimpdash extends Secure_area
         $this->load->view('mailchimpdash/campaignschedule',$data);
     }
     
-    function reports()
+    function campaignshow($cid)
     {
-        $this->load->view('mailchimpdash/reports',$data);
+        // @todo revisit this workaround
+        // this is kind of annoying -- fix yer api, mailchimp!
+        $response = $this->MailChimp->campaigns(array('id'=>$cid), 0, 1000);
+        foreach ($response['data'] as $campaign) 
+        {
+            if ($campaign['id'] == $cid) {
+                echo display_campaign_data($campaign);
+                die;
+            }
+        }
+    }
+    
+    function report($cid)
+    {
+        // @todo revisit this workaround
+        // this is kind of annoying -- fix yer api, mailchimp!
+        $response = $this->MailChimp->campaigns(array('id'=>$cid), 0, 1000);
+        foreach ($response['data'] as $campaign) 
+        {
+            if ($campaign['id'] == $cid) {
+                $data['campaign'] = $campaign;
+                break;
+            }
+        }
+        $this->load->view('mailchimpdash/report',$data);
     }
 }
 ?>

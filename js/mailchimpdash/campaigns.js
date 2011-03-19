@@ -102,3 +102,12 @@ function campaignSend(campaignId)
 	
 	tb_remove();
 }
+
+$(document).ready(function(){
+	$('.campaign-wrapper').each(function(){
+		var cid = $(this).attr('id').replace(/campaign-/, '');
+		var url = document.location.href.replace(/index.php.*/, 'index.php/mailchimpdash/campaignshow/'+cid);
+		$(this).load(url);
+	});
+	
+});

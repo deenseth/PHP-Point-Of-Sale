@@ -24,7 +24,7 @@
     <div class="clear"><!--  --></div>
 </div>
 <? foreach ($campaigns as $campaign) { ?>
-<?=display_campaign_data($campaign)?>
+<div class="campaign-wrapper" id="campaign-<?=$campaign['id']?>"></div>
 <? } ?>
 <div id="feedback_bar"></div>
 <?php $this->load->view("partial/footer"); ?>

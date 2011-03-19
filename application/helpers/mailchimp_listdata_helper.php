@@ -85,7 +85,17 @@ function display_campaign_data(array $campaign)
     
     $html = '<div class="campaign" id="campaign-'.$campaign['id'].'">';
     $html.= '   <div class="campaign-header">';
-    $html.= '       <div class="campaign-header-left">' . anchor('https://us2.admin.mailchimp.com/campaigns/wizard/setup?id='.$campaign['web_id'], $campaign['title'], array('target'=>'_blank', 'title'=>'Click to Manage')) . ' ('.anchor($campaign['archive_url'], 'View Archive', array('target'=>'_blank')).')</div>';
+    $html.= '       <div class="campaign-header-left">' 
+            . anchor('https://us2.admin.mailchimp.com/campaigns/wizard/setup?id='.$campaign['web_id'], 
+                        $campaign['title'], 
+                        array('target'=>'_blank', 'title'=>'Click to Manage')) 
+            . ' ('.anchor($campaign['archive_url'], 
+                        'View Archive', 
+                        array('target'=>'_blank')).')'
+            . ' ('.anchor(base_url().'index.php/mailchimpdash/report/'.$campaign['id'], 
+                        'View Report', 
+                        array('target'=>'_blank')).')'
+            .'</div>';
     $html.= '       <div class="campaign-header-right"><div class="resizer" style="background-image: url('.base_url().'images/plus.png);" onClick="expand(this)" ></div><p>'.$listLink.' | '. ucfirst($campaign['type']) . ' Report | </p></div>';
     $html.= '       <div class="clear"><!-- --></div>';
     $html.= '   </div>';
@@ -117,6 +127,4 @@ function display_campaign_data(array $campaign)
     $html.= '   </div>';
     $html.= '</div>';
     return $html; 
-    
-    
 }

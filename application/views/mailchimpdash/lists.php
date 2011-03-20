@@ -5,7 +5,11 @@
 <script type='text/javascript'>
 $(document).ready(function(){
 	$('#lists-view').slideDown(1000, function() {
+		<? if ($cid) { ?>
+		listPage('<?=$list_id?>', 0, '<?=$cid?>');
+		<? } else { ?>
 	    listPage('<?=$list_id?>', 0);
+	    <? } ?>
 	});
 });
 </script>
@@ -27,19 +31,19 @@ $(document).ready(function(){
 <fieldset id='lists-options'>
     <legend>Filter by:</legend>
     <div id='lists-options-customers-wrapper'>
-        <input type="checkbox" value="0" id="lists-options-customers"></input>
+        <input type="checkbox" <?=$filter == 'Customer' ? 'checked' : '' ?> id="lists-options-customers"></input>
         <label for="lists-options-customers">Customers</label>
     </div>
     <div id='lists-options-suppliers-wrapper'>
-        <input type="checkbox" value="0" id="lists-options-suppliers"></input>
+        <input type="checkbox" <?=$filter == 'Supplier' ? 'checked' : '' ?> id="lists-options-suppliers"></input>
         <label for="lists-options-suppliers">Suppliers</label>
     </div>
     <div id='lists-options-employees-wrapper'>
-        <input type="checkbox" value="0" id="lists-options-employees"></input>
+        <input type="checkbox" <?=$filter == 'Employer' ? 'checked' : '' ?> id="lists-options-employees"></input>
         <label for="lists-options-employees">Employees</label>
     </div>
     <div id='lists-options-persons-wrapper'>
-        <input type="checkbox" value="0" id="lists-options-persons"></input>
+        <input type="checkbox" <?=$filter == 'Person' ? 'checked' : '' ?> id="lists-options-persons"></input>
         <label for="lists-options-persons" title="List subscribers not currently in this system">Subscriber Only</label>
     </div>
 </div>

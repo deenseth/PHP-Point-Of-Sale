@@ -24,13 +24,13 @@
     <a class="button pill left" id="nav-button-prev" onClick="listPage('<?=$listid?>', <?=$start-25?>)">Previous</a>
     <? } ?>
     <div id="lists-nav-buttons-info" style="<?=$style?>>">
-        Viewing <?=$visible?> of <?=$total?> members.
+        Viewing <?=$visible ?> of <?=$total?> members.
         <? if ($filters) { ?>
         Filters applied: <?=ucwords(implode(', ', $filters))?>
         <? } ?>
     </div>
     <? if ($start+25 < $total) { ?>
-    <a class="button pill right" id="nav-button-next" onClick="listPage('<?=$listid?>', <?=$start+25?>)">Next</a>
+    <a class="button pill right" id="nav-button-next" onClick="listPage('<?=$listid?>', <?=$start+25?><?=$cid ? ', ' : ''?>)">Next</a>
     <? } ?>
     <div class="clear"><!--  --></div>
 </div>

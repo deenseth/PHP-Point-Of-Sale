@@ -106,7 +106,7 @@ td.value{
 	padding: 10px 5px 5px 5px;
 }
 
-#report-extras p{
+#report-extras #advice p{
 	background-repeat: no-repeat;
 	background-position: 3px 3px;
 	border-radius: 1px;
@@ -121,7 +121,6 @@ td.value{
 #report-extras .negative{
 	background-color: #ff9999;
 	background-image: url(../../images/chimp-negative.png);
-	
 }
 
 #report-extras .positive{
@@ -133,4 +132,20 @@ td.value{
 	background-color: #ffffcc;
 	background-image: url(../../images/chimp-neutral.png);
 	border: 1px solid #ffffff;
+}
+
+#report-extras #vip{
+	border-top: 1px dashed #cccccc;
+    margin-top: 10px;
+	padding-top: 5px;
+}
+
+#report-extras #vip a{
+	background-image: url(../../images/vipreport.png);
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+
+span#pass{
+	font-style: italic;
 }

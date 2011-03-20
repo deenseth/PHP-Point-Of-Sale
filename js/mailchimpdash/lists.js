@@ -8,12 +8,12 @@ function thickit(dom)
 	return false;
 }
 
-function listPage(listId, slice)
+function listPage(listId, slice, cid)
 {
 	var url = document.location.href.replace(/\/lists.*/, '/listsajax');
 	var lv = $('#lists-view');
 	var filters = getFilters();
-	lv.load(url, {listid: listId, start: slice, filters: filters});
+	lv.load(url, {listid: listId, start: slice, filters: filters, cid: cid});
 }
 
 var filters = '';

@@ -18,30 +18,45 @@ class Mailchimpdash extends Secure_area
         $this->load->view("mailchimpdash/index");
     }
     
-    function lists($list_id = null)
+    function lists($list_id = null, $cid = null, $filter = null)
     {
         $data['lists'] = $this->MailChimp->lists();
         if ($list_id) {
             $data['list_id'] = $list_id;
         } 
+        
+        if ($cid) {
+            $data['cid'] = $cid;
+        }
+        
+        if ($filter) {
+            $data['filter'] = $filter;
+        }
+        
         $this->load->view("mailchimpdash/lists", $data);
     }
     
     function listsajax()
     {
+        $cid = $this->input->post('campaignid');
+        
+        if ($cid) {
+            $data['cid'] = $cid;
+        }
+        
         if ($id = $this->input->post('listid')) { 
             if ($start = $this->input->post('start')) {
-                $members = $this->MailChimp->listMembers($id, 'subscribed', NULL, $start, 25);
+                $members = $cid ? $this->MailChimp->campaignMembers($cid, null, $start, 25)
+                         : $this->MailChimp->listMembers($id, 'subscribed', NULL, $start, 25);
             } else {
-                $members = $this->MailChimp->listMembers($id, 'subscribed', NULL, 0, 25);
+                $members = $cid ? $this->MailChimp->campaignMembers($cid, null, 0, 25)
+                         : $this->MailChimp->listMembers($id, 'subscribed', NULL, 0, 25);
             }
         } else { 
             $data['message'] = $this->lang->line('common_list_error');
         }
         
-        if ($members) {
-            
-        } else { 
+        if (!$members) { 
             $data['message'] = $this->lang->line('common_list_nomembers');
         }
         
@@ -204,10 +219,10 @@ class Mailchimpdash extends Secure_area
                 break;
             }
         }
-        
+        $data['listid'] = $campaign['list_id'];
         $data['campaignStats'] = $this->MailChimp->campaignStats($cid);
         $data['campaignAdvice'] = $this->MailChimp->campaignAdvice($cid);
-        $data['vipReportUrl'] = $this->MailChimp->campaignShareReport($cid);
+        $data['vipReport'] = $this->MailChimp->campaignShareReport($cid);
         $data['drilldownReportData'] = $this->_getDrilldownReportData($cid);
         $this->load->view('mailchimpdash/report',$data);
     }

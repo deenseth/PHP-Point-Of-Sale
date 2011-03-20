@@ -35,28 +35,32 @@
                 
                 <? foreach ($drilldownReportData as $title=>$data) { ?>
                 <tr class="<?=$counter2++ % 2 == 0 ? 'odd' : ''?>">
-                    <td class="title"><?=$title?></td>
+                    <td class="title"><?=anchor(base_url().'index.php/mailchimpdash/lists/'.$listid.'/'.$campaign['id'].'/'.($title == 'None' ? 'Person' : $title ), $title, array('target'=>'_blank'))?></td>
                     <? foreach ($data as $kind=>$value) { ?>
                     <td><?=$value ? $value : 0?></td>
                     <? } ?>
                 </tr>
                 <? } ?>
             </tbody>
+            
         </table>
     </div>
     <div class="clear"><!--  --></div>
     <div id="report-extras">
-        <? if ($campaignAdvice || true) { ?>
+        <? if ($campaignAdvice) { ?>
         <h3>Advice</h3><br/>
         <div id="advice">
         <? foreach ($campaignAdvice as $advice) { ?>
-        <p class="<?$advice['type']?>"><?=$advice['msg']?></p>
+            <p class="<?=$advice['type']?>"><?=$advice['msg']?></p>
         <? } ?>
-        <p class="neutral">You don't have the balls</p>
         </div>
         <? } ?>
-        
-        
+        <p><?=anchor(base_url().'index.php/mailchimpdash/lists/'.$listid.'/'.$campaign['cid'], 'View All Campaign Recipients', array('target'=>'_blank'))?></p>
+        <p id="vip"><a href="<?=$vipReport['url']?>" target="_blank">View Your VIP Report</a>
+        <? if ($vipReport['password']) { ?>
+        (Your password is <span id="pass"><?=$vipReport['password']?></span>)
+        <? } ?>
+        </p>
     </div>
 </div>
 <br/>

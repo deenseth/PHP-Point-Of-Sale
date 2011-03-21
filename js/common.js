@@ -1,3 +1,13 @@
+function thickit(dom)
+{
+	var t = dom.title || dom.name || null;
+	var a = dom.href || dom.alt;
+	var g = dom.rel || false;
+	tb_show(t,a,g);
+	dom.blur();
+	return false;
+}
+
 function get_dimensions() 
 {
 	var dims = {width:0,height:0};

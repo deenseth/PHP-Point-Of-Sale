@@ -1,13 +1,3 @@
-function thickit(dom)
-{
-	var t = dom.title || dom.name || null;
-	var a = dom.href || dom.alt;
-	var g = dom.rel || false;
-	tb_show(t,a,g);
-	dom.blur();
-	return false;
-}
-
 function listPage(listId, slice, cid)
 {
 	var url = document.location.href.replace(/\/lists.*/, '/listsajax');

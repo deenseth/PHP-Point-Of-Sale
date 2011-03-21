@@ -137,12 +137,17 @@ function campaign_export_script()
     $js = <<<ENDJS
 <script type="text/javascript" src="{$base_url}js/chartgrabber.js"></script>
 <script type="text/javascript">
-function export_to_campaign()
+function export_to_campaign(dom)
 {
     var binary = $('#chart')[0].get_img_binary();
     
     $.post('{$base_url}index.php/reports/export',
-            {chart: binary});
+            {chart: binary},
+            function(data){
+                $(dom).attr('href', $(dom).attr('href')+data);
+                thickit(dom);
+            }
+            );
     
 }
 </script>    
@@ -152,7 +157,7 @@ ENDJS;
 
 function campaign_export_button()
 {
-    return '<a class="button pill" onClick="export_to_campaign()">Export To Campaign</a>';
+    return '<a class="button pill" href="'.base_url().'index.php/mailchimpdash/charttocampaign/" onClick="export_to_campaign(this); return false;">Export To Campaign</a>';
 }
 
 

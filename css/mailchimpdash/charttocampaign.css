@@ -1,0 +1,24 @@
+#newcampaign{
+	text-align: center;
+}
+
+#exportthis{
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+#newcampaign label{
+	font-weight: bold;
+}
+
+#newcampaign-title{
+	margin-bottom: 15px;
+}
+
+#newcampaign-title-input{
+	width: 300px;
+}
+
+#newcampaign-chart{
+	margin-bottom: 10px;
+}

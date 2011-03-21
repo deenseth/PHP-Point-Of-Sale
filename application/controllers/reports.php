@@ -791,9 +791,11 @@ class Reports extends Secure_area
 	
 	function export()
 	{
-	    $file = fopen('saved_charts/'.time().'.png', 'w');
+	    $fname = time();
+	    $file = fopen('saved_charts/'.$fname.'.png', 'w');
 	    fwrite($file, base64_decode($_POST['chart']));
 	    fclose($file);
+	    echo $fname;
 	}
 }
 ?>

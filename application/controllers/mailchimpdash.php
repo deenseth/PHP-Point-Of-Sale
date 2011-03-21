@@ -272,5 +272,19 @@ class Mailchimpdash extends Secure_area
         
         return $stats;
     }
+    
+    function charttocampaign($filename)
+    {
+        $data['filename'] = $filename.'.png';
+        $data['lists'] = $this->MailChimp->listsWithGroups();
+        $this->load->view('mailchimpdash/charttocampaign', $data);
+    }
+    
+    function generatechartcampaign()
+    {
+        $data['title'] = $this->input->post('title');
+        
+        $this->load->view('mailchimpdash/generatechartcampaign', $data);
+    }
 }
 ?>

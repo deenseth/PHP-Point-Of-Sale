@@ -130,3 +130,33 @@ function display_campaign_data(array $campaign)
     $html.= '</div>';
     return $html; 
 }
+
+function campaign_export_script()
+{
+    $base_url = base_url();
+    $js = <<<ENDJS
+<script type="text/javascript" src="{$base_url}js/chartgrabber.js"></script>
+<script type="text/javascript">
+function export_to_campaign()
+{
+    var binary = $('#chart')[0].get_img_binary();
+    
+    $.post('{$base_url}index.php/reports/export',
+            {chart: binary});
+    
+}
+</script>    
+ENDJS;
+    return $js;
+}
+
+function campaign_export_button()
+{
+    return '<a class="button pill" onClick="export_to_campaign()">Export To Campaign</a>';
+}
+
+
+
+
+
+

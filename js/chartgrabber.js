@@ -1,6 +1,4 @@
 
-
-
 OFC = {};
  
 OFC.jquery = {

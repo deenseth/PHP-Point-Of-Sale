@@ -11,6 +11,7 @@ swfobject.embedSWF(
 "775", "420", "9.0.0", "expressInstall.swf",
 {"data-file":"<?php echo $data_file; ?>"} )
 </script>
+<?=campaign_export_script()?>
 <?php
 ?>
 </div>
@@ -22,6 +23,9 @@ swfobject.embedSWF(
 	<div class="summary_row"><?php echo $this->lang->line('reports_'.$name). ': '.to_currency($value); ?></div>
 <?php }?>
 </div>
+
+<?=campaign_export_button()?>
+
 <?php
 $this->load->view("partial/footer"); 
 ?>

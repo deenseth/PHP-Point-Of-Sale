@@ -789,5 +789,11 @@ class Reports extends Secure_area
 		$this->load->view("reports/tabular",$data);	
 	}
 	
+	function export()
+	{
+	    $file = fopen('saved_charts/'.time().'.png', 'w');
+	    fwrite($file, base64_decode($_POST['chart']));
+	    fclose($file);
+	}
 }
 ?>

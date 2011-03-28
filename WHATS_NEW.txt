@@ -1,1 +1,2 @@
-* Fixed bugs in reports where items would appear even though they are deleted
+* General bug fix release
+- Fixed bugs in reports

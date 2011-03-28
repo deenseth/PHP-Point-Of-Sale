@@ -64,14 +64,15 @@ if(count($cart)==0)
 }
 else
 {
-		foreach($cart as $line=>$item)
+	foreach($cart as $line=>$item)
 	{
+		$cur_item_info = $this->Item->get_info($item['item_id']);
 		echo form_open("sales/edit_item/$line");
 	?>
 		<tr>
 		<td><?php echo anchor("sales/delete_item/$line",'['.$this->lang->line('common_delete').']');?></td>
 		<td><?php echo $item['item_number']; ?></td>
-		<td style="align:center;"><?php echo $item['name']; ?></td>
+		<td style="align:center;"><?php echo $item['name']; ?><br /> [<?php echo $cur_item_info->quantity; ?> in stock]</td>
 
 
 

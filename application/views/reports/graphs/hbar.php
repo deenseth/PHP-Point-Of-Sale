@@ -30,7 +30,7 @@ $chart->set_x_axis( $x );
 
 $y = new y_axis();
 $y->set_offset( true );
-$y->set_labels($y_labels);
+$y->set_labels(array_reverse($y_labels));
 $chart->add_y_axis( $y );
 
 if (isset($yaxis_label))

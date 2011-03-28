@@ -147,17 +147,17 @@ class Receivings extends Secure_area
 		$data['total']=$this->receiving_lib->get_total();
 		$data['receipt_title']=$this->lang->line('recvs_receipt');
 		$data['transaction_time']= date('m/d/Y h:i:s a', strtotime($receiving_info['receiving_time']));
-		$customer_id=$this->receiving_lib->get_customer();
+		$supplier_id=$this->receiving_lib->get_supplier();
 		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
 		$emp_info=$this->Employee->get_info($employee_id);
 		$data['payment_type']=$receiving_info['payment_type'];
 
 		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
 
-		if($customer_id!=-1)
+		if($supplier_id!=-1)
 		{
-			$cust_info=$this->Customer->get_info($customer_id);
-			$data['customer']=$cust_info->first_name.' '.$cust_info->last_name;
+			$supplier_info=$this->Supplier->get_info($supplier_id);
+			$data['supplier']=$supplier_info->first_name.' '.$supplier_info->last_name;
 		}
 		$data['receiving_id']='RECV '.$receiving_id;
 		$this->load->view("receivings/receipt",$data);

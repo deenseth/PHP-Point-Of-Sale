@@ -1,2 +1,2 @@
-* Giftcards
-* Pagination
+* Giftcards!
+* Fixed bugs in receiving module

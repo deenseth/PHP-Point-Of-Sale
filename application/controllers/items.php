@@ -307,14 +307,13 @@ class Items extends Secure_area implements iData_controller
 	 */
 	function do_excel_import()
 	{
-		$msg = "do_excel_import";
-		$failCodes = null;
-		$successCode = null;
+		$msg = 'do_excel_import';
+		$failCodes = array();
 		if ($_FILES['file_path']['error']!=UPLOAD_ERR_OK)
 		{
 			$msg = $this->lang->line('items_excel_import_failed');
 			echo json_encode( array('success'=>false,'message'=>$msg) );
-			return ;
+			return;
 		}
 		else
 		{
@@ -325,48 +324,46 @@ class Items extends Secure_area implements iData_controller
 			$rowCount = $this->spreadsheetexcelreader->rowcount(0);
 			if($rowCount > 2){
 				for($i = 3; $i<=$rowCount; $i++){
-					$item_code = $this->spreadsheetexcelreader->val($i, 'A');
-					$item_id = $this->Item->get_item_id($item_code);
+
 					$item_data = array(
 					'name'			=>	$this->spreadsheetexcelreader->val($i, 'B'),
 					'description'	=>	$this->spreadsheetexcelreader->val($i, 'K'),
 					'category'		=>	$this->spreadsheetexcelreader->val($i, 'C'),
-					//'supplier_id'	=>	null,
-					'item_number'	=>	$this->spreadsheetexcelreader->val($i, 'A'),
 					'cost_price'	=>	$this->spreadsheetexcelreader->val($i, 'E'),
 					'unit_price'	=>	$this->spreadsheetexcelreader->val($i, 'F'),
 					'quantity'		=>	$this->spreadsheetexcelreader->val($i, 'I'),
 					'reorder_level'	=>	$this->spreadsheetexcelreader->val($i, 'J')
 					);
-
-					if($this->Item->save($item_data,$item_id)) {
+					$item_number = $this->spreadsheetexcelreader->val($i, 'A');
+					
+					if ($item_number != "")
+					{
+						$item_data['item_number'] = $item_number;
+					}
+					
+					if($this->Item->save($item_data)) {
 						$items_taxes_data = null;
 						//tax 1
 						if( is_numeric($this->spreadsheetexcelreader->val($i, 'G')) ){
 							$items_taxes_data[] = array('name'=>'Sales Tax 1', 'percent'=>$this->spreadsheetexcelreader->val($i, 'G') );
 						}
 
-						//taxt 2
+						//tax 2
 						if( is_numeric($this->spreadsheetexcelreader->val($i, 'H')) ){
 							$items_taxes_data[] = array('name'=>'Sales Tax 2', 'percent'=>$this->spreadsheetexcelreader->val($i, 'H') );
 						}
 
 						// save tax values
 						if(count($items_taxes_data) > 0){
-							$this->Item_taxes->save($items_taxes_data, $item_id);
+							$this->Item_taxes->save($items_taxes_data, $item_data['item_id']);
 						}
-						$successCode[] = $item_code;
 						
-						//Ramel Inventory Tracking
-						//update Inventory count details from Excel Import
-							$item_code = $this->spreadsheetexcelreader->val($i, 'A');
-							$item_id = $this->Item->get_item_id($item_code);
 							$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
 							$emp_info=$this->Employee->get_info($employee_id);
 							$comment ='Qty Excel Imported: means BEGIN/RESET/ACTUAL count';
 							$excel_data = array
 								(
-								'trans_items'=>$item_id,
+								'trans_items'=>$item_data['item_id'],
 								'trans_user'=>$employee_id,
 								'trans_comment'=>$comment,
 								'trans_inventory'=>$this->spreadsheetexcelreader->val($i, 'I')
@@ -376,7 +373,7 @@ class Items extends Secure_area implements iData_controller
 					}
 					else//insert or update item failure
 					{
-						$failCodes[] = $item_code ;
+						$failCodes[] = $i;
 					}
 				}
 

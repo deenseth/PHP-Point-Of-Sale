@@ -38,11 +38,6 @@ $(document).ready(function()
 	$('#item_form').validate({
 		submitHandler:function(form)
 		{
-			/*
-			make sure the hidden field #item_number gets set
-			to the visible scan_item_number value
-			*/
-			//$('#item_number').val($('#scan_item_number').val());
 			$(form).ajaxSubmit({
 			success:function(response)
 			{

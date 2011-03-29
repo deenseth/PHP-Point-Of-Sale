@@ -98,8 +98,6 @@ class Receivings extends Secure_area
 	function complete()
 	{
 		$data['cart']=$this->receiving_lib->get_cart();
-		$data['subtotal']=$this->receiving_lib->get_subtotal();
-		$data['taxes']=$this->receiving_lib->get_taxes();
 		$data['total']=$this->receiving_lib->get_total();
 		$data['receipt_title']=$this->lang->line('recvs_receipt');
 		$data['transaction_time']= date('m/d/Y h:i:s a');
@@ -140,8 +138,6 @@ class Receivings extends Secure_area
 		$receiving_info = $this->Receiving->get_info($receiving_id)->row_array();
 		$this->receiving_lib->copy_entire_receiving($receiving_id);
 		$data['cart']=$this->receiving_lib->get_cart();
-		$data['subtotal']=$this->receiving_lib->get_subtotal();
-		$data['taxes']=$this->receiving_lib->get_taxes();
 		$data['total']=$this->receiving_lib->get_total();
 		$data['receipt_title']=$this->lang->line('recvs_receipt');
 		$data['transaction_time']= date('m/d/Y h:i:s a', strtotime($receiving_info['receiving_time']));
@@ -169,8 +165,6 @@ class Receivings extends Secure_area
 		$data['cart']=$this->receiving_lib->get_cart();
 		$data['modes']=array('receive'=>$this->lang->line('recvs_receiving'),'return'=>$this->lang->line('recvs_return'));
 		$data['mode']=$this->receiving_lib->get_mode();
-		$data['subtotal']=$this->receiving_lib->get_subtotal();
-		$data['taxes']=$this->receiving_lib->get_taxes();
 		$data['total']=$this->receiving_lib->get_total();
 		$data['items_module_allowed'] = $this->Employee->has_permission('items', $person_info->person_id);
 		$data['payment_options']=array(

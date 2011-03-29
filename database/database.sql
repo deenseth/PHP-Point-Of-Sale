@@ -35,7 +35,6 @@ INSERT INTO `phppos_app_config` (`key`, `value`) VALUES ('address', '123 Nowhere
 ('return_policy', 'Test'),
 ('version', '10.0'),
 ('website', ''),
-('tax_on_received_inventory', '0'),
 ('lines_per_page', '20');
 
 -- --------------------------------------------------------

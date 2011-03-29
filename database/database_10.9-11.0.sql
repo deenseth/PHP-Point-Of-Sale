@@ -13,7 +13,4 @@ INSERT INTO `phppos_modules` (`name_lang_key`, `desc_lang_key`, `sort`, `module_
 INSERT INTO `phppos_app_config` (`key`, `value`) VALUES
 ('lines_per_page', '20');
 
-INSERT INTO `phppos_app_config` (`key`, `value`) VALUES
-('tax_on_received_inventory', '0');
-
 INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES ('giftcards', 1);

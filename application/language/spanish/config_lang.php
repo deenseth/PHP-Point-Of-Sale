@@ -22,5 +22,4 @@ $lang['config_language'] = 'Language';
 $lang['config_timezone'] = 'Timezone';
 $lang['config_lines_per_page'] = '';
 $lang['config_lines_per_page_required'] = '';
-$lang['config_tax_on_received_inventory'] = '';
 ?>

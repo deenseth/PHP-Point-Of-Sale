@@ -215,10 +215,7 @@ class Receiving_lib
 	function get_taxes()
 	{
 		$taxes = array();
-		
-		if ( $this->CI->Appconfig->get('tax_on_received_inventory') == 0 )
-			return $taxes;
-		
+				
 		foreach($this->get_cart() as $line=>$item)
 		{
 			$tax_info = $this->CI->Item_taxes->get_info($item['item_id']);

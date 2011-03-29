@@ -22,5 +22,4 @@ $lang['config_language'] = 'Language';
 $lang['config_timezone'] = 'Timezone';
 $lang['config_lines_per_page'] = 'Pagination rows';
 $lang['config_lines_per_page_required'] = 'Pagination rows is a required field';
-$lang['config_tax_on_received_inventory'] = 'Receivings tax';
 ?>

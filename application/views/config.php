@@ -76,17 +76,6 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_tax_on_received_inventory').':', 'tax_on_received_inventory',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_checkbox(array(
-		'name'=>'tax_on_received_inventory',
-		'id'=>'tax_on_received_inventory',
-		'value'=>'1',
-		'checked'=>$this->config->item('tax_on_received_inventory')));?>
-	</div>
-</div>
-
-<div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('common_email').':', 'email',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(

@@ -332,7 +332,8 @@ class Items extends Secure_area implements iData_controller
 					'cost_price'	=>	$this->spreadsheetexcelreader->val($i, 'E'),
 					'unit_price'	=>	$this->spreadsheetexcelreader->val($i, 'F'),
 					'quantity'		=>	$this->spreadsheetexcelreader->val($i, 'I'),
-					'reorder_level'	=>	$this->spreadsheetexcelreader->val($i, 'J')
+					'reorder_level'	=>	$this->spreadsheetexcelreader->val($i, 'J'),
+					'supplier_id'	=>  $this->Supplier->exists($this->spreadsheetexcelreader->val($i, 'D')) ? $this->spreadsheetexcelreader->val($i, 'D') : null
 					);
 					$item_number = $this->spreadsheetexcelreader->val($i, 'A');
 					

@@ -4,10 +4,10 @@ class Giftcard extends Model
 	/*
 	Determines if a given giftcard_id is an giftcard
 	*/
-	function exists( $giftcardNumber )
+	function exists( $giftcard_id )
 	{
 		$this->db->from('giftcards');
-		$this->db->where('giftcard_number',$giftcardNumber);
+		$this->db->where('giftcard_id',$giftcard_id);
 		$this->db->where('deleted',0);
 		$query = $this->db->get();
 

@@ -182,7 +182,7 @@ class Sale extends Model
 	
 	public function getGiftcardValue( $giftcardNumber )
 	{
-		if ( !$this->Giftcard->exists( $giftcardNumber ) )
+		if ( !$this->Giftcard->exists( $this->Giftcard->get_giftcard_id($giftcardNumber)))
 			return 0;
 		
 		$this->db->from('giftcards');

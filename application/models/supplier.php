@@ -8,7 +8,6 @@ class Supplier extends Person
 	{
 		$this->db->from('suppliers');	
 		$this->db->join('people', 'people.person_id = suppliers.person_id');
-		$this->db->where('deleted', 0);
 		$this->db->where('suppliers.person_id',$person_id);
 		$query = $this->db->get();
 		

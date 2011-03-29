@@ -8,7 +8,6 @@ class Item extends Model
 	{
 		$this->db->from('items');
 		$this->db->where('item_id',$item_id);
-		$this->db->where('deleted',0);
 		$query = $this->db->get();
 
 		return ($query->num_rows()==1);

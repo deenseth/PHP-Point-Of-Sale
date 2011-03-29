@@ -9,7 +9,6 @@ class Customer extends Person
 		$this->db->from('customers');	
 		$this->db->join('people', 'people.person_id = customers.person_id');
 		$this->db->where('customers.person_id',$person_id);
-		$this->db->where('deleted',0);		
 		$query = $this->db->get();
 		
 		return ($query->num_rows()==1);
@@ -34,7 +33,6 @@ class Customer extends Person
 	{
 		$this->db->from('customers');	
 		$this->db->join('people', 'people.person_id = customers.person_id');
-		$this->db->where('deleted',0);
 		$this->db->where('customers.person_id',$customer_id);
 		$query = $this->db->get();
 		
@@ -67,7 +65,6 @@ class Customer extends Person
 	{
 		$this->db->from('customers');
 		$this->db->join('people', 'people.person_id = customers.person_id');		
-		$this->db->where('deleted',0);
 		$this->db->where_in('customers.person_id',$customer_ids);
 		$this->db->order_by("last_name", "asc");
 		return $this->db->get();		

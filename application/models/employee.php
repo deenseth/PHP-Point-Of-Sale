@@ -9,7 +9,6 @@ class Employee extends Person
 		$this->db->from('employees');	
 		$this->db->join('people', 'people.person_id = employees.person_id');
 		$this->db->where('employees.person_id',$person_id);
-		$this->db->where('deleted',0);		
 		$query = $this->db->get();
 		
 		return ($query->num_rows()==1);
@@ -35,7 +34,6 @@ class Employee extends Person
 		$this->db->from('employees');	
 		$this->db->join('people', 'people.person_id = employees.person_id');
 		$this->db->where('employees.person_id',$employee_id);
-		$this->db->where('deleted',0);		
 		$query = $this->db->get();
 		
 		if($query->num_rows()==1)
@@ -68,7 +66,6 @@ class Employee extends Person
 		$this->db->from('employees');
 		$this->db->join('people', 'people.person_id = employees.person_id');		
 		$this->db->where_in('employees.person_id',$employee_ids);
-		$this->db->where('deleted',0);		
 		$this->db->order_by("last_name", "asc");
 		return $this->db->get();		
 	}

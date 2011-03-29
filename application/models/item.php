@@ -8,7 +8,6 @@ class Item extends Model
 	{
 		$this->db->from('items');
 		$this->db->where('item_id',$item_id);
-		$this->db->where('deleted',0);
 		$query = $this->db->get();
 
 		return ($query->num_rows()==1);
@@ -52,7 +51,6 @@ class Item extends Model
 	{
 		$this->db->from('items');
 		$this->db->where('item_id',$item_id);
-		$this->db->where('deleted',0);
 		
 		$query = $this->db->get();
 
@@ -84,7 +82,6 @@ class Item extends Model
 	{
 		$this->db->from('items');
 		$this->db->where('item_number',$item_number);
-		$this->db->where('deleted',0);
 
 		$query = $this->db->get();
 
@@ -103,7 +100,6 @@ class Item extends Model
 	{
 		$this->db->from('items');
 		$this->db->where_in('item_id',$item_ids);
-		$this->db->where('deleted',0);
 		$this->db->order_by("item", "asc");
 		return $this->db->get();
 	}

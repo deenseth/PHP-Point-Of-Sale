@@ -8,7 +8,6 @@ class Supplier extends Person
 	{
 		$this->db->from('suppliers');	
 		$this->db->join('people', 'people.person_id = suppliers.person_id');
-		$this->db->where('deleted', 0);
 		$this->db->where('suppliers.person_id',$person_id);
 		$query = $this->db->get();
 		
@@ -34,7 +33,6 @@ class Supplier extends Person
 	{
 		$this->db->from('suppliers');	
 		$this->db->join('people', 'people.person_id = suppliers.person_id');
-		$this->db->where('deleted', 0);
 		$this->db->where('suppliers.person_id',$supplier_id);
 		$query = $this->db->get();
 		
@@ -67,7 +65,6 @@ class Supplier extends Person
 	{
 		$this->db->from('suppliers');
 		$this->db->join('people', 'people.person_id = suppliers.person_id');		
-		$this->db->where('deleted', 0);
 		$this->db->where_in('suppliers.person_id',$suppliers_ids);
 		$this->db->order_by("last_name", "asc");
 		return $this->db->get();		

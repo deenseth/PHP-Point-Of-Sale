@@ -31,11 +31,11 @@ class Sale extends Model
 		}
 
 		$sales_data = array(
-		'sale_time' => date('Y-m-d H:i:s'),
-		'customer_id'=> $this->Customer->exists($customer_id) ? $customer_id : null,
-		'employee_id'=>$employee_id,
-		'payment_type'=>$payment_types,
-		'comment'=>$comment
+			'sale_time' => date('Y-m-d H:i:s'),
+			'customer_id'=> $this->Customer->exists($customer_id) ? $customer_id : null,
+			'employee_id'=>$employee_id,
+			'payment_type'=>$payment_types,
+			'comment'=>$comment
 		);
 
 		//Run these queries as a transaction, we want to make sure we do all or nothing
@@ -46,6 +46,14 @@ class Sale extends Model
 
 		foreach($payments as $payment_id=>$payment)
 		{
+			if ( substr( $payment['payment_type'], 0, strlen( $this->lang->line('sales_giftcard') ) ) == $this->lang->line('sales_giftcard') )
+			{
+				/* We have a gift card and we have to deduct the used value from the total value of the card. */
+				$splitpayment = explode( ':', $payment['payment_type'] );
+				$cur_giftcard_value = $this->getGiftcardValue( $splitpayment[1] );
+				$this->Giftcard->update( $splitpayment[1], $cur_giftcard_value - $payment['payment_amount'] );
+			}
+
 			$sales_payments_data = array
 			(
 				'sale_id'=>$sale_id,
@@ -170,6 +178,16 @@ class Sale extends Model
 
 		//Update null subtotals to be equal to the total as these don't have tax
 		$this->db->query('UPDATE '.$this->db->dbprefix('sales_items_temp'). ' SET total=subtotal WHERE total IS NULL');
+	}
+	
+	public function getGiftcardValue( $giftcardNumber )
+	{
+		if ( !$this->Giftcard->exists( $giftcardNumber ) )
+			return 0;
+		
+		$this->db->from('giftcards');
+		$this->db->where('giftcard_number',$giftcardNumber);
+		return $this->db->get()->row()->value;
 	}
 }
 ?>

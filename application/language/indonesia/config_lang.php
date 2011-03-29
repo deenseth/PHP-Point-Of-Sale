@@ -17,7 +17,7 @@ $lang['config_company_website_url']='Situs Perusahaan bukan URL yang benar(http:
 $lang['config_saved_successfully']='Konfigurasi berhasil disimpan';
 $lang['config_saved_unsuccessfully']='Konfigurasi tidak berhasil disimpan';
 $lang['config_return_policy_required']='Kebiajak retur wajib diisi';
-$lang['config_printe_after_sale']='Cetak bon setelah penjualan';
+$lang['config_print_after_sale']='Cetak bon setelah penjualan';
 $lang['config_language'] = 'Language';
 $lang['config_timezone'] = 'Timezone';
 ?>

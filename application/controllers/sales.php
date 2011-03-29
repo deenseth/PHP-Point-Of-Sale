@@ -44,22 +44,43 @@ class Sales extends Secure_area
 	{		
 		$data=array();
 		$this->form_validation->set_rules('amount_tendered', 'lang:sales_amount_tendered', 'numeric');
-
+		
 		if ($this->form_validation->run() == FALSE)
 		{
-			$data['error']=$this->lang->line('sales_must_enter_numeric');
+			if ( $this->input->post('payment_type') == $this->lang->line('sales_gift_card') )
+				$data['error']=$this->lang->line('sales_must_enter_numeric_giftcard');
+			else
+				$data['error']=$this->lang->line('sales_must_enter_numeric');
+				
  			$this->_reload($data);
  			return;
 		}
 
 		$payment_type=$this->input->post('payment_type');
-		$payment_amount=$this->input->post('amount_tendered');
-		if(!$this->sale_lib->add_payment($payment_type,$payment_amount))
+		if ( $payment_type == $this->lang->line('sales_giftcard') )
+		{
+			$payment_type=$this->input->post('payment_type').':'.$payment_amount=$this->input->post('amount_tendered');
+			$cur_giftcard_value = $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') );
+			if ( $cur_giftcard_value <= 0 )
+			{
+				$data['error']='Giftcard balance is '.to_currency( $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) ).' !';
+				$this->_reload($data);
+				return;
+			}
+			elseif ( ( $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ) > 0 )
+			{
+				$data['warning']='Giftcard balance is '.to_currency( $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ).' !';
+			}
+			$payment_amount=min( $this->sale_lib->get_total(), $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) );
+		}
+		else
+			$payment_amount=$this->input->post('amount_tendered');
+		
+		if( !$this->sale_lib->add_payment( $payment_type, $payment_amount ) )
 		{
 			$data['error']='Unable to Add Payment! Please try again!';
 		}
 		$this->_reload($data);
-
 	}
 
 	//Alain Multiple Payments
@@ -168,7 +189,8 @@ class Sales extends Secure_area
 			$total_payments += $payment['payment_amount'];
 		}
 
-		if (($this->sale_lib->get_mode() == 'sale') && ($total_payments <  to_currency_no_money($data['total'])))
+		/* Changed the conditional to account for floating point rounding */
+		if ( ( $this->sale_lib->get_mode() == 'sale' ) && ( ( to_currency_no_money( $data['total'] ) - $total_payments ) > 1e-6 ) )
 		{
 			$data['error'] = $this->lang->line('sales_payment_not_cover_total');
 			$this->_reload($data);
@@ -231,6 +253,7 @@ class Sales extends Secure_area
 		$data['payment_options']=array(
 			$this->lang->line('sales_cash') => $this->lang->line('sales_cash'),
 			$this->lang->line('sales_check') => $this->lang->line('sales_check'),
+			$this->lang->line('sales_giftcard') => $this->lang->line('sales_giftcard'),
 			$this->lang->line('sales_debit') => $this->lang->line('sales_debit'),
 			$this->lang->line('sales_credit') => $this->lang->line('sales_credit')
 		);
@@ -250,6 +273,5 @@ class Sales extends Secure_area
     	$this->_reload();
 
     }
-
 }
 ?>

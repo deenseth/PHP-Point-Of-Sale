@@ -230,7 +230,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_printe_after_sale').':', 'print_after_sale',array('class'=>'wide')); ?>
+<?php echo form_label($this->lang->line('config_print_after_sale').':', 'print_after_sale',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_checkbox(array(
 		'name'=>'print_after_sale',

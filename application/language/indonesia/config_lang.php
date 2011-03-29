@@ -20,6 +20,4 @@ $lang['config_return_policy_required']='Kebiajak retur wajib diisi';
 $lang['config_print_after_sale']='Cetak bon setelah penjualan';
 $lang['config_language'] = 'Language';
 $lang['config_timezone'] = 'Timezone';
-$lang['config_lines_per_page'] = '';
-$lang['config_lines_per_page_required'] = '';
 ?>

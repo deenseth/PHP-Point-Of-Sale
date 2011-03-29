@@ -20,6 +20,4 @@ $lang['config_return_policy_required']='Política de Reintegro es un campo reque
 $lang['config_print_after_sale']='Imprimir recibo después de una venta';
 $lang['config_language'] = 'Language';
 $lang['config_timezone'] = 'Timezone';
-$lang['config_lines_per_page'] = '';
-$lang['config_lines_per_page_required'] = '';
 ?>

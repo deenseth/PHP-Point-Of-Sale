@@ -1,2 +1,3 @@
-* General bug fix release
-- Fixed bugs in reports
+* Added new report "Detailed Receivings"
+* Fixed bug in excel import for items
+* Now include item quantity in sales interface

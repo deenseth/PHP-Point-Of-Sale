@@ -34,7 +34,8 @@ INSERT INTO `phppos_app_config` (`key`, `value`) VALUES ('address', '123 Nowhere
 ('phone', '555-555-5555'),
 ('return_policy', 'Test'),
 ('version', '10.0'),
-('website', '');
+('website', ''),
+('lines_per_page', '20');
 
 -- --------------------------------------------------------
 
@@ -132,6 +133,25 @@ CREATE TABLE `phppos_items` (
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `phppos_giftcards`
+--
+
+CREATE TABLE IF NOT EXISTS `phppos_giftcards` (
+  `giftcard_id` int(11) NOT NULL AUTO_INCREMENT,
+  `giftcard_number` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+  `value` double(15,2) NOT NULL,
+  `deleted` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`giftcard_id`),
+  UNIQUE KEY `giftcard_number` (`giftcard_number`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=48 ;
+
+--
+-- Dumping data for table `phppos_giftcards`
+--
+
+-- --------------------------------------------------------
+
 -- 
 -- Table structure for table `phppos_items_taxes`
 -- 
@@ -168,14 +188,16 @@ CREATE TABLE `phppos_modules` (
 -- Dumping data for table `phppos_modules`
 -- 
 
-INSERT INTO `phppos_modules` (`name_lang_key`, `desc_lang_key`, `sort`, `module_id`) VALUES ('module_config', 'module_config_desc', 8, 'config'),
+INSERT INTO `phppos_modules` (`name_lang_key`, `desc_lang_key`, `sort`, `module_id`) VALUES
+('module_config', 'module_config_desc', 8, 'config'),
 ('module_customers', 'module_customers_desc', 1, 'customers'),
 ('module_employees', 'module_employees_desc', 7, 'employees'),
 ('module_items', 'module_items_desc', 2, 'items'),
 ('module_receivings', 'module_receivings_desc', 5, 'receivings'),
 ('module_reports', 'module_reports_desc', 3, 'reports'),
 ('module_sales', 'module_sales_desc', 6, 'sales'),
-('module_suppliers', 'module_suppliers_desc', 4, 'suppliers');
+('module_suppliers', 'module_suppliers_desc', 4, 'suppliers'),
+('module_giftcards', 'module_giftcards_desc', 9, 'giftcards');
 
 -- --------------------------------------------------------
 
@@ -229,6 +251,7 @@ INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES ('config', 1)
 ('receivings', 1),
 ('reports', 1),
 ('sales', 1),
+('giftcards', 1),
 ('suppliers', 1);
 
 -- --------------------------------------------------------

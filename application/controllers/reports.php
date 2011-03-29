@@ -275,7 +275,7 @@ class Reports extends Secure_area
 
 		$data = array(
 			"title" => $this->lang->line('reports_sales_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_sales_graph/$start_date/$end_date"),
+			"data_file" => site_url("reports/graphical_summary_sales_graph/$start_date/$end_date"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
 		);
@@ -315,7 +315,7 @@ class Reports extends Secure_area
 
 		$data = array(
 			"title" => $this->lang->line('reports_items_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_items_graph/$start_date/$end_date"),
+			"data_file" => site_url("reports/graphical_summary_items_graph/$start_date/$end_date"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
 		);
@@ -354,7 +354,7 @@ class Reports extends Secure_area
 
 		$data = array(
 			"title" => $this->lang->line('reports_categories_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_categories_graph/$start_date/$end_date"),
+			"data_file" => site_url("reports/graphical_summary_categories_graph/$start_date/$end_date"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
 		);
@@ -390,7 +390,7 @@ class Reports extends Secure_area
 
 		$data = array(
 			"title" => $this->lang->line('reports_suppliers_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_suppliers_graph/$start_date/$end_date"),
+			"data_file" => site_url("reports/graphical_summary_suppliers_graph/$start_date/$end_date"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
 		);
@@ -426,7 +426,7 @@ class Reports extends Secure_area
 
 		$data = array(
 			"title" => $this->lang->line('reports_employees_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_employees_graph/$start_date/$end_date"),
+			"data_file" => site_url("reports/graphical_summary_employees_graph/$start_date/$end_date"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
 		);
@@ -462,7 +462,7 @@ class Reports extends Secure_area
 
 		$data = array(
 			"title" => $this->lang->line('reports_taxes_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_taxes_graph/$start_date/$end_date"),
+			"data_file" => site_url("reports/graphical_summary_taxes_graph/$start_date/$end_date"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
 		);
@@ -499,7 +499,7 @@ class Reports extends Secure_area
 
 		$data = array(
 			"title" => $this->lang->line('reports_customers_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_customers_graph/$start_date/$end_date"),
+			"data_file" => site_url("reports/graphical_summary_customers_graph/$start_date/$end_date"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
 		);
@@ -538,7 +538,7 @@ class Reports extends Secure_area
 
 		$data = array(
 			"title" => $this->lang->line('reports_discounts_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_discounts_graph/$start_date/$end_date"),
+			"data_file" => site_url("reports/graphical_summary_discounts_graph/$start_date/$end_date"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
 		);
@@ -576,7 +576,7 @@ class Reports extends Secure_area
 
 		$data = array(
 			"title" => $this->lang->line('reports_payments_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_payments_graph/$start_date/$end_date"),
+			"data_file" => site_url("reports/graphical_summary_payments_graph/$start_date/$end_date"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date))
 		);

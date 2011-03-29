@@ -144,9 +144,3 @@ input
 .clearfix { display: inline-block; }
 html[xmlns] .clearfix {	display: block; }
 * html .clearfix { height: 1%; }
-
-.pagination_links
-{
-	text-align: center;
-	padding-bottom: 5px;
-}

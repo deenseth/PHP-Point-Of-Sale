@@ -16,28 +16,14 @@ class Item extends Model
 	/*
 	Returns all the items
 	*/
-	function get_all( $itemCount, $offset )
+	function get_all()
 	{
 		$this->db->from('items');
 		$this->db->where('deleted',0);
 		$this->db->order_by("name", "asc");
-		
-		$this->db->limit( $itemCount, $offset );
-		
 		return $this->db->get();
 	}
 
-	/*
-	Returns count of undeleted items
-	*/
-	function count_all_undeleted( )
-	{
-		$this->db->from('items');
-		$this->db->where('deleted',0);
-		
-		return $this->db->count_all_results();
-	}
-	
 	function get_all_filtered($low_inventory=0,$is_serialized=0,$no_description)
 	{
 		$this->db->from('items');

@@ -20,6 +20,4 @@ $lang['config_return_policy_required']='Return policy is a required field';
 $lang['config_print_after_sale']='Print receipt after sale';
 $lang['config_language'] = 'Language';
 $lang['config_timezone'] = 'Timezone';
-$lang['config_lines_per_page'] = 'Pagination rows';
-$lang['config_lines_per_page_required'] = 'Pagination rows is a required field';
 ?>

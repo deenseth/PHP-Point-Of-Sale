@@ -9,7 +9,6 @@ class Customer extends Person
 		$this->db->from('customers');	
 		$this->db->join('people', 'people.person_id = customers.person_id');
 		$this->db->where('customers.person_id',$person_id);
-		$this->db->where('deleted',0);		
 		$query = $this->db->get();
 		
 		return ($query->num_rows()==1);

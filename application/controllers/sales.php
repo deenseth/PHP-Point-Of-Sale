@@ -219,8 +219,7 @@ class Sales extends Secure_area
 		$data['receipt_title']=$this->lang->line('sales_receipt');
 		$data['transaction_time']= date('m/d/Y h:i:s a', strtotime($sale_info['sale_time']));
 		$customer_id=$this->sale_lib->get_customer();
-		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
-		$emp_info=$this->Employee->get_info($employee_id);
+		$emp_info=$this->Employee->get_info($sale_info['employee_id']);
 		$data['payment_type']=$sale_info['payment_type'];
 		$data['amount_change']=to_currency($this->sale_lib->get_amount_due() * -1);
 		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
@@ -239,16 +238,30 @@ class Sales extends Secure_area
 	function edit($sale_id)
 	{
 		$data = array();
+
+		$data['customers'] = array('' => 'No Customer');
+		foreach ($this->Customer->get_all()->result() as $customer)
+		{
+			$data['customers'][$customer->person_id] = $customer->first_name . ' '. $customer->last_name;
+		}
+
+		$data['employees'] = array();
+		foreach ($this->Employee->get_all()->result() as $employee)
+		{
+			$data['employees'][$employee->person_id] = $employee->first_name . ' '. $employee->last_name;
+		}
+
 		$data['sale_info'] = $this->Sale->get_info($sale_id)->row_array();
+				
+		
 		$this->load->view('sales/edit', $data);
 	}
 	
 	function save($sale_id)
 	{
 		$sale_data = array(
-			'balance' => $this->input->post('balance'),
-			'delivery_date' => date('Y-m-d', strtotime($this->input->post('delivery_date'))),
-			'delivery_time' => $this->input->post('delivery_time'),
+			'customer_id' => $this->input->post('customer_id') ? $this->input->post('customer_id') : null,
+			'employee_id' => $this->input->post('employee_id'),
 			'comment' => $this->input->post('comment')
 		);
 		

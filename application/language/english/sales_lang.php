@@ -56,4 +56,6 @@ $lang['sales_item_insufficient_of_stock'] = 'Item is Insufficient of Stock';
 $lang['sales_quantity_less_than_zero'] = 'Warning, Desired Quantity is Insufficient. You can still process the sale, but check your inventory';
 $lang['sales_successfully_updated'] = 'Sale sucessfully updated';
 $lang['sales_unsuccessfully_updated'] = 'Sale unsucessfully updated';
+$lang['sales_edit_sale'] = 'Edit Sale';
+$lang['sales_employee'] = 'Employee';
 ?>

@@ -1,6 +1,6 @@
 <?php $this->load->view("partial/header"); ?>
 <div id="edit_sale_wrapper">
-	<h1><?php echo $this->lang->line('sales_edit_sale'); ?> <?php echo $sale_info['sale_id']; ?></h1>
+	<h1><?php echo $this->lang->line('sales_edit_sale'); ?> POS <?php echo $sale_info['sale_id']; ?></h1>
 	
 	<?php echo form_open("sales/save/".$sale_info['sale_id'],array('id'=>'sales_edit_form')); ?>
 	<ul id="error_message_box"></ul>
@@ -15,36 +15,14 @@
 	<div class="field_row clearfix">
 	<?php echo form_label($this->lang->line('sales_customer').':', 'customer'); ?>
 		<div class='form_field'>
-			<?php echo ($cust_info = $this->Customer->get_info($sale_info['customer_id'])) ? $cust_info->first_name . ' '.$cust_info->last_name : ''?>
+			<?php echo form_dropdown('customer_id', $customers, $sale_info['customer_id'], 'id="customer_id"');?>
 		</div>
 	</div>
 	
 	<div class="field_row clearfix">
-	<?php echo form_label($this->lang->line('sales_balance').':', 'balance'); ?>
+	<?php echo form_label($this->lang->line('sales_employee').':', 'employee'); ?>
 		<div class='form_field'>
-		<?php echo form_input(array(
-			'name'=>'balance',
-			'id'=>'balance',
-			'value'=>$sale_info['balance'])
-		);?>
-		</div>
-	</div>
-	
-	<div class="field_row clearfix">
-	<?php echo form_label($this->lang->line('sales_delivery_date').':', 'delivery_date'); ?>
-		<div class='form_field'>
-		<?php echo form_input(array(
-			'name'=>'delivery_date',
-			'id'=>'delivery_date',
-			'value'=>date('m/d/Y', strtotime($sale_info['delivery_date'])))
-		);?>
-		</div>
-	</div>
-	
-	<div class="field_row clearfix">
-	<?php echo form_label($this->lang->line('sales_delivery_time').':', 'delivery_time'); ?>
-		<div class='form_field'>
-			<?php echo form_dropdown('delivery_time',array('AM' => 'AM', 'PM' => 'PM'), $sale_info['delivery_time'], 'id="delivery_time"');?>
+			<?php echo form_dropdown('employee_id', $employees, $sale_info['employee_id'], 'id="employee_id"');?>
 		</div>
 	</div>
 	
@@ -98,15 +76,9 @@ $(document).ready(function()
  		wrapper: "li",
 		rules: 
 		{
-			balance: "required",
-			delivery_date: "required",
-    		delivery_time: "required"
    		},
 		messages: 
 		{
-     		balance: "<?php echo $this->lang->line('sales_balance_required'); ?>",
-     		delivery_date: "<?php echo $this->lang->line('sales_delivery_date_required'); ?>",
-     		delivery_time: "<?php echo $this->lang->line('sales_delivery_time_required'); ?>"
 		}
 	});
 });

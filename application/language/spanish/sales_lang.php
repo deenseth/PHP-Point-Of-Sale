@@ -1,4 +1,6 @@
 <?php
+$lang['sales_giftcard_number']='Gift Card Number';
+$lang['sales_giftcard']='Gift Card';
 $lang['sales_register']='Sales Register';
 $lang['sales_mode']='Register Mode';
 $lang['sales_new_item'] = 'New Item';
@@ -45,6 +47,7 @@ $lang['sales_change_due'] = 'Change Due';
 $lang['sales_payment_not_cover_total'] = 'Payment Amount does not cover Total';
 $lang['sales_transaction_failed'] = 'Sales Transaction Failed';
 $lang['sales_must_enter_numeric'] = 'Must enter numeric value for amount tendered';
+$lang['sales_must_enter_numeric_giftcard'] = 'Must enter numeric value for giftcard number';
 $lang['sales_serial'] = 'Serial';
 $lang['sales_description_abbrv'] = 'Desc';
 $lang['sales_item_out_of_stock'] = 'Item is Out of Stock';

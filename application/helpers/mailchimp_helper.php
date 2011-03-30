@@ -157,7 +157,7 @@ ENDJS;
 
 function campaign_export_button()
 {
-    return '<a class="button pill" href="'.base_url().'index.php/mailchimpdash/charttocampaign/" onClick="export_to_campaign(this); return false;">Export To Campaign</a>';
+    return '<div class="export-button-wrapper"><a class="button pill" href="'.base_url().'index.php/mailchimpdash/charttocampaign/" onClick="export_to_campaign(this); return false;">Export To Campaign</a><div class="clear"><!-- --></div></div>';
 }
 
 

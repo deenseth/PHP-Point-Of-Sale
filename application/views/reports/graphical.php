@@ -4,7 +4,6 @@ $this->load->view("partial/header");
 <div id="page_title" style="margin-bottom:8px;"><?php echo $title ?></div>
 <div id="page_subtitle" style="margin-bottom:8px;"><?php echo $subtitle ?></div>
 <div style="text-align: center;">
-
 <script type="text/javascript">
 swfobject.embedSWF(
 "<?php echo base_url(); ?>open-flash-chart.swf", "chart",
@@ -23,8 +22,8 @@ swfobject.embedSWF(
 	<div class="summary_row"><?php echo $this->lang->line('reports_'.$name). ': '.to_currency($value); ?></div>
 <?php }?>
 </div>
-
 <?=campaign_export_button()?>
+
 <div id="feedback_bar"></div>
 <?php
 $this->load->view("partial/footer"); 

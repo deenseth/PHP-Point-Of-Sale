@@ -23,4 +23,5 @@ $lang['employees_login_info']='Info Login Karyawan';
 $lang['employees_permission_info']='Hak Akses Karyawan';
 $lang['employees_permission_desc']='Tandai kotak di bawah ini untuk memberikan akses ke modul';
 $lang['employees_error_updating_demo_admin'] = 'You can not change the demo admin user';
+$lang['employees_error_deleting_demo_admin'] = 'You can not delete the demo admin user';
 ?>

@@ -16,7 +16,15 @@ class Sale extends Model
 
 		return ($query->num_rows()==1);
 	}
-
+	
+	function update($sale_data, $sale_id)
+	{
+		$this->db->where('sale_id', $sale_id);
+		$success = $this->db->update('sales',$sale_data);
+		
+		return $success;
+	}
+	
 	function save ($items,$customer_id,$employee_id,$comment,$payments,$sale_id=false)
 	{
 		if(count($items)==0)

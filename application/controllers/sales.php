@@ -235,7 +235,33 @@ class Sales extends Secure_area
 		$this->sale_lib->clear_all();
 
 	}
-
+	
+	function edit($sale_id)
+	{
+		$data = array();
+		$data['sale_info'] = $this->Sale->get_info($sale_id)->row_array();
+		$this->load->view('sales/edit', $data);
+	}
+	
+	function save($sale_id)
+	{
+		$sale_data = array(
+			'balance' => $this->input->post('balance'),
+			'delivery_date' => date('Y-m-d', strtotime($this->input->post('delivery_date'))),
+			'delivery_time' => $this->input->post('delivery_time'),
+			'comment' => $this->input->post('comment')
+		);
+		
+		if ($this->Sale->update($sale_data, $sale_id))
+		{
+			echo json_encode(array('success'=>true,'message'=>$this->lang->line('sales_successfully_updated')));
+		}
+		else
+		{
+			echo json_encode(array('success'=>false,'message'=>$this->lang->line('sales_unsuccessfully_updated')));
+		}
+	}
+	
 	function _reload($data=array())
 	{
 		$person_info = $this->Employee->get_logged_in_employee_info();

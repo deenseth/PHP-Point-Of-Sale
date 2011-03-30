@@ -771,8 +771,7 @@ class Reports extends Secure_area
 
 		$this->load->view("reports/tabular_details",$data);
 	}
-	
-	
+		
 	function excel_export()
 	{
 		$this->load->view("reports/excel_export",array());		

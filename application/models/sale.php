@@ -133,6 +133,21 @@ class Sale extends Model
 		
 		return $sale_id;
 	}
+	
+	function delete($sale_id)
+	{
+		//Run these queries as a transaction, we want to make sure we do all or nothing
+		$this->db->trans_start();
+		
+		$this->db->delete('sales_payments', array('sale_id' => $sale_id)); 
+		$this->db->delete('sales_items_taxes', array('sale_id' => $sale_id)); 
+		$this->db->delete('sales_items', array('sale_id' => $sale_id)); 
+		$this->db->delete('sales', array('sale_id' => $sale_id)); 
+		
+		$this->db->trans_complete();
+				
+		return $this->db->trans_status();
+	}
 
 	function get_sale_items($sale_id)
 	{

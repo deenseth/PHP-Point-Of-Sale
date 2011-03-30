@@ -257,6 +257,23 @@ class Sales extends Secure_area
 		$this->load->view('sales/edit', $data);
 	}
 	
+	function delete($sale_id)
+	{
+		$data = array();
+		
+		if ($this->Sale->delete($sale_id))
+		{
+			$data['success'] = true;
+		}
+		else
+		{
+			$data['success'] = false;
+		}
+		
+		$this->load->view('sales/delete', $data);
+		
+	}
+	
 	function save($sale_id)
 	{
 		$sale_data = array(

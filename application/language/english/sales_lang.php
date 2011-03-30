@@ -58,4 +58,7 @@ $lang['sales_successfully_updated'] = 'Sale sucessfully updated';
 $lang['sales_unsuccessfully_updated'] = 'Sale unsucessfully updated';
 $lang['sales_edit_sale'] = 'Edit Sale';
 $lang['sales_employee'] = 'Employee';
+$lang['sales_successfully_deleted'] = 'Sale sucessfully deleted';
+$lang['sales_unsuccessfully_deleted'] = 'Sale unsucessfully deleted';
+$lang['sales_delete_entire_sale'] = 'Delete entire sale';
 ?>

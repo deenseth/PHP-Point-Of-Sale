@@ -42,15 +42,24 @@
 	);
 	?>
 	</form>
+	<?php echo form_open("sales/delete/".$sale_info['sale_id'],array('id'=>'sales_delete_form')); ?>
+		<?php
+		echo form_submit(array(
+			'name'=>'submit',
+			'id'=>'submit',
+			'value'=>$this->lang->line('sales_delete_entire_sale'),
+			'class'=>'submit_button float_right')
+		);
+		?>
+		
+	</form>
 </div>
 <div id="feedback_bar"></div>
 <?php $this->load->view("partial/footer"); ?>
 
 <script type="text/javascript" language="javascript">
 $(document).ready(function()
-{
-	$('#delivery_date').datePicker({startDate: '01/01/1970'});
-	
+{	
 	$('#sales_edit_form').validate({
 		submitHandler:function(form)
 		{

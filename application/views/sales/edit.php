@@ -5,12 +5,19 @@
 	<?php echo form_open("sales/save/".$sale_info['sale_id'],array('id'=>'sales_edit_form')); ?>
 	<ul id="error_message_box"></ul>
 	
-		<div class="field_row clearfix">
-		<?php echo form_label($this->lang->line('sales_receipt').':', 'customer'); ?>
-			<div class='form_field'>
-				<?php echo anchor('sales/receipt/'.$sale_info['sale_id'], 'POS '.$sale_info['sale_id'], array('target' => '_blank'));?>
-			</div>
+	<div class="field_row clearfix">
+	<?php echo form_label($this->lang->line('sales_receipt').':', 'customer'); ?>
+		<div class='form_field'>
+			<?php echo anchor('sales/receipt/'.$sale_info['sale_id'], 'POS '.$sale_info['sale_id'], array('target' => '_blank'));?>
 		</div>
+	</div>
+	
+	<div class="field_row clearfix">
+	<?php echo form_label($this->lang->line('sales_date').':', 'date'); ?>
+		<div class='form_field'>
+			<?php echo form_input(array('name'=>'date','value'=>date('m/d/Y', strtotime($sale_info['sale_time'])), 'id'=>'date'));?>
+		</div>
+	</div>
 	
 	<div class="field_row clearfix">
 	<?php echo form_label($this->lang->line('sales_customer').':', 'customer'); ?>
@@ -60,6 +67,7 @@
 <script type="text/javascript" language="javascript">
 $(document).ready(function()
 {	
+	$('#date').datePicker({startDate: '01/01/1970'});
 	$("#sales_delete_form").submit(function()
 	{
 		if (!confirm('<?php echo $this->lang->line("sales_delete_confirmation"); ?>'))

@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2010, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -307,7 +307,7 @@ class CI_Router {
 	 */	
 	function set_class($class)
 	{
-		$this->class = $class;
+		$this->class = str_replace(array('/', '.'), '', $class);
 	}
 	
 	// --------------------------------------------------------------------
@@ -366,7 +366,7 @@ class CI_Router {
 	 */	
 	function set_directory($dir)
 	{
-		$this->directory = $dir.'/';
+		$this->directory = str_replace(array('/', '.'), '', $dir).'/';
 	}
 
 	// --------------------------------------------------------------------

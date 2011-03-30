@@ -503,7 +503,7 @@ ALTER TABLE `phppos_sales_items`
 -- 
 ALTER TABLE `phppos_sales_items_taxes`
   ADD CONSTRAINT `phppos_sales_items_taxes_ibfk_1` FOREIGN KEY (`sale_id`) REFERENCES `phppos_sales_items` (`sale_id`),
-  ADD CONSTRAINT `phppos_sales_items_taxes_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `phppos_sales_items` (`item_id`);
+  ADD CONSTRAINT `phppos_sales_items_taxes_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `phppos_items` (`item_id`);
 
 -- 
 -- Constraints for table `phppos_sales_payments`

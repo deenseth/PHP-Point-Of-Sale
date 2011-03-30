@@ -53,4 +53,15 @@ $lang['sales_description_abbrv'] = 'Desc';
 $lang['sales_item_out_of_stock'] = 'Item is Out of Stock';
 $lang['sales_item_insufficient_of_stock'] = 'Item is Insufficient of Stock';
 $lang['sales_quantity_less_than_zero'] = 'Warning, Desired Quantity is Insufficient. You can still process the sale, but check your inventory';
+$lang['sales_successfully_updated'] = 'Sale sucessfully updated';
+$lang['sales_unsuccessfully_updated'] = 'Sale unsucessfully updated';
+$lang['sales_edit_sale'] = 'Edit Sale';
+$lang['sales_employee'] = 'Employee';
+$lang['sales_successfully_deleted'] = 'Sale sucessfully deleted';
+$lang['sales_unsuccessfully_deleted'] = 'Sale unsucessfully deleted';
+$lang['sales_delete_entire_sale'] = 'Delete entire sale';
+$lang['sales_delete_confirmation'] = 'Are you sure you want to delete this sale, this action cannot be undone';
+$lang['sales_date'] = 'Sale Date';
+$lang['sales_delete_successful'] = 'You have successfully deleted a sale';
+$lang['sales_delete_unsuccessful'] = 'You have unsuccessfully deleted a sale';
 ?>

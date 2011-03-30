@@ -273,9 +273,13 @@ class Mailchimpdash extends Secure_area
         return $stats;
     }
     
-    function charttocampaign($filename)
+    function charttocampaign($filename=null)
     {
-        $data['filename'] = $filename.'.png';
+        // screw you thickbox
+        if ($filename && !preg_match('/.*random:.*/', $filename)) {
+            $data['filename'] = $filename.'.png';
+        }
+        
         $data['lists'] = $this->MailChimp->listsWithGroups();
         $this->load->view('mailchimpdash/charttocampaign', $data);
     }
@@ -297,12 +301,57 @@ class Mailchimpdash extends Secure_area
         
         $html = $this->load->view('mailchimpdash/generatechartcampaign', $data, true);
         
-        $options = array('list_id'=>$listID,
-                         'subject'=>$title,
-                         'from_email'=>'robert.elwell@gmail.com',
-                         'from_name'=>'test',
-                         'to_name'=>'our friend',
-                         'generate_text'=>true);
+        $options = array('list_id'      =>  $listID,
+                         'subject'      =>  $title,
+                         'from_email'   =>  $fromEmail,
+                         'from_name'    =>  $fromName,
+                         'to_name'      =>  $toName,
+                         'generate_text'=>  true);
+        
+        $segmentOptions = array();
+        if ($group) {
+            $ploded = explode('-', $group);
+            $groupingID = array_shift($ploded);
+            $groupName = implode('-', $ploded);
+            
+            $segmentOptions['match'] = 'all';
+            $segmentOptions['conditions'] = array(array('field'=>'interests-'.$groupingID,
+                                                        'op'   =>'one',
+                                                        'value'=>$groupName));
+        }
+        
+        $id = $this->MailChimp->campaignCreate('regular', $options, array('html'=>$html), $segmentOptions); 
+        
+        if ($id) {
+            echo json_encode(array('success'=>true,'message'=>"Campaign created"));
+        } else {
+            echo json_encode(array('success'=>false,'message'=>"Could not create campaign: " . $this->MailChimp->errorMessage));
+        }
+    }
+    
+    function generatebasiccampaign()
+    {
+        $title = $this->input->post('title');
+        $listID = $this->input->post('listID');
+        $group = $this->input->post('group');
+        $campaignText = $this->input->post('campaignText');
+        $fromEmail = $this->input->post('fromEmail');
+        $fromName = $this->input->post('fromName');
+        $toName = $this->input->post('toName');
+        $chartHtml = $this->input->post('chartHtml');
+        
+        $data['title'] = $title;
+        $data['campaignText'] = nl2br(strip_tags($campaignText));
+        $data['chartHtml'] = $chartHtml;
+        
+        $html = $this->load->view('mailchimpdash/generatebasiccampaign', $data, true);
+        
+        $options = array('list_id'      =>  $listID,
+                         'subject'      =>  $title,
+                         'from_email'   =>  $fromEmail,
+                         'from_name'    =>  $fromName,
+                         'to_name'      =>  $toName,
+                         'generate_text'=>  true);
         
         $segmentOptions = array();
         if ($group) {

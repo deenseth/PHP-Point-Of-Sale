@@ -39,6 +39,7 @@ function changeGroups(dom)
 
 function campaignCreate()
 {
+	<? if ($filename) { ?>
     $.post('<?=base_url()?>index.php/mailchimpdash/generatechartcampaign',
   		                   {title: $('#newcampaign-title-input').val(),
                             chartLocation: $('#newcampaign-chart img').attr('src'),
@@ -62,6 +63,35 @@ function campaignCreate()
                                }
                                tb_remove();
                            });
+    <? } else { ?>
+    var tableholder = $('#table_holder');
+    tableholder.makeCssInline();
+    var htmlData = tableholder.html();
+    
+    $.post('<?=base_url()?>/generatebasiccampaign',
+            {title: $('#newcampaign-title-input').val(),
+             chartHtml: htmlData,
+             campaignText: $('#campaigntext').val(),
+             listID: $('#listpicker').val(),
+             group: $('#grouppicker').val(),
+             fromEmail: $('#fromEmail').val(),
+             fromName: $('#fromName').val(),
+             toName: $('#toName').val()
+            },
+            function(response) {
+                if (typeof(response) != 'object') {
+                    var data = JSON.parse(response);
+                } else {
+                    var data = response;
+                }
+                if (data.success) {
+                    set_feedback(data.message, 'success_message', false);
+                } else {
+                    set_feedback(data.message, 'error_message', true);
+                }
+                tb_remove();
+            });
+    <? } ?>
 }
 </script>
 <link rel="stylesheet" href="<?=base_url()?>css/mailchimpdash/charttocampaign.css" />
@@ -83,9 +113,11 @@ function campaignCreate()
         <label for="newcampign-title-input">Campaign Title</label><br/>
         <input type="text" id="newcampaign-title-input" name="newcampaign-title-input" />
     </div>
+    <? if ($filename) { ?>
     <div id="newcampaign-chart">
         <img src="<?=base_url().'saved_charts/'.$filename?>" alt="" style="height: 50%; width: 50%;"/>
     </div>
+    <? } ?>
     <div id="newcampaign-campaigntext">
         <label for="campaigntext">Campaign Text</label><br/>
         <textarea id="campaigntext" name="campaigntext" rows="5" cols="30"></textarea>

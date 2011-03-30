@@ -10,7 +10,7 @@ swfobject.embedSWF(
 "775", "420", "9.0.0", "expressInstall.swf",
 {"data-file":"<?php echo $data_file; ?>"} )
 </script>
-<?=campaign_export_script()?>
+<?=campaign_export_script(true)?>
 <?php
 ?>
 </div>

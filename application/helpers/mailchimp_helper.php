@@ -131,10 +131,13 @@ function display_campaign_data(array $campaign)
     return $html; 
 }
 
-function campaign_export_script()
+function campaign_export_script($isGraphical=false)
 {
     $base_url = base_url();
+    
+    if ($isGraphical) {
     $js = <<<ENDJS
+<script src="{$base_url}js/jquery.makecssinline.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
 <script type="text/javascript" src="{$base_url}js/chartgrabber.js"></script>
 <script type="text/javascript">
 function export_to_campaign(dom)
@@ -152,6 +155,18 @@ function export_to_campaign(dom)
 }
 </script>    
 ENDJS;
+    } else {
+    $js = <<<ENDJS
+<script src="{$base_url}js/jquery.makecssinline.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
+<script type="text/javascript">
+function export_to_campaign(dom)
+{
+    thickit(dom);    
+}
+</script>    
+ENDJS;
+    
+    }
     return $js;
 }
 

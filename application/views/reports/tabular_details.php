@@ -7,6 +7,7 @@ if($export_excel == 1){
 	$this->load->view("partial/header");
 } 
 ?>
+<?=campaign_export_script()?>
 <div id="page_title" style="margin-bottom:8px;"><?php echo $title ?></div>
 <div id="page_subtitle" style="margin-bottom:8px;"><?php echo $subtitle ?></div>
 <div id="table_holder">
@@ -61,6 +62,10 @@ if($export_excel == 1){
 	<div class="summary_row"><?php echo $this->lang->line('reports_'.$name). ': '.to_currency($value); ?></div>
 <?php }?>
 </div>
+<?=campaign_export_button()?>
+
+<div id="feedback_bar"></div>
+
 <?php 
 if($export_excel == 1){
 	$this->load->view("partial/footer_excel");

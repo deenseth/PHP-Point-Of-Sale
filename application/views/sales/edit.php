@@ -60,13 +60,20 @@
 <script type="text/javascript" language="javascript">
 $(document).ready(function()
 {	
+	$("#sales_delete_form").submit(function()
+	{
+		if (!confirm('<?php echo $this->lang->line("sales_delete_confirmation"); ?>'))
+		{
+			return false;
+		}
+	});
+	
 	$('#sales_edit_form').validate({
 		submitHandler:function(form)
 		{
 			$(form).ajaxSubmit({
 			success:function(response)
 			{
-				console.log(response);
 				if(response.success)
 				{
 					set_feedback(response.message,'success_message',false);

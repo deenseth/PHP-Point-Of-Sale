@@ -61,4 +61,5 @@ $lang['sales_employee'] = 'Employee';
 $lang['sales_successfully_deleted'] = 'Sale sucessfully deleted';
 $lang['sales_unsuccessfully_deleted'] = 'Sale unsucessfully deleted';
 $lang['sales_delete_entire_sale'] = 'Delete entire sale';
+$lang['sales_delete_confirmation'] = 'Are you sure you want to delete this sale, this action cannot be undone';
 ?>

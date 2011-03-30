@@ -4,13 +4,13 @@
 if ($success)
 {
 ?>
-	<h1>You have successfully deleted a sale</h1>
+	<h1><?php echo $this->lang->line('sales_delete_successful'); ?></h1>
 <?php	
 }
 else
 {
 ?>
-	<h1>Could not delete sale</h1>
+	<h1><?php echo $this->lang->line('sales_delete_unsuccessful'); ?></h1>
 <?php
 }
 ?>

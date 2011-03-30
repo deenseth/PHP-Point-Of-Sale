@@ -62,4 +62,6 @@ $lang['sales_unsuccessfully_deleted'] = 'Sale unsucessfully deleted';
 $lang['sales_delete_entire_sale'] = 'Delete entire sale';
 $lang['sales_delete_confirmation'] = 'Are you sure you want to delete this sale, this action cannot be undone';
 $lang['sales_date'] = 'Sale Date';
+$lang['sales_delete_successful'] = 'You have successfully deleted a sale';
+$lang['sales_delete_unsuccessful'] = 'You have unsuccessfully deleted a sale';
 ?>

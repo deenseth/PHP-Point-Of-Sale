@@ -5,6 +5,13 @@
 	<?php echo form_open("sales/save/".$sale_info['sale_id'],array('id'=>'sales_edit_form')); ?>
 	<ul id="error_message_box"></ul>
 	
+		<div class="field_row clearfix">
+		<?php echo form_label($this->lang->line('sales_receipt').':', 'customer'); ?>
+			<div class='form_field'>
+				<?php echo anchor('sales/receipt/'.$sale_info['sale_id'], 'POS '.$sale_info['sale_id'], array('target' => '_blank'));?>
+			</div>
+		</div>
+	
 	<div class="field_row clearfix">
 	<?php echo form_label($this->lang->line('sales_customer').':', 'customer'); ?>
 		<div class='form_field'>

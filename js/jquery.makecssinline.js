@@ -10,7 +10,7 @@
                         properties.push(property + ':' + $(this).css(property));
                     }
                 }
-                this.style.cssText = properties.join(';');
+                this.style.cssText = properties.join(';').replace(/"/, "'");
                 $(this).children().makeCssInline();
             });
         }

@@ -55,7 +55,7 @@
 			'name'=>'submit',
 			'id'=>'submit',
 			'value'=>$this->lang->line('sales_delete_entire_sale'),
-			'class'=>'submit_button float_right')
+			'class'=>'delete_button float_right')
 		);
 		?>
 		

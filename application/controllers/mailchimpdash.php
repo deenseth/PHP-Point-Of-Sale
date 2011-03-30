@@ -287,10 +287,13 @@ class Mailchimpdash extends Secure_area
         $group = $this->input->post('group');
         $chartLocation = $this->input->post('chartLocation');
         $campaignText = $this->input->post('campaignText');
+        $fromEmail = $this->input->post('fromEmail');
+        $fromName = $this->input->post('fromName');
+        $toName = $this->input->post('toName');
         
         $data['title'] = $title;
         $data['png'] = base64_encode(file_get_contents($chartLocation));
-        $data['campaignText'] = $campaignText;
+        $data['campaignText'] = nl2br(strip_tags($campaignText));
         
         $html = $this->load->view('mailchimpdash/generatechartcampaign', $data, true);
         

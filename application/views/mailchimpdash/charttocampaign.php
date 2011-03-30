@@ -44,7 +44,10 @@ function campaignCreate()
                             chartLocation: $('#newcampaign-chart img').attr('src'),
                             campaignText: $('#campaigntext').val(),
                             listID: $('#listpicker').val(),
-                            group: $('#grouppicker').val()
+                            group: $('#grouppicker').val(),
+                            fromEmail: $('#fromEmail').val(),
+                            fromName: $('#fromName').val(),
+                            toName: $('#toName').val()
                            },
                            function(response) {
                         	   if (typeof(response) != 'object') {
@@ -64,6 +67,18 @@ function campaignCreate()
 <link rel="stylesheet" href="<?=base_url()?>css/mailchimpdash/charttocampaign.css" />
 <h3 id="exportthis">Export This Report To a Campaign</h3>
 <div id="newcampaign">
+    <div id="newcampaign-fromemail">
+        <label for="fromName">Campaign "From" Email</label><br/>
+        <input type="text" id="fromEmail" name="fromEmail" />
+    </div>
+    <div id="newcampaign-fromname">
+        <label for="fromName">Campaign "From" Name</label><br/>
+        <input type="text" id="fromName" name="fromName" />
+    </div>
+    <div id="newcampaign-toname">
+        <label for="toName">Campaign "To" Name</label><br/>
+        <input type="text" id="toName" name="toName" />
+    </div>
     <div id="newcampaign-title">
         <label for="newcampign-title-input">Campaign Title</label><br/>
         <input type="text" id="newcampaign-title-input" name="newcampaign-title-input" />
@@ -75,6 +90,7 @@ function campaignCreate()
         <label for="campaigntext">Campaign Text</label><br/>
         <textarea id="campaigntext" name="campaigntext" rows="5" cols="30"></textarea>
     </div>
+    <br/>
     <div id="newcampaign-listpicker">
         <label for="listpicker">Choose Your List:</label>
         <select id="listpicker" onChange='changeGroups(this);'>
@@ -84,7 +100,7 @@ function campaignCreate()
             <? } ?>
         </select>
         <div id="grouppicker-wrapper" style="display: none;">
-        <label for="grouppicker">Group</label>
+        <label for="grouppicker">Group:</label>
         <select id="grouppicker"/>
         </div>
     </div>

@@ -1,2 +1,2 @@
-* Giftcards!
-* Fixed bugs in receiving module
+* Can now edit/delete a sale after it has been processed.
+* Fixed bug in receipt where wrong employee would be displayed (both receiving and sale)

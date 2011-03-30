@@ -25,7 +25,7 @@ swfobject.embedSWF(
 </div>
 
 <?=campaign_export_button()?>
-
+<div id="feedback_bar"></div>
 <?php
 $this->load->view("partial/footer"); 
 ?>

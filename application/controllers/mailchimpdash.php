@@ -109,7 +109,7 @@ class Mailchimpdash extends Secure_area
         if ($result = $this->MailChimp->listUnsubscribe($listID, $email, false, false, false)) {
             echo json_encode(array('success'=>true,'message'=>"Unsubscribed {$email} from list"));
         } else {
-            echo json_encode(array('success'=>false,'message'=>"Could not unsubscribe {$email} from list"));
+            echo json_encode(array('success'=>false,'message'=>"Could not unsubscribe {$email} from list: ".$this->MailChimp->errorMessage));
         }
     }    
     
@@ -132,7 +132,7 @@ class Mailchimpdash extends Secure_area
                 if ($cid && $this->MailChimp->campaignPause($cid)) {
                     echo json_encode(array('success'=>true, 'message'=>'Campaign successfully paused'));
                 } else {
-                    echo json_encode(array('success'=>false, 'message'=>'Could not pause campaign'));
+                    echo json_encode(array('success'=>false, 'message'=>'Could not pause campaign: '.$this->MailChimp->errorMessage));
                 }
                 break;
             case 'resume':
@@ -140,7 +140,7 @@ class Mailchimpdash extends Secure_area
                 if ($cid && $this->MailChimp->campaignResume($cid)) {
                     echo json_encode(array('success'=>true, 'message'=>'Campaign successfully resumed'));
                 } else {
-                    echo json_encode(array('success'=>false, 'message'=>'Could not resume campaign'));
+                    echo json_encode(array('success'=>false, 'message'=>'Could not resume campaign: '.$this->MailChimp->errorMessage));
                 }
                 break;
             case 'delete':
@@ -148,7 +148,7 @@ class Mailchimpdash extends Secure_area
                 if ($cid && $this->MailChimp->campaignDelete($cid)) {
                     echo json_encode(array('success'=>true, 'message'=>'Campaign successfully deleted'));
                 } else {
-                    echo json_encode(array('success'=>false, 'message'=>'Could not delete campaign'));
+                    echo json_encode(array('success'=>false, 'message'=>'Could not delete campaign: '.$this->MailChimp->errorMessage));
                 }
                 break;
             case 'send':
@@ -156,7 +156,7 @@ class Mailchimpdash extends Secure_area
                 if ($cid && $result) {
                     echo json_encode(array('success'=>true, 'message'=>'Campaign successfully sent'));
                 } else {
-                    echo json_encode(array('success'=>false, 'message'=>'Could not send campaign'));
+                    echo json_encode(array('success'=>false, 'message'=>'Could not send campaign: '.$this->MailChimp->errorMessage));
                 }
                 break;
             case 'sendtest':
@@ -166,7 +166,7 @@ class Mailchimpdash extends Secure_area
                 if ($cid && $result) {
                     echo json_encode(array('success'=>true, 'message'=>'Test campaign successfully sent'));
                 } else {
-                    echo json_encode(array('success'=>false, 'message'=>'Could not send test campaign'));
+                    echo json_encode(array('success'=>false, 'message'=>'Could not send test campaign: '.$this->MailChimp->errorMessage));
                 }
                 break;
             case 'schedule':
@@ -175,7 +175,7 @@ class Mailchimpdash extends Secure_area
                 if ($cid && $scheduletime && $this->MailChimp->campaignSchedule($cid, $scheduletime)) {
                     echo json_encode(array('success'=>true, 'message'=>'Campaign successfully scheduled'));
                 } else {
-                    echo json_encode(array('success'=>false, 'message'=>'Could not schedule campaign'));
+                    echo json_encode(array('success'=>false, 'message'=>'Could not schedule campaign: '.$this->MailChimp->errorMessage));
                 }
                 break;
         }
@@ -282,9 +282,44 @@ class Mailchimpdash extends Secure_area
     
     function generatechartcampaign()
     {
-        $data['title'] = $this->input->post('title');
+        $title = $this->input->post('title');
+        $listID = $this->input->post('listID');
+        $group = $this->input->post('group');
+        $chartLocation = $this->input->post('chartLocation');
+        $campaignText = $this->input->post('campaignText');
         
-        $this->load->view('mailchimpdash/generatechartcampaign', $data);
+        $data['title'] = $title;
+        $data['png'] = base64_encode(file_get_contents($chartLocation));
+        $data['campaignText'] = $campaignText;
+        
+        $html = $this->load->view('mailchimpdash/generatechartcampaign', $data, true);
+        
+        $options = array('list_id'=>$listID,
+                         'subject'=>$title,
+                         'from_email'=>'robert.elwell@gmail.com',
+                         'from_name'=>'test',
+                         'to_name'=>'our friend',
+                         'generate_text'=>true);
+        
+        $segmentOptions = array();
+        if ($group) {
+            $ploded = explode('-', $group);
+            $groupingID = array_shift($ploded);
+            $groupName = implode('-', $ploded);
+            
+            $segmentOptions['match'] = 'all';
+            $segmentOptions['conditions'] = array(array('field'=>'interests-'.$groupingID,
+                                                        'op'   =>'one',
+                                                        'value'=>$groupName));
+        }
+        
+        $id = $this->MailChimp->campaignCreate('regular', $options, array('html'=>$html), $segmentOptions); 
+        
+        if ($id) {
+            echo json_encode(array('success'=>true,'message'=>"Campaign created"));
+        } else {
+            echo json_encode(array('success'=>false,'message'=>"Could not create campaign: " . $this->MailChimp->errorMessage));
+        }
     }
 }
 ?>

@@ -1,4 +1,3 @@
-<script type="text/javascript" src="http://2imgs.com/2i/j/api2i.js"></script>
 <script type="text/javascript">
 var summarydata = '';
 $('.summary_row').each(function(){
@@ -40,7 +39,26 @@ function changeGroups(dom)
 
 function campaignCreate()
 {
-    
+    $.post('<?=base_url()?>index.php/mailchimpdash/generatechartcampaign',
+  		                   {title: $('#newcampaign-title-input').val(),
+                            chartLocation: $('#newcampaign-chart img').attr('src'),
+                            campaignText: $('#campaigntext').val(),
+                            listID: $('#listpicker').val(),
+                            group: $('#grouppicker').val()
+                           },
+                           function(response) {
+                        	   if (typeof(response) != 'object') {
+                                   var data = JSON.parse(response);
+                               } else {
+                                   var data = response;
+                               }
+                               if (data.success) {
+                                   set_feedback(data.message, 'success_message', false);
+                               } else {
+                                   set_feedback(data.message, 'error_message', true);
+                               }
+                               tb_remove();
+                           });
 }
 </script>
 <link rel="stylesheet" href="<?=base_url()?>css/mailchimpdash/charttocampaign.css" />

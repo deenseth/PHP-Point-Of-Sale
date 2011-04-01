@@ -136,6 +136,10 @@ a.none
 	text-align:left;
 }
 
+#mercury_merchant_information
+{
+	display: none;
+}
 #footer
 {
 	position:relative;

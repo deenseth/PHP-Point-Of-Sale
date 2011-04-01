@@ -65,4 +65,5 @@ $lang['sales_delete_confirmation'] = 'Are you sure you want to delete this sale,
 $lang['sales_date'] = 'Sale Date';
 $lang['sales_delete_successful'] = 'You have successfully deleted a sale';
 $lang['sales_delete_unsuccessful'] = 'You have unsuccessfully deleted a sale';
+$lang['sales_integrated_credit_card'] = 'Integrated Credit Card';
 ?>

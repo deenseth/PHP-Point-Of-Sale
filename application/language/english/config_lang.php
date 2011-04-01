@@ -20,4 +20,8 @@ $lang['config_return_policy_required']='Return policy is a required field';
 $lang['config_print_after_sale']='Print receipt after sale';
 $lang['config_language'] = 'Language';
 $lang['config_timezone'] = 'Timezone';
+$lang['config_enable_credit_card_processing'] = 'Integrated Credit Card Processing';
+$lang['config_mercury_merchant_id'] = 'Mercury Merchant ID';
+$lang['config_mercury_merchant_password'] = 'Mercury Merchant Password';
+
 ?>

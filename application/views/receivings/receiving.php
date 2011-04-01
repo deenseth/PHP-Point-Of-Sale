@@ -77,26 +77,10 @@ else
 		<td style="align:center;"><?php echo $item['name']; ?><br>
 
 		<?php
-        	if($item['allow_alt_description']==1 && false)
-        	{
-        		echo form_input(array('name'=>'description','value'=>$item['description'],'size'=>'20'));
-        	}
-        	else
-        	{
-				echo $item['description'];
-        		echo form_hidden('description',$item['description']);
-        	}
+			echo $item['description'];
+      		echo form_hidden('description',$item['description']);
 		?>
-		<br>
-
-
-
-		<?php
-        	if($item['is_serialized']==1 && false)
-        	{
-				echo form_input(array('name'=>'serialnumber','value'=>$item['serialnumber'],'size'=>'20'));
-			}
-		?></td>
+		<br />
 
 
 		<?php if ($items_module_allowed)
@@ -115,15 +99,7 @@ else
 		?>
 		<td>
 		<?php
-        	if($item['is_serialized']==1 && false)
-        	{
-        		echo $item['quantity'];
-        		echo form_hidden('quantity',$item['quantity']);
-        	}
-        	else
-        	{
-        		echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2'));
-        	}
+        	echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2'));
 		?>
 		</td>
 

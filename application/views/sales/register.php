@@ -261,12 +261,12 @@ else
 				<?php echo $this->lang->line('sales_payment').':   ';?>
 			</td>
 			<td>
-				<?php echo form_dropdown('payment_type',$payment_options,array(),'onchange="if (this.value==\''.$this->lang->line('sales_giftcard').'\') { document.getElementById(\'payment_value_card_number\').innerHTML=\''.$this->lang->line('sales_giftcard_number').'\'; document.getElementById(\'amount_tendered\').value=\'\'; document.getElementById(\'amount_tendered\').focus(); } else { document.getElementById(\'payment_value_card_number\').innerHTML=\''.$this->lang->line('sales_amount_tendered').'\'; }"');?>
+				<?php echo form_dropdown('payment_type',$payment_options,array(), 'id="payment_types"');?>
 			</td>
 			</tr>
 			<tr>
 			<td>
-				<span id="payment_value_card_number"><?php echo $this->lang->line('sales_amount_tendered').':   ';?></span>
+				<span id="amount_tendered_label"><?php echo $this->lang->line('sales_amount_tendered').': ';?></span>
 			</td>
 			<td>
 				<?php echo form_input(array('name'=>'amount_tendered','id'=>'amount_tendered','value'=>to_currency_no_money($amount_due),'size'=>'10'));	?>
@@ -405,6 +405,7 @@ $(document).ready(function()
 	   $('#add_payment_form').submit();
     });
 
+	$("#payment_types").change(checkPaymentTypeGiftcard).ready(checkPaymentTypeGiftcard)
 });
 
 function post_item_form_submit(response)
@@ -422,6 +423,20 @@ function post_person_form_submit(response)
 	{
 		$("#customer").attr("value",response.person_id);
 		$("#select_customer_form").submit();
+	}
+}
+
+function checkPaymentTypeGiftcard()
+{
+	if ($("#payment_types").val() == "<?php echo $this->lang->line('sales_giftcard'); ?>")
+	{
+		$("#amount_tendered_label").html("<?php echo $this->lang->line('sales_giftcard_number'); ?>");
+		$("#amount_tendered").val('');
+		$("#amount_tendered").focus();
+	}
+	else
+	{
+		$("#amount_tendered_label").html("<?php echo $this->lang->line('sales_amount_tendered'); ?>");		
 	}
 }
 

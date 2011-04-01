@@ -55,31 +55,36 @@ class Sales extends Secure_area
  			$this->_reload($data);
  			return;
 		}
-
+		
 		$payment_type=$this->input->post('payment_type');
 		if ( $payment_type == $this->lang->line('sales_giftcard') )
 		{
+			$payments = $this->sale_lib->get_payments();
 			$payment_type=$this->input->post('payment_type').':'.$payment_amount=$this->input->post('amount_tendered');
-			$cur_giftcard_value = $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') );
+			$current_payments_with_giftcard = isset($payments[$payment_type]) ? $payments[$payment_type]['payment_amount'] : 0;
+			$cur_giftcard_value = $this->Sale->get_giftcard_value( $this->input->post('amount_tendered') ) - $current_payments_with_giftcard;
 			if ( $cur_giftcard_value <= 0 )
 			{
-				$data['error']='Giftcard balance is '.to_currency( $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) ).' !';
+				$data['error']='Giftcard balance is '.to_currency( $this->Sale->get_giftcard_value( $this->input->post('amount_tendered') ) ).' !';
 				$this->_reload($data);
 				return;
 			}
-			elseif ( ( $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ) > 0 )
+			elseif ( ( $this->Sale->get_giftcard_value( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ) > 0 )
 			{
-				$data['warning']='Giftcard balance is '.to_currency( $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ).' !';
+				$data['warning']='Giftcard balance is '.to_currency( $this->Sale->get_giftcard_value( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ).' !';
 			}
-			$payment_amount=min( $this->sale_lib->get_total(), $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) );
+			$payment_amount=min( $this->sale_lib->get_total(), $this->Sale->get_giftcard_value( $this->input->post('amount_tendered') ) );
 		}
 		else
+		{
 			$payment_amount=$this->input->post('amount_tendered');
+		}
 		
 		if( !$this->sale_lib->add_payment( $payment_type, $payment_amount ) )
 		{
 			$data['error']='Unable to Add Payment! Please try again!';
 		}
+		
 		$this->_reload($data);
 	}
 

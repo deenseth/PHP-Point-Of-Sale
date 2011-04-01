@@ -147,8 +147,8 @@ function get_items_manage_table($items,$controller)
 	$CI->lang->line('items_unit_price'),
 	$CI->lang->line('items_tax_percents'),
 	$CI->lang->line('items_quantity'),
-	'&nbsp', 
-	'Inventory'//Ramel Inventory Tracking
+	'&nbsp;',
+	$CI->lang->line('items_inventory')
 	);
 	
 	$table.='<thead><tr>';

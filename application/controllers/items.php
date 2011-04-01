@@ -224,7 +224,6 @@ class Items extends Secure_area implements iData_controller
 		{			
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_updating').' '.
 			$cur_item_info->name,'item_id'=>$item_id));
-			
 		}
 		else//failure
 		{	

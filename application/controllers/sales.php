@@ -55,31 +55,36 @@ class Sales extends Secure_area
  			$this->_reload($data);
  			return;
 		}
-
+		
 		$payment_type=$this->input->post('payment_type');
 		if ( $payment_type == $this->lang->line('sales_giftcard') )
 		{
+			$payments = $this->sale_lib->get_payments();
 			$payment_type=$this->input->post('payment_type').':'.$payment_amount=$this->input->post('amount_tendered');
-			$cur_giftcard_value = $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') );
+			$current_payments_with_giftcard = isset($payments[$payment_type]) ? $payments[$payment_type]['payment_amount'] : 0;
+			$cur_giftcard_value = $this->Giftcard->get_giftcard_value( $this->input->post('amount_tendered') ) - $current_payments_with_giftcard;
 			if ( $cur_giftcard_value <= 0 )
 			{
-				$data['error']='Giftcard balance is '.to_currency( $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) ).' !';
+				$data['error']='Giftcard balance is '.to_currency( $this->Giftcard->get_giftcard_value( $this->input->post('amount_tendered') ) ).' !';
 				$this->_reload($data);
 				return;
 			}
-			elseif ( ( $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ) > 0 )
+			elseif ( ( $this->Giftcard->get_giftcard_value( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ) > 0 )
 			{
-				$data['warning']='Giftcard balance is '.to_currency( $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ).' !';
+				$data['warning']='Giftcard balance is '.to_currency( $this->Giftcard->get_giftcard_value( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ).' !';
 			}
-			$payment_amount=min( $this->sale_lib->get_total(), $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) );
+			$payment_amount=min( $this->sale_lib->get_total(), $this->Giftcard->get_giftcard_value( $this->input->post('amount_tendered') ) );
 		}
 		else
+		{
 			$payment_amount=$this->input->post('amount_tendered');
+		}
 		
 		if( !$this->sale_lib->add_payment( $payment_type, $payment_amount ) )
 		{
 			$data['error']='Unable to Add Payment! Please try again!';
 		}
+		
 		$this->_reload($data);
 	}
 
@@ -330,5 +335,63 @@ class Sales extends Secure_area
     	$this->_reload();
 
     }
+	
+	function suspend()
+	{
+		$data['cart']=$this->sale_lib->get_cart();
+		$data['subtotal']=$this->sale_lib->get_subtotal();
+		$data['taxes']=$this->sale_lib->get_taxes();
+		$data['total']=$this->sale_lib->get_total();
+		$data['receipt_title']=$this->lang->line('sales_receipt');
+		$data['transaction_time']= date('m/d/Y h:i:s a');
+		$customer_id=$this->sale_lib->get_customer();
+		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
+		$comment = $this->input->post('comment');
+		$emp_info=$this->Employee->get_info($employee_id);
+		$payment_type = $this->input->post('payment_type');
+		$data['payment_type']=$this->input->post('payment_type');
+		//Alain Multiple payments
+		$data['payments']=$this->sale_lib->get_payments();
+		$data['amount_change']=to_currency($this->sale_lib->get_amount_due() * -1);
+		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
+
+		if($customer_id!=-1)
+		{
+			$cust_info=$this->Customer->get_info($customer_id);
+			$data['customer']=$cust_info->first_name.' '.$cust_info->last_name;
+		}
+
+		$total_payments = 0;
+
+		foreach($data['payments'] as $payment)
+		{
+			$total_payments += $payment['payment_amount'];
+		}
+
+		//SAVE sale to database
+		$data['sale_id']='POS '.$this->Sale_suspended->save($data['cart'], $customer_id,$employee_id,$comment,$data['payments']);
+		if ($data['sale_id'] == 'POS -1')
+		{
+			$data['error_message'] = $this->lang->line('sales_transaction_failed');
+		}
+		$this->sale_lib->clear_all();
+		$this->_reload(array('success' => $this->lang->line('sales_successfully_suspended_sale')));
+	}
+	
+	function suspended()
+	{
+		$data = array();
+		$data['suspended_sales'] = $this->Sale_suspended->get_all()->result_array();
+		$this->load->view('sales/suspended', $data);
+	}
+	
+	function unsuspend()
+	{
+		$sale_id = $this->input->post('suspended_sale_id');
+		$this->sale_lib->clear_all();
+		$this->sale_lib->copy_entire_suspended_sale($sale_id);
+		$this->Sale_suspended->delete($sale_id);
+    	$this->_reload();
+	}
 }
 ?>

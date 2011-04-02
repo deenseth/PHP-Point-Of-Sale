@@ -9,21 +9,6 @@ $(document).ready(function()
     enable_search('<?php echo site_url("$controller_name/suggest")?>','<?php echo $this->lang->line("common_confirm_search")?>');
     enable_delete('<?php echo $this->lang->line($controller_name."_confirm_delete")?>','<?php echo $this->lang->line($controller_name."_none_selected")?>');
 
-    $("#low_inventory").click(function()
-    {
-    	$('#giftcards_filter_form').submit();
-    });
-
-    $("#is_serialized").click(function()
-    {
-    	$('#giftcards_filter_form').submit();
-    });
-
-    $("#no_description").click(function()
-    {
-    	$('#giftcards_filter_form').submit();
-    });
-
 });
 
 function init_table_sorting()
@@ -37,10 +22,8 @@ function init_table_sorting()
 			headers:
 			{
 				0: { sorter: false},
-				8: { sorter: false},
-				9: { sorter: false}
+				3: { sorter: false}
 			}
-
 		});
 	}
 }
@@ -70,24 +53,6 @@ function post_giftcard_form_submit(response)
 			});
 		}
 	}
-}
-
-function show_hide_search_filter(search_filter_section, switchImgTag) {
-        var ele = document.getElementById(search_filter_section);
-        var imageEle = document.getElementById(switchImgTag);
-        var elesearchstate = document.getElementById('search_section_state');
-        if(ele.style.display == "block")
-        {
-                ele.style.display = "none";
-				imageEle.innerHTML = '<img src=" <?php echo base_url()?>images/plus.png" style="border:0;outline:none;padding:0px;margin:0px;position:relative;top:-5px;" >';
-                elesearchstate.value="none";
-        }
-        else
-        {
-                ele.style.display = "block";
-                imageEle.innerHTML = '<img src=" <?php echo base_url()?>images/minus.png" style="border:0;outline:none;padding:0px;margin:0px;position:relative;top:-5px;" >';
-                elesearchstate.value="block";
-        }
 }
 
 </script>

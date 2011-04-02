@@ -65,8 +65,8 @@ class Receivings extends Secure_area
 		$this->form_validation->set_rules('quantity', 'lang:items_quantity', 'required|integer');
 		$this->form_validation->set_rules('discount', 'lang:items_discount', 'required|integer');
 
-    $description = $this->input->post("description");
-    $serialnumber = $this->input->post("serialnumber");
+    	$description = $this->input->post("description");
+    	$serialnumber = $this->input->post("serialnumber");
 		$price = $this->input->post("price");
 		$quantity = $this->input->post("quantity");
 		$discount = $this->input->post("discount");
@@ -184,10 +184,8 @@ class Receivings extends Secure_area
 
     function cancel_receiving()
     {
-        //$this->load->view("receivings/receipt",$data);
     	$this->receiving_lib->clear_all();
     	$this->_reload();
-
     }
 
 }

@@ -80,7 +80,6 @@ class Receiving extends Model
 			return -1;
 		}
 
-
 		return $receiving_id;
 	}
 

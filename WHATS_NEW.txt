@@ -1,2 +1,4 @@
-* Can now edit/delete a sale after it has been processed.
-* Fixed bug in receipt where wrong employee would be displayed (both receiving and sale)
+* Can now suspend a sale and bring it back in for later use
+* Fixed bug in gift cards where you could use more than it is worth
+* Changed gift card icon
+* Code cleanup

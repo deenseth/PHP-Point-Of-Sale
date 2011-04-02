@@ -1,8 +1,4 @@
 <?php
-echo form_open('items/find_item_info/'.$item_info->item_id,array('id'=>'item_number_form'));
-?>
-<?php
-echo form_close();
 echo form_open('items/save_inventory/'.$item_info->item_id,array('id'=>'item_form'));
 ?>
 <fieldset id="inv_item_basic_info">
@@ -97,25 +93,16 @@ echo form_close();
 <tr bgcolor="#FF0033" align="center" style="font-weight:bold"><td colspan="4">Inventory Data Tracking</td></tr>
 <tr align="center" style="font-weight:bold"><td width="15%">Date</td><td width="25%">Employee</td><td width="15%">In/Out Qty</td><td width="45%">Remarks</td></tr>
 <?php
-$trans_items_id = $item_info->item_id;
-$query=mysql_query("select * from phppos_inventory where trans_items='" .$trans_items_id. "' ORDER BY trans_date DESC" );
-while($row = mysql_fetch_array($query)){
+foreach($this->Inventory->get_inventory_data_for_item($item_info->item_id)->result_array() as $row)
+{
 ?>
 <tr bgcolor="#CCCCCC" align="center">
 <td><?php echo $row['trans_date'];?></td>
 <td><?php
-	//$row['trans_user']
-	//$this->Employee->get_info($this->db->get()->row()->person_id);
-	//$emp_info=$this->Employee->get_info($employee_id);
 	$person_id = $row['trans_user'];
-	$user=mysql_query("select * from phppos_people where person_id='" .$person_id. "'");
-	while($row_user = mysql_fetch_array($user))
-	{
-	echo $row_user['first_name']." ".$row_user['last_name'];
-	}
+	$employee = $this->Employee->get_info($person_id);
+	echo $employee->first_name." ".$employee->last_name;
 	?>
-    
-    
 </td>
 <td align="right"><?php echo $row['trans_inventory'];?></td>
 <td><?php echo $row['trans_comment'];?></td>

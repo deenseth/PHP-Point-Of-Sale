@@ -10,11 +10,22 @@ if (isset($warning))
 {
 	echo "<div class='warning_mesage'>".$warning."</div>";
 }
+
+if (isset($success))
+{
+	echo "<div class='success_message'>".$success."</div>";
+}
 ?>
 <div id="register_wrapper">
 <?php echo form_open("sales/change_mode",array('id'=>'mode_form')); ?>
 	<span><?php echo $this->lang->line('sales_mode') ?></span>
 <?php echo form_dropdown('mode',$modes,$mode,'onchange="$(\'#mode_form\').submit();"'); ?>
+<div id="show_suspended_sales_button">
+	<?php echo anchor("sales/suspended/width:425",
+	"<div class='small_button'><span style='font-size:73%;'>".$this->lang->line('sales_suspended_sales')."</span></div>",
+	array('class'=>'thickbox none','title'=>$this->lang->line('sales_suspended_sales')));
+	?>
+</div>
 </form>
 <?php echo form_open("sales/add",array('id'=>'add_item_form')); ?>
 <label id="item_label" for="item">
@@ -229,9 +240,10 @@ else
 				<?php echo form_open("sales/complete",array('id'=>'finish_sale_form')); ?>
 				<label id="comment_label" for="comment"><?php echo $this->lang->line('common_comments'); ?>:</label>
 				<?php echo form_textarea(array('name'=>'comment','value'=>'','rows'=>'4','cols'=>'23'));?>
-				<br><br>
+				<br /><br />
 
 				<?php echo "<div class='small_button' id='finish_sale_button' style='float:left;margin-top:5px;'><span>".$this->lang->line('sales_complete_sale')."</span></div>";
+				echo "<div class='small_button' id='suspend_sale_button' style='float:right;margin-top:5px;'><span>".$this->lang->line('sales_suspend_sale')."</span></div>";
 				?>
 			</div>
 			</form>
@@ -261,12 +273,12 @@ else
 				<?php echo $this->lang->line('sales_payment').':   ';?>
 			</td>
 			<td>
-				<?php echo form_dropdown('payment_type',$payment_options,array(),'onchange="if (this.value==\''.$this->lang->line('sales_giftcard').'\') { document.getElementById(\'payment_value_card_number\').innerHTML=\''.$this->lang->line('sales_giftcard_number').'\'; document.getElementById(\'amount_tendered\').value=\'\'; document.getElementById(\'amount_tendered\').focus(); } else { document.getElementById(\'payment_value_card_number\').innerHTML=\''.$this->lang->line('sales_amount_tendered').'\'; }"');?>
+				<?php echo form_dropdown('payment_type',$payment_options,array(), 'id="payment_types"');?>
 			</td>
 			</tr>
 			<tr>
 			<td>
-				<span id="payment_value_card_number"><?php echo $this->lang->line('sales_amount_tendered').':   ';?></span>
+				<span id="amount_tendered_label"><?php echo $this->lang->line('sales_amount_tendered').': ';?></span>
 			</td>
 			<td>
 				<?php echo form_input(array('name'=>'amount_tendered','id'=>'amount_tendered','value'=>to_currency_no_money($amount_due),'size'=>'10'));	?>
@@ -315,7 +327,7 @@ else
 				?>
 			</tbody>
 			</table>
-		    <br>
+		    <br />
 		<?php
 		}
 		?>
@@ -392,6 +404,15 @@ $(document).ready(function()
     	}
     });
 
+	$("#suspend_sale_button").click(function()
+	{
+		if (confirm('<?php echo $this->lang->line("sales_confirm_suspend_sale"); ?>'))
+    	{
+			$('#finish_sale_form').attr('action', '<?php echo site_url("sales/suspend"); ?>');
+    		$('#finish_sale_form').submit();
+    	}
+	});
+
     $("#cancel_sale_button").click(function()
     {
     	if (confirm('<?php echo $this->lang->line("sales_confirm_cancel_sale"); ?>'))
@@ -405,6 +426,7 @@ $(document).ready(function()
 	   $('#add_payment_form').submit();
     });
 
+	$("#payment_types").change(checkPaymentTypeGiftcard).ready(checkPaymentTypeGiftcard)
 });
 
 function post_item_form_submit(response)
@@ -422,6 +444,20 @@ function post_person_form_submit(response)
 	{
 		$("#customer").attr("value",response.person_id);
 		$("#select_customer_form").submit();
+	}
+}
+
+function checkPaymentTypeGiftcard()
+{
+	if ($("#payment_types").val() == "<?php echo $this->lang->line('sales_giftcard'); ?>")
+	{
+		$("#amount_tendered_label").html("<?php echo $this->lang->line('sales_giftcard_number'); ?>");
+		$("#amount_tendered").val('');
+		$("#amount_tendered").focus();
+	}
+	else
+	{
+		$("#amount_tendered_label").html("<?php echo $this->lang->line('sales_amount_tendered'); ?>");		
 	}
 }
 

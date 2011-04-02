@@ -29,7 +29,7 @@
 				}
 				?>
 			</td>
-			<td><?php echo $suspended_sale['sale_id'];?></td>
+			<td><?php echo $suspended_sale['comment'];?></td>
 			<td>
 				<?php 
 				echo form_open('sales/unsuspend');

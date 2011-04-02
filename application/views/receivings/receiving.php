@@ -74,7 +74,7 @@ else
 		<tr>
 		<td><?php echo anchor("receivings/delete_item/$item_id",'['.$this->lang->line('common_delete').']');?></td>
 
-		<td style="align:center;"><?php echo $item['name']; ?><br>
+		<td style="align:center;"><?php echo $item['name']; ?><br />
 
 		<?php
 			echo $item['description'];
@@ -154,10 +154,10 @@ else
 	?>
 	<div id="finish_sale">
 		<?php echo form_open("receivings/complete",array('id'=>'finish_sale_form')); ?>
-		<br>
+		<br />
 		<label id="comment_label" for="comment"><?php echo $this->lang->line('common_comments'); ?>:</label>
 		<?php echo form_textarea(array('name'=>'comment','value'=>'','rows'=>'4','cols'=>'23'));?>
-		<br><br>
+		<br /><br />
 		<table width="100%"><tr><td>
 		<?php
 			echo $this->lang->line('sales_payment').':   ';?>
@@ -179,7 +179,7 @@ else
         </tr>
 
         </table>
-        <br>
+        <br />
 		<?php echo "<div class='small_button' id='finish_sale_button' style='float:right;margin-top:5px;'><span>".$this->lang->line('recvs_complete_receiving')."</span></div>";
 		?>
 		</div>

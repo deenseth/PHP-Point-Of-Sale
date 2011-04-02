@@ -35,7 +35,7 @@ class Sale extends Model
 		$payment_types='';
 		foreach($payments as $payment_id=>$payment)
 		{
-			$payment_types=$payment_types.$payment['payment_type'].': '.to_currency($payment['payment_amount']).'<br>';
+			$payment_types=$payment_types.$payment['payment_type'].': '.to_currency($payment['payment_amount']).'<br />';
 		}
 
 		$sales_data = array(

@@ -319,11 +319,6 @@ class Sales extends Secure_area
 			$this->lang->line('sales_debit') => $this->lang->line('sales_debit'),
 			$this->lang->line('sales_credit') => $this->lang->line('sales_credit')
 		);
-		
-		if ($this->Appconfig->get('enable_credit_card_processing'))
-		{
-			$data['payment_options'][$this->lang->line('sales_integrated_credit_card')] = $this->lang->line('sales_integrated_credit_card');
-		}
 
 		$customer_id=$this->sale_lib->get_customer();
 		if($customer_id!=-1)

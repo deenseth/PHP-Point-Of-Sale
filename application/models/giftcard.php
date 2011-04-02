@@ -171,6 +171,16 @@ class Giftcard extends Model
 		return $this->db->get();	
 	}
 	
+	public function get_giftcard_value( $giftcard_number )
+	{
+		if ( !$this->exists( $this->get_giftcard_id($giftcard_number)))
+			return 0;
+		
+		$this->db->from('giftcards');
+		$this->db->where('giftcard_number',$giftcard_number);
+		return $this->db->get()->row()->value;
+	}
+	
 	function update_giftcard_value( $giftcard_number, $value )
 	{
 		$this->db->where('giftcard_number', $giftcard_number);

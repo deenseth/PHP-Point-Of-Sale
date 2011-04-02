@@ -58,7 +58,7 @@ class Sale extends Model
 			{
 				/* We have a gift card and we have to deduct the used value from the total value of the card. */
 				$splitpayment = explode( ':', $payment['payment_type'] );
-				$cur_giftcard_value = $this->get_giftcard_value( $splitpayment[1] );
+				$cur_giftcard_value = $this->Giftcard->get_giftcard_value( $splitpayment[1] );
 				$this->Giftcard->update_giftcard_value( $splitpayment[1], $cur_giftcard_value - $payment['payment_amount'] );
 			}
 

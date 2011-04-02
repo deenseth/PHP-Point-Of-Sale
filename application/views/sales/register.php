@@ -232,6 +232,7 @@ else
 				<br /><br />
 
 				<?php echo "<div class='small_button' id='finish_sale_button' style='float:left;margin-top:5px;'><span>".$this->lang->line('sales_complete_sale')."</span></div>";
+				echo "<div class='small_button' id='suspend_sale_button' style='float:right;margin-top:5px;'><span>".$this->lang->line('sales_suspend_sale')."</span></div>";
 				?>
 			</div>
 			</form>
@@ -391,6 +392,15 @@ $(document).ready(function()
     		$('#finish_sale_form').submit();
     	}
     });
+
+	$("#suspend_sale_button").click(function()
+	{
+		if (confirm('<?php echo $this->lang->line("sales_confirm_suspend_sale"); ?>'))
+    	{
+			$('#finish_sale_form').attr('action', '<?php echo site_url("sales/suspend"); ?>');
+    		$('#finish_sale_form').submit();
+    	}
+	});
 
     $("#cancel_sale_button").click(function()
     {

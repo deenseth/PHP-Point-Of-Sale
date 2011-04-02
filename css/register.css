@@ -9,7 +9,14 @@
 {
 	position:relative;
 	background-color:#DDD;
-	padding: 3px 0px 3px 5px;
+	padding: 8px 0px 8px 0px;
+}
+
+#show_suspended_sales_button
+{
+	position:absolute;
+	top:3px;
+	right:4px;	
 }
 
 #mode_form span
@@ -115,5 +122,14 @@
 	width:100%;
 	margin-top:5px;
 	clear:both;
+}
+#suspended_sales_table th
+{
+	text-align:center;
+}
+
+#suspended_sales_table td
+{
+	padding: 7px;
 }
 

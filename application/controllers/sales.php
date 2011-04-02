@@ -211,57 +211,6 @@ class Sales extends Secure_area
 		$this->load->view("sales/receipt",$data);
 		$this->sale_lib->clear_all();
 	}
-	
-	function suspend()
-	{
-		$data['cart']=$this->sale_lib->get_cart();
-		$data['subtotal']=$this->sale_lib->get_subtotal();
-		$data['taxes']=$this->sale_lib->get_taxes();
-		$data['total']=$this->sale_lib->get_total();
-		$data['receipt_title']=$this->lang->line('sales_receipt');
-		$data['transaction_time']= date('m/d/Y h:i:s a');
-		$customer_id=$this->sale_lib->get_customer();
-		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
-		$comment = $this->input->post('comment');
-		$emp_info=$this->Employee->get_info($employee_id);
-		$payment_type = $this->input->post('payment_type');
-		$data['payment_type']=$this->input->post('payment_type');
-		//Alain Multiple payments
-		$data['payments']=$this->sale_lib->get_payments();
-		$data['amount_change']=to_currency($this->sale_lib->get_amount_due() * -1);
-		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
-
-		if($customer_id!=-1)
-		{
-			$cust_info=$this->Customer->get_info($customer_id);
-			$data['customer']=$cust_info->first_name.' '.$cust_info->last_name;
-		}
-
-		$total_payments = 0;
-
-		foreach($data['payments'] as $payment)
-		{
-			$total_payments += $payment['payment_amount'];
-		}
-
-		/* Changed the conditional to account for floating point rounding */
-		if ( ( $this->sale_lib->get_mode() == 'sale' ) && ( ( to_currency_no_money( $data['total'] ) - $total_payments ) > 1e-6 ) )
-		{
-			$data['error'] = $this->lang->line('sales_payment_not_cover_total');
-			$this->_reload($data);
-			return false;
-		}
-
-		//SAVE sale to database
-		$data['sale_id']='POS '.$this->Sale_suspended->save($data['cart'], $customer_id,$employee_id,$comment,$data['payments']);
-		if ($data['sale_id'] == 'POS -1')
-		{
-			$data['error_message'] = $this->lang->line('sales_transaction_failed');
-		}
-		$this->load->view("sales/receipt",$data);
-		$this->sale_lib->clear_all();
-	}
-	
 
 	function receipt($sale_id)
 	{
@@ -391,5 +340,63 @@ class Sales extends Secure_area
     	$this->_reload();
 
     }
+	
+	function suspend()
+	{
+		$data['cart']=$this->sale_lib->get_cart();
+		$data['subtotal']=$this->sale_lib->get_subtotal();
+		$data['taxes']=$this->sale_lib->get_taxes();
+		$data['total']=$this->sale_lib->get_total();
+		$data['receipt_title']=$this->lang->line('sales_receipt');
+		$data['transaction_time']= date('m/d/Y h:i:s a');
+		$customer_id=$this->sale_lib->get_customer();
+		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
+		$comment = $this->input->post('comment');
+		$emp_info=$this->Employee->get_info($employee_id);
+		$payment_type = $this->input->post('payment_type');
+		$data['payment_type']=$this->input->post('payment_type');
+		//Alain Multiple payments
+		$data['payments']=$this->sale_lib->get_payments();
+		$data['amount_change']=to_currency($this->sale_lib->get_amount_due() * -1);
+		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
+
+		if($customer_id!=-1)
+		{
+			$cust_info=$this->Customer->get_info($customer_id);
+			$data['customer']=$cust_info->first_name.' '.$cust_info->last_name;
+		}
+
+		$total_payments = 0;
+
+		foreach($data['payments'] as $payment)
+		{
+			$total_payments += $payment['payment_amount'];
+		}
+
+		//SAVE sale to database
+		$data['sale_id']='POS '.$this->Sale_suspended->save($data['cart'], $customer_id,$employee_id,$comment,$data['payments']);
+		if ($data['sale_id'] == 'POS -1')
+		{
+			$data['error_message'] = $this->lang->line('sales_transaction_failed');
+		}
+		$this->sale_lib->clear_all();
+		$this->_reload(array('success' => $this->lang->line('sales_successfully_suspended_sale')));
+	}
+	
+	function suspended()
+	{
+		$data = array();
+		$data['suspended_sales'] = $this->Sale_suspended->get_all()->result_array();
+		$this->load->view('sales/suspended', $data);
+	}
+	
+	function unsuspend()
+	{
+		$sale_id = $this->input->post('suspended_sale_id');
+		$this->sale_lib->clear_all();
+		$this->sale_lib->copy_entire_suspended_sale($sale_id);
+		$this->Sale_suspended->delete($sale_id);
+    	$this->_reload();
+	}
 }
 ?>

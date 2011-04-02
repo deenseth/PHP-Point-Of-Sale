@@ -1,6 +1,13 @@
 <?php
 class Sale_suspended extends Model
 {
+	function get_all()
+	{
+		$this->db->from('sales_suspended');
+		$this->db->order_by('sale_id');
+		return $this->db->get();
+	}
+	
 	public function get_info($sale_id)
 	{
 		$this->db->from('sales_suspended');
@@ -81,25 +88,6 @@ class Sale_suspended extends Model
 			);
 
 			$this->db->insert('sales_suspended_items',$sales_items_data);
-
-			//Update stock quantity
-			$item_data = array('quantity'=>$cur_item_info->quantity - $item['quantity']);
-			$this->Item->save($item_data,$item['item_id']);
-			
-			//Ramel Inventory Tracking
-			//Inventory Count Details
-			$qty_buy = -$item['quantity'];
-			$sale_remarks ='POS '.$sale_id;
-			$inv_data = array
-			(
-				'trans_date'=>date('Y-m-d H:i:s'),
-				'trans_items'=>$item['item_id'],
-				'trans_user'=>$employee_id,
-				'trans_comment'=>$sale_remarks,
-				'trans_inventory'=>$qty_buy
-			);
-			$this->Inventory->insert($inv_data);
-			//------------------------------------Ramel
 
 			$customer = $this->Customer->get_info($customer_id);
  			if ($customer_id == -1 or $customer->taxable)

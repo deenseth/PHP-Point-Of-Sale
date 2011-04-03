@@ -374,11 +374,11 @@ class Mailchimpdash extends Secure_area
         }
     }
     
-    function groupoptions()
+    function groupoptions($add)
     {
+        $data['add'] = $add === '1';
         $data['lists'] = $this->MailChimp->listsWithGroups();
         $this->load->view('mailchimpdash/groupoptions',$data);
     }
-    
 }
 ?>

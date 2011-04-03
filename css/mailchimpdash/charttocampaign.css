@@ -1,4 +1,4 @@
-#newcampaign{
+#newcampaign, #groupoptions{
 	text-align: center;
 }
 
@@ -7,7 +7,7 @@
 	text-align: center;
 }
 
-#newcampaign label{
+#newcampaign label, #groupoptions label{
 	font-weight: bold;
 }
 
@@ -15,7 +15,7 @@
 	margin-bottom: 15px;
 }
 
-#newcampaign input[type="text"]{
+#newcampaign input[type="text"], #groupoptions input[type='text']{
 	width: 300px;
 }
 

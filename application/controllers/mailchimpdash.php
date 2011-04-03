@@ -376,7 +376,8 @@ class Mailchimpdash extends Secure_area
     
     function groupoptions()
     {
-        
+        $data['lists'] = $this->MailChimp->listsWithGroups();
+        $this->load->view('mailchimpdash/groupoptions',$data);
     }
     
 }

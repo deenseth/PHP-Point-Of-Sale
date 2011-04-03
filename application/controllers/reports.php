@@ -736,6 +736,8 @@ class Reports extends Secure_area
 		    $summary_data[]= array($row['person_id'], $row['customer_name'], $row['sale_date'], $row['quantity_purchased'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']), to_currency($row['profit']), to_currency($row['discount']));
 		}
 		
+		$add = ($key = $this->Appconfig->get('mc_api_key'));
+		
 		$data = array(
 			"title" => ucwords($item->name).' '.$this->lang->line('reports_report'),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
@@ -743,7 +745,7 @@ class Reports extends Secure_area
 			"summary_data" => $summary_data,
 			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'item_id'=>$item->item_id)),
 			"export_excel" => $export_excel,
-		    "add_to_group" => ($key = $this->Appconfig->get('mc_api_key'))
+		    "add_to_group" => $add
 		);
 
 		$this->load->view("reports/tabular_details",$data);

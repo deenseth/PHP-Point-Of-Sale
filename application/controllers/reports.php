@@ -742,7 +742,8 @@ class Reports extends Secure_area
 			"headers" => $model->getDataColumns(),
 			"summary_data" => $summary_data,
 			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'item_id'=>$item->item_id)),
-			"export_excel" => $export_excel
+			"export_excel" => $export_excel,
+		    "add_to_group" => true
 		);
 
 		$this->load->view("reports/tabular_details",$data);

@@ -373,5 +373,11 @@ class Mailchimpdash extends Secure_area
             echo json_encode(array('success'=>false,'message'=>"Could not create campaign: " . $this->MailChimp->errorMessage));
         }
     }
+    
+    function groupoptions()
+    {
+        
+    }
+    
 }
 ?>

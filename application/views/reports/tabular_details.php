@@ -69,7 +69,7 @@ if($export_excel == 1){
 <?php }?>
 </div>
 <?=campaign_export_button()?>
-
+<?=$add_to_group ? add_to_group_button() : ''?>
 <div id="feedback_bar"></div>
 
 <?php 

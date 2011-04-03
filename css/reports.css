@@ -25,7 +25,8 @@
 	text-align: center;
 }
 
-.export-button-wrapper{
+.export-button-wrapper,
+.group-add-wrapper{
 	margin: 20px 0;
 	text-align: center;
 }

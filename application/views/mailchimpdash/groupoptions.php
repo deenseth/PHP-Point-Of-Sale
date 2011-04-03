@@ -5,8 +5,12 @@ var listsToGroups = [];
 <? if (!$list['groupings']) { continue; } ?>
 listsToGroups['<?=$list['id']?>'] = [];
     <? foreach ($list['groupings'] as $grouping) { ?>
+    <? if ($add) { ?>
     <? foreach ($grouping['groups'] as $group) { ?>
-    listsToGroups['<?=$list['id']?>'].push(['<?=$grouping['id']?>-<?=$group['name']?>', '<?=$grouping['name']?><?=$add ? ': '.$group['name'] : ''?>']);
+    listsToGroups['<?=$list['id']?>'].push(['<?=$grouping['id']?>-<?=$group['name']?>', '<?=$grouping['name']?>: <?=$group['name']?>']);
+    <? } ?>
+    <? } else { ?>
+    listsToGroups['<?=$list['id']?>'].push(['<?=$grouping['id']?>', '<?=$grouping['name']?>']);
     <? } ?>
     <? } ?>
 <? } ?>
@@ -21,6 +25,7 @@ function changeGroups(dom)
 			$(grouping).each(function(){
 				optionstring = optionstring + '<option value="'+this[0]+'">'+this[1]+'</option>';
 				});
+			optionstring = optionstring + '<option value="new">New Grouping</option>';
             $('#grouppicker').html(optionstring);
             $('#grouppicker-wrapper').show();
 		} else {
@@ -30,6 +35,17 @@ function changeGroups(dom)
 		$('#grouppicker').hide();
 	} 
 }
+
+function changeGroupName(dom)
+{
+	var selected = $(dom).find(':selected').val();
+	if (selected == 'new') {
+		$('#groupingwrapper').show();
+	} else {
+	    $('#groupingwrapper').hide();
+	}
+}
+
 </script>
 <link rel="stylesheet" href="<?=preg_replace('/index.php.*/', '', base_url())?>css/mailchimpdash/charttocampaign.css" />
 <h3 id="exportthis"><?=$add ? 'Add to' : 'Create'?> Group</h3>
@@ -42,10 +58,16 @@ function changeGroups(dom)
             <option value="<?=$list['id']?>"><?=$list['name']?></option>
             <? } ?>
         </select>
+        <br/> <br/>
         <div id="grouppicker-wrapper" style="display: none;">
         <label for="grouppicker"><?=$add ? 'Group:' : 'Grouping'?></label>
-        <select id="grouppicker"/>
+        <select id="grouppicker" onChange='changeGroupName(this)'/>
+        <br/><br/>
         <? if (!$add) { ?>
+        <div id="groupingwrapper" style="display: none">
+        <label for="groupingtext">Grouping</label>
+        <input type="text" id="grouping" /><br/><br/>
+        </div>
         <label for="grouptext">Group</label>
         <input type="text" id="group" />
         <? } ?>

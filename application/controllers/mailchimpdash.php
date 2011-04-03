@@ -279,8 +279,8 @@ class Mailchimpdash extends Secure_area
         if ($filename && !preg_match('/.*random:.*/', $filename)) {
             $data['filename'] = $filename.'.png';
         }
-        
         $data['lists'] = $this->MailChimp->listsWithGroups();
+        
         $this->load->view('mailchimpdash/charttocampaign', $data);
     }
     

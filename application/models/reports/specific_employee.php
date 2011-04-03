@@ -21,7 +21,7 @@ class Specific_employee extends Report
 		$this->db->join('people', 'sales_items_temp.customer_id = people.person_id', 'left');
 		$this->db->where('sale_date BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'" and employee_id='.$inputs['employee_id']);
 		$this->db->group_by('sale_id');
-		$this->db->order_by('sale_id');
+		$this->db->order_by('sale_date');
 
 		$data = array();
 		$data['summary'] = $this->db->get()->result_array();

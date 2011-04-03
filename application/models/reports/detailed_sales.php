@@ -22,7 +22,7 @@ class Detailed_sales extends Report
 		$this->db->join('people as customer', 'sales_items_temp.customer_id = customer.person_id', 'left');
 		$this->db->where('sale_date BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
 		$this->db->group_by('sale_id');
-		$this->db->order_by('sale_id');
+		$this->db->order_by('sale_date');
 
 		$data = array();
 		$data['summary'] = $this->db->get()->result_array();

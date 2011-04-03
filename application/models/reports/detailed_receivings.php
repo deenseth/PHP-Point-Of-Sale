@@ -22,7 +22,7 @@ class Detailed_receivings extends Report
 		$this->db->join('people as supplier', 'receivings_items_temp.supplier_id = supplier.person_id', 'left');
 		$this->db->where('receiving_date BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
 		$this->db->group_by('receiving_id');
-		$this->db->order_by('receiving_id');
+		$this->db->order_by('receiving_date');
 
 		$data = array();
 		$data['summary'] = $this->db->get()->result_array();

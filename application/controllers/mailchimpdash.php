@@ -380,5 +380,65 @@ class Mailchimpdash extends Secure_area
         $data['lists'] = $this->MailChimp->listsWithGroups();
         $this->load->view('mailchimpdash/groupoptions',$data);
     }
+    
+    function groupcreate()
+    {
+        $emailString = $this->input->post('emails');
+        $emails = explode(',', $emailString);
+        
+        $listID = $this->input->post('listID');
+        
+    }
+    
+    function groupadd()
+    {
+        $customerIDString = $this->input->post('customerIDs');
+        $customerIDs = explode(',', $customerIDString);
+        
+        $listID = $this->input->post('listID');
+        $group = $this->input->post('group');
+        
+        $interests = array();
+        if ($group) {
+            $ploded = explode('-', $group);
+            $groupingID = array_shift($ploded);
+            $groupName = implode('-', $ploded);
+            
+            $interests[] = $groupName;
+        }
+        
+        $batch = array();
+        foreach ($this->Customer->get_multiple_info($customerIDs)->result() as $customer) 
+        {
+            $batch[] = array('EMAIL'=>$customer->email, 'EMAIL_TYPE'=>'html', 'INTERESTS'=>implode(',', $interests));
+        }
+        
+        $response = $this->MailChimp->listBatchSubscribe($listID, $batch, false, true, false);
+        
+        $message = '';
+        
+        if ($response['add_count'] > 0) {
+            $message .= "{$response['add_count']} added. ";
+        } 
+        
+        if ($response['update_count'] > 0) {
+            $message .= "{$response['update_count']} updated. ";
+        }
+          
+        
+        if ($response['error_count'] > 0) {
+            $message .= "{$response['error_count']} errors. ";
+            foreach ($response['errors'] as $error) 
+            {
+                $message .= "{$error['email']}: {$error['message']}";
+            }
+            
+            echo json_encode(array('success'=>false,'message'=>$message));
+        } else {
+            echo json_encode(array('success'=>true,'message'=>$message));
+        }
+        
+    }
+    
 }
 ?>

@@ -25,7 +25,9 @@ function changeGroups(dom)
 			$(grouping).each(function(){
 				optionstring = optionstring + '<option value="'+this[0]+'">'+this[1]+'</option>';
 				});
+			<? if (!$add) { ?>
 			optionstring = optionstring + '<option value="new">New Grouping</option>';
+			<? } ?>
             $('#grouppicker').html(optionstring);
             $('#grouppicker-wrapper').show();
 		} else {
@@ -46,6 +48,43 @@ function changeGroupName(dom)
 	}
 }
 
+function groupCreate()
+{
+	
+}
+
+function groupAdd()
+{
+    $.post('<?=preg_replace('/index.php.*/', '', base_url())?>index.php/mailchimpdash/groupadd',
+            {
+             listID: $('#listpicker').val(),
+             group: $('#grouppicker').val(),
+             customerIDs: getCustomers()
+            },
+            function(response) {
+                if (typeof(response) != 'object') {
+                    var data = JSON.parse(response);
+                } else {
+                    var data = response;
+                }
+                if (data.success) {
+                    set_feedback(data.message, 'success_message', false);
+                } else {
+                    set_feedback(data.message, 'error_message', true);
+                }
+                tb_remove();
+            });
+}
+
+function getCustomers()
+{
+	var emails = [];
+	$('#sortable_table tr td:first-child').each(function(){
+		emails.push($(this).text());
+	});
+	return emails.join(',');
+}
+
 </script>
 <link rel="stylesheet" href="<?=preg_replace('/index.php.*/', '', base_url())?>css/mailchimpdash/charttocampaign.css" />
 <h3 id="exportthis"><?=$add ? 'Add to' : 'Create'?> Group</h3>
@@ -60,15 +99,15 @@ function changeGroupName(dom)
         </select>
         <br/> <br/>
         <div id="grouppicker-wrapper" style="display: none;">
-        <label for="grouppicker"><?=$add ? 'Group:' : 'Grouping'?></label>
+        <label for="grouppicker"><?=$add ? 'Group:' : 'Grouping'?> </label>
         <select id="grouppicker" onChange='changeGroupName(this)'/>
         <br/><br/>
         <? if (!$add) { ?>
         <div id="groupingwrapper" style="display: none">
-        <label for="groupingtext">Grouping</label>
+        <label for="groupingtext">Grouping: </label>
         <input type="text" id="grouping" /><br/><br/>
         </div>
-        <label for="grouptext">Group</label>
+        <label for="grouptext">Group: </label>
         <input type="text" id="group" />
         <? } ?>
         </div>

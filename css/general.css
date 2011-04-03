@@ -16,6 +16,11 @@
 	width:150px;
 }
 
+.field_row label.extra_wide 
+{
+	width:225px;
+}
+
 label.required
 {
 	color:red;

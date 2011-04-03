@@ -10,7 +10,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 <legend><?php echo $this->lang->line("config_info"); ?></legend>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_company').':', 'company',array('class'=>'wide required')); ?>
+<?php echo form_label($this->lang->line('config_company').':', 'company',array('class'=>'extra_wide required')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
 		'name'=>'company',
@@ -20,7 +20,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_address').':', 'address',array('class'=>'wide required')); ?>
+<?php echo form_label($this->lang->line('config_address').':', 'address',array('class'=>'extra_wide required')); ?>
 	<div class='form_field'>
 	<?php echo form_textarea(array(
 		'name'=>'address',
@@ -32,7 +32,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_phone').':', 'phone',array('class'=>'wide required')); ?>
+<?php echo form_label($this->lang->line('config_phone').':', 'phone',array('class'=>'extra_wide required')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
 		'name'=>'phone',
@@ -42,7 +42,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_default_tax_rate_1').':', 'default_tax_1_rate',array('class'=>'wide required')); ?>
+<?php echo form_label($this->lang->line('config_default_tax_rate_1').':', 'default_tax_1_rate',array('class'=>'extra_wide required')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
 		'name'=>'default_tax_1_name',
@@ -59,7 +59,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_default_tax_rate_2').':', 'default_tax_1_rate',array('class'=>'wide')); ?>
+<?php echo form_label($this->lang->line('config_default_tax_rate_2').':', 'default_tax_1_rate',array('class'=>'extra_wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
 		'name'=>'default_tax_2_name',
@@ -76,7 +76,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('common_email').':', 'email',array('class'=>'wide')); ?>
+<?php echo form_label($this->lang->line('common_email').':', 'email',array('class'=>'extra_wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
 		'name'=>'email',
@@ -87,7 +87,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_fax').':', 'fax',array('class'=>'wide')); ?>
+<?php echo form_label($this->lang->line('config_fax').':', 'fax',array('class'=>'extra_wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
 		'name'=>'fax',
@@ -97,7 +97,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_website').':', 'website',array('class'=>'wide')); ?>
+<?php echo form_label($this->lang->line('config_website').':', 'website',array('class'=>'extra_wide')); ?>
 	<div class='form_field'>
 	<?php echo form_input(array(
 		'name'=>'website',
@@ -107,7 +107,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('common_return_policy').':', 'return_policy',array('class'=>'wide required')); ?>
+<?php echo form_label($this->lang->line('common_return_policy').':', 'return_policy',array('class'=>'extra_wide required')); ?>
 	<div class='form_field'>
 	<?php echo form_textarea(array(
 		'name'=>'return_policy',
@@ -119,7 +119,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_language').':', 'language',array('class'=>'wide required')); ?>
+<?php echo form_label($this->lang->line('config_language').':', 'language',array('class'=>'extra_wide required')); ?>
 	<div class='form_field'>
 	<?php echo form_dropdown('language', array(
 		'english'  => 'English',
@@ -130,7 +130,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_timezone').':', 'timezone',array('class'=>'wide required')); ?>
+<?php echo form_label($this->lang->line('config_timezone').':', 'timezone',array('class'=>'extra_wide required')); ?>
 	<div class='form_field'>
 	<?php echo form_dropdown('timezone', 
 	 array(
@@ -230,16 +230,47 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_print_after_sale').':', 'print_after_sale',array('class'=>'wide')); ?>
+<?php echo form_label($this->lang->line('config_enable_credit_card_processing').':', 'enable_credit_card_processing',array('class'=>'extra_wide')); ?>
+	<div class='form_field'>
+	<?php echo form_checkbox(array(
+		'name'=>'enable_credit_card_processing',
+		'id'=>'enable_credit_card_processing',
+		'value'=>'1',
+		'checked'=>$this->config->item('enable_credit_card_processing')));?>
+	</div>
+</div>
+
+<div id="mercury_merchant_information">
+	<div class="field_row clearfix">	
+	<?php echo form_label($this->lang->line('config_mercury_merchant_id').':', 'mercury_merchant_id',array('class'=>'extra_wide')); ?>
+		<div class='form_field'>
+		<?php echo form_input(array(
+			'name'=>'mercury_merchant_id',
+			'id'=>'mercury_merchant_id',
+			'value'=>$this->config->item('mercury_merchant_id')));?>
+		</div>
+	</div>
+	
+	<div class="field_row clearfix">	
+	<?php echo form_label($this->lang->line('config_mercury_merchant_password').':', 'mercury_merchant_password',array('class'=>'extra_wide')); ?>
+		<div class='form_field'>
+		<?php echo form_password(array(
+			'name'=>'mercury_merchant_password',
+			'id'=>'mercury_merchant_password',
+			'value'=>$this->config->item('mercury_merchant_password')));?>
+		</div>
+	</div>
+</div>
+<div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('config_print_after_sale').':', 'print_after_sale',array('class'=>'extra_wide')); ?>
 	<div class='form_field'>
 	<?php echo form_checkbox(array(
 		'name'=>'print_after_sale',
 		'id'=>'print_after_sale',
-		'value'=>'print_after_sale',
+		'value'=>'1',
 		'checked'=>$this->config->item('print_after_sale')));?>
 	</div>
 </div>
-
 
 <?php 
 echo form_submit(array(
@@ -260,6 +291,9 @@ echo form_close();
 //validation and submit handling
 $(document).ready(function()
 {
+	$("#enable_credit_card_processing").change(check_enable_credit_card_processing).ready(check_enable_credit_card_processing);
+		
+		
 	$('#config_form').validate({
 		submitHandler:function(form)
 		{
@@ -310,5 +344,18 @@ $(document).ready(function()
 		}
 	});
 });
+
+function check_enable_credit_card_processing()
+{
+	if($("#enable_credit_card_processing").attr('checked'))
+	{
+		$("#mercury_merchant_information").show();
+	}
+	else
+	{
+		$("#mercury_merchant_information").hide();
+	}
+	
+}
 </script>
 <?php $this->load->view("partial/footer"); ?>

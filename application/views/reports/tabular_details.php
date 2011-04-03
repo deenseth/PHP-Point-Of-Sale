@@ -14,7 +14,9 @@ if($export_excel == 1){
 	<table class="tablesorter report" id="sortable_table">
 		<thead>
 			<tr>
+				<? if ($headers['details']) { ?>
 				<th>+</th>
+				<? } ?>
 				<?php foreach ($headers['summary'] as $header) { ?>
 				<th><?php echo $header; ?></th>
 				<?php } ?>
@@ -23,11 +25,14 @@ if($export_excel == 1){
 		<tbody>
 			<?php foreach ($summary_data as $key=>$row) { ?>
 			<tr>
+				<? if ($headers['details']) { ?>
 				<td><a href="#" class="expand">+</a></td>
+				<? } ?>
 				<?php foreach ($row as $cell) { ?>
 				<td><?php echo $cell; ?></td>
 				<?php } ?>
 			</tr>
+			<? if ($headers['details']) { ?>
 			<tr>
 				<td colspan="100">
 				<table class="innertable">
@@ -53,6 +58,7 @@ if($export_excel == 1){
 				
 				</td>
 			</tr>
+			<? } ?>
 			<?php } ?>
 		</tbody>
 	</table>

@@ -710,15 +710,12 @@ class Reports extends Secure_area
 		$data['specific_input_name'] = $this->lang->line('reports_item');
 		
 		$items = array();
+		
 		foreach($this->Item->get_all()->result() as $item)
 		{
-			$item[$item->item_id] = $item->name;
+			$items[$item->item_id] = $item->name;
 		}
 		$data['specific_input_data'] = $items;
-		
-		if ($item) {
-		    $data['item'] = $item;
-		}
 		
 		$this->load->view("reports/specific_input",$data);	
 	}
@@ -728,30 +725,23 @@ class Reports extends Secure_area
 	    $this->load->model('reports/Specific_item');
 		$model = $this->Specific_item;
 		
+		$item = $this->Item->get_info($item_id);
+		
 		$headers = $model->getDataColumns();
 		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'item_id' =>$item_id));
-		
-		$summary_data = array();
-		$details_data = array();
-		
-		foreach($report_data['summary'] as $key=>$row)
+        $summary_data = array();
+		foreach ($report_data as $key=>$data)
 		{
-			$summary_data[] = array(anchor('sales/receipt/'.$row['sale_id'], 'POS '.$row['sale_id'], array('target' => '_blank')), $row['sale_date'], $row['items_purchased'], $row['customer_name'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']), $row['payment_type'], $row['comment']);
-			
-			foreach($report_data['details'][$key] as $drow)
-			{
-				$details_data[$key][] = array($drow['name'], $drow['category'], $drow['serialnumber'], $drow['description'], $drow['quantity_purchased'], to_currency($drow['subtotal']), to_currency($drow['total']), to_currency($drow['tax']),to_currency($drow['profit']), $drow['discount_percent'].'%');
-			}
+		    $row = array_shift($data);
+		    $summary_data[]= array($row['person_id'], $row['customer_name'], $row['sale_date'], $row['quantity_purchased'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']), to_currency($row['profit']), to_currency($row['discount']));
 		}
-
-		$employee_info = $this->Employee->get_info($employee_id);
+		
 		$data = array(
-			"title" => $employee_info->first_name .' '. $employee_info->last_name.' '.$this->lang->line('reports_report'),
+			"title" => ucwords($item->name).' '.$this->lang->line('reports_report'),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"headers" => $model->getDataColumns(),
 			"summary_data" => $summary_data,
-			"details_data" => $details_data,
-			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'employee_id' =>$employee_id)),
+			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'item_id'=>$item->item_id)),
 			"export_excel" => $export_excel
 		);
 

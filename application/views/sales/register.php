@@ -235,14 +235,79 @@ else
 		// Only show this part if there is at least one payment entered.
 		if(count($payments) > 0)
 		{
-			echo AuthorizeNetDPM::getCreditCardForm($amount, $fp_sequence, $relay_response_url,$api_login_id, $transaction_key);
-		?>
+			if (isset($payments[$this->lang->line('sales_integrated_credit_card')]))
+			{	
+			?>
+			<form method="post" action="<?php echo AuthorizeNetDPM::SANDBOX_URL;?>" id="credit_card_form">
+			       
+			      <?php echo $sim->getHiddenFieldString();
+			    ?>
+			      <fieldset>
+			        <div>
+			          <label>Credit Card Number</label>
+			          <input type="text" class="text required creditcard" size="15" name="x_card_num" value=""></input>
+			        </div>
+			        <div>
+			          <label>Exp.</label>
+			          <input type="text" class="text required" size="4" name="x_exp_date" value=""></input>
+			        </div>
+			        <div>
+			          <label>CCV</label>
+			          <input type="text" class="text required" size="4" name="x_card_code" value=""></input>
+			        </div>
+			      </fieldset>
+			      <fieldset>
+			        <div>
+			          <label>First Name</label>
+			          <input type="text" class="text required" size="15" name="x_first_name" value="<?php echo isset($customer_info->first_name) ? $customer_info->first_name : ''; ?>"></input>
+			        </div>
+			        <div>
+			          <label>Last Name</label>
+			          <input type="text" class="text required" size="14" name="x_last_name" value="<?php echo isset($customer_info->last_name) ? $customer_info->last_name : ''; ?>"></input>
+			        </div>
+			      </fieldset>
+			      <fieldset>
+			        <div>
+			          <label>Address</label>
+			          <input type="text" class="text required" size="26" name="x_address" value="<?php echo isset($customer_info->address_1) ? $customer_info->address_1 : ''; ?>"></input>
+			        </div>
+			        <div>
+			          <label>City</label>
+			          <input type="text" class="text required" size="15" name="x_city" value="<?php echo isset($customer_info->city) ? $customer_info->city : ''; ?>"></input>
+			        </div>
+			      </fieldset>
+			      <fieldset>
+			        <div>
+			          <label>State</label>
+			          <input type="text" class="text required" size="4" name="x_state" value="<?php echo isset($customer_info->state) ? $customer_info->state : ''; ?>"></input>
+			        </div>
+			        <div>
+			          <label>Zip Code</label>
+			          <input type="text" class="text required" size="9" name="x_zip" value="<?php echo isset($customer_info->zip) ? $customer_info->zip : ''; ?>"></input>
+			        </div>
+			        <div>
+			          <label>Country</label>
+			          <input type="text" class="text required" size="22" name="x_country" value="<?php echo isset($customer_info->country) ? $customer_info->country : ''; ?>"></input>
+			        </div>
+			      </fieldset>
+			    </form>	
+				
+			<?php	
+			}
+			?>
 			<div id="finish_sale">
 				<?php echo form_open("sales/complete",array('id'=>'finish_sale_form')); ?>
-				<label id="comment_label" for="comment"><?php echo $this->lang->line('common_comments'); ?>:</label>
-				<?php echo form_textarea(array('name'=>'comment','value'=>'','rows'=>'4','cols'=>'23'));?>
+				
+				<?php
+				if (!isset($payments[$this->lang->line('sales_integrated_credit_card')]))
+				{	
+				?>
+					<label id="comment_label" for="comment"><?php echo $this->lang->line('common_comments'); ?>:</label>
+					<?php echo form_textarea(array('name'=>'comment','value'=>'','rows'=>'4','cols'=>'23'));?>
+				<?php
+				}
+				?>
 				<br /><br />
-
 				<?php echo "<div class='small_button' id='finish_sale_button' style='float:left;margin-top:5px;'><span>".$this->lang->line('sales_complete_sale')."</span></div>";
 				echo "<div class='small_button' id='suspend_sale_button' style='float:right;margin-top:5px;'><span>".$this->lang->line('sales_suspend_sale')."</span></div>";
 				?>
@@ -251,9 +316,6 @@ else
 		<?php
 		}
 		?>
-
-
-
     <table width="100%"><tr>
     <td style="width:55%; "><div class="float_left"><?php echo 'Payments Total:' ?></div></td>
     <td style="width:45%; text-align:right;"><div class="float_left" style="text-align:right;font-weight:bold;"><?php echo to_currency($payments_total); ?></div></td>
@@ -303,8 +365,6 @@ else
 			<th style="width:11%;"><?php echo $this->lang->line('common_delete'); ?></th>
 			<th style="width:60%;"><?php echo 'Type'; ?></th>
 			<th style="width:18%;"><?php echo 'Amount'; ?></th>
-
-
 			</tr>
 			</thead>
 			<tbody id="payment_contents">
@@ -401,7 +461,19 @@ $(document).ready(function()
     {
     	if (confirm('<?php echo $this->lang->line("sales_confirm_finish_sale"); ?>'))
     	{
-    		$('#finish_sale_form').submit();
+			<?php if (isset($payments[$this->lang->line('sales_integrated_credit_card')]))
+			{
+			?>
+	    		$('#credit_card_form').submit();
+			<?php
+			}
+			else
+			{
+			?>
+    			$('#finish_sale_form').submit();
+			<?php
+			}
+			?>
     	}
     });
 

@@ -4,7 +4,6 @@ class Credit_card_receiver extends Controller
 {
 	function index()
 	{		
-		$redirect_url = site_url('sales/complete');
 		$api_login_id = $this->config->item('authorize_net_api_login_id');
 		$md5_setting = $this->config->item('authorize_net_md5_hash');
 		
@@ -13,11 +12,12 @@ class Credit_card_receiver extends Controller
 		{
 			if ($response->approved)
 			{
-				$redirect_url .= '?response_code=1&transaction_id=' .
-				$response->getTransactionId();
+				$redirect_url = site_url('sales/complete');
+				$redirect_url .= '?response_code=1&transaction_id=' .$response->transaction_id;
 			}
 			else
 			{
+				$redirect_url = site_url('sales/index');
 				$redirect_url .= '?response_code='.$response->response_code . 
 				'&response_reason_text=' . $response->response_reason_text;
 			}

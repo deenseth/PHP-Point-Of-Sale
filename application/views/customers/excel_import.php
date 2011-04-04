@@ -1,9 +1,9 @@
 <?php
-echo form_open_multipart('items/do_excel_import/',array('id'=>'item_form'));
+echo form_open_multipart('customers/do_excel_import/',array('id'=>'item_form'));
 ?>
 <div id="required_fields_message">Max import data from execel sheet</div>
 <ul id="error_message_box"></ul>
-<b><a href="<?php echo base_url(). '/'.'import_items.csv'; ?>">Download Import Excel Template (CSV)</a></b>
+<b><a href="<?php echo base_url(). '/'.'import_customers.csv'; ?>">Download Import Excel Template (CSV)</a></b>
 <fieldset id="item_basic_info">
 <legend>Import</legend>
 
@@ -42,7 +42,7 @@ $(document).ready(function()
 			success:function(response)
 			{
 				tb_remove();
-				post_item_form_submit(response);
+				post_person_form_submit(response);
 			},
 			dataType:'json'
 		});

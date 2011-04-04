@@ -289,21 +289,11 @@ class Items extends Secure_area implements iData_controller
 		}
 	}
 
-	/**
-	 * Display form: Import data from an excel file
-	 * @author: Nguyen OJB
-	 * @since: 10.1
-	 */
 	function excel_import()
 	{
 		$this->load->view("items/excel_import", null);
 	}
 
-	/**
-	 * Read data from excel file -> save it to databse
-	 * @author: Nguyen OJB
-	 * @since: 10.1
-	 */
 	function do_excel_import()
 	{
 		$msg = 'do_excel_import';
@@ -316,57 +306,63 @@ class Items extends Secure_area implements iData_controller
 		}
 		else
 		{
-			$this->load->library('spreadsheetexcelreader');
-			$this->spreadsheetexcelreader->store_extended_info = false;
-			$success = $this->spreadsheetexcelreader->read($_FILES['file_path']['tmp_name']);
-
-			$rowCount = $this->spreadsheetexcelreader->rowcount(0);
-			if($rowCount > 2){
-				for($i = 3; $i<=$rowCount; $i++){
-
+			if (($handle = fopen($_FILES['file_path']['tmp_name'], "r")) !== FALSE)
+			{
+				//Skip first row
+				fgetcsv($handle);
+				
+				$i=1;
+				while (($data = fgetcsv($handle)) !== FALSE) 
+				{
 					$item_data = array(
-					'name'			=>	$this->spreadsheetexcelreader->val($i, 'B'),
-					'description'	=>	$this->spreadsheetexcelreader->val($i, 'K'),
-					'category'		=>	$this->spreadsheetexcelreader->val($i, 'C'),
-					'cost_price'	=>	$this->spreadsheetexcelreader->val($i, 'E'),
-					'unit_price'	=>	$this->spreadsheetexcelreader->val($i, 'F'),
-					'quantity'		=>	$this->spreadsheetexcelreader->val($i, 'I'),
-					'reorder_level'	=>	$this->spreadsheetexcelreader->val($i, 'J'),
-					'supplier_id'	=>  $this->Supplier->exists($this->spreadsheetexcelreader->val($i, 'D')) ? $this->spreadsheetexcelreader->val($i, 'D') : null
+					'name'			=>	$data[1],
+					'description'	=>	$data[12],
+					'category'		=>	$data[2],
+					'cost_price'	=>	$data[4],
+					'unit_price'	=>	$data[5],
+					'quantity'		=>	$data[10],
+					'reorder_level'	=>	$data[11],
+					'supplier_id'	=>  $this->Supplier->exists($data[3]) ? $data[3] : null,
+					'allow_alt_description'=> $data[13] != '' ? '1' : '0',
+					'is_serialized'=>$data[14] != '' ? '1' : '0'
 					);
-					$item_number = $this->spreadsheetexcelreader->val($i, 'A');
+					$item_number = $data[0];
 					
 					if ($item_number != "")
 					{
 						$item_data['item_number'] = $item_number;
 					}
 					
-					if($this->Item->save($item_data)) {
+					if($this->Item->save($item_data)) 
+					{
 						$items_taxes_data = null;
 						//tax 1
-						if( is_numeric($this->spreadsheetexcelreader->val($i, 'G')) ){
-							$items_taxes_data[] = array('name'=>'Sales Tax 1', 'percent'=>$this->spreadsheetexcelreader->val($i, 'G') );
+						if( is_numeric($data[7]) && $data[6]!='' )
+						{
+							$items_taxes_data[] = array('name'=>$data[6], 'percent'=>$data[7] );
 						}
 
 						//tax 2
-						if( is_numeric($this->spreadsheetexcelreader->val($i, 'H')) ){
-							$items_taxes_data[] = array('name'=>'Sales Tax 2', 'percent'=>$this->spreadsheetexcelreader->val($i, 'H') );
+						if( is_numeric($data[9]) && $data[8]!='' )
+						{
+							$items_taxes_data[] = array('name'=>$data[8], 'percent'=>$data[9] );
 						}
 
 						// save tax values
-						if(count($items_taxes_data) > 0){
+						if(count($items_taxes_data) > 0)
+						{
 							$this->Item_taxes->save($items_taxes_data, $item_data['item_id']);
 						}
 						
 							$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
 							$emp_info=$this->Employee->get_info($employee_id);
-							$comment ='Qty Excel Imported: means BEGIN/RESET/ACTUAL count';
+							$comment ='Qty CSV Imported';
 							$excel_data = array
 								(
 								'trans_items'=>$item_data['item_id'],
 								'trans_user'=>$employee_id,
 								'trans_comment'=>$comment,
-								'trans_inventory'=>$this->spreadsheetexcelreader->val($i, 'I')
+								'trans_inventory'=>$data[10]
 								);
 								$this->db->insert('inventory',$excel_data);
 						//------------------------------------------------Ramel
@@ -376,19 +372,24 @@ class Items extends Secure_area implements iData_controller
 						$failCodes[] = $i;
 					}
 				}
-
-			} else {
-				// rowCount < 2
+				
+				$i++;
+			}
+			else 
+			{
 				echo json_encode( array('success'=>true,'message'=>'Your upload file has no data or not in supported format.') );
 				return;
 			}
 		}
 
 		$success = true;
-		if(count($failCodes) > 1){
+		if(count($failCodes) > 1)
+		{
 			$msg = "Most items imported. But some were not, here is list of their CODE (" .count($failCodes) ."): ".implode(", ", $failCodes);
 			$success = false;
-		}else{
+		}
+		else
+		{
 			$msg = "Import items successful";
 		}
 

@@ -229,8 +229,8 @@ echo form_open('config/save/',array('id'=>'config_form'));
 	</div>
 </div>
 
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_enable_credit_card_processing').':', 'enable_credit_card_processing',array('class'=>'extra_wide')); ?>
+<div class="field_row clearfix">
+<?php echo form_label("<a href='https://ems.authorize.net/oap/home.aspx?SalesRepID=98&ResellerID=19031' target='_blank'>".$this->lang->line('config_enable_credit_card_processing').'</a>:', 'enable_credit_card_processing',array('class'=>'extra_wide')); ?>
 	<div class='form_field'>
 	<?php echo form_checkbox(array(
 		'name'=>'enable_credit_card_processing',

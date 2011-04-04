@@ -182,6 +182,6 @@ function add_to_group_button()
 {
     $CI =& get_instance();
     if ($key = $CI->Appconfig->get('mc_api_key')) {
-        return '<div class="group-add-wrapper"><a class="button pill" href="'.base_url().'index.php/mailchimpdash/groupoptions/1/" onClick="thickit(this); return false;">Add To List Interest Group</a>&nbsp;&nbsp;<a class="button pill" href="'.base_url().'index.php/mailchimpdash/groupoptions/0/" onClick="thickit(this); return false;">Create List Interest Group</a><div class="clear"><!-- --></div></div>';
+        return '<div class="group-add-wrapper"><a class="button pill" href="'.base_url().'index.php/mailchimpdash/groupoptions/1/" onClick="thickit(this); return false;">Add To Existing List Interest Group</a>&nbsp;&nbsp;<a class="button pill" href="'.base_url().'index.php/mailchimpdash/groupoptions/0/" onClick="thickit(this); return false;">Add to New List Interest Group</a><div class="clear"><!-- --></div></div>';
     }
 }

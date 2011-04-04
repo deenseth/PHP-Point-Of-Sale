@@ -50,7 +50,53 @@ function changeGroupName(dom)
 
 function groupCreate()
 {
+    var groupingIsNew = 0;
+    if (($('#grouppicker').val() == 'new')) {
+		var groupingIsNew = 1;
+    } 
+    
+	var groupingID = $('#grouppicker').val();
 	
+	if (groupingID == '') {
+		alert('Please select a grouping.');
+		return false;
+	}
+
+	var groupName = $('#grouptext').val();
+	if (groupName == '') {
+		alert('Please specify a group name');
+		return false;
+	}
+
+	var groupingName = $('#groupingtext').val();
+	if (groupingIsNew == 1 && groupingName == '') {
+		alert('Please specify a name for your grouping');
+		return false;
+	}
+    
+    $.post('<?=preg_replace('/index.php.*/', '', base_url())?>index.php/mailchimpdash/groupcreate',
+            {
+             listID: $('#listpicker').val(),
+             groupingIsNew: groupingIsNew,
+             groupingID: groupingID,
+             customerIDs: getCustomers(),
+             groupingType: $('#groupingtype').val(),
+             groupingName: groupingName,
+             groupName: groupName
+            },
+            function(response) {
+                if (typeof(response) != 'object') {
+                    var data = JSON.parse(response);
+                } else {
+                    var data = response;
+                }
+                if (data.success) {
+                    set_feedback(data.message, 'success_message', false);
+                } else {
+                    set_feedback(data.message, 'error_message', true);
+                }
+                tb_remove();
+            });
 }
 
 function groupAdd()
@@ -104,11 +150,19 @@ function getCustomers()
         <br/><br/>
         <? if (!$add) { ?>
         <div id="groupingwrapper" style="display: none">
-        <label for="groupingtext">Grouping: </label>
-        <input type="text" id="grouping" /><br/><br/>
+        <label for="groupingtext">Grouping Name: </label>
+        <input type="text" id="groupingtext" /><br/><br/>
+        <label for="groupingtype">Grouping Type:</label>
+        <select id="groupingtype">
+        	<option value="checkboxes" selected="selected">Checkboxes</option>
+        	<option value="radio">Radio</option>
+        	<option value="hidden">Hidden</option>
+        	<option value="dropdown">Dropdown</option>
+        </select>
+        <br/><br/>
         </div>
         <label for="grouptext">Group: </label>
-        <input type="text" id="group" />
+        <input type="text" id="grouptext" />
         <? } ?>
         </div>
     </div>

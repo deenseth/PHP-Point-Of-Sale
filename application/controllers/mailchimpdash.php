@@ -383,10 +383,59 @@ class Mailchimpdash extends Secure_area
     
     function groupcreate()
     {
-        $emailString = $this->input->post('emails');
-        $emails = explode(',', $emailString);
+        $customerIDString = $this->input->post('customerIDs');
+        $customerIDs = explode(',', $customerIDString);
         
         $listID = $this->input->post('listID');
+        
+        $groupingIsNew = $this->input->post('groupingIsNew');
+        
+        $groupName = $this->input->post('groupName');
+        
+        if ($groupingIsNew == 0) {
+            $groupingID = $this->input->post('groupingID');
+            $result = $this->MailChimp->listInterestGroupAdd($listID, $groupName, $groupingID);
+        } else {
+            $groupingType = $this->input->post('groupingType');
+            $groupingName = $this->input->post('groupingName');
+            $result = $this->MailChimp->listInterestGroupingAdd($listID, $groupingName, $groupingType, array($groupName));
+        }
+        
+        
+        if ($result) {
+            $batch = array();
+            foreach ($this->Customer->get_multiple_info($customerIDs)->result() as $customer) 
+            {
+                $batch[] = array('EMAIL'=>$customer->email, 'EMAIL_TYPE'=>'html', 'INTERESTS'=>$groupName);
+            }
+            
+            $response = $this->MailChimp->listBatchSubscribe($listID, $batch, false, true, false);
+            
+            $message = '';
+            
+            if ($response['add_count'] > 0) {
+                $message .= "{$response['add_count']} added. ";
+            } 
+            
+            if ($response['update_count'] > 0) {
+                $message .= "{$response['update_count']} updated. ";
+            }
+              
+            
+            if ($response['error_count'] > 0) {
+                $message .= "{$response['error_count']} errors. ";
+                foreach ($response['errors'] as $error) 
+                {
+                    $message .= "{$error['email']}: {$error['message']}";
+                }
+                
+                echo json_encode(array('success'=>false,'message'=>$message));
+            } else {
+                echo json_encode(array('success'=>true,'message'=>$message));
+            }
+        } else {
+            echo json_encode(array('success'=>false,'message'=>"There was an error: ".$this->MailChimp->errorMessage));
+        }
         
     }
     

@@ -704,6 +704,53 @@ class Reports extends Secure_area
 		$this->load->view("reports/tabular_details",$data);
 	}
 	
+    function specific_item_input($item=null)
+	{
+		$data = $this->_get_common_report_data();
+		$data['specific_input_name'] = $this->lang->line('reports_item');
+		
+		$items = array();
+		
+		foreach($this->Item->get_all()->result() as $item)
+		{
+			$items[$item->item_id] = $item->name;
+		}
+		$data['specific_input_data'] = $items;
+		
+		$this->load->view("reports/specific_input",$data);	
+	}
+	
+	function specific_item($start_date, $end_date, $item_id, $export_excel=0)
+	{
+	    $this->load->model('reports/Specific_item');
+		$model = $this->Specific_item;
+		
+		$item = $this->Item->get_info($item_id);
+		
+		$headers = $model->getDataColumns();
+		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'item_id' =>$item_id));
+        $summary_data = array();
+		foreach ($report_data as $key=>$data)
+		{
+		    $row = array_shift($data);
+		    $summary_data[]= array($row['person_id'], $row['customer_name'], $row['sale_date'], $row['quantity_purchased'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']), to_currency($row['profit']), to_currency($row['discount']));
+		}
+		
+		$add = ($key = $this->Appconfig->get('mc_api_key'));
+		
+		$data = array(
+			"title" => ucwords($item->name).' '.$this->lang->line('reports_report'),
+			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
+			"headers" => $model->getDataColumns(),
+			"summary_data" => $summary_data,
+			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'item_id'=>$item->item_id)),
+			"export_excel" => $export_excel,
+		    "add_to_group" => $add
+		);
+
+		$this->load->view("reports/tabular_details",$data);
+	}
+	
 	function detailed_sales($start_date, $end_date, $export_excel=0)
 	{
 		$this->load->model('reports/Detailed_sales');

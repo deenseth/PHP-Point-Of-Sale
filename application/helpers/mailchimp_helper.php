@@ -172,11 +172,16 @@ ENDJS;
 
 function campaign_export_button()
 {
-    return '<div class="export-button-wrapper"><a class="button pill" href="'.base_url().'index.php/mailchimpdash/charttocampaign/" onClick="export_to_campaign(this); return false;">Export To Campaign</a><div class="clear"><!-- --></div></div>';
+    $CI =& get_instance();
+    if ($key = $CI->Appconfig->get('mc_api_key')) {
+        return '<div class="export-button-wrapper"><a class="button pill" href="'.base_url().'index.php/mailchimpdash/charttocampaign/" onClick="export_to_campaign(this); return false;">Export To Campaign</a><div class="clear"><!-- --></div></div>';
+    }
 }
 
-
-
-
-
-
+function add_to_group_button()
+{
+    $CI =& get_instance();
+    if ($key = $CI->Appconfig->get('mc_api_key')) {
+        return '<div class="group-add-wrapper"><a class="button pill" href="'.base_url().'index.php/mailchimpdash/groupoptions/1/" onClick="thickit(this); return false;">Add To Existing List Interest Group</a>&nbsp;&nbsp;<a class="button pill" href="'.base_url().'index.php/mailchimpdash/groupoptions/0/" onClick="thickit(this); return false;">Add to New List Interest Group</a><div class="clear"><!-- --></div></div>';
+    }
+}

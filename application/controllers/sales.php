@@ -1,5 +1,6 @@
 <?php
 require_once ("secure_area.php");
+require_once (APPPATH."libraries/anet_php_sdk/AuthorizeNet.php");
 class Sales extends Secure_area
 {
 	function __construct()
@@ -331,6 +332,13 @@ class Sales extends Secure_area
 			$info=$this->Customer->get_info($customer_id);
 			$data['customer']=$info->first_name.' '.$info->last_name;
 		}
+		
+		$data['relay_response_url'] = site_url('credit_card_receiver/index');
+		$data['api_login_id'] = $this->config->item('authorize_net_api_login_id');
+		$data['transaction_key'] = $this->config->item('authorize_net_transaction_key');
+		$data['amount'] = "5.99";
+		$data['fp_sequence'] = "123";
+		
 		$this->load->view("sales/register",$data);
 	}
 

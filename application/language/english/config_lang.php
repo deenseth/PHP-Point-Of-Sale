@@ -21,7 +21,7 @@ $lang['config_print_after_sale']='Print receipt after sale';
 $lang['config_language'] = 'Language';
 $lang['config_timezone'] = 'Timezone';
 $lang['config_enable_credit_card_processing'] = 'Integrated Credit Card Processing';
-$lang['config_mercury_merchant_id'] = 'Mercury Merchant ID';
-$lang['config_mercury_merchant_password'] = 'Mercury Merchant Password';
-
+$lang['config_authorize_net_api_login_id'] = 'Authorize.net API Login ID';
+$lang['config_authorize_net_transaction_key'] = 'Authorize.net Transaction Key';
+$lang['config_authorize_net_md5_hash'] = 'Authorize.net MD5 Hash';
 ?>

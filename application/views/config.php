@@ -240,24 +240,34 @@ echo form_open('config/save/',array('id'=>'config_form'));
 	</div>
 </div>
 
-<div id="mercury_merchant_information">
+<div id="authorizenet_merchant_information">
 	<div class="field_row clearfix">	
-	<?php echo form_label($this->lang->line('config_mercury_merchant_id').':', 'mercury_merchant_id',array('class'=>'extra_wide')); ?>
+	<?php echo form_label($this->lang->line('config_authorize_net_api_login_id').':', 'authorize_net_api_login_id',array('class'=>'extra_wide')); ?>
 		<div class='form_field'>
 		<?php echo form_input(array(
-			'name'=>'mercury_merchant_id',
-			'id'=>'mercury_merchant_id',
-			'value'=>$this->config->item('mercury_merchant_id')));?>
+			'name'=>'authorize_net_api_login_id',
+			'id'=>'authorize_net_api_login_id',
+			'value'=>$this->config->item('authorize_net_api_login_id')));?>
 		</div>
 	</div>
 	
 	<div class="field_row clearfix">	
-	<?php echo form_label($this->lang->line('config_mercury_merchant_password').':', 'mercury_merchant_password',array('class'=>'extra_wide')); ?>
+	<?php echo form_label($this->lang->line('config_authorize_net_transaction_key').':', 'authorize_net_transaction_key',array('class'=>'extra_wide')); ?>
 		<div class='form_field'>
-		<?php echo form_password(array(
-			'name'=>'mercury_merchant_password',
-			'id'=>'mercury_merchant_password',
-			'value'=>$this->config->item('mercury_merchant_password')));?>
+		<?php echo form_input(array(
+			'name'=>'authorize_net_transaction_key',
+			'id'=>'authorize_net_transaction_key',
+			'value'=>$this->config->item('authorize_net_transaction_key')));?>
+		</div>
+	</div>
+	
+	<div class="field_row clearfix">	
+	<?php echo form_label($this->lang->line('config_authorize_net_md5_hash').':', 'authorize_net_md5_hash',array('class'=>'extra_wide')); ?>
+		<div class='form_field'>
+		<?php echo form_input(array(
+			'name'=>'authorize_net_md5_hash',
+			'id'=>'authorize_net_md5_hash',
+			'value'=>$this->config->item('authorize_net_md5_hash')));?>
 		</div>
 	</div>
 </div>
@@ -349,11 +359,11 @@ function check_enable_credit_card_processing()
 {
 	if($("#enable_credit_card_processing").attr('checked'))
 	{
-		$("#mercury_merchant_information").show();
+		$("#authorizenet_merchant_information").show();
 	}
 	else
 	{
-		$("#mercury_merchant_information").hide();
+		$("#authorizenet_merchant_information").hide();
 	}
 	
 }

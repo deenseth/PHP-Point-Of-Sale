@@ -12,3 +12,18 @@ INSERT INTO `phppos_modules` (`name_lang_key`, `desc_lang_key`, `sort`, `module_
 ('module_mailchimp', 'module_mailchimp_desc', 10, 'mailchimpdash');
 
 INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES ('giftcards',1);
+
+CREATE TABLE IF NOT EXISTS `phppos_campaignbuilds` (
+    `campaign_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `reportaction` VARCHAR(255) NOT NULL,
+    `reportparams` MEDIUMTEXT,
+    `interval` ENUM('daily', 'weekly', 'monthly'),
+    `list_id` VARCHAR(255) NOT NULL,
+    `grouping_id` VARCHAR(255),
+    `grouping_value` VARCHAR(255),
+    `title` VARCHAR(255) NOT NULL,
+    `blurb` VARCHAR(255),
+    `from_email` VARCHAR(255) NOT NULL,
+    `from_name` VARCHAR(255) NOT NULL,
+    `to_name` VARCHAR(255) NOT NULL
+)

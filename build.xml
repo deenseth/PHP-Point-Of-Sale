@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<project name="PHPPOS" default="help" basedir=".">
+    <tstamp />
+    <property name="strings.promptChar" value=" :" />
+
+    <target name="help">
+        <echo msg="Please specify a build command." />
+    </target>
+    
+    <taskdef classname="RepeatableCampaign" name="RepeatableCampaign" />
+    
+    <target name="dailyCampaign">
+        <php expression="require_once '../../index.php'" />
+        <property name="interval" value="daily" />
+        <RepeatableCampaign interval="{$interval}" />
+    </target>
+    
+    <target name="weeklyCampaign">
+        <php expression="require_once '../../index.php'" />
+        <property name="interval" value="weekly" />
+        <RepeatableCampaign interval="{$interval}" />
+    </target>
+    
+    <target name="monthlyCampaign">
+        <php expression="require_once '../../index.php'" />
+        <property name="interval" value="monthly" />
+        <RepeatableCampaign interval="{$interval}" />
+    </target>
+</project>

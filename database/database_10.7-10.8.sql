@@ -15,8 +15,8 @@ INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES ('giftcards',
 
 CREATE TABLE IF NOT EXISTS `phppos_campaignbuilds` (
     `campaign_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `reportaction` VARCHAR(255) NOT NULL,
-    `reportparams` MEDIUMTEXT,
+    `report_model` VARCHAR(255) NOT NULL,
+    `report_params` MEDIUMTEXT,
     `interval` ENUM('daily', 'weekly', 'monthly'),
     `list_id` VARCHAR(255) NOT NULL,
     `grouping_id` VARCHAR(255),

@@ -163,7 +163,7 @@ class Customers extends Person_controller
 			}
 			else 
 			{
-				echo json_encode( array('success'=>true,'message'=>'Your upload file has no data or not in supported format.') );
+				echo json_encode( array('success'=>false,'message'=>'Your upload file has no data or not in supported format.') );
 				return;
 			}
 		}

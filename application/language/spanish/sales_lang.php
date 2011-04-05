@@ -74,4 +74,9 @@ $lang['sales_comments'] = 'Comments';
 $lang['sales_unsuspend_and_delete'] = 'Unsuspend and Delete';
 $lang['sales_unsuspend'] = 'Unsuspend';
 $lang['sales_successfully_suspended_sale'] = 'Your sale has been successfully suspended';
+$lang['sales_credit_card_number'] = "Credit Card Number";
+$lang['sales_expiration'] = 'Exp.';
+$lang['sales_ccv'] = 'CCV';
+$lang['sales_integrated_credit_card'] = 'Integrated Credit Card';
+
 ?>

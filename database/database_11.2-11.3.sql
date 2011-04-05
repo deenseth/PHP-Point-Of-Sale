@@ -1,0 +1,1 @@
+ALTER TABLE  `phppos_sessions` CHANGE  `user_data`  `user_data` TEXT NULL;

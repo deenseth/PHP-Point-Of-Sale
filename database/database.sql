@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 02, 2011 at 12:17 PM
+-- Generation Time: Apr 05, 2011 at 04:18 PM
 -- Server version: 5.1.54
 -- PHP Version: 5.3.3
 
@@ -492,7 +492,7 @@ CREATE TABLE `phppos_sessions` (
   `ip_address` varchar(16) NOT NULL DEFAULT '0',
   `user_agent` varchar(50) NOT NULL,
   `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_data` text NOT NULL,
+  `user_data` text,
   PRIMARY KEY (`session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

@@ -49,7 +49,7 @@ function get_people_manage_table_data_rows($people,$controller)
 function get_person_data_row($person,$controller)
 {
 	$CI =& get_instance();
-	$controller_name=$CI->uri->segment(1);
+	$controller_name=strtolower(get_class($CI));
 	$width = $controller->get_form_width();
 
 	$table_data_row='<tr>';
@@ -115,7 +115,7 @@ function get_supplier_manage_table_data_rows($suppliers,$controller)
 function get_supplier_data_row($supplier,$controller)
 {
 	$CI =& get_instance();
-	$controller_name=$CI->uri->segment(1);
+	$controller_name=strtolower(get_class($CI));
 	$width = $controller->get_form_width();
 
 	$table_data_row='<tr>';
@@ -193,7 +193,7 @@ function get_item_data_row($item,$controller)
 		$tax_percents.=$tax_info['percent']. '%, ';
 	}
 	$tax_percents=substr($tax_percents, 0, -2);
-	$controller_name=$CI->uri->segment(1);
+	$controller_name=strtolower(get_class($CI));
 	$width = $controller->get_form_width();
 
 	$table_data_row='<tr>';
@@ -265,7 +265,7 @@ function get_giftcards_manage_table_data_rows( $giftcards, $controller )
 function get_giftcard_data_row($giftcard,$controller)
 {
 	$CI =& get_instance();
-	$controller_name=$CI->uri->segment(1);
+	$controller_name=strtolower(get_class($CI));
 	$width = $controller->get_form_width();
 
 	$table_data_row='<tr>';

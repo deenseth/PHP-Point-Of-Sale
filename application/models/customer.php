@@ -17,13 +17,20 @@ class Customer extends Person
 	/*
 	Returns all the customers
 	*/
-	function get_all()
+	function get_all($limit=10000, $offset=0)
 	{
 		$this->db->from('customers');
 		$this->db->join('people','customers.person_id=people.person_id');			
 		$this->db->where('deleted',0);
 		$this->db->order_by("last_name", "asc");
+		$this->db->limit($limit);
+		$this->db->offset($offset);
 		return $this->db->get();		
+	}
+	
+	function count_all()
+	{
+		return $this->db->count_all('customers');	
 	}
 	
 	/*

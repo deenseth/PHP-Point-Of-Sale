@@ -9,9 +9,14 @@ class Suppliers extends Person_controller
 	
 	function index()
 	{
-		$data['controller_name']=strtolower($this->uri->segment(1));
+		$config['base_url'] = site_url('?c=suppliers&m=index');
+		$config['total_rows'] = $this->Supplier->count_all();
+		$config['per_page'] = '20'; 
+		$this->pagination->initialize($config);
+		
+		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_supplier_manage_table($this->Supplier->get_all(),$this);
+		$data['manage_table']=get_supplier_manage_table($this->Supplier->get_all($config['per_page'], $this->input->get('per_page')),$this);
 		$this->load->view('suppliers/manage',$data);
 	}
 	

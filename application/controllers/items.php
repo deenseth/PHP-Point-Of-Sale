@@ -10,9 +10,14 @@ class Items extends Secure_area implements iData_controller
 
 	function index()
 	{
-		$data['controller_name']=strtolower($this->uri->segment(1));
+		$config['base_url'] = site_url('?c=items&m=index');
+		$config['total_rows'] = $this->Item->count_all();
+		$config['per_page'] = '20'; 
+		$this->pagination->initialize($config);
+		
+		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_items_manage_table($this->Item->get_all(),$this);
+		$data['manage_table']=get_items_manage_table($this->Item->get_all($config['per_page'], $this->input->get('per_page')),$this);
 		$this->load->view('items/manage',$data);
 	}
 
@@ -26,7 +31,7 @@ class Items extends Secure_area implements iData_controller
 		$data['low_inventory']=$this->input->post('low_inventory');
 		$data['is_serialized']=$this->input->post('is_serialized');
 		$data['no_description']=$this->input->post('no_description');
-		$data['controller_name']=strtolower($this->uri->segment(1));
+		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
 		$data['manage_table']=get_items_manage_table($this->Item->get_all_filtered($low_inventory,$is_serialized,$no_description),$this);
 		$this->load->view('items/manage',$data);

@@ -30,7 +30,9 @@ class Supplier extends Person
 	
 	function count_all()
 	{
-		return $this->db->count_all('suppliers');	
+		$this->db->from('suppliers');
+		$this->db->where('deleted',0);
+		return $this->db->count_all_results();
 	}
 	
 	/*

@@ -30,7 +30,9 @@ class Customer extends Person
 	
 	function count_all()
 	{
-		return $this->db->count_all('customers');	
+		$this->db->from('customers');
+		$this->db->where('deleted',0);
+		return $this->db->count_all_results();
 	}
 	
 	/*

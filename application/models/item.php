@@ -28,7 +28,9 @@ class Item extends Model
 	
 	function count_all()
 	{
-		return $this->db->count_all('items');	
+		$this->db->from('items');
+		$this->db->where('deleted',0);
+		return $this->db->count_all_results();
 	}
 
 	function get_all_filtered($low_inventory=0,$is_serialized=0,$no_description)

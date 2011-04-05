@@ -29,7 +29,9 @@ class Giftcard extends Model
 	
 	function count_all()
 	{
-		return $this->db->count_all('giftcards');	
+		$this->db->from('giftcards');
+		$this->db->where('deleted',0);
+		return $this->db->count_all_results();
 	}
 
 	/*

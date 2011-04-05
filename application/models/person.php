@@ -23,7 +23,9 @@ class Person extends Model
 	
 	function count_all()
 	{
-		return $this->db->count_all('people');	
+		$this->db->from('people');
+		$this->db->where('deleted',0);
+		return $this->db->count_all_results();
 	}
 	
 	/*

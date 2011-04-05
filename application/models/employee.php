@@ -30,7 +30,9 @@ class Employee extends Person
 	
 	function count_all()
 	{
-		return $this->db->count_all('employees');	
+		$this->db->from('employees');
+		$this->db->where('deleted',0);
+		return $this->db->count_all_results();
 	}
 	
 	/*

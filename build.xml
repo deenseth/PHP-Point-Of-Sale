@@ -11,20 +11,14 @@
     <taskdef classname="RepeatableCampaign" name="RepeatableCampaign" />
     
     <target name="dailyCampaign">
-        <php expression="require_once '../../index.php'" />
-        <property name="interval" value="daily" />
-        <RepeatableCampaign interval="{$interval}" />
+        <RepeatableCampaign interval="daily" />
     </target>
     
     <target name="weeklyCampaign">
-        <php expression="require_once '../../index.php'" />
-        <property name="interval" value="weekly" />
-        <RepeatableCampaign interval="{$interval}" />
+        <RepeatableCampaign interval="weekly" />
     </target>
     
     <target name="monthlyCampaign">
-        <php expression="require_once '../../index.php'" />
-        <property name="interval" value="monthly" />
-        <RepeatableCampaign interval="{$interval}" />
+        <RepeatableCampaign interval="monthly" />
     </target>
 </project>

@@ -1,12 +1,15 @@
 <?php
 require_once ("phing/Task.php");
-require_once (APPPATH."application/controllers/reports.php");
 
 class RepeatableCampaign extends Task {
     private $interval;
     
     public function main()
     {
+        $system_folder = "../system";
+        require_once (dirname(__FILE__)."/ci_model_remote_open.php");
+        require_once (APPPATH . "/controllers/reports.php");
+        error_reporting('E_NONE');
         $CI = &get_instance();
         
         if ($key = $CI->Appconfig->get('mc_api_key')) {
@@ -15,33 +18,35 @@ class RepeatableCampaign extends Task {
             throw new Exception('You must have an API key to use this feature');
         }
         
+        $CI->load->library('Report_Service', array(), 'Service');
+        
         $query = $CI->db->query("SELECT * FROM `phppos_campaignbuilds` WHERE `interval` = ?", array($this->interval));
         
         foreach ($query->result() as $row)
         {
-            $options = array('list_id'	    =>    $row['list_id'],
-                             'subject'	    =>    $row['title'],
-                             'from_email'	=>    $row['from_email'],
-                             'from_name'	=>    $row['from_name'],
-                             'to_name'		=>    $row['to_name'],
+            $options = array('list_id'	    =>    $row->list_id,
+                             'subject'	    =>    $row->title,
+                             'from_email'	=>    $row->from_email,
+                             'from_name'	=>    $row->from_name,
+                             'to_name'		=>    $row->to_name,
                              'generate_text'=>    true);
             
             $segmentOptions = array();
-            if ($row['grouping_id'] && $row['grouping_value']) {
+            if ($row->grouping_id && $row->grouping_value) {
                 $segmentOptions = array('match'	        =>    'all',
-                                        'conditions'	=>    array(array('field'=>'interests-'.$row['grouping_id']),
+                                        'conditions'	=>    array(array('field'=>'interests-'.$row->grouping_id),
                                                                           'op'	 =>'one',
-                                                                          'value'=>$row['grouping_value']));
+                                                                          'value'=>$row->grouping_value));
             }
             
+            // build and call the appropriate report service
+            $CI->Service->setSuppressEcho(true);
+            $params = ($p = unserialize($row->report_params) && is_array($p)) ? $p : array();
+            $intervalDates = $this->getIntervalDates();
+            $callParams = $intervalDates + $params;
             
-            $CI->load->model($row['report_model']);
-            $className = str_replace('reports/', '', $row['report_model']);
-            $model = $CI->{$className};
-            
-            $headers = $model->getDataColumns();
-            
-            
+            $html = call_user_func_array(array($CI->Service, $row->report_type), $callParams);
+            var_dump($html); die;
             $id = $this->MailChimp->campaignCreate('regular', $options ,array('html'=>$html), $segmentOptions);
             if ($id) {
                 if ($this->MailChimp->campaignSendNow($id)) {
@@ -65,13 +70,13 @@ class RepeatableCampaign extends Task {
     {
         switch ($this->interval){
             case 'daily':
-                return array('start_date'=>date('Y-m-d', strtotime('today')), 'end_date'=>date('Y-m-d', strtotime('today')));
+                return array(date('Y-m-d', strtotime('today')), date('Y-m-d', strtotime('today')));
                 break;
             case 'weekly':
-                return array('start_date'=>date('Y-m-d', strtotime('-1 week')), 'end_date'=>date('Y-m-d', strtotime('today')));
+                return array(date('Y-m-d', strtotime('-1 week')), date('Y-m-d', strtotime('today')));
                 break;
             case 'monthly':
-                return array('start_date'=>date('Y-m-d', strtotime('-1 month')), 'end_date'=>date('Y-m-d', strtotime('today')));
+                return array(date('Y-m-d', strtotime('-1 month')), date('Y-m-d', strtotime('today')));
                 break;
         }
     }

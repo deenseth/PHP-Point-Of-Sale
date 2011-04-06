@@ -36,7 +36,7 @@ if (isset($error_message))
 	<th style="width:17%;text-align:right;"><?php echo $this->lang->line('sales_total'); ?></th>
 	</tr>
 	<?php
-	foreach($cart as $line=>$item)
+	foreach(array_reverse($cart, true) as $line=>$item)
 	{
 	?>
 		<tr>

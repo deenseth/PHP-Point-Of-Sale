@@ -75,7 +75,7 @@ if(count($cart)==0)
 }
 else
 {
-	foreach($cart as $line=>$item)
+	foreach(array_reverse($cart, true) as $line=>$item)
 	{
 		$cur_item_info = $this->Item->get_info($item['item_id']);
 		echo form_open("sales/edit_item/$line");

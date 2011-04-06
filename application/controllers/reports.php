@@ -6,7 +6,8 @@ class Reports extends Secure_area
 	function __construct()
 	{
 		parent::__construct('reports');
-		$this->load->helper('report');		
+		$this->load->helper('report');
+		$this->load->library('Report_Service', array(), 'Service');
 	}
 	
 	//Initial report listing screen
@@ -39,126 +40,31 @@ class Reports extends Secure_area
 	//Summary sales report
 	function summary_sales($start_date, $end_date, $export_excel=0)
 	{
-		$this->load->model('reports/Summary_sales');
-		$model = $this->Summary_sales;
-		$tabular_data = array();
-		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
-		
-		foreach($report_data as $row)
-		{
-			$tabular_data[] = array($row['sale_date'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
-		}
-
-		$data = array(
-			"title" => $this->lang->line('reports_sales_summary_report'),
-			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
-			"headers" => $model->getDataColumns(),
-			"data" => $tabular_data,
-			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
-			"export_excel" => $export_excel
-		);
-
-		$this->load->view("reports/tabular",$data);
+		$this->Service->summary_sales($start_date, $end_date, $export_excel);
 	}
 	
 	//Summary categories report
 	function summary_categories($start_date, $end_date, $export_excel=0)
 	{
-		$this->load->model('reports/Summary_categories');
-		$model = $this->Summary_categories;
-		$tabular_data = array();
-		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
-		
-		foreach($report_data as $row)
-		{
-			$tabular_data[] = array($row['category'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
-		}
-
-		$data = array(
-			"title" => $this->lang->line('reports_categories_summary_report'),
-			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
-			"headers" => $model->getDataColumns(),
-			"data" => $tabular_data,
-			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
-			"export_excel" => $export_excel
-		);
-
-		$this->load->view("reports/tabular",$data);
+		$this->Service->summary_categories($start_date, $end_date, $export_excel);
 	}
 	
 	//Summary customers report
 	function summary_customers($start_date, $end_date, $export_excel=0)
 	{
-		$this->load->model('reports/Summary_customers');
-		$model = $this->Summary_customers;
-		$tabular_data = array();
-		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
-		
-		foreach($report_data as $row)
-		{
-			$tabular_data[] = array($row['customer'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
-		}
-
-		$data = array(
-			"title" => $this->lang->line('reports_customers_summary_report'),
-			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
-			"headers" => $model->getDataColumns(),
-			"data" => $tabular_data,
-			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
-			"export_excel" => $export_excel
-		);
-
-		$this->load->view("reports/tabular",$data);
+		$this->Service->summary_customers($start_date, $end_date, $export_excel);
 	}
 	
 	//Summary suppliers report
 	function summary_suppliers($start_date, $end_date, $export_excel=0)
 	{
-		$this->load->model('reports/Summary_suppliers');
-		$model = $this->Summary_suppliers;
-		$tabular_data = array();
-		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
-		
-		foreach($report_data as $row)
-		{
-			$tabular_data[] = array($row['supplier'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
-		}
-
-		$data = array(
-			"title" => $this->lang->line('reports_suppliers_summary_report'),
-			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
-			"headers" => $model->getDataColumns(),
-			"data" => $tabular_data,
-			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
-			"export_excel" => $export_excel
-		);
-
-		$this->load->view("reports/tabular",$data);
+		$this->Service->summary_suppliers($start_date, $end_date, $export_excel);
 	}
 	
 	//Summary items report
 	function summary_items($start_date, $end_date, $export_excel=0)
 	{
-		$this->load->model('reports/Summary_items');
-		$model = $this->Summary_items;
-		$tabular_data = array();
-		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date));
-		
-		foreach($report_data as $row)
-		{
-			$tabular_data[] = array(character_limiter($row['name'], 16), $row['quantity_purchased'], to_currency($row['subtotal']), to_currency($row['total']), to_currency($row['tax']),to_currency($row['profit']));
-		}
-
-		$data = array(
-			"title" => $this->lang->line('reports_items_summary_report'),
-			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
-			"headers" => $model->getDataColumns(),
-			"data" => $tabular_data,
-			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
-			"export_excel" => $export_excel
-		);
-		
-		$this->load->view("reports/tabular",$data);
+		$this->Service->summary_items($start_date, $end_date, $export_excel);
 	}
 	
 	//Summary employees report

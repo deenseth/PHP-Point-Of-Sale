@@ -29,6 +29,11 @@ if(isset($error))
 		<?php echo form_dropdown('specific_input_data',$specific_input_data, '', 'id="specific_input_data"'); ?>
 	</div>
 	
+	<?php echo form_label($this->lang->line('reports_sale_type'), 'reports_sale_type_label', array('class'=>'required')); ?>
+	<div id='report_sale_type'>
+		<?php echo form_dropdown('sale_type',array('all' => $this->lang->line('reports_all'), 'sales' => $this->lang->line('reports_sales'), 'returns' => $this->lang->line('reports_returns')), 'all', 'id="sale_type"'); ?>
+	</div>
+	
 	<div>
 		Export to Excel: <input type="radio" name="export_excel" id="export_excel_yes" value='1' /> Yes
 		<input type="radio" name="export_excel" id="export_excel_no" value='0' checked='checked' /> No
@@ -50,6 +55,7 @@ $(document).ready(function()
 {
 	$("#generate_report").click(function()
 	{
+		var sale_type = $("#sale_type").val();
 		var export_excel = 0;
 		if ($("#export_excel_yes").attr('checked'))
 		{
@@ -58,7 +64,7 @@ $(document).ready(function()
 		
 		if ($("#simple_radio").attr('checked'))
 		{
-			window.location = window.location+'/'+$("#report_date_range_simple option:selected").val()+ '/' + $('#specific_input_data').val()
+			window.location = window.location+'/'+$("#report_date_range_simple option:selected").val()+ '/' + $('#specific_input_data').val() + '/' + sale_type
 			+ '/' + export_excel;
 		}
 		else
@@ -66,7 +72,7 @@ $(document).ready(function()
 			var start_date = $("#start_year").val()+'-'+$("#start_month").val()+'-'+$('#start_day').val();
 			var end_date = $("#end_year").val()+'-'+$("#end_month").val()+'-'+$('#end_day').val();
 			
-			window.location = window.location+'/'+start_date + '/'+ end_date + '/' + $('#specific_input_data').val() + '/' + export_excel;
+			window.location = window.location+'/'+start_date + '/'+ end_date + '/' + $('#specific_input_data').val() + '/' + sale_type + '/'+ export_excel;
 		}
 	});
 	

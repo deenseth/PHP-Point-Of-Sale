@@ -1,4 +1,6 @@
 * Added credit card processing via authorize.net
  - Signup via https://ems.authorize.net/oap/home.aspx?SalesRepID=98&ResellerID=19031
+* Can now filter reports by all/sales/returns
 * Added pagination throughout program
 * Improved importing for items and added importing for customers
+* Added location field for items

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 05, 2011 at 04:18 PM
+-- Generation Time: Apr 08, 2011 at 04:27 PM
 -- Server version: 5.1.54
 -- PHP Version: 5.3.3
 
@@ -139,7 +139,7 @@ CREATE TABLE `phppos_items` (
   `unit_price` double(15,2) NOT NULL,
   `quantity` double(15,2) NOT NULL DEFAULT '0.00',
   `reorder_level` double(15,2) NOT NULL DEFAULT '0.00',
-  `location` VARCHAR( 255 ) NOT NULL,
+  `location` varchar(255) NOT NULL,
   `item_id` int(10) NOT NULL AUTO_INCREMENT,
   `allow_alt_description` tinyint(1) NOT NULL,
   `is_serialized` tinyint(1) NOT NULL,
@@ -175,6 +175,43 @@ CREATE TABLE `phppos_items_taxes` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `phppos_item_kits`
+--
+
+CREATE TABLE `phppos_item_kits` (
+  `item_kit_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  PRIMARY KEY (`item_kit_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `phppos_item_kits`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `phppos_item_kit_items`
+--
+
+CREATE TABLE `phppos_item_kit_items` (
+  `item_kit_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  PRIMARY KEY (`item_kit_id`,`item_id`,`quantity`),
+  KEY `phppos_item_kit_items_ibfk_2` (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `phppos_item_kit_items`
+--
+
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `phppos_modules`
 --
 
@@ -193,15 +230,16 @@ CREATE TABLE `phppos_modules` (
 --
 
 INSERT INTO `phppos_modules` (`name_lang_key`, `desc_lang_key`, `sort`, `module_id`) VALUES
-('module_config', 'module_config_desc', 8, 'config'),
-('module_customers', 'module_customers_desc', 1, 'customers'),
-('module_employees', 'module_employees_desc', 7, 'employees'),
-('module_giftcards', 'module_giftcards_desc', 9, 'giftcards'),
-('module_items', 'module_items_desc', 2, 'items'),
-('module_receivings', 'module_receivings_desc', 5, 'receivings'),
-('module_reports', 'module_reports_desc', 3, 'reports'),
-('module_sales', 'module_sales_desc', 6, 'sales'),
-('module_suppliers', 'module_suppliers_desc', 4, 'suppliers');
+('module_config', 'module_config_desc', 100, 'config'),
+('module_customers', 'module_customers_desc', 10, 'customers'),
+('module_employees', 'module_employees_desc', 80, 'employees'),
+('module_giftcards', 'module_giftcards_desc', 90, 'giftcards'),
+('module_items', 'module_items_desc', 20, 'items'),
+('module_item_kits', 'module_item_kits_desc', 30, 'item_kits'),
+('module_receivings', 'module_receivings_desc', 60, 'receivings'),
+('module_reports', 'module_reports_desc', 50, 'reports'),
+('module_sales', 'module_sales_desc', 70, 'sales'),
+('module_suppliers', 'module_suppliers_desc', 40, 'suppliers');
 
 -- --------------------------------------------------------
 
@@ -255,6 +293,7 @@ INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES
 ('employees', 1),
 ('giftcards', 1),
 ('items', 1),
+('item_kits', 1),
 ('receivings', 1),
 ('reports', 1),
 ('sales', 1),
@@ -556,6 +595,13 @@ ALTER TABLE `phppos_items`
 --
 ALTER TABLE `phppos_items_taxes`
   ADD CONSTRAINT `phppos_items_taxes_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `phppos_items` (`item_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `phppos_item_kit_items`
+--
+ALTER TABLE `phppos_item_kit_items`
+  ADD CONSTRAINT `phppos_item_kit_items_ibfk_1` FOREIGN KEY (`item_kit_id`) REFERENCES `phppos_item_kits` (`item_kit_id`),
+  ADD CONSTRAINT `phppos_item_kit_items_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `phppos_items` (`item_id`);
 
 --
 -- Constraints for table `phppos_permissions`

@@ -9,7 +9,9 @@ if($report_service->renderData['data']['export_excel'] == 1){
 } 
 ?>
 <?=$report_service->render()?>
-<?=$report_service->renderData['data']['export_excel'] ? '' : campaign_export_button()?>
+<div id="chimp-options">
+<?=$report_service->renderData['data']['export_excel'] ? '' : campaign_export_button().repeatable_campaign_button($report_service->renderData['data']['report_name'])?>
+</div>
 <div id="feedback_bar"></div>
 <?php 
 if($report_service->renderData['data']['export_excel'] == 1){

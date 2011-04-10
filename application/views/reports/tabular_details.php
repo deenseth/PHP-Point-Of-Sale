@@ -15,6 +15,9 @@ if($report_service->renderData['data']['export_excel'] == 1){
 <?=$report_service->renderData['data']['add_to_group'] 
     && !$report_service->renderData['data']['export_excel'] 
     ? add_to_group_button() : ''?>
+<?=$report_service->renderData['data']['export_excel'] 
+        ? '' 
+        :  repeatable_campaign_button($report_service->renderData['data']['report_name']) ?>
 <div id="feedback_bar"></div>
 <?php 
 if($report_service->renderData['data']['export_excel'] == 1){

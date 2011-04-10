@@ -29,6 +29,7 @@ class RepeatableCampaign extends Task {
                              'from_email'	=>    $row->from_email,
                              'from_name'	=>    $row->from_name,
                              'to_name'		=>    $row->to_name,
+                             'inline_css'	=>    true,
                              'generate_text'=>    true);
             
             $segmentOptions = array();

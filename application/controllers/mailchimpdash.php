@@ -2,7 +2,7 @@
 require_once ("secure_area.php");
 class Mailchimpdash extends Secure_area 
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
 
@@ -13,12 +13,12 @@ class Mailchimpdash extends Secure_area
         } 
     }
 
-    function index()
+    public function index()
     {
         $this->load->view("mailchimpdash/index");
     }
     
-    function lists($list_id = null, $cid = null, $filter = null)
+    public function lists($list_id = null, $cid = null, $filter = null)
     {
         $data['lists'] = $this->MailChimp->lists();
         if ($list_id) {
@@ -36,7 +36,7 @@ class Mailchimpdash extends Secure_area
         $this->load->view("mailchimpdash/lists", $data);
     }
     
-    function listsajax()
+    public function listsajax()
     {
         $cid = $this->input->post('campaignid');
         
@@ -101,7 +101,7 @@ class Mailchimpdash extends Secure_area
         $this->load->view("mailchimpdash/listsajax",$data);
     }
     
-    function listremoveajax()
+    public function listremoveajax()
     {
         $listID = $this->input->post('listid');
         $email = $this->input->post('email');
@@ -113,7 +113,7 @@ class Mailchimpdash extends Secure_area
         }
     }    
     
-    function campaigns($page=1)
+    public function campaigns($page=1)
     {
         $slice = ($page-1)*25;
         $response = $this->MailChimp->campaigns(array(), $slice);
@@ -124,7 +124,7 @@ class Mailchimpdash extends Secure_area
         $this->load->view('mailchimpdash/campaigns',$data);
     }
     
-    function campaignajax($method)
+    public function campaignajax($method)
     {
         switch ($method) {
             case 'pause':
@@ -181,19 +181,19 @@ class Mailchimpdash extends Secure_area
         }
     }
     
-    function configuretest($cid)
+    public function configuretest($cid)
     {
         $data['campaignid'] = $cid;
         $this->load->view('mailchimpdash/configuretest',$data);
     }
     
-    function campaignschedule($cid)
+    public function campaignschedule($cid)
     {
         $data['cid'] = $cid;
         $this->load->view('mailchimpdash/campaignschedule',$data);
     }
     
-    function campaignshow($cid)
+    public function campaignshow($cid)
     {
         // @todo revisit this workaround
         // this is kind of annoying -- fix yer api, mailchimp!
@@ -207,7 +207,7 @@ class Mailchimpdash extends Secure_area
         }
     }
     
-    function report($cid)
+    public function report($cid)
     {
         // @todo revisit this workaround
         // this is kind of annoying -- fix yer api, mailchimp!
@@ -273,7 +273,7 @@ class Mailchimpdash extends Secure_area
         return $stats;
     }
     
-    function charttocampaign($filename=null)
+    public function charttocampaign($filename=null)
     {
         // screw you thickbox
         if ($filename && !preg_match('/.*random:.*/', $filename)) {
@@ -284,7 +284,7 @@ class Mailchimpdash extends Secure_area
         $this->load->view('mailchimpdash/charttocampaign', $data);
     }
     
-    function generatechartcampaign()
+    public function generatechartcampaign()
     {
         $title = $this->input->post('title');
         $listID = $this->input->post('listID');
@@ -329,7 +329,7 @@ class Mailchimpdash extends Secure_area
         }
     }
     
-    function generatebasiccampaign()
+    public function generatebasiccampaign()
     {
         $title = $this->input->post('title');
         $listID = $this->input->post('listID');
@@ -374,14 +374,14 @@ class Mailchimpdash extends Secure_area
         }
     }
     
-    function groupoptions($add)
+    public function groupoptions($add)
     {
         $data['add'] = $add === '1';
         $data['lists'] = $this->MailChimp->listsWithGroups();
         $this->load->view('mailchimpdash/groupoptions',$data);
     }
     
-    function groupcreate()
+    public function groupcreate()
     {
         $customerIDString = $this->input->post('customerIDs');
         $customerIDs = explode(',', $customerIDString);
@@ -439,7 +439,7 @@ class Mailchimpdash extends Secure_area
         
     }
     
-    function groupadd()
+    public function groupadd()
     {
         $customerIDString = $this->input->post('customerIDs');
         $customerIDs = explode(',', $customerIDString);
@@ -485,6 +485,41 @@ class Mailchimpdash extends Secure_area
             echo json_encode(array('success'=>false,'message'=>$message));
         } else {
             echo json_encode(array('success'=>true,'message'=>$message));
+        }
+        
+    }
+    
+    public function repeatablecampaign($report_name)
+    {
+        $data['lists'] = $this->MailChimp->listsWithGroups();
+        $data['report_name'] = $report_name;
+        $this->load->view('mailchimpdash/repeatablecampaign', $data);
+    }
+    
+    public function createrepeatablecampaign()
+    {
+        $interval = $this->input->post('interval');
+        $data = array('interval'	=>    $interval,
+                      'list_id'		=>    $this->input->post('listID'),
+                      'title'		=>    $this->input->post('title'),
+                      'blurb'		=>    $this->input->post('blurb'),
+                      'from_email'	=>    $this->input->post('fromEmail'),
+                      'from_name'	=>    $this->input->post('fromName'),
+                      'to_name'		=>    $this->input->post('toName'),
+                      'report_type'	=>    $this->input->post('reportName')
+                      );
+                      
+        if ($group = $this->input->post('group')) {
+            $ploded = explode('-', $group);
+            $data['grouping_id'] = array_shift($ploded);
+            $data['grouping_value'] = implode('-', $ploded);
+        }
+        
+        try{
+            $this->db->insert($data);
+            echo json_encode(array('success'=>true,'message'=>ucfirst($interval)." report successfully queued."));
+        } catch (Exception $e) {
+            echo json_encode(array('success'=>false,'message'=>"There was an error: " . $e->getMessage()));
         }
         
     }

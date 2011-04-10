@@ -26,7 +26,8 @@
 }
 
 .export-button-wrapper,
-.group-add-wrapper{
+.group-add-wrapper,
+.repeatable-campaign-wrapper{
 	margin: 20px 0;
 	text-align: center;
 }

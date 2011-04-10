@@ -496,7 +496,15 @@ class Mailchimpdash extends Secure_area
         $this->load->view('mailchimpdash/repeatablecampaign', $data);
     }
     
-    public function createrepeatablecampaign()
+    public function editrepeatablecampaign($id)
+    {
+        $data['lists'] = $this->MailChimp->listsWithGroups();
+        $query = $this->db->get_where('phppos_campaignbuilds', array('campaign_id'	=>    $id));
+        $data['report'] = array_shift($query->result());
+        $this->load->view('mailchimpdash/repeatablecampaign', $data);
+    }
+    
+    public function createrepeatablecampaign($id = null)
     {
         $interval = $this->input->post('interval');
         $data = array('interval'	=>    $interval,
@@ -517,8 +525,16 @@ class Mailchimpdash extends Secure_area
         }
         
         try{
-            if ($this->db->insert('phppos_campaignbuilds', $data)) {
-                echo json_encode(array('success'=>true,'message'=>ucfirst($interval)." report successfully queued."));
+            if ($id) {
+                $this->db->where('campaign_id', $id);
+                $result = $this->db->update('phppos_campaignbuilds', $data);
+            } else {
+                $result = $this->db->insert('phppos_campaignbuilds', $data);
+            }
+            
+            if ($result) {
+                $actioned = $id ? 'saved' : 'queued';
+                echo json_encode(array('success'=>true,'message'=>ucfirst($interval)." report successfully $actioned."));
             } else {
                 echo json_encode(array('success'=>false,'message'=>"There was an error: " . $this->db->_error_message()));
             }
@@ -532,6 +548,58 @@ class Mailchimpdash extends Secure_area
     public function repeatablecampaignhelp()
     {
         $this->load->view("mailchimpdash/repeatablecampaignhelp");
+    }
+    
+    public function repeatablecampaigns()
+    {
+        $daily = array();
+        $query = $this->db->get_where('phppos_campaignbuilds', array('interval'	=>    'daily'));
+        foreach ($query->result() as $result)
+        {
+            $daily[] = $result;
+        }
+        
+        $weekly = array();
+        $query = $this->db->get_where('phppos_campaignbuilds', array('interval'	=>    'weekly'));
+        foreach ($query->result() as $result)
+        {
+            $weekly[] = $result;
+        }
+        
+        $monthly = array();
+        $query = $this->db->get_where('phppos_campaignbuilds', array('interval'	=>    'monthly'));
+        foreach ($query->result() as $result)
+        {
+            $monthly[] = $result;
+        }
+        
+        $data = array('daily'	=>    $daily,
+                      'weekly'	=>    $weekly,
+                      'monthly' =>    $monthly);
+        
+        $this->load->view('mailchimpdash/repeatablecampaigns', $data);
+    }
+    
+    public function deleterepeatable($id)
+    {
+        try{
+            if ($this->db->delete('phppos_campaignbuilds', array('campaign_id'=>$id))) {
+                echo json_encode(array('success'=>true,'message'=>"Successfully deleted."));
+            } else {
+                echo json_encode(array('success'=>false,'message'=>"There was an error: " . $this->db->_error_message()));
+            }
+            
+        } catch (Exception $e) {
+            echo json_encode(array('success'=>false,'message'=>"There was an error: " . $e->getMessage()));
+        }
+    }
+    
+    public function editrepeatable($id)
+    {
+        $data['lists'] = $this->MailChimp->listsWithGroups();
+        $query = $this->db->get_where('phppos_campaignbuilds', array('campaign_id'=>$id));
+        $data['report'] = $query->result();
+        $this->load->view('mailchimpdash/repeatablecampaign', $data);
     }
     
 }

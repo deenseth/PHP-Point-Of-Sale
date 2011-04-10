@@ -10,6 +10,7 @@
 		<div id="content-area-wrapper">
 			<div id"content-area">
     			<div id="page_title" style="margin-bottom:8px;"><?=$data->title?></div>
+    			<div id="blurb"><?=$data->blurb?></div>
     			<?=$report_service->render()?>
 			</div>
 		</div>

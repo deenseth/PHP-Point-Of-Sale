@@ -47,8 +47,9 @@ class RepeatableCampaign extends Task {
             
             $report = call_user_func_array(array($CI->Service, $row->report_type), $callParams);
             $html = $CI->load->view('partial/repeatable_campaign', array('report_service'=>$report, 'data'=>$row), true);
-            echo $html; die;
+            
             $id = $this->MailChimp->campaignCreate('regular', $options ,array('html'=>$html), $segmentOptions);
+            echo $id;
             if ($id) {
                 if ($this->MailChimp->campaignSendNow($id)) {
                     $message = "{ucfirst($this->interval)} campaign \"{$row['title']}\" (ID: {$id}) sent successfully";

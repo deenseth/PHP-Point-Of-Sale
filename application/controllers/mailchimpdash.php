@@ -516,8 +516,12 @@ class Mailchimpdash extends Secure_area
         }
         
         try{
-            $this->db->insert($data);
-            echo json_encode(array('success'=>true,'message'=>ucfirst($interval)." report successfully queued."));
+            if ($this->db->insert('phppos_campaignbuilds', $data)) {
+                echo json_encode(array('success'=>true,'message'=>ucfirst($interval)." report successfully queued."));
+            } else {
+                echo json_encode(array('success'=>false,'message'=>"There was an error: " . $this->db->_error_message()));
+            }
+            
         } catch (Exception $e) {
             echo json_encode(array('success'=>false,'message'=>"There was an error: " . $e->getMessage()));
         }

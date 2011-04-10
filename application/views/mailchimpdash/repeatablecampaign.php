@@ -120,4 +120,6 @@ function campaignCreate()
     <div id="newcampaign-buttonwrapper">
         <a class="button pill" onClick="campaignCreate()">Create Campaign</a>
     </div>
+    <br/><br/>
+    <p>More questions about repeatable campaigns? <a href="<?=base_url()?>index.php/mailchimpdash/repeatablecampaignhelp" target="_blank">Learn more!</a>
 </div>

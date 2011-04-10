@@ -528,6 +528,11 @@ class Mailchimpdash extends Secure_area
         }
         
     }
+
+    public function repeatablecampaignhelp()
+    {
+        $this->load->view("mailchimpdash/repeatablecampaignhelp");
+    }
     
 }
 ?>

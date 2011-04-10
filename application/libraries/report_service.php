@@ -35,7 +35,8 @@ class Report_Service
 			"headers" => $model->getDataColumns(),
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
-			"export_excel" => $export_excel
+			"export_excel" => $export_excel,
+		    "report_name"  => __FUNCTION__
 		);
 		
 		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
@@ -60,7 +61,8 @@ class Report_Service
 			"headers" => $model->getDataColumns(),
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
-			"export_excel" => $export_excel
+			"export_excel" => $export_excel,
+		    "report_name"  => __FUNCTION__
 		);
 
 		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
@@ -85,7 +87,8 @@ class Report_Service
 			"headers" => $model->getDataColumns(),
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
-			"export_excel" => $export_excel
+			"export_excel" => $export_excel,
+		    "report_name"  => __FUNCTION__
 		);
 
 		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
@@ -110,7 +113,8 @@ class Report_Service
 			"headers" => $model->getDataColumns(),
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
-			"export_excel" => $export_excel
+			"export_excel" => $export_excel,
+		    "report_name"  => __FUNCTION__
 		);
 
 		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
@@ -135,7 +139,8 @@ class Report_Service
 			"headers" => $model->getDataColumns(),
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
-			"export_excel" => $export_excel
+			"export_excel" => $export_excel,
+		    "report_name"  => __FUNCTION__
 		);
 		
 		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
@@ -160,7 +165,8 @@ class Report_Service
 			"headers" => $model->getDataColumns(),
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
-			"export_excel" => $export_excel
+			"export_excel" => $export_excel,
+		    "report_name"  => __FUNCTION__
 		);
 
 		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
@@ -185,7 +191,8 @@ class Report_Service
 			"headers" => $model->getDataColumns(),
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
-			"export_excel" => $export_excel
+			"export_excel" => $export_excel,
+		    "report_name"  => __FUNCTION__
 		);
 
 		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
@@ -210,7 +217,8 @@ class Report_Service
 			"headers" => $model->getDataColumns(),
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
-			"export_excel" => $export_excel
+			"export_excel" => $export_excel,
+		    "report_name"  => __FUNCTION__
 		);
 
 		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
@@ -235,7 +243,8 @@ class Report_Service
 			"headers" => $model->getDataColumns(),
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
-			"export_excel" => $export_excel
+			"export_excel" => $export_excel,
+		    "report_name"  => __FUNCTION__
 		);
 
 		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
@@ -597,7 +606,8 @@ class Report_Service
 			"summary_data" => $summary_data,
 			"details_data" => $details_data,
 			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'customer_id' =>$customer_id)),
-			"export_excel" => $export_excel
+			"export_excel" => $export_excel,
+		    "report_name"  => __FUNCTION__
 		);
 
 		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
@@ -633,7 +643,8 @@ class Report_Service
 			"summary_data" => $summary_data,
 			"details_data" => $details_data,
 			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'employee_id' =>$employee_id)),
-			"export_excel" => $export_excel
+			"export_excel" => $export_excel,
+		    "report_name"  => __FUNCTION__
 		);
 
 		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
@@ -665,6 +676,7 @@ class Report_Service
 			"summary_data" => $summary_data,
 			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'item_id'=>$item->item_id)),
 			"export_excel" => $export_excel,
+		    "report_name"  => __FUNCTION__,
 		    "add_to_group" => $add
 		);
 
@@ -700,7 +712,8 @@ class Report_Service
 			"summary_data" => $summary_data,
 			"details_data" => $details_data,
 			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
-			"export_excel" => $export_excel
+			"export_excel" => $export_excel,
+		    "report_name"  => __FUNCTION__
 		);
 
 		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
@@ -724,7 +737,8 @@ class Report_Service
 			"headers" => $model->getDataColumns(),
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array()),
-			"export_excel" => $export_excel
+			"export_excel" => $export_excel,
+		    "report_name"  => __FUNCTION__
 		);
 
 		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
@@ -747,7 +761,8 @@ class Report_Service
 			"headers" => $model->getDataColumns(),
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array()),
-			"export_excel" => $export_excel
+			"export_excel" => $export_excel,
+		    "report_name"  => __FUNCTION__
 		);
 
 		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);

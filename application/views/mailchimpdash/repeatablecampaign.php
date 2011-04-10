@@ -33,16 +33,23 @@ function changeGroups(dom)
 
 function campaignCreate()
 {
+	var listID = $('#listpicker').val();
+	if (!listID) {
+		alert("Please select a list");
+		return;
+	}
+    
     $.post('<?=base_url()?>index.php/mailchimpdash/createrepeatablecampaign',
             {title: $('#newcampaign-title-input').val(),
-             listID: $('#listpicker').val(),
+             listID: listID,
              group: $('#grouppicker').val(),
              fromEmail: $('#fromEmail').val(),
              fromName: $('#fromName').val(),
              toName: $('#toName').val(),
              interval: $('#interval-picker').val(),
              reportName: '<?=$report_name?>',
-             blurb: $('#campaigntext').val()
+             blurb: $('#campaigntext').val(),
+             reportParams: $('#reportparams').val()
             },
             function(response) {
                 if (typeof(response) != 'object') {

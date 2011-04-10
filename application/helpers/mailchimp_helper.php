@@ -186,10 +186,13 @@ function add_to_group_button()
     }
 }
 
-function repeatable_campaign_button($report_name)
+function repeatable_campaign_button($report_name, $params=null)
 {
     $CI =& get_instance();
     if ($key = $CI->Appconfig->get('mc_api_key')) {
-        return '<div class="repeatable-campaign-wrapper"><a class="button pill" href="'.base_url().'index.php/mailchimpdash/repeatablecampaign/'.$report_name.'" onClick="thickit(this); return false;">Create Repeatable Campaign</a><div class="clear"><!-- --></div></div>';
+        if ($params) {
+            $hiddenInput = '<input id="reportparams" type="hidden" value=\''.$params.'\' />';
+        }
+        return '<div class="repeatable-campaign-wrapper"><a class="button pill" href="'.base_url().'index.php/mailchimpdash/repeatablecampaign/'.$report_name.'" onClick="thickit(this); return false;">Create Repeatable Campaign</a>'.$hiddenInput.'<div class="clear"><!-- --></div></div>';
     }
 }

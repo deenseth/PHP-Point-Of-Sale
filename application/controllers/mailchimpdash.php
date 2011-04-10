@@ -506,7 +506,8 @@ class Mailchimpdash extends Secure_area
                       'from_email'	=>    $this->input->post('fromEmail'),
                       'from_name'	=>    $this->input->post('fromName'),
                       'to_name'		=>    $this->input->post('toName'),
-                      'report_type'	=>    $this->input->post('reportName')
+                      'report_type'	=>    $this->input->post('reportName'),
+        			 'report_params'=>    $this->input->post('reportParams')
                       );
                       
         if ($group = $this->input->post('group')) {

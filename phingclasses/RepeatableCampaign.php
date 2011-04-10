@@ -42,13 +42,15 @@ class RepeatableCampaign extends Task {
             
             // build and call the appropriate report service
             $CI->Service->setSuppressEcho(true);
-            $params = ($p = unserialize($row->report_params) && is_array($p)) ? $p : array();
+            $p = unserialize($row->report_params);
+            $params = (is_array($p)) ? $p : array();
+            
             $intervalDates = $this->getIntervalDates();
             $callParams = $intervalDates + $params;
             
             $report = call_user_func_array(array($CI->Service, $row->report_type), $callParams);
             $html = $CI->load->view('partial/repeatable_campaign', array('report_service'=>$report, 'data'=>$row), true);
-            echo $html; die;
+            
             $id = $CI->MailChimp->campaignCreate('regular', $options ,array('html'=>$html), $segmentOptions);
             if ($id) {
                 if ($CI->MailChimp->campaignSendNow($id)) {

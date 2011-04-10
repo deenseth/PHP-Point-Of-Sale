@@ -607,6 +607,7 @@ class Report_Service
 			"details_data" => $details_data,
 			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'customer_id' =>$customer_id)),
 			"export_excel" => $export_excel,
+		    'report_params'       => serialize(array('customer_id'=>$customer_id)),
 		    "report_name"  => __FUNCTION__
 		);
 
@@ -644,6 +645,7 @@ class Report_Service
 			"details_data" => $details_data,
 			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'employee_id' =>$employee_id)),
 			"export_excel" => $export_excel,
+			'report_params'       => serialize(array('employee_id'=>$employee_id)),
 		    "report_name"  => __FUNCTION__
 		);
 
@@ -677,6 +679,7 @@ class Report_Service
 			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'item_id'=>$item->item_id)),
 			"export_excel" => $export_excel,
 		    "report_name"  => __FUNCTION__,
+		    'report_params'       => serialize(array('item_id'=>$item_id)),
 		    "add_to_group" => $add
 		);
 

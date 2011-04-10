@@ -594,13 +594,5 @@ class Mailchimpdash extends Secure_area
         }
     }
     
-    public function editrepeatable($id)
-    {
-        $data['lists'] = $this->MailChimp->listsWithGroups();
-        $query = $this->db->get_where('phppos_campaignbuilds', array('campaign_id'=>$id));
-        $data['report'] = $query->result();
-        $this->load->view('mailchimpdash/repeatablecampaign', $data);
-    }
-    
 }
 ?>

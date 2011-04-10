@@ -1,5 +1,33 @@
 <?php $this->load->view("partial/header"); ?>
 <link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/mailchimpdash/repeatablecampaigns.css" />
+<script type="text/javascript">
+
+function deleteCampaign(campaign_id)
+{
+	if (confirm('Are you sure you want to delete this repeatable campaign?')) {
+		$.post('<?=base_url()?>index.php/mailchimpdash/deleterepeatable/'+campaign_id,
+				{},
+				function(data){
+					if (typeof(data) != 'object') {
+						var response = JSON.parse(data);
+					} else {
+						var response = data;
+					}
+					if (response.success) {
+					  set_feedback(response.message, 'success_message', false);
+					  $(obj).parent('td').parent('tr').fadeOut(250);
+				  } else {
+					  set_feedback(response.message, 'error_message', true);
+				  }
+				},
+				'json');
+
+		$('#campaign-'+campaign_id).remove();
+		return false;
+	}
+}
+
+</script>
 <br/><br/>
 <h1>Repeatable Campaigns</h1>
 

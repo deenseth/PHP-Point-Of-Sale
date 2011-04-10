@@ -142,6 +142,7 @@ label.required
 input
 {
 	font-family:arial;
+	padding: 3px;
 }
 
 .clearfix:after 

@@ -14,5 +14,10 @@
         <p><?=anchor(current_url().'/campaigns', 'Campaign Management')?></p>
         <div class="clear"><!--  --></div>
     </div>
+    <div class="dashboard-link">
+        <?=anchor(current_url().'/repeatablecampaigns', '<img src="'.base_url().'/images/chimp_clock.gif" alt=""/>')?>
+        <p><?=anchor(current_url().'/repeatablecampaigns', 'Repeatable Campaign Management')?></p>
+        <div class="clear"><!--  --></div>
+    </div>
 </div>
 <?php $this->load->view("partial/footer"); ?>

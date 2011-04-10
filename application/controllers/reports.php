@@ -39,54 +39,63 @@ class Reports extends Secure_area
 	//Summary sales report
 	function summary_sales($start_date, $end_date, $export_excel=0)
 	{
-		$this->Service->summary_sales($start_date, $end_date, $export_excel);
+	    $data = array('report_service' => $this->Service->summary_sales($start_date, $end_date, $export_excel));
+		$this->load->view('reports/tabular',$data);
 	}
 	
 	//Summary categories report
 	function summary_categories($start_date, $end_date, $export_excel=0)
 	{
-		$this->Service->summary_categories($start_date, $end_date, $export_excel);
+		$data = array('report_service' => $this->Service->summary_categories($start_date, $end_date, $export_excel));
+		$this->load->view('reports/tabular',$data);
 	}
 	
 	//Summary customers report
 	function summary_customers($start_date, $end_date, $export_excel=0)
 	{
-		$this->Service->summary_customers($start_date, $end_date, $export_excel);
+	    $data = array('report_service' => $this->Service->summary_customers($start_date, $end_date, $export_excel));
+		$this->load->view('reports/tabular',$data);
 	}
 	
 	//Summary suppliers report
 	function summary_suppliers($start_date, $end_date, $export_excel=0)
 	{
-		$this->Service->summary_suppliers($start_date, $end_date, $export_excel);
+		$data = array('report_service' => $this->Service->summary_suppliers($start_date, $end_date, $export_excel));
+		$this->load->view('reports/tabular',$data);
 	}
 	
 	//Summary items report
 	function summary_items($start_date, $end_date, $export_excel=0)
 	{
-		$this->Service->summary_items($start_date, $end_date, $export_excel);
+		$data = array('report_service' => $this->Service->summary_items($start_date, $end_date, $export_excel));
+		$this->load->view('reports/tabular',$data);
 	}
 	
 	//Summary employees report
 	function summary_employees($start_date, $end_date, $export_excel=0)
 	{
-		$this->Service->summary_employees($start_date, $end_date, $export_excel);
+		$data = array('report_service' => $this->Service->summary_employees($start_date, $end_date, $export_excel));
+		$this->load->view('reports/tabular',$data);
 	}
 	
 	//Summary taxes report
 	function summary_taxes($start_date, $end_date, $export_excel=0)
 	{
-		$this->Service->summary_taxes($start_date, $end_date, $export_excel);
+		$data = array('report_service' => $this->Service->summary_taxes($start_date, $end_date, $export_excel));
+		$this->load->view('reports/tabular',$data);
 	}
 	
 	//Summary discounts report
 	function summary_discounts($start_date, $end_date, $export_excel=0)
 	{
-		$this->Service->summary_discounts($start_date, $end_date, $export_excel);
+		$data = array('report_service' => $this->Service->summary_discounts($start_date, $end_date, $export_excel));
+		$this->load->view('reports/tabular',$data);
 	}
 	
 	function summary_payments($start_date, $end_date, $export_excel=0)
 	{
-		$this->Service->summary_payments($start_date, $end_date, $export_excel);
+		$data = array('report_service' => $this->Service->summary_payments($start_date, $end_date, $export_excel));
+		$this->load->view('reports/tabular',$data);
 	}
 	
 	//Input for reports that require only a date range. (see routes.php to see that all graphical summary reports route here)
@@ -95,6 +104,11 @@ class Reports extends Secure_area
 		$data = $this->_get_common_report_data();
 		$this->load->view("reports/date_input",$data);	
 	}
+	
+	/**
+	 * For graphical summary reports, we don't need to reuse the data anywhere, 
+	 * so for brevity's sake, we'll just render the report directly through the service
+	 */
 	
 	//Graphical summary sales report
 	function graphical_summary_sales($start_date, $end_date)
@@ -216,7 +230,8 @@ class Reports extends Secure_area
 
 	function specific_customer($start_date, $end_date, $customer_id, $export_excel=0)
 	{
-		$this->Service->specific_customer($start_date, $end_date, $customer_id, $export_excel);
+		$data = array('report_service' => $this->Service->specific_customer($start_date, $end_date, $customer_id, $export_excel));
+		$this->load->view('reports/tabular_details',$data);
 	}
 	
 	function specific_employee_input()
@@ -235,7 +250,8 @@ class Reports extends Secure_area
 
 	function specific_employee($start_date, $end_date, $employee_id, $export_excel=0)
 	{
-		$this->Service->specific_employee($start_date, $end_date, $employee_id, $export_excel);
+		$data = array('report_service' => $this->Service->specific_employee($start_date, $end_date, $employee_id, $export_excel));
+		$this->load->view('reports/tabular_details',$data);
 	}
 	
     function specific_item_input($item=null)
@@ -256,12 +272,14 @@ class Reports extends Secure_area
 	
 	function specific_item($start_date, $end_date, $item_id, $export_excel=0)
 	{
-	    $this->Service->specific_item($start_date, $end_date, $item_id, $export_excel);
+	    $data = array('report_service' => $this->Service->specific_item($start_date, $end_date, $item_id, $export_excel));
+		$this->load->view('reports/tabular_details',$data);
 	}
 	
 	function detailed_sales($start_date, $end_date, $export_excel=0)
 	{
-		$this->Service->detailed_sales($start_date, $end_date, $export_excel);
+		$data = array('report_service' => $this->Service->detailed_sales($start_date, $end_date, $export_excel));
+		$this->load->view('reports/tabular_details',$data);
 	}
 	
 	function excel_export()
@@ -271,12 +289,14 @@ class Reports extends Secure_area
 	
 	function inventory_low($export_excel=0)
 	{
-		$this->Service->inventory_low($export_excel);
+		$data = array('report_service' => $this->Service->inventory_low($export_excel));
+		$this->load->view('reports/tabular',$data);
 	}
 	
 	function inventory_summary($export_excel=0)
 	{
-		$this->Service->inventory_summary($export_excel);
+		$data = array('report_service' => $this->Service->inventory_summary($export_excel));
+		$this->load->view('reports/tabular',$data);
 	}
 	
 	function export()

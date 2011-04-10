@@ -17,7 +17,7 @@ class Report_Service
         $this->CI = &get_instance();
     }
     
-    function summary_sales($start_date, $end_Date, $export_excel=0)
+    function summary_sales($start_date, $end_date, $export_excel=0)
     {
         $this->CI->load->model('reports/Summary_sales');
 		$model = $this->CI->Summary_sales;
@@ -37,8 +37,9 @@ class Report_Service
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date)),
 			"export_excel" => $export_excel
 		);
-
-		return $this->_display($this->CI->load->view("reports/tabular",$data, true));
+		
+		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		return $this;
     }
     
     function summary_categories($start_date, $end_date, $export_excel=0)
@@ -62,7 +63,8 @@ class Report_Service
 			"export_excel" => $export_excel
 		);
 
-		$this->_display($this->CI->load->view("reports/tabular",$data,true));
+		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		return $this;
     }
     
     function summary_customers($start_date, $end_date, $export_excel=0)
@@ -86,7 +88,8 @@ class Report_Service
 			"export_excel" => $export_excel
 		);
 
-		$this->_display($this->CI->load->view("reports/tabular",$data,true));
+		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		return $this;
 	}
 	
     function summary_suppliers($start_date, $end_date, $export_excel=0)
@@ -110,7 +113,8 @@ class Report_Service
 			"export_excel" => $export_excel
 		);
 
-		$this->_display($this->CI->load->view("reports/tabular",$data,true));
+		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		return $this;
 	}
 	
     function summary_items($start_date, $end_date, $export_excel=0)
@@ -134,7 +138,8 @@ class Report_Service
 			"export_excel" => $export_excel
 		);
 		
-		$this->_display($this->CI->load->view("reports/tabular",$data,true));
+		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		return $this;
 	}
 	
     function summary_employees($start_date, $end_date, $export_excel=0)
@@ -158,7 +163,8 @@ class Report_Service
 			"export_excel" => $export_excel
 		);
 
-		$this->_display($this->CI->load->view("reports/tabular",$data,true));
+		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		return $this;
 	}
 	
     function summary_taxes($start_date, $end_date, $export_excel=0)
@@ -182,7 +188,8 @@ class Report_Service
 			"export_excel" => $export_excel
 		);
 
-		$this->_display($this->CI->load->view("reports/tabular",$data,true));
+		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		return $this;
 	}
 	
     function summary_discounts($start_date, $end_date, $export_excel=0)
@@ -206,7 +213,8 @@ class Report_Service
 			"export_excel" => $export_excel
 		);
 
-		$this->_display($this->CI->load->view("reports/tabular",$data,true));
+		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		return $this;
 	}
 	
     function summary_payments($start_date, $end_date, $export_excel=0)
@@ -230,7 +238,8 @@ class Report_Service
 			"export_excel" => $export_excel
 		);
 
-		$this->_display($this->CI->load->view("reports/tabular",$data,true));
+		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		return $this;
 	}
     
 	function graphical_summary_sales($start_date, $end_date)
@@ -591,7 +600,8 @@ class Report_Service
 			"export_excel" => $export_excel
 		);
 
-		$this->_display($this->CI->load->view("reports/tabular_details",$data,true));
+		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
+		return $this;
 	}
 	
     function specific_employee($start_date, $end_date, $employee_id, $export_excel=0)
@@ -626,7 +636,8 @@ class Report_Service
 			"export_excel" => $export_excel
 		);
 
-		$this->_display($this->CI->load->view("reports/tabular_details",$data,true));
+		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
+		return $this;
 	}
 	
     function specific_item($start_date, $end_date, $item_id, $export_excel=0)
@@ -657,7 +668,8 @@ class Report_Service
 		    "add_to_group" => $add
 		);
 
-		$this->_display($this->CI->load->view("reports/tabular_details",$data,true));
+		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
+		return $this;
 	}
 	
     function detailed_sales($start_date, $end_date, $export_excel=0)
@@ -691,7 +703,8 @@ class Report_Service
 			"export_excel" => $export_excel
 		);
 
-		$this->_display($this->CI->load->view("reports/tabular_details",$data,true));
+		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
+		return $this;
 	}
 	
     function inventory_low($export_excel=0)
@@ -714,7 +727,7 @@ class Report_Service
 			"export_excel" => $export_excel
 		);
 
-		$this->_display($this->CI->load->view("reports/tabular",$data,true));	
+		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
 	}
 	
     function inventory_summary($export_excel=0)
@@ -737,7 +750,8 @@ class Report_Service
 			"export_excel" => $export_excel
 		);
 
-		$this->_display($this->CI->load->view("reports/tabular",$data,true));	
+		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		return $this;
 	}
 	
 	
@@ -763,6 +777,12 @@ class Report_Service
             echo $html;
             return true;
         }
+    }
+    
+    public function render()
+    {
+        $this->_suppressEcho = true;
+        return $this->_display($this->CI->load->view($this->renderData['script'], $this->renderData['data'], true));
     }
     
 }

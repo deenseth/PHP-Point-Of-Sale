@@ -56,6 +56,6 @@
 	<div class="summary_row"><?php echo $this->lang->line('reports_'.$name). ': '.to_currency($value); ?></div>
 <?php }?>
 </div>
-<?=campaign_export_button()?>
-<?=$add_to_group ? add_to_group_button() : ''?>
+<?=$export_excel ? '' : campaign_export_button()?>
+<?=$add_to_group && !$export_excel ? add_to_group_button() : ''?>
 <div id="feedback_bar"></div>

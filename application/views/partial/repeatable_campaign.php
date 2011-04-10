@@ -1,11 +1,12 @@
 <html>
+	<style>
+		<?=file_get_contents(dirname(__FILE__).'../../../../css/phppos.css')?>
+		<?=file_get_contents(dirname(__FILE__).'../../../../css/general.css')?>
+        <?=file_get_contents(dirname(__FILE__).'../../../../css/tables.css')?>
+		<?=file_get_contents(dirname(__FILE__).'../../../../css/reports.css')?>
+	</style>
 	<body>
-		<style>
-			<?=file_get_contents(base_url().'css/phppos.css')?>
-			<?=file_get_contents(base_url().'css/general.css')?>
-            <?=file_get_contents(base_url().'css/tables.css')?>
-			<?=file_get_contents(base_url().'css/reports.css')?>
-		</style>
+		
 		<div id="content-area-wrapper">
 			<div id"content-area">
     			<div id="page_title" style="margin-bottom:8px;"><?=$data->title?></div>

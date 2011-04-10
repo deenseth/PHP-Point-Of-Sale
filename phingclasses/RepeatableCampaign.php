@@ -48,16 +48,15 @@ class RepeatableCampaign extends Task {
             $report = call_user_func_array(array($CI->Service, $row->report_type), $callParams);
             $html = $CI->load->view('partial/repeatable_campaign', array('report_service'=>$report, 'data'=>$row), true);
             
-            $id = $this->MailChimp->campaignCreate('regular', $options ,array('html'=>$html), $segmentOptions);
-            echo $id;
+            $id = $CI->MailChimp->campaignCreate('regular', $options ,array('html'=>$html), $segmentOptions);
             if ($id) {
-                if ($this->MailChimp->campaignSendNow($id)) {
-                    $message = "{ucfirst($this->interval)} campaign \"{$row['title']}\" (ID: {$id}) sent successfully";
+                if ($CI->MailChimp->campaignSendNow($id)) {
+                    $message = ucfirst($this->interval)." campaign \"{$row->title}\" sent successfully (ID: {$id})";
                 } else { 
-                    $message = "Problem sending {$this->interval} campaign \"{$row['title']}\" (ID: {$id}): {$this->MailChimp->errorMessage}";
+                    $message = "Problem sending {$this->interval} campaign \"{$row->title}\" (ID: {$id}): {$CI->MailChimp->errorMessage}";
                 }
             } else {
-                $message = "Problem creating {$this->interval} campaign \"{$row['title']}\": {$this->MailChimp->errorMessage}";
+                $message = "Problem creating {$this->interval} campaign \"{$row->title}\": {$CI->MailChimp->errorMessage}";
             }
             $this->log($message);
         }

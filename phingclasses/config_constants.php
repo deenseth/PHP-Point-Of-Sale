@@ -113,4 +113,3 @@ if ( ! defined('E_STRICT'))
     define('E_STRICT', 2048);
 }
 
-?> 

@@ -64,11 +64,10 @@
 #menubar_navigation
 {
 	position:relative;
-	width:100%;
+	width:75%;
 	left:200px;
 	top:8px;
 	height:45%;
-
 }
 
 #menubar_footer

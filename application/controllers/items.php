@@ -294,7 +294,14 @@ class Items extends Secure_area implements iData_controller
 			echo json_encode(array('success'=>false,'message'=>$this->lang->line('items_cannot_be_deleted')));
 		}
 	}
-
+	
+	function excel()
+	{
+		$data = file_get_contents("import_items.csv");
+		$name = 'import_items.csv';
+		force_download($name, $data);
+	}
+	
 	function excel_import()
 	{
 		$this->load->view("items/excel_import", null);

@@ -109,6 +109,13 @@ class Customers extends Person_controller
 		}
 	}
 	
+	function excel()
+	{
+		$data = file_get_contents("import_customers.csv");
+		$name = 'import_customers.csv';
+		force_download($name, $data);
+	}
+	
 	function excel_import()
 	{
 		$this->load->view("customers/excel_import", null);

@@ -82,7 +82,7 @@ class Item_kit extends Model
 		{
 			if($this->db->insert('item_kits',$item_kit_data))
 			{
-				$item_data['item_kit_id']=$this->db->insert_id();
+				$item_kit_data['item_kit_id']=$this->db->insert_id();
 				return true;
 			}
 			return false;

@@ -278,19 +278,6 @@ function get_giftcard_data_row($giftcard,$controller)
 	return $table_data_row;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
 Gets the html table to manage item kits.
 */

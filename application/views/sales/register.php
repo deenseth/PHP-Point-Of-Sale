@@ -159,6 +159,10 @@ else
         	{
         		echo form_input(array('name'=>'serialnumber','value'=>$item['serialnumber'],'size'=>'20'));
 			}
+			else
+			{
+				echo form_hidden('serialnumber', '');
+			}
 		?>
 		</td>
 

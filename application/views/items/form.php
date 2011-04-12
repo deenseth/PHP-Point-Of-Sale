@@ -1,10 +1,6 @@
 <div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
 <ul id="error_message_box"></ul>
 <?php
-echo form_open('items/find_item_info/'.$item_info->item_id,array('id'=>'item_number_form'));
-?>
-<?php
-echo form_close();
 echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 ?>
 <fieldset id="item_basic_info">

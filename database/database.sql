@@ -35,7 +35,7 @@ INSERT INTO `phppos_app_config` (`key`, `value`) VALUES
 ('fax', ''),
 ('phone', '555-555-5555'),
 ('return_policy', 'Test'),
-('version', '10.0'),
+('timezone', 'America/New_York'),
 ('website', '');
 
 -- --------------------------------------------------------

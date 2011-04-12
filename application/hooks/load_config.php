@@ -16,6 +16,10 @@ function load_config()
 	if ($CI->config->item('timezone'))
 	{
 		date_default_timezone_set($CI->config->item('timezone'));
-	}	
+	}
+	else
+	{
+		date_default_timezone_set('America/New_York');
+	}
 }
 ?>

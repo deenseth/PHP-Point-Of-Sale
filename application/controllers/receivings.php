@@ -16,6 +16,7 @@ class Receivings extends Secure_area
 	function item_search()
 	{
 		$suggestions = $this->Item->get_item_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		$suggestions = array_merge($suggestions, $this->Item_kit->get_item_kit_search_suggestions($this->input->post('q'),$this->input->post('limit')));
 		echo implode("\n",$suggestions);
 	}
 
@@ -43,14 +44,18 @@ class Receivings extends Secure_area
 	{
 		$data=array();
 		$mode = $this->receiving_lib->get_mode();
-		$item_id_or_number_or_receipt = $this->input->post("item");
+		$item_id_or_number_or_item_kit_or_receipt = $this->input->post("item");
 		$quantity = $mode=="receive" ? 1:-1;
 
-		if($this->receiving_lib->is_valid_receipt($item_id_or_number_or_receipt) && $mode=='return')
+		if($this->receiving_lib->is_valid_receipt($item_id_or_number_or_item_kit_or_receipt) && $mode=='return')
 		{
-			$this->receiving_lib->return_entire_receiving($item_id_or_number_or_receipt);
+			$this->receiving_lib->return_entire_receiving($item_id_or_number_or_item_kit_or_receipt);
 		}
-		elseif(!$this->receiving_lib->add_item($item_id_or_number_or_receipt,$quantity))
+		elseif($this->receiving_lib->is_valid_item_kit($item_id_or_number_or_item_kit_or_receipt))
+		{
+			$this->receiving_lib->add_item_kit($item_id_or_number_or_item_kit_or_receipt);
+		}
+		elseif(!$this->receiving_lib->add_item($item_id_or_number_or_item_kit_or_receipt,$quantity))
 		{
 			$data['error']=$this->lang->line('recvs_unable_to_add_item');
 		}

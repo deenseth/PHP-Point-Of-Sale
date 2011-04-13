@@ -331,7 +331,7 @@ class Sale_lib
 	
 	function add_item_kit($external_item_kit_id)
 	{
-		//POS #
+		//KIT #
 		$pieces = explode(' ',$external_item_kit_id);
 		$item_kit_id = $pieces[1];
 		

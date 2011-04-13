@@ -1,11 +1,11 @@
 <?php
-$lang['giftcards_giftcard_number']='Giftcard Number';
-$lang['giftcards_card_value']='Value';
-$lang['giftcards_basic_information']='Giftcard Information';
-$lang['giftcards_number_required']='Giftcard Number is a required field';
-$lang['giftcards_value_required']='Giftcard Value is a required field';
-$lang['giftcards_number']='Giftcard Number must be a number';
-$lang['giftcards_value']='Giftcard Value must be a number';
+$lang['giftcards_giftcard_number']='Número de Tarjeta de Regalo';
+$lang['giftcards_card_value']='Valor';
+$lang['giftcards_basic_information']='Información de Tarjeta de Regalo';
+$lang['giftcards_number_required']='Número de Tarjeta de Regalo es requerido';
+$lang['giftcards_value_required']='Valor de Tarjeta de Regalo es requerido';
+$lang['giftcards_number']='Número de Tarjeta de Regalo debe ser un número';
+$lang['giftcards_value']='Valor de Tarjeta de Regalo debe ser un número';
 
 
 $lang['giftcards_retrive_giftcard_info']='Retrive Giftcard Info';

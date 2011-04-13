@@ -299,6 +299,19 @@ class Sale_lib
 
 		return false;
 	}
+	
+	function is_valid_item_kit($item_kit_id)
+	{
+		//KIT #
+		$pieces = explode(' ',$item_kit_id);
+
+		if(count($pieces)==2)
+		{
+			return $this->CI->Item_kit->exists($pieces[1]);
+		}
+
+		return false;
+	}
 
 	function return_entire_sale($receipt_sale_id)
 	{
@@ -314,6 +327,18 @@ class Sale_lib
 			$this->add_item($row->item_id,-$row->quantity_purchased,$row->discount_percent,$row->item_unit_price,$row->description,$row->serialnumber);
 		}
 		$this->set_customer($this->CI->Sale->get_customer($sale_id)->person_id);
+	}
+	
+	function add_item_kit($external_item_kit_id)
+	{
+		//POS #
+		$pieces = explode(' ',$external_item_kit_id);
+		$item_kit_id = $pieces[1];
+		
+		foreach ($this->CI->Item_kit_items->get_info($item_kit_id) as $item_kit_item)
+		{
+			$this->add_item($item_kit_item['item_id'], $item_kit_item['quantity']);
+		}
 	}
 
 	function copy_entire_sale($sale_id)

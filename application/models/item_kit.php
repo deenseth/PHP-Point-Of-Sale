@@ -133,6 +133,28 @@ class Item_kit extends Model
 		return $suggestions;
 
 	}
+	
+	function get_item_kit_search_suggestions($search, $limit=25)
+	{
+		$suggestions = array();
+
+		$this->db->from('item_kits');
+		$this->db->like('name', $search);
+		$this->db->order_by("name", "asc");
+		$by_name = $this->db->get();
+		foreach($by_name->result() as $row)
+		{
+			$suggestions[]='KIT '.$row->item_kit_id.'|'.$row->name;
+		}
+
+		//only return $limit suggestions
+		if(count($suggestions > $limit))
+		{
+			$suggestions = array_slice($suggestions, 0,$limit);
+		}
+		return $suggestions;
+		
+	}
 
 	/*
 	Preform a search on items

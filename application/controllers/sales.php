@@ -17,6 +17,7 @@ class Sales extends Secure_area
 	function item_search()
 	{
 		$suggestions = $this->Item->get_item_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		$suggestions = array_merge($suggestions, $this->Item_kit->get_item_kit_search_suggestions($this->input->post('q'),$this->input->post('limit')));
 		echo implode("\n",$suggestions);
 	}
 
@@ -100,19 +101,23 @@ class Sales extends Secure_area
 	{
 		$data=array();
 		$mode = $this->sale_lib->get_mode();
-		$item_id_or_number_or_receipt = $this->input->post("item");
+		$item_id_or_number_or_item_kit_or_receipt = $this->input->post("item");
 		$quantity = $mode=="sale" ? 1:-1;
 
-		if($this->sale_lib->is_valid_receipt($item_id_or_number_or_receipt) && $mode=='return')
+		if($this->sale_lib->is_valid_receipt($item_id_or_number_or_item_kit_or_receipt) && $mode=='return')
 		{
-			$this->sale_lib->return_entire_sale($item_id_or_number_or_receipt);
+			$this->sale_lib->return_entire_sale($item_id_or_number_or_item_kit_or_receipt);
 		}
-		elseif(!$this->sale_lib->add_item($item_id_or_number_or_receipt,$quantity))
+		elseif($this->sale_lib->is_valid_item_kit($item_id_or_number_or_item_kit_or_receipt))
+		{
+			$this->sale_lib->add_item_kit($item_id_or_number_or_item_kit_or_receipt);
+		}
+		elseif(!$this->sale_lib->add_item($item_id_or_number_or_item_kit_or_receipt,$quantity))
 		{
 			$data['error']=$this->lang->line('sales_unable_to_add_item');
 		}
 		
-		if($this->sale_lib->out_of_stock($item_id_or_number_or_receipt))
+		if($this->sale_lib->out_of_stock($item_id_or_number_or_item_kit_or_receipt))
 		{
 			$data['warning'] = $this->lang->line('sales_quantity_less_than_zero');
 		}

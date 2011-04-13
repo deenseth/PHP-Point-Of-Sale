@@ -72,16 +72,19 @@ class Item_kits extends Secure_area implements iData_controller
 				$item_kit_data['name'],'item_kit_id'=>$item_kit_id));
 			}
 			
-			$item_kit_items = array();
-			foreach($this->input->post('item_kit_item') as $item_id => $quantity)
+			if ($this->input->post('item_kit_item'))
 			{
-				$item_kit_items[] = array(
-					'item_id' => $item_id,
-					'quantity' => $quantity
-				);
-			}
+				$item_kit_items = array();
+				foreach($this->input->post('item_kit_item') as $item_id => $quantity)
+				{
+					$item_kit_items[] = array(
+						'item_id' => $item_id,
+						'quantity' => $quantity
+						);
+				}
 			
-			$this->Item_kit_items->save($item_kit_items, $item_kit_id);
+				$this->Item_kit_items->save($item_kit_items, $item_kit_id);
+			}
 		}
 		else//failure
 		{

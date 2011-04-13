@@ -241,6 +241,7 @@ echo form_open('config/save/',array('id'=>'config_form'));
 </div>
 
 <div id="authorizenet_merchant_information">
+	<h2><?php echo $this->lang->line('config_must_be_pci_compliant');?></h2>
 	<div class="field_row clearfix">	
 	<?php echo form_label($this->lang->line('config_authorize_net_api_login_id').':', 'authorize_net_api_login_id',array('class'=>'extra_wide')); ?>
 		<div class='form_field'>

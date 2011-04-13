@@ -36,6 +36,6 @@ $lang['common_return_policy']='Política de reintegro';
 $lang['common_price']='Precio';
 $lang['common_welcome_message']= 'Bienvenido(a) a PHP Point Of Sale. ¡Haz click en algún módulo; debajo, para empezar!';
 $lang['common_inv']='inv';
-$lang['common_det']='details';
+$lang['common_det']='detalles';
 $lang['common_address']= 'Dirección';
 ?>

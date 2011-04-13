@@ -199,7 +199,7 @@ CREATE TABLE `phppos_item_kits` (
 CREATE TABLE `phppos_item_kit_items` (
   `item_kit_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
+  `quantity` double(15,2) NOT NULL,
   PRIMARY KEY (`item_kit_id`,`item_id`,`quantity`),
   KEY `phppos_item_kit_items_ibfk_2` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

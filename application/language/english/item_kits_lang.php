@@ -12,4 +12,8 @@ $lang['item_kits_error_adding_updating'] = 'Error adding/updating Item Kit';
 $lang['item_kits_successful_deleted'] = 'You have successfully deleted';
 $lang['item_kits_one_or_multiple'] = 'Item Kit(s)';
 $lang['item_kits_cannot_be_deleted'] = 'Could not delete item kit(s)';
+$lang['item_kits_add_item'] = 'Add Item';
+$lang['item_kits_items'] = 'Items';
+$lang['item_kits_item'] = 'Item';
+$lang['item_kits_quantity'] = 'Quantity';
 ?>

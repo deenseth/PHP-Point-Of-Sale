@@ -20,7 +20,7 @@ PRIMARY KEY (  `item_kit_id` )
 CREATE TABLE `phppos_item_kit_items` (
 `item_kit_id` INT NOT NULL, 
 `item_id` INT NOT NULL, 
-`quantity` INT NOT NULL, 
+`quantity` double(15,2) NOT NULL, 
 PRIMARY KEY (`item_kit_id`, `item_id`, `quantity`)
 ) ENGINE = INNODB;
 ALTER TABLE `phppos_item_kit_items`

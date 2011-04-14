@@ -267,7 +267,7 @@ class MailChimp extends MCAPI
             $mv = (count($merge_vars['GROUPINGS']) > 0) ? $merge_vars : null;
             
             if ($selected) {
-                if ($this->listSubscribe($list['id'], $person->email, $mv, 'html', false, true)) {
+                if ($this->listSubscribe($list['id'], $person->email, $mv, 'html', false, true, true)) {
                     $added++;
                 } else {
                     $unadded++;

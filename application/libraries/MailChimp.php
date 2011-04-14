@@ -340,4 +340,25 @@ class MailChimp extends MCAPI
         return $campaigns;
         
     }
+    
+    function getPersonDataByEmail($email, $listID = null)
+    {
+        $person = new stdClass();
+        $person->email = $email;
+        
+        $lists = $listID ? $this->lists(array('id'=>$listID)) : $this->lists();
+        foreach ($lists as $list) 
+        {
+            $listID = $list['id'];
+            if (($response = $this->listMemberInfo($listID, $person->email)) && $response['success'] == 1) {
+                $info = array_shift($response['data']);
+                $person->first_name = $info['merges']['FNAME'];
+                $person->last_name = $info['merges']['LNAME'];
+                break;
+            } 
+        }
+        
+        return $person;
+    }
+    
 }

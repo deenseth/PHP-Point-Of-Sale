@@ -59,7 +59,7 @@ function campaignDelete(campaignId)
 		}
 		if (data.success) {
 			set_feedback(data.message, 'success_message', false);
-			var box = $('campaign-'+campaignId);
+			var box = $('#campaign-'+campaignId);
 			box.slideUp(500);
 			box.remove();
 		} else {

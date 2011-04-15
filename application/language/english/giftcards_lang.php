@@ -30,7 +30,6 @@ $lang['giftcards_tax_percent']='Tax Percent';
 $lang['giftcards_tax_percents']='Tax Percent(s)';
 $lang['giftcards_reorder_level']='Reorder Level';
 $lang['giftcards_quantity']='Quantity';
-$lang['giftcards_reorder_level']='Reorder Level';
 $lang['giftcards_no_giftcards_to_display']='No Giftcards to display';
 $lang['giftcards_bulk_edit']='Bulk Edit';
 $lang['giftcards_confirm_delete']='Are you sure you want to delete the selected giftcards?';

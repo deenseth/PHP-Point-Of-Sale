@@ -39,7 +39,7 @@
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database','session','form_validation','session','user_agent');
+$autoload['libraries'] = array('database','session','form_validation','session','user_agent','MailChimp');
 
 
 /*
@@ -52,7 +52,7 @@ $autoload['libraries'] = array('database','session','form_validation','session',
 */
 
 //sale
-$autoload['helper'] = array('form','url','table','text','currency', 'html');
+$autoload['helper'] = array('form','url','table','mailchimp','text','currency', 'html');
 
 
 /*

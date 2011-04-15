@@ -24,6 +24,8 @@ echo form_open('customers/save/'.$person_info->person_id,array('id'=>'customer_f
 	</div>
 </div>
 
+<?=$this->load->view('partial/list_manage_form_wrapper.php', array('email'=>$person_info->email))?>
+
 <?php
 echo form_submit(array(
 	'name'=>'submit',

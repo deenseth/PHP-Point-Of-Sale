@@ -1,0 +1,31 @@
+#dashboard-links{
+    margin-top: 20px;
+}
+
+a img{
+    border: 0;
+}
+
+.dashboard-link{
+    height: 60px;
+}
+
+.dashboard-link img {
+    float: left;
+    margin-right: 10px;
+}
+
+.dashboard-link p {
+    float: left;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 15px;
+    }
+    
+.dashboard-link p a{
+    text-decoration: none;
+    }
+    
+.dashboard-link p a:hover{
+    text-decoration: underline;
+    }

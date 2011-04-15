@@ -9,6 +9,7 @@ class Employees extends Person_controller
 	
 	function index()
 	{
+	    $data['mailchimp']=($this->config->item('mc_api_key') != null);
 		$data['controller_name']=strtolower($this->uri->segment(1));
 		$data['form_width']=$this->get_form_width();
 		$data['manage_table']=get_people_manage_table($this->Employee->get_all(),$this);
@@ -39,7 +40,17 @@ class Employees extends Person_controller
 	*/
 	function view($employee_id=-1)
 	{
-		$data['person_info']=$this->Employee->get_info($employee_id);
+	    $email=preg_replace('/.*email:([^\/]*)\/.*/', '$1', uri_string());
+		$data['person_info']=$employee_id == -1 ? $this->Employee->get_by_email($email) : $this->Employee->get_info($employee_id);
+		
+		if (!$data['person_info'] && $email) {
+		    if ($key = $this->config->item('mc_api_key')) {
+                $this->load->library('MailChimp', array($key) , 'MailChimp');
+                $data['person_info'] = $this->MailChimp->getPersonDataByEmail($email);
+		    }
+		}
+		
+		
 		$data['all_modules']=$this->Module->get_all_modules();
 		$this->load->view("employees/form",$data);
 	}
@@ -88,13 +99,35 @@ class Employees extends Person_controller
 			//New employee
 			if($employee_id==-1)
 			{
+			    $subscriptionInfo = '';
+                if ($key = $this->config->item('mc_api_key')) {
+                    $this->load->library('MailChimp', array($key) , 'MailChimp');
+                    
+                    if ($this->MailChimp->handleSubscriptionForPerson($employee_data['person_id'])) {
+                        $subscriptionInfo = $this->lang->line('common_successful_subscription');
+                    } else {
+                        $subscriptionInfo = $this->lang->line('common_unsuccessful_subscription');
+                    }
+                }
+			    
 				echo json_encode(array('success'=>true,'message'=>$this->lang->line('employees_successful_adding').' '.
-				$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>$employee_data['person_id']));
+				$person_data['first_name'].' '.$person_data['last_name'].'. '.$subscriptionInfo,'person_id'=>$employee_data['person_id']));
 			}
 			else //previous employee
 			{
+			    $subscriptionInfo = '';
+                if ($key = $this->config->item('mc_api_key')) {
+                    $this->load->library('MailChimp', array($key) , 'MailChimp');
+                    
+                    if ($this->MailChimp->handleSubscriptionForPerson($employee_id, true)) {
+                        $subscriptionInfo = $this->lang->line('common_successful_subscription');
+                    } else {
+                        $subscriptionInfo = $this->lang->line('common_unsuccessful_subscription');
+                    }
+                }
+			    
 				echo json_encode(array('success'=>true,'message'=>$this->lang->line('employees_successful_updating').' '.
-				$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>$employee_id));
+				$person_data['first_name'].' '.$person_data['last_name'].'. '.$subscriptionInfo,'person_id'=>$employee_id));
 			}
 		}
 		else//failure

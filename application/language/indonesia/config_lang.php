@@ -20,4 +20,5 @@ $lang['config_return_policy_required']='Kebiajak retur wajib diisi';
 $lang['config_printe_after_sale']='Cetak bon setelah penjualan';
 $lang['config_language'] = 'Language';
 $lang['config_timezone'] = 'Timezone';
+$lang['config_mc_api_key'] = 'MailChimp API Key';
 ?>

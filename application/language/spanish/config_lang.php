@@ -20,4 +20,5 @@ $lang['config_return_policy_required']='Política de Reintegro es un campo reque
 $lang['config_printe_after_sale']='Imprimir recibo después de una venta';
 $lang['config_language'] = 'Idioma';
 $lang['config_timezone'] = 'Zona horaria';
+$lang['config_mc_api_key'] = 'Llave de MailChimp API';
 ?>

@@ -4,6 +4,7 @@ $lang['customers_customer']='Customer';
 $lang['customers_update']='Update Customer';
 $lang['customers_confirm_delete']='Are you sure you want to delete the selected customers?';
 $lang['customers_none_selected']='You have not selected any customers to delete';
+$lang['customers_none_selected_add']='You have not selected any customers to add to a mailing list';
 $lang['customers_error_adding_updating'] = 'Error adding/updating customer';
 $lang['customers_successful_adding']='You have successfully added customer';
 $lang['customers_successful_updating']='You have successfully updated customer';

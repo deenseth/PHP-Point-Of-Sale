@@ -1,0 +1,24 @@
+#newcampaign, #groupoptions{
+	text-align: center;
+}
+
+#exportthis{
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+#newcampaign label, #groupoptions label{
+	font-weight: bold;
+}
+
+#newcampaign-title{
+	margin-bottom: 15px;
+}
+
+#newcampaign input[type="text"], #groupoptions input[type='text']{
+	width: 300px;
+}
+
+#newcampaign-chart{
+	margin-bottom: 10px;
+}

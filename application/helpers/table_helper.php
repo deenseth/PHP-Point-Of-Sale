@@ -7,12 +7,23 @@ function get_people_manage_table($people,$controller)
 	$CI =& get_instance();
 	$table='<table class="tablesorter" id="sortable_table">';
 	
-	$headers = array('<input type="checkbox" id="select_all" />', 
-	$CI->lang->line('common_last_name'),
-	$CI->lang->line('common_first_name'),
-	$CI->lang->line('common_email'),
-	$CI->lang->line('common_phone_number'),
-	'&nbsp');
+	
+	if ($key = $CI->config->item('mc_api_key')) {
+		$headers = array('<input type="checkbox" id="select_all" />', 
+		$CI->lang->line('common_last_name'),
+		$CI->lang->line('common_first_name'),
+		$CI->lang->line('common_email'),
+		$CI->lang->line('common_emailgroups'),
+		$CI->lang->line('common_phone_number'),
+		'&nbsp');
+	} else {
+		$headers = array('<input type="checkbox" id="select_all" />', 
+        $CI->lang->line('common_last_name'),
+        $CI->lang->line('common_first_name'),
+        $CI->lang->line('common_email'),
+        $CI->lang->line('common_phone_number'),
+        '&nbsp');
+	}
 	
 	$table.='<thead><tr>';
 	foreach($headers as $header)
@@ -50,15 +61,33 @@ function get_person_data_row($person,$controller)
 {
 	$CI =& get_instance();
 	$controller_name=$CI->uri->segment(1);
-	$width = $controller->get_form_width();
-
+	
+    $width = $controller->get_form_width();
+	
 	$table_data_row='<tr>';
-	$table_data_row.="<td width='5%'><input type='checkbox' id='person_$person->person_id' value='".$person->person_id."'/></td>";
-	$table_data_row.='<td width="20%">'.character_limiter($person->last_name,13).'</td>';
-	$table_data_row.='<td width="20%">'.character_limiter($person->first_name,13).'</td>';
-	$table_data_row.='<td width="30%">'.mailto($person->email,character_limiter($person->email,22)).'</td>';
-	$table_data_row.='<td width="20%">'.character_limiter($person->phone_number,13).'</td>';		
-	$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$person->person_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
+
+	if ($key = $CI->config->item('mc_api_key')) {
+		if (!$CI->MailChimp) {
+			$CI->load->library('MailChimp', array('api_key'=>$key), 'MailChimp');
+		}
+		
+		$table_data_row.="<td width='5%'><input type='checkbox' id='person_$person->person_id' value='".$person->person_id."'/></td>";
+	    $table_data_row.='<td width="19%">'.character_limiter($person->last_name,13).'</td>';
+	    $table_data_row.='<td width="19%">'.character_limiter($person->first_name,13).'</td>';
+	    $table_data_row.='<td width="15%">'.mailto($person->email,character_limiter($person->email,22)).'</td>';
+	    $table_data_row.='<td width="12%" class="email-lists">'.$CI->MailChimp->tableListing($person->email).'</td>';
+	    $table_data_row.='<td width="15%">'.character_limiter($person->phone_number,13).'</td>';        
+	    $table_data_row.='<td width="5%">'.anchor($controller_name."/view/$person->person_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';
+	}  else {
+		$table_data_row.="<td width='5%'><input type='checkbox' id='person_$person->person_id' value='".$person->person_id."'/></td>";
+	    $table_data_row.='<td width="20%">'.character_limiter($person->last_name,13).'</td>';
+	    $table_data_row.='<td width="20%">'.character_limiter($person->first_name,13).'</td>';
+	    $table_data_row.='<td width="30%">'.mailto($person->email,character_limiter($person->email,22)).'</td>';
+	    $table_data_row.='<td width="20%">'.character_limiter($person->phone_number,13).'</td>';        
+	    $table_data_row.='<td width="5%">'.anchor($controller_name."/view/$person->person_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';
+	}
+	
+	
 	$table_data_row.='</tr>';
 	
 	return $table_data_row;
@@ -72,13 +101,24 @@ function get_supplier_manage_table($suppliers,$controller)
 	$CI =& get_instance();
 	$table='<table class="tablesorter" id="sortable_table">';
 	
-	$headers = array('<input type="checkbox" id="select_all" />',
-	$CI->lang->line('suppliers_company_name'),
-	$CI->lang->line('common_last_name'),
-	$CI->lang->line('common_first_name'),
-	$CI->lang->line('common_email'),
-	$CI->lang->line('common_phone_number'),
-	'&nbsp');
+	if ($key = $CI->config->item('mc_api_key')) {
+		$headers = array('<input type="checkbox" id="select_all" />',
+        $CI->lang->line('suppliers_company_name'),
+        $CI->lang->line('common_last_name'),
+        $CI->lang->line('common_first_name'),
+        $CI->lang->line('common_email'),
+        $CI->lang->line('common_emailgroups'),
+        $CI->lang->line('common_phone_number'),
+        '&nbsp');
+	} else {
+		$headers = array('<input type="checkbox" id="select_all" />',
+		$CI->lang->line('suppliers_company_name'),
+		$CI->lang->line('common_last_name'),
+		$CI->lang->line('common_first_name'),
+		$CI->lang->line('common_email'),
+		$CI->lang->line('common_phone_number'),
+		'&nbsp');
+	}
 	
 	$table.='<thead><tr>';
 	foreach($headers as $header)
@@ -119,13 +159,29 @@ function get_supplier_data_row($supplier,$controller)
 	$width = $controller->get_form_width();
 
 	$table_data_row='<tr>';
-	$table_data_row.="<td width='5%'><input type='checkbox' id='person_$supplier->person_id' value='".$supplier->person_id."'/></td>";
-	$table_data_row.='<td width="17%">'.character_limiter($supplier->company_name,13).'</td>';
-	$table_data_row.='<td width="17%">'.character_limiter($supplier->last_name,13).'</td>';
-	$table_data_row.='<td width="17%">'.character_limiter($supplier->first_name,13).'</td>';
-	$table_data_row.='<td width="22%">'.mailto($supplier->email,character_limiter($supplier->email,22)).'</td>';
-	$table_data_row.='<td width="17%">'.character_limiter($supplier->phone_number,13).'</td>';		
-	$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$supplier->person_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
+	
+	if ($key = $CI->config->item('mc_api_key')) {
+        if (!$CI->MailChimp) {
+            $CI->load->library('MailChimp', array('api_key'=>$key), 'MailChimp');
+        }
+        $table_data_row.="<td width='5%'><input type='checkbox' id='person_$supplier->person_id' value='".$supplier->person_id."'/></td>";
+        $table_data_row.='<td width="14%">'.character_limiter($supplier->company_name,13).'</td>';
+        $table_data_row.='<td width="14%">'.character_limiter($supplier->last_name,13).'</td>';
+        $table_data_row.='<td width="14%">'.character_limiter($supplier->first_name,13).'</td>';
+        $table_data_row.='<td width="20%">'.mailto($supplier->email,character_limiter($supplier->email,22)).'</td>';
+        $table_data_row.='<td width="13%" class="email-lists">'.$CI->MailChimp->tableListing($supplier->email).'</td>';
+        $table_data_row.='<td width="15%">'.character_limiter($supplier->phone_number,13).'</td>';      
+        $table_data_row.='<td width="5%">'.anchor($controller_name."/view/$supplier->person_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';      
+	} else {
+		$table_data_row.="<td width='5%'><input type='checkbox' id='person_$supplier->person_id' value='".$supplier->person_id."'/></td>";
+		$table_data_row.='<td width="17%">'.character_limiter($supplier->company_name,13).'</td>';
+		$table_data_row.='<td width="17%">'.character_limiter($supplier->last_name,13).'</td>';
+		$table_data_row.='<td width="17%">'.character_limiter($supplier->first_name,13).'</td>';
+		$table_data_row.='<td width="22%">'.mailto($supplier->email,character_limiter($supplier->email,22)).'</td>';
+		$table_data_row.='<td width="17%">'.character_limiter($supplier->phone_number,13).'</td>';		
+		$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$supplier->person_id/width:$width", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
+	}
+	
 	$table_data_row.='</tr>';
 	
 	return $table_data_row;

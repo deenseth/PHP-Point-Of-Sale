@@ -38,4 +38,17 @@ $lang['common_price']='Price';
 $lang['common_welcome_message']= 'Welcome to PHP Point Of Sale, click a module below to get started!';
 $lang['common_inv']='inv';
 $lang['common_det']='details';
+$lang['common_emailgroups']='E-Mail Lists';
+$lang['common_list_manage']='Manage Subscriptions';
+$lang['common_list_manage_helpertext']='Select the lists and groups you would like to manage for the emails you selected. Click "unsubscribe" to remove the selected lists and groups. Click "subscribe" to add them to the lists and groups you selected.';
+$lang['common_list_manage_none_added']='Please select at least one person to manage subscriptions';
+$lang['common_successful_subscription']='Mailing list subscriptions successful!';
+$lang['common_unsuccessful_subscription']='Mailing list subscriptions unsuccessful.';
+$lang['common_mailchimp_dashboard']='MailChimp Dashboard';
+$lang['common_mailchimp_dashboard_desc']='Manage your communications where you manage everything else!';
+$lang['common_mailchimp_dashboard_rejected']='No MailChimp API key found. Please set one in your config screen.';
+$lang['common_mailchimp_dashboard_lists']='List Management';
+$lang['common_mailchimp_dashboard_lists_helper']='Select a list to view your subscribers';
+$lang['common_mailchimp_dashboard_listbuttons']='Your Lists';
+
 ?>

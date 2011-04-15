@@ -1,2 +1,7 @@
 application/config/database.php
 .htaccess
+*~
+.buildpath
+.settings
+.project
+saved_charts/*.png

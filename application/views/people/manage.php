@@ -69,6 +69,10 @@ function post_person_form_submit(response)
 	<ul>
 		<li class="float_left"><span><?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('id'=>'delete')); ?></span></li>
 		<li class="float_left"><span><a href="#" id="email"><?php echo $this->lang->line("common_email");?></a></span></li>
+		<?php if ($mailchimp) { ?>
+		<li class="float_left"><span><a href='javascript:list_manage("<?=site_url($controller_name."/listmanage")?>", "<?=$this->lang->line("common_list_manage_none_added")?>");'>
+	                                  <?=$this->lang->line("common_list_manage")?></a></span></li>
+		<? } ?>
 		<li class="float_right">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
 		<?php echo form_open("$controller_name/search",array('id'=>'search_form')); ?>

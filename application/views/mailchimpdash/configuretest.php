@@ -7,7 +7,7 @@
     <label for="test-emails">Enter your emails (separated by commas):</label>
     <textarea rows="3" cols="50" id="test-emails" name="test-emails" ></textarea>
     <br/><br/>
-    <a class="pill button" onClick="doSendTest('<?=$campaignid?>')" style="float: right">Submit</a>
+    <a class="pill button" onClick="doSendTest('<?php echo $campaignid?>')" style="float: right">Submit</a>
     <div class="clear"><!--  --></div>
 </form>
 </div>

@@ -5,7 +5,7 @@
 function deleteCampaign(campaign_id)
 {
 	if (confirm('Are you sure you want to delete this repeatable campaign?')) {
-		$.post('<?=base_url()?>index.php/mailchimpdash/deleterepeatable/'+campaign_id,
+		$.post('<?php echo base_url()?>index.php/mailchimpdash/deleterepeatable/'+campaign_id,
 				{},
 				function(data){
 					if (typeof(data) != 'object') {
@@ -31,38 +31,38 @@ function deleteCampaign(campaign_id)
 <br/><br/>
 <h1>Repeatable Campaigns</h1>
 
-<? if ($daily) { ?>
+<?php if ($daily) { ?>
 <div id="daily" class="campaigns">
 <h3>Daily Campaigns</h3>
 
-<? foreach ($daily as $campaign) { ?>
+<?php foreach ($daily as $campaign) { ?>
 	<?$this->load->view('partial/repeatablecampaign', array('campaign'=>$campaign))?>
-<? } ?>
+<?php } ?>
 
 </div>
-<? } ?>
+<?php } ?>
 
-<? if ($weekly) { ?>
+<?php if ($weekly) { ?>
 <div id="weekly" class="campaigns">
 <h3>Weekly Campaigns</h3>
 
-<? foreach ($weekly as $campaign) { ?>
+<?php foreach ($weekly as $campaign) { ?>
 	<?$this->load->view('partial/repeatablecampaign', array('campaign'=>$campaign))?>
-<? } ?>
+<?php } ?>
 
 </div>
-<? } ?>
+<?php } ?>
 
-<? if ($monthly) { ?>
+<?php if ($monthly) { ?>
 <div id="weekly" class="campaigns">
 <h3>Monthly Campaigns</h3>
 
-<? foreach ($monthly as $campaign) { ?>
+<?php foreach ($monthly as $campaign) { ?>
 	<?$this->load->view('partial/repeatablecampaign', array('campaign'=>$campaign))?>
-<? } ?>
+<?php } ?>
 
 </div>
-<? } ?>
+<?php } ?>
 <div id="feedback_bar"></div>
 <br/><br/>
 <?php $this->load->view("partial/footer"); ?>

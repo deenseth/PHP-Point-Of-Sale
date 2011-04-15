@@ -72,7 +72,7 @@ foreach($all_modules->result() as $module)
 }s
 </style>
 
-<?=$this->load->view('partial/list_manage_form_wrapper.php', array('email'=>$person_info->email))?>
+<?php echo $this->load->view('partial/list_manage_form_wrapper.php', array('email'=>$person_info->email))?>
 
 <?php
 echo form_submit(array(

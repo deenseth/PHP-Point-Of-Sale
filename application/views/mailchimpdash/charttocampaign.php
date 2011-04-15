@@ -7,15 +7,15 @@ $('#campaigntext').val(summarydata);
 
 var listsToGroups = [];
 
-<? foreach ($lists as $list) { ?>
-<? if (!$list['groupings']) { continue; } ?>
-listsToGroups['<?=$list['id']?>'] = [];
-    <? foreach ($list['groupings'] as $grouping) { ?>
-    <? foreach ($grouping['groups'] as $group) { ?>
-    listsToGroups['<?=$list['id']?>'].push(['<?=$grouping['id']?>-<?=$group['name']?>', '<?=$grouping['name']?>: <?=$group['name']?>']);
-    <? } ?>
-    <? } ?>
-<? } ?>
+<?php foreach ($lists as $list) { ?>
+<?php if (!$list['groupings']) { continue; } ?>
+listsToGroups['<?php echo $list['id']?>'] = [];
+    <?php foreach ($list['groupings'] as $grouping) { ?>
+    <?php foreach ($grouping['groups'] as $group) { ?>
+    listsToGroups['<?php echo $list['id']?>'].push(['<?php echo $grouping['id']?>-<?php echo $group['name']?>', '<?php echo $grouping['name']?>: <?php echo $group['name']?>']);
+    <?php } ?>
+    <?php } ?>
+<?php } ?>
 
 function changeGroups(dom)
 {
@@ -39,8 +39,8 @@ function changeGroups(dom)
 
 function campaignCreate()
 {
-	<? if ($filename) { ?>
-    $.post('<?=base_url()?>index.php/mailchimpdash/generatechartcampaign',
+	<?php if ($filename) { ?>
+    $.post('<?php echo base_url()?>index.php/mailchimpdash/generatechartcampaign',
   		                   {title: $('#newcampaign-title-input').val(),
                             chartLocation: $('#newcampaign-chart img').attr('src'),
                             campaignText: $('#campaigntext').val(),
@@ -63,12 +63,12 @@ function campaignCreate()
                                }
                                tb_remove();
                            });
-    <? } else { ?>
+    <?php } else { ?>
     var tableholder = $('#table_holder');
     tableholder.makeCssInline();
     var htmlData = tableholder.html();
     
-    $.post('<?=base_url()?>/generatebasiccampaign',
+    $.post('<?php echo base_url()?>/generatebasiccampaign',
             {title: $('#newcampaign-title-input').val(),
              chartHtml: htmlData,
              campaignText: $('#campaigntext').val(),
@@ -91,10 +91,10 @@ function campaignCreate()
                 }
                 tb_remove();
             });
-    <? } ?>
+    <?php } ?>
 }
 </script>
-<link rel="stylesheet" href="<?=base_url()?>css/mailchimpdash/charttocampaign.css" />
+<link rel="stylesheet" href="<?php echo base_url()?>css/mailchimpdash/charttocampaign.css" />
 <h3 id="exportthis">Export This Report To a Campaign</h3>
 <div id="newcampaign">
     <div id="newcampaign-fromemail">
@@ -113,11 +113,11 @@ function campaignCreate()
         <label for="newcampign-title-input">Campaign Title</label><br/>
         <input type="text" id="newcampaign-title-input" name="newcampaign-title-input" />
     </div>
-    <? if ($filename) { ?>
+    <?php if ($filename) { ?>
     <div id="newcampaign-chart">
-        <img src="<?=base_url().'saved_charts/'.$filename?>" alt="" style="height: 50%; width: 50%;"/>
+        <img src="<?php echo base_url().'saved_charts/'.$filename?>" alt="" style="height: 50%; width: 50%;"/>
     </div>
-    <? } ?>
+    <?php } ?>
     <div id="newcampaign-campaigntext">
         <label for="campaigntext">Campaign Text</label><br/>
         <textarea id="campaigntext" name="campaigntext" rows="5" cols="30"></textarea>
@@ -127,9 +127,9 @@ function campaignCreate()
         <label for="listpicker">Choose Your List:</label>
         <select id="listpicker" onChange='changeGroups(this);'>
             <option value=""></option>
-            <? foreach ($lists as $list) { ?>
-            <option value="<?=$list['id']?>"><?=$list['name']?></option>
-            <? } ?>
+            <?php foreach ($lists as $list) { ?>
+            <option value="<?php echo $list['id']?>"><?php echo $list['name']?></option>
+            <?php } ?>
         </select>
         <div id="grouppicker-wrapper" style="display: none;">
         <label for="grouppicker">Group:</label>

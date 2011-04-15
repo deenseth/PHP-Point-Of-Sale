@@ -14,7 +14,7 @@ function listadd_submit()
         return;
     }
 	
-    $.ajax({url: '<?=$addAjaxUrl?>', 
+    $.ajax({url: '<?php echo $addAjaxUrl?>', 
             data: $('#listmanage-form').serialize(),
             type: 'POST',
             success: function(data) {
@@ -53,7 +53,7 @@ function listremove_submit()
         return;
     }
     
-    $.ajax({url: '<?=$removeAjaxUrl?>', 
+    $.ajax({url: '<?php echo $removeAjaxUrl?>', 
             data: $('#listmanage-form').serialize(),
             type: 'POST',
             success: function(data) {
@@ -87,14 +87,14 @@ function listremove_submit()
 <div id="list-form-wrapper">
     <h2><?php echo $this->lang->line('common_list_manage');?></h2>
     <div id='list-form-wrapper-left'>
-        <p class='helpertext'><?=$this->lang->line('common_list_manage_helpertext')?></p>
+        <p class='helpertext'><?php echo $this->lang->line('common_list_manage_helpertext')?></p>
     </div>
     <div id='list-form-wrapper-right'>
         <div id='list-form-wrapper-right-top'>
             <form id="listmanage-form">
             <?php foreach ($personids as $id) { ?>
                 <?php echo form_hidden('personid[]', $id);?>
-            <? } ?>
+            <?php } ?>
             
             <div class="list" id="header">
                 <p class="descriptor" id="lists-descriptor">Lists</p>
@@ -104,7 +104,7 @@ function listremove_submit()
                 <div class="clear"><!--  --></div>
             </div>
             
-            <?=$this->load->view('partial/list_manage_form.php')?>
+            <?php echo $this->load->view('partial/list_manage_form.php')?>
             
             </form>
         </div>

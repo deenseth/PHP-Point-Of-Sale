@@ -9,7 +9,7 @@ class Employees extends Person_controller
 	
 	function index()
 	{
-	    $data['mailchimp']=($this->config->item('mc_api_key') !== null);
+	    $data['mailchimp']=($this->config->item('mc_api_key') != null);
 		$data['controller_name']=strtolower($this->uri->segment(1));
 		$data['form_width']=$this->get_form_width();
 		$data['manage_table']=get_people_manage_table($this->Employee->get_all(),$this);

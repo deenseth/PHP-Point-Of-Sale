@@ -7,7 +7,6 @@ $lang['giftcards_value_required']='Giftcard Value is a required field';
 $lang['giftcards_number']='Giftcard Number must be a number';
 $lang['giftcards_value']='Giftcard Value must be a number';
 
-
 $lang['giftcards_retrive_giftcard_info']='Retrive Giftcard Info';
 $lang['giftcards_description']='Description';
 $lang['giftcards_amazon']='Amazon';

@@ -7,7 +7,6 @@ $lang['giftcards_value_required']='Valor de Tarjeta de Regalo es requerido';
 $lang['giftcards_number']='Número de Tarjeta de Regalo debe ser un número';
 $lang['giftcards_value']='Valor de Tarjeta de Regalo debe ser un número';
 
-
 $lang['giftcards_retrive_giftcard_info']='Obtener Info de Tarjeta de Regalo';
 $lang['giftcards_description']='Descripción';
 $lang['giftcards_amazon']='Amazon';

@@ -653,7 +653,7 @@ class Report_Service
 		return $this;
 	}
 	
-    function specific_item($start_date, $end_date, $item_id, $export_excel=0)
+    function specific_item($start_date, $end_date, $item_id, $sale_type, $export_excel=0)
 	{
 	    $this->CI->load->model('reports/Specific_item');
 		$model = $this->CI->Specific_item;
@@ -661,7 +661,7 @@ class Report_Service
 		$item = $this->CI->Item->get_info($item_id);
 		
 		$headers = $model->getDataColumns();
-		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'item_id' =>$item_id));
+		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'item_id' =>$item_id, 'sale_type'=>$sale_type));
         $summary_data = array();
 		foreach ($report_data as $key=>$data)
 		{

@@ -272,9 +272,9 @@ class Reports extends Secure_area
 		
 	}
 	
-	function specific_item($start_date, $end_date, $employee_id, $export_excel=0)
+	function specific_item($start_date, $end_date, $employee_id, $sale_type, $export_excel=0)
 	{
-	    $data = array('report_service' => $this->Service->specific_item($start_date, $end_date, $employee_id, $export_excel));
+	    $data = array('report_service' => $this->Service->specific_item($start_date, $end_date, $employee_id, $sale_type, $export_excel));
 		$this->load->view('reports/tabular_details',$data);
 	}
 	

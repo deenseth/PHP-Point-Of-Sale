@@ -38,11 +38,14 @@ class Module extends Model
 		return $this->db->get();		
 	}
 	
-	function get_allowed_modules($person_id)
+	function get_allowed_modules($person_id, $mailchimp_enabled = false)
 	{
 		$this->db->from('modules');
 		$this->db->join('permissions','permissions.module_id=modules.module_id');
 		$this->db->where("permissions.person_id",$person_id);
+		if (!$mailchimp_enabled) {
+		  $this->db->where('modules.module_id !=', "mailchimp");
+		}
 		$this->db->order_by("sort", "asc");
 		return $this->db->get();		
 	}

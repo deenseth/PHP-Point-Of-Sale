@@ -1,0 +1,55 @@
+#list-manage-form-wrapper h3{
+	border-bottom: 2px solid #333333;
+	margin-bottom: 5px;
+}
+
+#list-manage-form-wrapper .list{
+	border-bottom: 1px dashed #333333;
+	margin-top: 5px;
+	padding-bottom: 5px;
+}
+
+#list-manage-form-wrapper .list-main{
+	float: left;
+	width: 115px;
+}
+
+#list-manage-form-wrapper .list-groups{
+	float: right;
+	width: 200px;
+}
+
+#list-manage-form-wrapper p.grouping{
+	font-weight: bold;
+	padding-top: 0;
+}
+
+#list-manage-form-wrapper .list-group{
+	margin-bottom: 5px;
+}
+
+#list-manage-form-wrapper input{
+	margin-right: 3px;
+}
+
+#list-manage-form-wrapper label{
+	margin-right: 5px;
+}
+
+#list-manage-form-wrapper{
+	margin: 10px 0;
+}
+
+#list-manage-form-wrapper .list:last-child{
+	border-bottom: 2px solid #333333;
+}
+
+#lists-descriptor{
+	float: left;
+	width: 115px;
+}
+
+#list-manage-form-wrapper .descriptor{
+	font-weight: bold;
+	padding-bottom: 0;
+}

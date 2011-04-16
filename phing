@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Resolve to the build.xml in the root directory of the source code
+buildfile=`dirname $0`/build.xml
+# Resolve to the phing/classes directory of the source code
+classes=`dirname $0`/phingclasses:`dirname $0`/..
+export PHP_CLASSPATH=$classes
+
+# Pass off the command line arguments to the phing command in the path
+phing -f $buildfile $@

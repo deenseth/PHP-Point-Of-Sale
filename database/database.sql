@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 08, 2011 at 04:27 PM
+-- Generation Time: Apr 16, 2011 at 04:24 PM
 -- Server version: 5.1.54
 -- PHP Version: 5.3.3
 
@@ -37,6 +37,33 @@ INSERT INTO `phppos_app_config` (`key`, `value`) VALUES
 ('return_policy', 'Test'),
 ('timezone', 'America/New_York'),
 ('website', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `phppos_campaignbuilds`
+--
+
+CREATE TABLE `phppos_campaignbuilds` (
+  `campaign_id` int(11) NOT NULL AUTO_INCREMENT,
+  `report_type` varchar(255) NOT NULL,
+  `report_params` mediumtext,
+  `interval` enum('daily','weekly','monthly') DEFAULT NULL,
+  `list_id` varchar(255) NOT NULL,
+  `grouping_id` varchar(255) DEFAULT NULL,
+  `grouping_value` varchar(255) DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `blurb` varchar(255) DEFAULT NULL,
+  `from_email` varchar(255) NOT NULL,
+  `from_name` varchar(255) NOT NULL,
+  `to_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`campaign_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `phppos_campaignbuilds`
+--
+
 
 -- --------------------------------------------------------
 
@@ -236,6 +263,7 @@ INSERT INTO `phppos_modules` (`name_lang_key`, `desc_lang_key`, `sort`, `module_
 ('module_giftcards', 'module_giftcards_desc', 90, 'giftcards'),
 ('module_items', 'module_items_desc', 20, 'items'),
 ('module_item_kits', 'module_item_kits_desc', 30, 'item_kits'),
+('module_mailchimp', 'module_mailchimp_desc', 91, 'mailchimpdash'),
 ('module_receivings', 'module_receivings_desc', 60, 'receivings'),
 ('module_reports', 'module_reports_desc', 50, 'reports'),
 ('module_sales', 'module_sales_desc', 70, 'sales'),
@@ -294,6 +322,7 @@ INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES
 ('giftcards', 1),
 ('items', 1),
 ('item_kits', 1),
+('mailchimpdash', 1),
 ('receivings', 1),
 ('reports', 1),
 ('sales', 1),
@@ -601,7 +630,7 @@ ALTER TABLE `phppos_items_taxes`
 --
 ALTER TABLE `phppos_item_kit_items`
   ADD CONSTRAINT `phppos_item_kit_items_ibfk_1` FOREIGN KEY (`item_kit_id`) REFERENCES `phppos_item_kits` (`item_kit_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `phppos_item_kit_items_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `phppos_items` (`item_id`)  ON DELETE CASCADE;
+  ADD CONSTRAINT `phppos_item_kit_items_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `phppos_items` (`item_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `phppos_permissions`

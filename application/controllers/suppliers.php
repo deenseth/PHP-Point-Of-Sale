@@ -9,12 +9,15 @@ class Suppliers extends Person_controller
 	
 	function index()
 	{
+	        $data['mailchimp']=($this->config->item('mc_api_key') != null);
+
 		$config['base_url'] = site_url('?c=suppliers&m=index');
 		$config['total_rows'] = $this->Supplier->count_all();
 		$config['per_page'] = '20'; 
 		$this->pagination->initialize($config);
 		
 		$data['controller_name']=strtolower(get_class());
+
 		$data['form_width']=$this->get_form_width();
 		$data['manage_table']=get_supplier_manage_table($this->Supplier->get_all($config['per_page'], $this->input->get('per_page')),$this);
 		$this->load->view('suppliers/manage',$data);
@@ -44,7 +47,16 @@ class Suppliers extends Person_controller
 	*/
 	function view($supplier_id=-1)
 	{
-		$data['person_info']=$this->Supplier->get_info($supplier_id);
+	    $email=preg_replace('/.*email:([^\/]*)\/.*/', '$1', uri_string());
+		$data['person_info']=$supplier_id == -1 ? $this->Supplier->get_by_email($email) : $this->Supplier->get_info($supplier_id);
+		
+		if (!$data['person_info'] && $email) {
+		    if ($key = $this->config->item('mc_api_key')) {
+                $this->load->library('MailChimp', array($key) , 'MailChimp');
+                $data['person_info'] = $this->MailChimp->getPersonDataByEmail($email);
+		    }
+		}
+		
 		$this->load->view("suppliers/form",$data);
 	}
 	
@@ -75,13 +87,41 @@ class Suppliers extends Person_controller
 			//New supplier
 			if($supplier_id==-1)
 			{
-				echo json_encode(array('success'=>true,'message'=>$this->lang->line('suppliers_successful_adding').' '.
-				$supplier_data['company_name'],'person_id'=>$supplier_data['person_id']));
+			    $subscriptionInfo = '';
+                if ($key = $this->config->item('mc_api_key')) {
+                    $this->load->library('MailChimp', array($key) , 'MailChimp');
+                    
+                    if ($this->MailChimp->handleSubscriptionForPerson($supplier_data['person_id'])) {
+                        $subscriptionInfo = $this->lang->line('common_successful_subscription');
+                    } else {
+                        $subscriptionInfo = $this->lang->line('common_unsuccessful_subscription');
+                    }
+                }
+			    
+				echo json_encode(array('success'=>true,
+				                       'message'=>$this->lang->line('suppliers_successful_adding').' '.
+				                                  $supplier_data['company_name'].'. '.
+				                                  $subscriptionInfo,
+                                       'person_id'=>$supplier_data['person_id']));
 			}
 			else //previous supplier
 			{
-				echo json_encode(array('success'=>true,'message'=>$this->lang->line('suppliers_successful_updating').' '.
-				$supplier_data['company_name'],'person_id'=>$supplier_id));
+		        $subscriptionInfo = '';
+                if ($key = $this->config->item('mc_api_key')) {
+                    $this->load->library('MailChimp', array($key) , 'MailChimp');
+                    
+                    if ($this->MailChimp->handleSubscriptionForPerson($supplier_id, true)) {
+                        $subscriptionInfo = $this->lang->line('common_successful_subscription');
+                    } else {
+                        $subscriptionInfo = $this->lang->line('common_unsuccessful_subscription');
+                    }
+                }
+			    
+				echo json_encode(array('success'=>true,
+				                       'message'=>$this->lang->line('suppliers_successful_updating').' '.
+				                                  $supplier_data['company_name'].'. '.
+				                                  $subscriptionInfo,
+	                                   'person_id'=>$supplier_id));
 			}
 		}
 		else//failure

@@ -1,0 +1,140 @@
+#list-form-wrapper{
+	background-color: rgb(100, 190, 100);
+	background-color: rgba(100, 225, 100, 0.2);
+	border: 1px solid #333333;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	height: 325px;
+	margin: 25px auto auto auto;
+	padding: 10px 20px;
+	width: 650px;
+}
+
+#list-form-wrapper h2{
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+#list-form-wrapper-left{
+	background-color: rgb(100, 200, 100);
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+	float: left;
+	height: 300px;
+	padding: 0 10px;
+	width: 100px;
+}
+
+#list-form-wrapper-right{
+	float: right;
+	height: 300px;
+	width: 520px;
+}
+
+#list-form-wrapper-right-top{
+	height: 270px;
+}
+
+#list-form-wrapper-right-bottom{
+	height: 20px;
+}
+
+.clear{
+	clear: both;
+	float: none;
+}
+
+#list-form-wrapper p.helpertext{
+	font-size: 13px;
+	line-height: 20px;
+}
+
+#list-form-wrapper label{
+	font-size: 10px;
+}
+
+#list-form-wrapper form{
+	background-color: rgb(255, 255, 100);
+	-webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    padding: 10px;
+	width: 500px;
+}
+
+button{
+	cursor: pointer;
+}
+
+#listadd-submit{
+	margin-left: 10px;
+}
+
+div.list-groups{
+	border-left: 1px solid #333333;
+	float: right;
+	padding-left: 10px;
+	width: 265px;
+}
+
+div.list{
+	border-bottom: 1px dashed #333333;
+	margin-bottom: 5px;
+	padding: 5px 0;
+}
+
+div.list:last-child{
+	border-bottom: none;
+}
+
+.list .list-main{
+	float: left;
+	display: table-cell;
+	vertical-align: middle;
+	width: 220px;
+}
+
+
+#TB_ajaxContent p.grouping{
+	float: right;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 0;
+	text-align: right;
+}
+
+
+
+#header{
+	border-bottom: 1px solid #333333;
+	margin-bottom: 0;
+	padding: 0;
+}
+
+#header p.descriptor{
+	font-weight: bold;
+	padding: 0;
+}
+
+p#lists-descriptor{
+	float: left;
+}
+
+.list-groups .descriptor{
+	float: right;
+	text-align: right;
+}
+
+#header .list-groups{
+	border-left: none;
+}
+
+.list-group{
+	margin-bottom: 5px;
+}
+
+.list-group label{
+	margin: 0 3px;
+}

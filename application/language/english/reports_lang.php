@@ -13,6 +13,7 @@ $lang['reports_date'] = 'Date';
 $lang['reports_name'] = 'Name';
 $lang['reports_quantity_purchased'] = 'Quantity Purchased';
 $lang['reports_sale_id'] = 'Sale ID';
+$lang['reports_customer_id'] = 'Customer ID';
 $lang['reports_items_purchased'] = 'Items Purchased';
 $lang['reports_sold_by'] = 'Sold By';
 $lang['reports_sold_to'] = 'Sold To';

@@ -229,6 +229,22 @@ echo form_open('config/save/',array('id'=>'config_form'));
 	</div>
 </div>
 
+<div class="field_row clearfix">
+
+<?php echo form_label('<a href="http://admin.mailchimp.com/account/api-key-popup" target="_blank">'
+			  .$this->lang->line('config_mc_api_key').'</a>:', 
+			  'mc_api_key', 
+			  array('class'=>'wide')); ?>
+      <div class='form_field'>
+      <?php echo form_input(array(
+		'name'=>'mc_api_key',
+		'id'=>'mc_api_key',
+		'value'=>$this->config->item('mc_api_key')));?>
+	</div>
+	<div class='form_field' style="height: 20px; padding-top: 5px;">
+		<a href="index.php/config/mailchimpinfo" target="_blank">Learn More</a>
+   	</div>
+</div>
 <div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('config_print_after_sale').':', 'print_after_sale',array('class'=>'wide')); ?>
 	<div class='form_field'>

@@ -8,7 +8,7 @@ function checkbox_click(event)
 	}
 	else
 	{
-		$(event.target).parent().parent().find("td").removeClass();		
+		$(event.target).parent().parent().find("td").removeClass('selected').removeClass('over');		
 	}
 }
 
@@ -42,6 +42,25 @@ function enable_search(suggest_url,confirm_search_message)
 	});
 }
 enable_search.enabled=false;
+
+
+function list_manage(url, complaint)
+{
+	var checked = $('#sortable_table td :checked').length
+	if (checked < 1) {
+		alert(complaint);
+		return;
+	}
+	
+	var personids = new Array();
+	
+	$('#sortable_table td :checked').each(function() {
+		personids.push($(this).attr('value'));
+		
+	});
+	
+	tb_show('Manage Subscriptions', url + '/personids:' + personids.join(','));
+}
 
 function do_search(show_feedback,on_complete)
 {	
@@ -205,7 +224,7 @@ function enable_select_all()
 			$("#sortable_table tbody :checkbox").each(function()
 			{
 				$(this).attr('checked',false);
-				$(this).parent().parent().find("td").removeClass();				
+				$(this).parent().parent().find("td").removeClass('selected').removeClass('over');				
 			});    	
 		}
 	 });	
@@ -225,6 +244,12 @@ function enable_row_selection(rows)
 		function row_over()
 		{
 			$(this).find("td").addClass('over').css("backgroundColor","");
+			if ($(this).find("td.email-lists ul").length > 0 && $(this).find("td.email-lists ul").height() >= 25) {
+				$(this).find("td.email-lists").css('height', 'auto')
+				$(this).find("td.email-lists ul").css('height', 'auto')
+				$(this).height($(this).find("td.email-lists ul").height())
+			}
+			
 			$(this).css("cursor","pointer");
 		},
 		
@@ -232,7 +257,15 @@ function enable_row_selection(rows)
 		{
 			if(!$(this).find("td").hasClass("selected"))
 			{
-				$(this).find("td").removeClass();
+				if ($(this).find("td.email-lists ul").length > 0) {
+					$(this).find("td.email-lists").css('height', '25px')
+					$(this).find("td.email-lists ul").css('height', '25px')
+					$(this).height('25px')
+				}
+				
+				$(this).find("td").removeClass('selected');
+				$(this).find("td.email-lists").css('overflow', 'hidden')
+				$(this).find("td").removeClass('over');
 			}
 		}
 	);
@@ -250,7 +283,8 @@ function enable_row_selection(rows)
 		}
 		else
 		{
-			$(this).find("td").removeClass();
+			$(this).find("td").removeClass('selected');
+			$(this).find("td").removeClass('over');
 		}
 	});
 }

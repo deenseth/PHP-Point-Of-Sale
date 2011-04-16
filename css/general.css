@@ -152,3 +152,8 @@ input
 .clearfix { display: inline-block; }
 html[xmlns] .clearfix {	display: block; }
 * html .clearfix { height: 1%; }
+
+.clear{
+   float: none;
+   clear: both;
+}

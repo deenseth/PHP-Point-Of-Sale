@@ -248,49 +248,49 @@ else
 			    ?>
 			      <fieldset>
 			        <div>
-			          <label><?php echo $this->lang->line("sales_credit_card_number");?></label>
+			          <label>Credit Card Number</label>
 			          <input type="text" class="text required creditcard" size="15" name="x_card_num" value=""></input>
 			        </div>
 			        <div>
-			          <label><?php echo $this->lang->line("sales_expiration");?></label>
+			          <label>Exp.</label>
 			          <input type="text" class="text required" size="4" name="x_exp_date" value=""></input>
 			        </div>
 			        <div>
-			          <label><?php echo $this->lang->line("sales_ccv");?></label>
+			          <label>CCV</label>
 			          <input type="text" class="text required" size="4" name="x_card_code" value=""></input>
 			        </div>
 			      </fieldset>
 			      <fieldset>
 			        <div>
-			          <label><?php echo $this->lang->line("common_first_name");?></label>
+			          <label>First Name</label>
 			          <input type="text" class="text required" size="15" name="x_first_name" value="<?php echo isset($customer_info->first_name) ? $customer_info->first_name : ''; ?>"></input>
 			        </div>
 			        <div>
-			          <label><?php echo $this->lang->line("common_last_name");?></label>
+			          <label>Last Name</label>
 			          <input type="text" class="text required" size="14" name="x_last_name" value="<?php echo isset($customer_info->last_name) ? $customer_info->last_name : ''; ?>"></input>
 			        </div>
 			      </fieldset>
 			      <fieldset>
 			        <div>
-			          <label><?php echo $this->lang->line("common_address");?></label>
+			          <label>Address</label>
 			          <input type="text" class="text required" size="26" name="x_address" value="<?php echo isset($customer_info->address_1) ? $customer_info->address_1 : ''; ?>"></input>
 			        </div>
 			        <div>
-			          <label><?php echo $this->lang->line("common_city");?></label>
+			          <label>City</label>
 			          <input type="text" class="text required" size="15" name="x_city" value="<?php echo isset($customer_info->city) ? $customer_info->city : ''; ?>"></input>
 			        </div>
 			      </fieldset>
 			      <fieldset>
 			        <div>
-			          <label><?php echo $this->lang->line("common_state");?></label>
+			          <label>State</label>
 			          <input type="text" class="text required" size="4" name="x_state" value="<?php echo isset($customer_info->state) ? $customer_info->state : ''; ?>"></input>
 			        </div>
 			        <div>
-			          <label><?php echo $this->lang->line("common_zip");?></label>
+			          <label>Zip Code</label>
 			          <input type="text" class="text required" size="9" name="x_zip" value="<?php echo isset($customer_info->zip) ? $customer_info->zip : ''; ?>"></input>
 			        </div>
 			        <div>
-			          <label><?php echo $this->lang->line("common_country");?></label>
+			          <label>Country</label>
 			          <input type="text" class="text required" size="22" name="x_country" value="<?php echo isset($customer_info->country) ? $customer_info->country : ''; ?>"></input>
 			        </div>
 			      </fieldset>

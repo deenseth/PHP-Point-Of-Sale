@@ -255,7 +255,7 @@ class Reports extends Secure_area
 		$this->load->view('reports/tabular_details',$data);
 	}
 	
-    function specific_item_by_customer_input($item=null)
+    function specific_item_input($item=null)
 	{
 		$data = $this->_get_common_report_data();
 		$data['specific_input_name'] = $this->lang->line('reports_item');
@@ -270,29 +270,6 @@ class Reports extends Secure_area
 		
 		$this->load->view("reports/specific_input",$data);
 		
-	}
-	
-	function specific_item_by_customer($start_date, $end_date, $item_id, $export_excel=0)
-	{
-	    $data = array('report_service' => $this->Service->specific_item_by_customer($start_date, $end_date, $item_id, $export_excel));
-		$this->load->view('reports/tabular_details',$data);
-	}
-
-
-    function specific_item_input($item=null)
-    {
-		$data = $this->_get_common_report_data();
-		$data['specific_input_name'] = $this->lang->line('reports_item');
-	    $items = array();
-        
-		
-		foreach($this->Item->get_all()->result() as $item)
-		{
-			$items[$item->item_id] = $item->name;
-		}
-		$data['specific_input_data'] = $items;
-		
-		$this->load->view("reports/specific_input",$data);	
 	}
 	
 	function specific_item($start_date, $end_date, $employee_id, $export_excel=0)

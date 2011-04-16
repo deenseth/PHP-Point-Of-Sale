@@ -42,6 +42,13 @@ label.required
 	border: 2px solid #ddd;
 }
 
+.delete_button 
+{
+	padding: 5px;
+	color: #fff;
+	background-color: #ea4729;
+	border: 2px solid #ddd;
+}
 .small_button
 {
 	position:relative;
@@ -130,6 +137,7 @@ label.required
 input
 {
 	font-family:arial;
+	padding: 3px;
 }
 
 .clearfix:after 
@@ -144,9 +152,3 @@ input
 .clearfix { display: inline-block; }
 html[xmlns] .clearfix {	display: block; }
 * html .clearfix { height: 1%; }
-
-.pagination_links
-{
-	text-align: center;
-	padding-bottom: 5px;
-}

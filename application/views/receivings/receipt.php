@@ -35,7 +35,7 @@ if (isset($error_message))
 	<th style="width:17%;text-align:right;"><?php echo $this->lang->line('sales_total'); ?></th>
 	</tr>
 	<?php
-	foreach($cart as $item_id=>$item)
+	foreach(array_reverse($cart, true) as $line=>$item)
 	{
 	?>
 		<tr>
@@ -53,19 +53,7 @@ if (isset($error_message))
 	    </tr>
 	<?php
 	}
-	?>
-	<tr>
-	<td colspan="3" style='text-align:right;border-top:2px solid #000000;'><?php echo $this->lang->line('sales_sub_total'); ?></td>
-	<td colspan="2" style='text-align:right;border-top:2px solid #000000;'><?php echo to_currency($subtotal); ?></td>
-	</tr>
-
-	<?php foreach($taxes as $name=>$value) { ?>
-		<tr>
-			<td colspan="3" style='text-align:right;'><?php echo $name; ?>:</td>
-			<td colspan="2" style='text-align:right;'><?php echo to_currency($value); ?></td>
-		</tr>
-	<?php }; ?>
-
+	?>	
 	<tr>
 	<td colspan="3" style='text-align:right;'><?php echo $this->lang->line('sales_total'); ?></td>
 	<td colspan="2" style='text-align:right'><?php echo to_currency($total); ?></td>

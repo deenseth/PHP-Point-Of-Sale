@@ -12,11 +12,20 @@ class Person extends Model
 	}
 	
 	/*Gets all people*/
-	function get_all()
+	function get_all($limit=10000, $offset=0)
 	{
 		$this->db->from('people');
 		$this->db->order_by("last_name", "asc");
+		$this->db->limit($limit);
+		$this->db->offset($offset);
 		return $this->db->get();		
+	}
+	
+	function count_all()
+	{
+		$this->db->from('people');
+		$this->db->where('deleted',0);
+		return $this->db->count_all_results();
 	}
 	
 	/*

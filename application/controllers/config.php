@@ -28,12 +28,10 @@ class Config extends Secure_area
 		'return_policy'=>$this->input->post('return_policy'),
 		'language'=>$this->input->post('language'),
 		'timezone'=>$this->input->post('timezone'),
-		'print_after_sale'=>$this->input->post('print_after_sale'),
-		'lines_per_page'=>$this->input->post('lines_per_page'),
-		'tax_on_received_inventory'=>$this->input->post('tax_on_received_inventory')
+		'print_after_sale'=>$this->input->post('print_after_sale')	
 		);
 		
-		if($this->Appconfig->batch_save($batch_save_data))
+		if($_SERVER['HTTP_HOST'] !='demo.phppointofsale.com' && $this->Appconfig->batch_save($batch_save_data))
 		{
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('config_saved_successfully')));
 		}

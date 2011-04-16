@@ -10,24 +10,15 @@ class Giftcards extends Secure_area implements iData_controller
 
 	function index()
 	{
-		$data['controller_name']=strtolower($this->uri->segment(1));
+		$config['base_url'] = site_url('?c=giftcards&m=index');
+		$config['total_rows'] = $this->Giftcard->count_all();
+		$config['per_page'] = '20'; 
+		$this->pagination->initialize($config);
+		
+		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_giftcards_manage_table($this->Giftcard->get_all(),$this);
+		$data['manage_table']=get_giftcards_manage_table($this->Giftcard->get_all($config['per_page'], $this->input->get('per_page')),$this);
 		$this->load->view('giftcards/manage',$data);
-	}
-
-	function refresh()
-	{
-		$data['controller_name']=strtolower($this->uri->segment(1));
-		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_giftcards_manage_table($this->Giftcard->get_all(),$this);
-		$this->load->view('giftcards/manage',$data);
-	}
-
-	function find_giftcard_info()
-	{
-		$giftcard_number=$this->input->post('scan_giftcard_number');
-		echo json_encode($this->Giftcard->find_giftcard_info($giftcard_number));
 	}
 
 	function search()
@@ -46,15 +37,6 @@ class Giftcards extends Secure_area implements iData_controller
 		echo implode("\n",$suggestions);
 	}
 
-	/*
-	Gives search suggestions based on what is being searched for
-	*/
-	function suggest_category()
-	{
-		$suggestions = $this->Giftcard->get_category_suggestions($this->input->post('q'));
-		echo implode("\n",$suggestions);
-	}
-
 	function get_row()
 	{
 		$giftcard_id = $this->input->post('row_id');
@@ -67,28 +49,6 @@ class Giftcards extends Secure_area implements iData_controller
 		$data['giftcard_info']=$this->Giftcard->get_info($giftcard_id);
 
 		$this->load->view("giftcards/form",$data);
-	}
-	
-	function count_details($giftcard_id=-1)
-	{
-		$data['giftcard_info']=$this->Giftcard->get_info($giftcard_id);
-		$this->load->view("giftcards/count_details",$data);
-	} //------------------------------------------- Ramel
-
-	function generate_barcodes($giftcard_ids)
-	{
-		$result = array();
-
-		$giftcard_ids = explode(',', $giftcard_ids);
-		foreach ($giftcard_ids as $giftcard_id)
-		{
-			$giftcard_info = $this->Giftcard->get_info($giftcard_id);
-
-			$result[] = array('name' =>$giftcard_info->name, 'id'=> $giftcard_id);
-		}
-
-		$data['giftcards'] = $result;
-		$this->load->view("barcode_sheet", $data);
 	}
 	
 	function save($giftcard_id=-1)
@@ -134,74 +94,6 @@ class Giftcards extends Secure_area implements iData_controller
 		{
 			echo json_encode(array('success'=>false,'message'=>$this->lang->line('giftcards_cannot_be_deleted')));
 		}
-	}
-
-	/**
-	 * Display form: Import data from an excel file
-	 * @author: Nguyen OJB
-	 * @since: 10.1
-	 */
-	function excel_import()
-	{
-		$this->load->view("giftcards/excel_import", null);
-	}
-
-	/**
-	 * Read data from excel file -> save it to databse
-	 * @author: Nguyen OJB
-	 * @since: 10.1
-	 */
-	function do_excel_import()
-	{
-		$msg = "do_excel_import";
-		$failCodes = null;
-		$successCode = null;
-		if ($_FILES['file_path']['error']!=UPLOAD_ERR_OK)
-		{
-			$msg = $this->lang->line('giftcards_excel_import_failed');
-			echo json_encode( array('success'=>false,'message'=>$msg) );
-			return ;
-		}
-		else
-		{
-			$this->load->library('spreadsheetexcelreader');
-			$this->spreadsheetexcelreader->store_extended_info = false;
-			$success = $this->spreadsheetexcelreader->read($_FILES['file_path']['tmp_name']);
-
-			$rowCount = $this->spreadsheetexcelreader->rowcount(0);
-			if($rowCount > 0)
-			{
-				for($i = 1; $i<=$rowCount; $i++)
-				{
-					$giftcard_data = array( 'giftcard_number' => $this->spreadsheetexcelreader->val( $i, 'A' ), 'value'	=>	$this->spreadsheetexcelreader->val( $i, 'B' ) );
-
-					if( $this->Giftcard->save( $giftcard_data ) )
-					{
-						$successCode[] = $giftcard_data['giftcard_number'];
-					}
-					else//insert or update giftcard failure
-					{
-						$failCodes[] = $giftcard_data['giftcard_number'];
-					}
-				}
-			}
-			else
-			{
-				// rowCount < 2
-				echo json_encode( array('success'=>true,'message'=>'Your upload file has no data or not in supported format.') );
-				return;
-			}
-		}
-
-		$success = true;
-		if(count($failCodes) > 1){
-			$msg = "Most giftcards imported. But some were not, here is list of their CODE (" .count($failCodes) ."): ".implode(", ", $failCodes);
-			$success = false;
-		}else{
-			$msg = "Import giftcards successful";
-		}
-
-		echo json_encode( array('success'=>$success,'message'=>$msg) );
 	}
 		
 	/*

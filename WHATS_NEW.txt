@@ -1,1 +1,6 @@
-* Fixed bugs in reports where items would appear even though they are deleted
+* Added item kits feature
+* Can now filter reports by all/sales/returns
+* Added pagination throughout program
+* Improved importing for items and added importing for customers
+* Added location field for items
+* Bug fixes

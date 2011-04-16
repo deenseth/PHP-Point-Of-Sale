@@ -138,7 +138,7 @@ class Sale_lib
 		$this->CI->session->set_userdata('sale_mode',$mode);
 	}
 
-	function add_item($item_id,$quantity=1,$discount=0,$price=null,$tax=null,$description=null,$serialnumber=null)
+	function add_item($item_id,$quantity=1,$discount=0,$price=null,$description=null,$serialnumber=null)
 	{
 		//make sure item exists
 		if(!$this->CI->Item->exists($item_id))
@@ -299,6 +299,19 @@ class Sale_lib
 
 		return false;
 	}
+	
+	function is_valid_item_kit($item_kit_id)
+	{
+		//KIT #
+		$pieces = explode(' ',$item_kit_id);
+
+		if(count($pieces)==2)
+		{
+			return $this->CI->Item_kit->exists($pieces[1]);
+		}
+
+		return false;
+	}
 
 	function return_entire_sale($receipt_sale_id)
 	{
@@ -311,9 +324,21 @@ class Sale_lib
 
 		foreach($this->CI->Sale->get_sale_items($sale_id)->result() as $row)
 		{
-			$this->add_item($row->item_id,-$row->quantity_purchased,$row->discount_percent,$row->item_unit_price,null,$row->description,$row->serialnumber);
+			$this->add_item($row->item_id,-$row->quantity_purchased,$row->discount_percent,$row->item_unit_price,$row->description,$row->serialnumber);
 		}
 		$this->set_customer($this->CI->Sale->get_customer($sale_id)->person_id);
+	}
+	
+	function add_item_kit($external_item_kit_id)
+	{
+		//KIT #
+		$pieces = explode(' ',$external_item_kit_id);
+		$item_kit_id = $pieces[1];
+		
+		foreach ($this->CI->Item_kit_items->get_info($item_kit_id) as $item_kit_item)
+		{
+			$this->add_item($item_kit_item['item_id'], $item_kit_item['quantity']);
+		}
 	}
 
 	function copy_entire_sale($sale_id)
@@ -323,13 +348,30 @@ class Sale_lib
 
 		foreach($this->CI->Sale->get_sale_items($sale_id)->result() as $row)
 		{
-			$this->add_item($row->item_id,$row->quantity_purchased,$row->discount_percent,$row->item_unit_price,null,$row->description,$row->serialnumber);
+			$this->add_item($row->item_id,$row->quantity_purchased,$row->discount_percent,$row->item_unit_price,$row->description,$row->serialnumber);
 		}
 		foreach($this->CI->Sale->get_sale_payments($sale_id)->result() as $row)
 		{
 			$this->add_payment($row->payment_type,$row->payment_amount);
 		}
 		$this->set_customer($this->CI->Sale->get_customer($sale_id)->person_id);
+
+	}
+	
+	function copy_entire_suspended_sale($sale_id)
+	{
+		$this->empty_cart();
+		$this->delete_customer();
+
+		foreach($this->CI->Sale_suspended->get_sale_items($sale_id)->result() as $row)
+		{
+			$this->add_item($row->item_id,$row->quantity_purchased,$row->discount_percent,$row->item_unit_price,$row->description,$row->serialnumber);
+		}
+		foreach($this->CI->Sale_suspended->get_sale_payments($sale_id)->result() as $row)
+		{
+			$this->add_payment($row->payment_type,$row->payment_amount);
+		}
+		$this->set_customer($this->CI->Sale_suspended->get_customer($sale_id)->person_id);
 
 	}
 

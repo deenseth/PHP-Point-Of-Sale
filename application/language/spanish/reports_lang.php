@@ -74,4 +74,12 @@ $lang['reports_inventory_summary_report'] = 'Reporte de Resumen de Inventario';
 $lang['reports_payment_type'] = 'Tipo de Pago';
 $lang['reports_payments_summary_report'] = 'Reporte de Resumen de Pagos';
 $lang['reports_payments'] = 'Pagos';
+$lang['reports_receivings'] = 'Receivings';
+$lang['reports_received_by'] = 'Received By';
+$lang['reports_supplied_by'] = 'Supplied by';
+$lang['reports_items_received'] = 'Items Received';
+$lang['reports_detailed_receivings_report'] = 'Detailed Receivings Report';
+$lang['reports_sale_type'] = 'Sale Type';
+$lang['reports_all'] = 'All';
+$lang['reports_returns'] = 'Returns';
 ?>

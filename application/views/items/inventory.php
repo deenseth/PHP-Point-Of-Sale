@@ -1,9 +1,6 @@
 <div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
 <ul id="error_message_box"></ul>
 <?php
-echo form_open('items/find_item_info/'.$item_info->item_id,array('id'=>'item_number_form'));
-?>
-<?php
 echo form_close();
 echo form_open('items/save_inventory/'.$item_info->item_id,array('id'=>'item_form'));
 ?>
@@ -90,7 +87,6 @@ echo form_open('items/save_inventory/'.$item_info->item_id,array('id'=>'item_for
 	<?php echo form_input(array(
 		'name'=>'newquantity',
 		'id'=>'newquantity'
-		//'value'=>$item_info->quantity
 		)
 	);?>
 	</div>
@@ -102,7 +98,6 @@ echo form_open('items/save_inventory/'.$item_info->item_id,array('id'=>'item_for
 	<?php echo form_textarea(array(
 		'name'=>'trans_comment',
 		'id'=>'trans_comment',
-		//'value'=>$item_info->description,
 		'rows'=>'3',
 		'cols'=>'17')		
 	);?>
@@ -124,20 +119,10 @@ echo form_close();
 
 //validation and submit handling
 $(document).ready(function()
-{	
-	//$("#category").autocomplete("<?php //echo site_url('items/suggest_category');?>",{max:100,minChars:0,delay:10});
-    //$("#category").result(function(event, data, formatted){});
-	//$("#category").search();
-	
-	
+{		
 	$('#item_form').validate({
 		submitHandler:function(form)
 		{
-			/*
-			make sure the hidden field #item_number gets set
-			to the visible scan_item_number value
-			*/
-			//$('#item_number').val($('#scan_item_number').val());
 			$(form).ajaxSubmit({
 			success:function(response)
 			{

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `phppos_giftcards` (
+CREATE TABLE `phppos_giftcards` (
   `giftcard_id` int(11) NOT NULL AUTO_INCREMENT,
   `giftcard_number` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `value` double(15,2) NOT NULL,

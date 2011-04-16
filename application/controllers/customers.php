@@ -9,9 +9,14 @@ class Customers extends Person_controller
 	
 	function index()
 	{
-		$data['controller_name']=strtolower($this->uri->segment(1));
+		$config['base_url'] = site_url('?c=customers&m=index');
+		$config['total_rows'] = $this->Customer->count_all();
+		$config['per_page'] = '20'; 
+		$this->pagination->initialize($config);
+		
+		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_people_manage_table($this->Customer->get_all(),$this);
+		$data['manage_table']=get_people_manage_table($this->Customer->get_all($config['per_page'], $this->input->get('per_page')),$this);
 		$this->load->view('people/manage',$data);
 	}
 	
@@ -102,6 +107,86 @@ class Customers extends Person_controller
 		{
 			echo json_encode(array('success'=>false,'message'=>$this->lang->line('customers_cannot_be_deleted')));
 		}
+	}
+	
+	function excel()
+	{
+		$data = file_get_contents("import_customers.csv");
+		$name = 'import_customers.csv';
+		force_download($name, $data);
+	}
+	
+	function excel_import()
+	{
+		$this->load->view("customers/excel_import", null);
+	}
+
+	function do_excel_import()
+	{
+		$msg = 'do_excel_import';
+		$failCodes = array();
+		if ($_FILES['file_path']['error']!=UPLOAD_ERR_OK)
+		{
+			$msg = $this->lang->line('items_excel_import_failed');
+			echo json_encode( array('success'=>false,'message'=>$msg) );
+			return;
+		}
+		else
+		{
+			if (($handle = fopen($_FILES['file_path']['tmp_name'], "r")) !== FALSE)
+			{
+				//Skip first row
+				fgetcsv($handle);
+				
+				$i=1;
+				while (($data = fgetcsv($handle)) !== FALSE) 
+				{
+					$person_data = array(
+					'first_name'=>$data[0],
+					'last_name'=>$data[1],
+					'email'=>$data[2],
+					'phone_number'=>$data[3],
+					'address_1'=>$data[4],
+					'address_2'=>$data[5],
+					'city'=>$data[6],
+					'state'=>$data[7],
+					'zip'=>$data[8],
+					'country'=>$data[9],
+					'comments'=>$data[10]
+					);
+					
+					$customer_data=array(
+					'account_number'=>$data[11]=='' ? null:$data[11],
+					'taxable'=>$data[12]=='' ? 0:1,
+					);
+					
+					if(!$this->Customer->save($person_data,$customer_data))
+					{	
+						$failCodes[] = $i;
+					}
+					
+					$i++;
+				}
+			}
+			else 
+			{
+				echo json_encode( array('success'=>false,'message'=>'Your upload file has no data or not in supported format.') );
+				return;
+			}
+		}
+
+		$success = true;
+		if(count($failCodes) > 1)
+		{
+			$msg = "Most customers imported. But some were not, here is list of their CODE (" .count($failCodes) ."): ".implode(", ", $failCodes);
+			$success = false;
+		}
+		else
+		{
+			$msg = "Import Customers successful";
+		}
+
+		echo json_encode( array('success'=>$success,'message'=>$msg) );
 	}
 	
 	/*

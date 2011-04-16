@@ -1,10 +1,6 @@
 <div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
 <ul id="error_message_box"></ul>
 <?php
-echo form_open('items/find_item_info/'.$item_info->item_id,array('id'=>'item_number_form'));
-?>
-<?php
-echo form_close();
 echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 ?>
 <fieldset id="item_basic_info">
@@ -135,6 +131,17 @@ echo form_open('items/save/'.$item_info->item_id,array('id'=>'item_form'));
 		'name'=>'reorder_level',
 		'id'=>'reorder_level',
 		'value'=>$item_info->reorder_level)
+	);?>
+	</div>
+</div>
+
+<div class="field_row clearfix">	
+<?php echo form_label($this->lang->line('items_location').':', 'location',array('class'=>'wide')); ?>
+	<div class='form_field'>
+	<?php echo form_input(array(
+		'name'=>'location',
+		'id'=>'location',
+		'value'=>$item_info->location)
 	);?>
 	</div>
 </div>

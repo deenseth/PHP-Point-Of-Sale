@@ -28,9 +28,6 @@ class Config extends Secure_area
 		'return_policy'=>$this->input->post('return_policy'),
 		'language'=>$this->input->post('language'),
 		'timezone'=>$this->input->post('timezone'),
-		'enable_credit_card_processing'=>$this->input->post('enable_credit_card_processing'),
-		'mercury_merchant_id'=>$this->input->post('mercury_merchant_id'),
-		'mercury_merchant_password'=>$this->input->post('mercury_merchant_password'),
 		'print_after_sale'=>$this->input->post('print_after_sale')	
 		);
 		

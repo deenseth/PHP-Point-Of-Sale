@@ -41,7 +41,7 @@ class Config extends Secure_area
 		'return_policy'=>$this->input->post('return_policy'),
 		'language'=>$this->input->post('language'),
 		'timezone'=>$this->input->post('timezone'),
-		'mc_api_key'=>$validated_api_key
+		'mc_api_key'=>$validated_api_key,
 		'enable_credit_card_processing'=>$this->input->post('enable_credit_card_processing'),
 		'authorize_net_api_login_id'=>$this->input->post('authorize_net_api_login_id'),
 		'authorize_net_transaction_key'=>$this->input->post('authorize_net_transaction_key'),

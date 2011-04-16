@@ -29,9 +29,8 @@ class Config extends Secure_area
 		'language'=>$this->input->post('language'),
 		'timezone'=>$this->input->post('timezone'),
 		'enable_credit_card_processing'=>$this->input->post('enable_credit_card_processing'),
-		'authorize_net_api_login_id'=>$this->input->post('authorize_net_api_login_id'),
-		'authorize_net_transaction_key'=>$this->input->post('authorize_net_transaction_key'),
-		'authorize_net_md5_hash'=>$this->input->post('authorize_net_md5_hash'),
+		'mercury_merchant_id'=>$this->input->post('mercury_merchant_id'),
+		'mercury_merchant_password'=>$this->input->post('mercury_merchant_password'),
 		'print_after_sale'=>$this->input->post('print_after_sale')	
 		);
 		
@@ -42,6 +41,7 @@ class Config extends Secure_area
 		else
 		{
 			echo json_encode(array('success'=>false,'message'=>$this->lang->line('config_saved_unsuccessfully')));
+	
 		}
 	}
 }

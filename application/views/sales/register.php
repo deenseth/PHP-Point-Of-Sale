@@ -239,7 +239,6 @@ else
 		// Only show this part if there is at least one payment entered.
 		if(count($payments) > 0)
 		{
-			echo AuthorizeNetDPM::getCreditCardForm($amount, $fp_sequence, $relay_response_url,$api_login_id, $transaction_key);
 		?>
 			<div id="finish_sale">
 				<?php echo form_open("sales/complete",array('id'=>'finish_sale_form')); ?>

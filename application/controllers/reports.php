@@ -281,7 +281,10 @@ class Reports extends Secure_area
 
     function specific_item_input($item=null)
     {
-		$items = array();
+		$data = $this->_get_common_report_data();
+		$data['specific_input_name'] = $this->lang->line('reports_item');
+	    $items = array();
+        
 		
 		foreach($this->Item->get_all()->result() as $item)
 		{

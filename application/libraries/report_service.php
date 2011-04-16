@@ -689,7 +689,7 @@ class Report_Service
 	
 	function specific_item($start_date, $end_date, $employee_id, $export_excel=0)
 	{
-	    $this->load->model('report/Specific_employee');
+	    $this->CI->load->model('report/Specific_employee');
 	    $model = $this->Specific_employee;
 	    
 	    $headers = $model->getDataColumns();
@@ -759,7 +759,7 @@ class Report_Service
 	
 	function detailed_receivings($start_date, $end_date, $sale_type, $export_excel=0)
 	{
-	    $this->load->model('reports/Detailed_receivings');
+	    $this->CI->load->model('reports/Detailed_receivings');
 		$model = $this->Detailed_receivings;
 		
 		$headers = $model->getDataColumns();

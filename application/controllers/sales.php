@@ -178,7 +178,7 @@ class Sales extends Secure_area
 		$data['transaction_time']= date('m/d/Y h:i:s a');
 		$customer_id=$this->sale_lib->get_customer();
 		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
-		$comment = $this->input->post('comment') ? $this->input->post('comment') : $this->input->get('transaction_id');
+		$comment = $this->input->post('comment');
 		$emp_info=$this->Employee->get_info($employee_id);
 		$payment_type = $this->input->post('payment_type');
 		$data['payment_type']=$this->input->post('payment_type');
@@ -336,33 +336,13 @@ class Sales extends Secure_area
 		{
 			$info=$this->Customer->get_info($customer_id);
 			$data['customer']=$info->first_name.' '.$info->last_name;
-			$data['customer_info'] = $info;
 		}
 		
-		if (isset($data['payments'][$this->lang->line('sales_integrated_credit_card')]))
-		{
-			$data['cc_amount'] = $data['payments'][$this->lang->line('sales_integrated_credit_card')]['payment_amount'];
-			$data['time'] = time();
-			$data['fp_sequence'] = $data['time'];
-			$data['fp'] = AuthorizeNetDPM::getFingerprint($this->config->item('authorize_net_api_login_id'), $this->config->item('authorize_net_transaction_key'), $data['cc_amount'], $data['fp_sequence'], $data['time']);
-			$data['sim'] = new AuthorizeNetSIM_Form(
-	            array(
-	            'x_amount'        => $data['cc_amount'],
-	            'x_fp_sequence'   => $data['fp_sequence'],
-	            'x_fp_hash'       => $data['fp'],
-	            'x_fp_timestamp'  => $data['time'],
-	            'x_relay_response'=> "TRUE",
-	            'x_relay_url'     => site_url('credit_card_receiver/index'),
-	            'x_login'         => $this->config->item('authorize_net_api_login_id'),
-	            'x_test_request'  => FALSE,
-	            )
-	        );
-		}
-		
-		if ($this->input->get('response_reason_text'))
-		{
-			$data['error'] = $this->input->get('response_reason_text');
-		}
+		$data['relay_response_url'] = site_url('credit_card_receiver/index');
+		$data['api_login_id'] = $this->config->item('authorize_net_api_login_id');
+		$data['transaction_key'] = $this->config->item('authorize_net_transaction_key');
+		$data['amount'] = "5.99";
+		$data['fp_sequence'] = "123";
 		
 		$this->load->view("sales/register",$data);
 	}

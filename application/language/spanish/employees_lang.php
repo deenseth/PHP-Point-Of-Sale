@@ -23,4 +23,5 @@ $lang['employees_login_info']='Información de Ingreso del Empleado';
 $lang['employees_permission_info']='Permisos y Acceso del Empleado';
 $lang['employees_permission_desc']='Activa las cajas debajo para permitir el acceso a los módulos';
 $lang['employees_error_updating_demo_admin'] = 'No puedes cambiar al usuario administrador de demo';
+$lang['employees_error_deleting_demo_admin'] = 'You can not delete the demo admin user';
 ?>

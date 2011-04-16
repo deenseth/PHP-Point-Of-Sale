@@ -9,7 +9,6 @@ class Employee extends Person
 		$this->db->from('employees');	
 		$this->db->join('people', 'people.person_id = employees.person_id');
 		$this->db->where('employees.person_id',$person_id);
-		$this->db->where('deleted',0);		
 		$query = $this->db->get();
 		
 		return ($query->num_rows()==1);
@@ -18,13 +17,22 @@ class Employee extends Person
 	/*
 	Returns all the employees
 	*/
-	function get_all()
+	function get_all($limit=10000, $offset=0)
 	{
 		$this->db->from('employees');
 		$this->db->where('deleted',0);		
 		$this->db->join('people','employees.person_id=people.person_id');			
 		$this->db->order_by("last_name", "asc");
+		$this->db->limit($limit);
+		$this->db->offset($offset);
 		return $this->db->get();		
+	}
+	
+	function count_all()
+	{
+		$this->db->from('employees');
+		$this->db->where('deleted',0);
+		return $this->db->count_all_results();
 	}
 	
 	/*
@@ -35,7 +43,6 @@ class Employee extends Person
 		$this->db->from('employees');	
 		$this->db->join('people', 'people.person_id = employees.person_id');
 		$this->db->where('employees.person_id',$employee_id);
-		$this->db->where('deleted',0);		
 		$query = $this->db->get();
 		
 		if($query->num_rows()==1)
@@ -68,7 +75,6 @@ class Employee extends Person
 		$this->db->from('employees');
 		$this->db->join('people', 'people.person_id = employees.person_id');		
 		$this->db->where_in('employees.person_id',$employee_ids);
-		$this->db->where('deleted',0);		
 		$this->db->order_by("last_name", "asc");
 		return $this->db->get();		
 	}

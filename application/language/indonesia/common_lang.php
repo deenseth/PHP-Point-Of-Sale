@@ -38,4 +38,5 @@ $lang['common_price']='Harga';
 $lang['common_welcome_message']= 'Selamat Datang di PHP Point Of Sale, klik modul di bawah ini untuk memulai!';
 $lang['common_inv']='inv';
 $lang['common_det']='details';
+$lang['common_address']='Alamat';
 ?>

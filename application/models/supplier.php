@@ -8,7 +8,6 @@ class Supplier extends Person
 	{
 		$this->db->from('suppliers');	
 		$this->db->join('people', 'people.person_id = suppliers.person_id');
-		$this->db->where('deleted', 0);
 		$this->db->where('suppliers.person_id',$person_id);
 		$query = $this->db->get();
 		
@@ -18,13 +17,22 @@ class Supplier extends Person
 	/*
 	Returns all the suppliers
 	*/
-	function get_all()
+	function get_all($limit=10000, $offset=0)
 	{
 		$this->db->from('suppliers');
 		$this->db->join('people','suppliers.person_id=people.person_id');			
 		$this->db->where('deleted', 0);
 		$this->db->order_by("last_name", "asc");
+		$this->db->limit($limit);
+		$this->db->offset($offset);
 		return $this->db->get();		
+	}
+	
+	function count_all()
+	{
+		$this->db->from('suppliers');
+		$this->db->where('deleted',0);
+		return $this->db->count_all_results();
 	}
 	
 	/*
@@ -34,7 +42,6 @@ class Supplier extends Person
 	{
 		$this->db->from('suppliers');	
 		$this->db->join('people', 'people.person_id = suppliers.person_id');
-		$this->db->where('deleted', 0);
 		$this->db->where('suppliers.person_id',$supplier_id);
 		$query = $this->db->get();
 		
@@ -67,7 +74,6 @@ class Supplier extends Person
 	{
 		$this->db->from('suppliers');
 		$this->db->join('people', 'people.person_id = suppliers.person_id');		
-		$this->db->where('deleted', 0);
 		$this->db->where_in('suppliers.person_id',$suppliers_ids);
 		$this->db->order_by("last_name", "asc");
 		return $this->db->get();		

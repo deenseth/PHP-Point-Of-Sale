@@ -34,4 +34,7 @@ $lang['module_mailchimpdash_desc']='Manage &amp; report on mailing lists &amp; c
 $lang['module_mailchimpdash_not_activated']='Get MailChimp!';
 $lang['module_mailchimpdash_not_activated_desc']='Take your customer, partner, and employee communications to the next level. If you have an account, enter your API key in the configuration screen.';
 
+$lang['module_item_kits']='Item Kits';
+$lang['module_item_kits_desc']='Add, Update, Delete and Search Item Kits';
+
 ?>

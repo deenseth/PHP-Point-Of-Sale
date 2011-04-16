@@ -11,8 +11,9 @@ abstract class Report extends Model
 		$this->output->set_header("Cache-Control: post-check=0, pre-check=0", false);
 		$this->output->set_header("Pragma: no-cache");
 		
-		//Create our temp table to work with the data in our report
+		//Create our temp tables to work with the data in our report
 		$this->Sale->create_sales_items_temp_table();
+		$this->Receiving->create_receivings_items_temp_table();
 	}
 	
 	//Returns the column names used for the report

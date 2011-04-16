@@ -67,36 +67,20 @@ if(count($cart)==0)
 }
 else
 {
-	foreach($cart as $item_id=>$item)
+	foreach(array_reverse($cart, true) as $line=>$item)
 	{
-		echo form_open("receivings/edit_item/$item_id");
+		echo form_open("receivings/edit_item/$line");
 	?>
 		<tr>
-		<td><?php echo anchor("receivings/delete_item/$item_id",'['.$this->lang->line('common_delete').']');?></td>
+		<td><?php echo anchor("receivings/delete_item/$line",'['.$this->lang->line('common_delete').']');?></td>
 
-		<td style="align:center;"><?php echo $item['name']; ?><br>
+		<td style="align:center;"><?php echo $item['name']; ?><br />
 
 		<?php
-        	if($item['allow_alt_description']==1 && false)
-        	{
-        		echo form_input(array('name'=>'description','value'=>$item['description'],'size'=>'20'));
-        	}
-        	else
-        	{
-				echo $item['description'];
-        		echo form_hidden('description',$item['description']);
-        	}
+			echo $item['description'];
+      		echo form_hidden('description',$item['description']);
 		?>
-		<br>
-
-
-
-		<?php
-        	if($item['is_serialized']==1 && false)
-        	{
-				echo form_input(array('name'=>'serialnumber','value'=>$item['serialnumber'],'size'=>'20'));
-			}
-		?></td>
+		<br />
 
 
 		<?php if ($items_module_allowed)
@@ -115,15 +99,7 @@ else
 		?>
 		<td>
 		<?php
-        	if($item['is_serialized']==1 && false)
-        	{
-        		echo $item['quantity'];
-        		echo form_hidden('quantity',$item['quantity']);
-        	}
-        	else
-        	{
-        		echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2'));
-        	}
+        	echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2'));
 		?>
 		</td>
 
@@ -169,14 +145,6 @@ else
 	?>
 
 	<div id='sale_details'>
-		<div class="float_left" style="width:55%;"><?php echo $this->lang->line('sales_sub_total'); ?>:</div>
-		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo to_currency($subtotal); ?></div>
-
-		<?php foreach($taxes as $name=>$value) { ?>
-		<div class="float_left" style='width:55%;'><?php echo $name; ?>:</div>
-		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo to_currency($value); ?></div>
-		<?php }; ?>
-
 		<div class="float_left" style='width:55%;'><?php echo $this->lang->line('sales_total'); ?>:</div>
 		<div class="float_left" style="width:45%;font-weight:bold;"><?php echo to_currency($total); ?></div>
 	</div>
@@ -186,10 +154,10 @@ else
 	?>
 	<div id="finish_sale">
 		<?php echo form_open("receivings/complete",array('id'=>'finish_sale_form')); ?>
-		<br>
+		<br />
 		<label id="comment_label" for="comment"><?php echo $this->lang->line('common_comments'); ?>:</label>
 		<?php echo form_textarea(array('name'=>'comment','value'=>'','rows'=>'4','cols'=>'23'));?>
-		<br><br>
+		<br /><br />
 		<table width="100%"><tr><td>
 		<?php
 			echo $this->lang->line('sales_payment').':   ';?>
@@ -211,7 +179,7 @@ else
         </tr>
 
         </table>
-        <br>
+        <br />
 		<?php echo "<div class='small_button' id='finish_sale_button' style='float:right;margin-top:5px;'><span>".$this->lang->line('recvs_complete_receiving')."</span></div>";
 		?>
 		</div>

@@ -16,6 +16,7 @@ class Receivings extends Secure_area
 	function item_search()
 	{
 		$suggestions = $this->Item->get_item_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		$suggestions = array_merge($suggestions, $this->Item_kit->get_item_kit_search_suggestions($this->input->post('q'),$this->input->post('limit')));
 		echo implode("\n",$suggestions);
 	}
 
@@ -43,14 +44,18 @@ class Receivings extends Secure_area
 	{
 		$data=array();
 		$mode = $this->receiving_lib->get_mode();
-		$item_id_or_number_or_receipt = $this->input->post("item");
+		$item_id_or_number_or_item_kit_or_receipt = $this->input->post("item");
 		$quantity = $mode=="receive" ? 1:-1;
 
-		if($this->receiving_lib->is_valid_receipt($item_id_or_number_or_receipt) && $mode=='return')
+		if($this->receiving_lib->is_valid_receipt($item_id_or_number_or_item_kit_or_receipt) && $mode=='return')
 		{
-			$this->receiving_lib->return_entire_receiving($item_id_or_number_or_receipt);
+			$this->receiving_lib->return_entire_receiving($item_id_or_number_or_item_kit_or_receipt);
 		}
-		elseif(!$this->receiving_lib->add_item($item_id_or_number_or_receipt,$quantity))
+		elseif($this->receiving_lib->is_valid_item_kit($item_id_or_number_or_item_kit_or_receipt))
+		{
+			$this->receiving_lib->add_item_kit($item_id_or_number_or_item_kit_or_receipt);
+		}
+		elseif(!$this->receiving_lib->add_item($item_id_or_number_or_item_kit_or_receipt,$quantity))
 		{
 			$data['error']=$this->lang->line('recvs_unable_to_add_item');
 		}
@@ -65,13 +70,11 @@ class Receivings extends Secure_area
 		$this->form_validation->set_rules('quantity', 'lang:items_quantity', 'required|integer');
 		$this->form_validation->set_rules('discount', 'lang:items_discount', 'required|integer');
 
-
-        $description = $this->input->post("description");
-        $serialnumber = $this->input->post("serialnumber");
+    	$description = $this->input->post("description");
+    	$serialnumber = $this->input->post("serialnumber");
 		$price = $this->input->post("price");
 		$quantity = $this->input->post("quantity");
 		$discount = $this->input->post("discount");
-
 
 		if ($this->form_validation->run() != FALSE)
 		{
@@ -100,8 +103,6 @@ class Receivings extends Secure_area
 	function complete()
 	{
 		$data['cart']=$this->receiving_lib->get_cart();
-		$data['subtotal']=$this->receiving_lib->get_subtotal();
-		$data['taxes']=$this->receiving_lib->get_taxes();
 		$data['total']=$this->receiving_lib->get_total();
 		$data['receipt_title']=$this->lang->line('recvs_receipt');
 		$data['transaction_time']= date('m/d/Y h:i:s a');
@@ -142,22 +143,19 @@ class Receivings extends Secure_area
 		$receiving_info = $this->Receiving->get_info($receiving_id)->row_array();
 		$this->receiving_lib->copy_entire_receiving($receiving_id);
 		$data['cart']=$this->receiving_lib->get_cart();
-		$data['subtotal']=$this->receiving_lib->get_subtotal();
-		$data['taxes']=$this->receiving_lib->get_taxes();
 		$data['total']=$this->receiving_lib->get_total();
 		$data['receipt_title']=$this->lang->line('recvs_receipt');
 		$data['transaction_time']= date('m/d/Y h:i:s a', strtotime($receiving_info['receiving_time']));
-		$customer_id=$this->receiving_lib->get_customer();
-		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
-		$emp_info=$this->Employee->get_info($employee_id);
+		$supplier_id=$this->receiving_lib->get_supplier();
+		$emp_info=$this->Employee->get_info($receiving_info['employee_id']);
 		$data['payment_type']=$receiving_info['payment_type'];
 
 		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
 
-		if($customer_id!=-1)
+		if($supplier_id!=-1)
 		{
-			$cust_info=$this->Customer->get_info($customer_id);
-			$data['customer']=$cust_info->first_name.' '.$cust_info->last_name;
+			$supplier_info=$this->Supplier->get_info($supplier_id);
+			$data['supplier']=$supplier_info->first_name.' '.$supplier_info->last_name;
 		}
 		$data['receiving_id']='RECV '.$receiving_id;
 		$this->load->view("receivings/receipt",$data);
@@ -171,8 +169,6 @@ class Receivings extends Secure_area
 		$data['cart']=$this->receiving_lib->get_cart();
 		$data['modes']=array('receive'=>$this->lang->line('recvs_receiving'),'return'=>$this->lang->line('recvs_return'));
 		$data['mode']=$this->receiving_lib->get_mode();
-		$data['subtotal']=$this->receiving_lib->get_subtotal();
-		$data['taxes']=$this->receiving_lib->get_taxes();
 		$data['total']=$this->receiving_lib->get_total();
 		$data['items_module_allowed'] = $this->Employee->has_permission('items', $person_info->person_id);
 		$data['payment_options']=array(
@@ -193,10 +189,8 @@ class Receivings extends Secure_area
 
     function cancel_receiving()
     {
-        //$this->load->view("receivings/receipt",$data);
     	$this->receiving_lib->clear_all();
     	$this->_reload();
-
     }
 
 }

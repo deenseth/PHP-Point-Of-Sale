@@ -9,7 +9,6 @@ class Customer extends Person
 		$this->db->from('customers');	
 		$this->db->join('people', 'people.person_id = customers.person_id');
 		$this->db->where('customers.person_id',$person_id);
-		$this->db->where('deleted',0);		
 		$query = $this->db->get();
 		
 		return ($query->num_rows()==1);
@@ -18,13 +17,22 @@ class Customer extends Person
 	/*
 	Returns all the customers
 	*/
-	function get_all()
+	function get_all($limit=10000, $offset=0)
 	{
 		$this->db->from('customers');
 		$this->db->join('people','customers.person_id=people.person_id');			
 		$this->db->where('deleted',0);
 		$this->db->order_by("last_name", "asc");
+		$this->db->limit($limit);
+		$this->db->offset($offset);
 		return $this->db->get();		
+	}
+	
+	function count_all()
+	{
+		$this->db->from('customers');
+		$this->db->where('deleted',0);
+		return $this->db->count_all_results();
 	}
 	
 	/*
@@ -34,7 +42,6 @@ class Customer extends Person
 	{
 		$this->db->from('customers');	
 		$this->db->join('people', 'people.person_id = customers.person_id');
-		$this->db->where('deleted',0);
 		$this->db->where('customers.person_id',$customer_id);
 		$query = $this->db->get();
 		
@@ -67,7 +74,6 @@ class Customer extends Person
 	{
 		$this->db->from('customers');
 		$this->db->join('people', 'people.person_id = customers.person_id');		
-		$this->db->where('deleted',0);
 		$this->db->where_in('customers.person_id',$customer_ids);
 		$this->db->order_by("last_name", "asc");
 		return $this->db->get();		

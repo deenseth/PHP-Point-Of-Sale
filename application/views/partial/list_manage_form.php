@@ -20,15 +20,15 @@ $boxdata = array(  'name'        => $list['name'],
     <?php echo form_checkbox($boxdata);?>
     <?php echo form_label($list['name'], $list['name']);?>
     </div>
-    <? if (count($list['groupings'])) { ?>
+    <?php if (count($list['groupings'])) { ?>
     <div class='list-groups'>
-    <? foreach ($list['groupings'] as $grouping) { 
+    <?php foreach ($list['groupings'] as $grouping) { 
             if ($grouping['form_field'] == 'dropdown') {
                 $options = array('');
             }
         ?>
         <div class='list-group'>
-        <p class="grouping"><?=$grouping['name']?></p>
+        <p class="grouping"><?php echo $grouping['name']?></p>
         <?php foreach ($grouping['groups'] as $group) {
                 switch($grouping['form_field']) {
                     case 'checkboxes':
@@ -63,10 +63,10 @@ $boxdata = array(  'name'        => $list['name'],
                 echo form_dropdown($grouping['name'], $options, $defaultValue);
             } ?>
         </div>
-    <? } ?>
+    <?php } ?>
         <div class="clear"><!--  --></div>
     </div>
-    <? } ?>
+    <?php } ?>
     <div class="clear"><!--  --></div>
 </div>
-<? } ?>
+<?php } ?>

@@ -3,7 +3,7 @@ echo form_open_multipart('items/do_excel_import/',array('id'=>'item_form'));
 ?>
 <div id="required_fields_message">Max import data from execel sheet</div>
 <ul id="error_message_box"></ul>
-<b><a href="<?php echo base_url(). '/'.'Import-PHPPOS.xls'; ?>">Download Import Excel Template</a></b>
+<b><a href="<?php echo site_url('items/excel'); ?>">Download Import Excel Template (CSV)</a></b>
 <fieldset id="item_basic_info">
 <legend>Import</legend>
 
@@ -38,11 +38,6 @@ $(document).ready(function()
 	$('#item_form').validate({
 		submitHandler:function(form)
 		{
-			/*
-			make sure the hidden field #item_number gets set
-			to the visible scan_item_number value
-			*/
-			//$('#item_number').val($('#scan_item_number').val());
 			$(form).ajaxSubmit({
 			success:function(response)
 			{

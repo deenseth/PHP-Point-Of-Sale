@@ -4,7 +4,7 @@ class Giftcard extends Model
 	/*
 	Determines if a given giftcard_id is an giftcard
 	*/
-	function exists($giftcard_id)
+	function exists( $giftcard_id )
 	{
 		$this->db->from('giftcards');
 		$this->db->where('giftcard_id',$giftcard_id);
@@ -17,34 +17,21 @@ class Giftcard extends Model
 	/*
 	Returns all the giftcards
 	*/
-	function get_all()
+	function get_all($limit=10000, $offset=0)
 	{
 		$this->db->from('giftcards');
 		$this->db->where('deleted',0);
 		$this->db->order_by("giftcard_number", "asc");
+		$this->db->limit($limit);
+		$this->db->offset($offset);
 		return $this->db->get();
 	}
-
-	function get_all_filtered()
+	
+	function count_all()
 	{
 		$this->db->from('giftcards');
-		/*
-		if ($low_inventory !=0 )
-		{
-			$this->db->where('quantity <=','reorder_level');
-		}
-		if ($is_serialized !=0 )
-		{
-			$this->db->where('is_serialized',1);
-		}
-		if ($no_description!=0 )
-		{
-			$this->db->where('description','');
-		}
-		*/
 		$this->db->where('deleted',0);
-		$this->db->order_by("giftcard_number", "asc");
-		return $this->db->get();
+		return $this->db->count_all_results();
 	}
 
 	/*
@@ -173,29 +160,6 @@ class Giftcard extends Model
 			$suggestions[]=$row->giftcard_number;
 		}
 
-		$this->db->select('giftcard_number');
-		$this->db->from('giftcards');
-		$this->db->where('deleted',0);
-		$this->db->distinct();
-		$this->db->like('giftcard_number', $search);
-		$this->db->order_by("giftcard_number", "asc");
-		$by_category = $this->db->get();
-		foreach($by_category->result() as $row)
-		{
-			$suggestions[]=$row->giftcard_number;
-		}
-
-		$this->db->from('giftcards');
-		$this->db->like('giftcard_number', $search);
-		$this->db->where('deleted',0);
-		$this->db->order_by("giftcard_number", "asc");
-		$by_giftcard_number = $this->db->get();
-		foreach($by_giftcard_number->result() as $row)
-		{
-			$suggestions[]=$row->giftcard_number;
-		}
-
-
 		//only return $limit suggestions
 		if(count($suggestions > $limit))
 		{
@@ -203,57 +167,6 @@ class Giftcard extends Model
 		}
 		return $suggestions;
 
-	}
-
-	function get_giftcard_search_suggestions($search,$limit=25)
-	{
-		$suggestions = array();
-
-		$this->db->from('giftcards');
-		$this->db->where('deleted',0);
-		$this->db->like('giftcard_number', $search);
-		$this->db->order_by("giftcard_number", "asc");
-		$by_number = $this->db->get();
-		foreach($by_number->result() as $row)
-		{
-			$suggestions[]=$row->giftcard_id.'|'.$row->giftcard_number;
-		}
-
-		$this->db->from('giftcards');
-		$this->db->where('deleted',0);
-		$this->db->like('giftcard_number', $search);
-		$this->db->order_by("giftcard_number", "asc");
-		$by_giftcard_number = $this->db->get();
-		foreach($by_giftcard_number->result() as $row)
-		{
-			$suggestions[]=$row->giftcard_id.'|'.$row->giftcard_number;
-		}
-
-		//only return $limit suggestions
-		if(count($suggestions > $limit))
-		{
-			$suggestions = array_slice($suggestions, 0,$limit);
-		}
-		return $suggestions;
-
-	}
-
-	function get_category_suggestions($search)
-	{
-		$suggestions = array();
-		$this->db->distinct();
-		$this->db->select('giftcard_number');
-		$this->db->from('giftcards');
-		$this->db->like('giftcard_number', $search);
-		$this->db->where('deleted', 0);
-		$this->db->order_by("giftcard_number", "asc");
-		$by_category = $this->db->get();
-		foreach($by_category->result() as $row)
-		{
-			$suggestions[]=$row->category;
-		}
-
-		return $suggestions;
 	}
 
 	/*
@@ -262,28 +175,25 @@ class Giftcard extends Model
 	function search($search)
 	{
 		$this->db->from('giftcards');
-		$this->db->where("(giftcard_number LIKE '%".$this->db->escape_like_str($search)."%' or 
-		giftcard_number LIKE '%".$this->db->escape_like_str($search)."%' or 
-		giftcard_number LIKE '%".$this->db->escape_like_str($search)."%') and deleted=0");
+		$this->db->where("giftcard_number LIKE '%".$this->db->escape_like_str($search)."%' and deleted=0");
 		$this->db->order_by("giftcard_number", "asc");
 		return $this->db->get();	
 	}
-
-	function get_categories()
+	
+	public function get_giftcard_value( $giftcard_number )
 	{
-		$this->db->select('giftcard_number');
+		if ( !$this->exists( $this->get_giftcard_id($giftcard_number)))
+			return 0;
+		
 		$this->db->from('giftcards');
-		$this->db->where('deleted',0);
-		$this->db->distinct();
-		$this->db->order_by("giftcard_number", "asc");
-
-		return $this->db->get();
+		$this->db->where('giftcard_number',$giftcard_number);
+		return $this->db->get()->row()->value;
 	}
 	
-	function update( $giftcard_number, $value )
+	function update_giftcard_value( $giftcard_number, $value )
 	{
-		//Update giftcard value
-		$this->db->query('UPDATE '.$this->db->dbprefix('giftcards').' SET `value`='.$value.' WHERE `giftcard_number`='.$giftcard_number );
+		$this->db->where('giftcard_number', $giftcard_number);
+		$this->db->update('giftcards', array('value' => $value));
 	}
 }
 ?>

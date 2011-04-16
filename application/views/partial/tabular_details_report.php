@@ -2,9 +2,9 @@
 	<table class="tablesorter report" id="sortable_table">
 		<thead>
 			<tr>
-				<? if ($headers['details']) { ?>
+				<?php if ($headers['details']) { ?>
 				<th>+</th>
-				<? } ?>
+				<?php } ?>
 				<?php foreach ($headers['summary'] as $header) { ?>
 				<th><?php echo $header; ?></th>
 				<?php } ?>
@@ -13,14 +13,14 @@
 		<tbody>
 			<?php foreach ($summary_data as $key=>$row) { ?>
 			<tr>
-				<? if ($headers['details']) { ?>
+				<?php if ($headers['details']) { ?>
 				<td><a href="#" class="expand">+</a></td>
-				<? } ?>
+				<?php } ?>
 				<?php foreach ($row as $cell) { ?>
 				<td><?php echo $cell; ?></td>
 				<?php } ?>
 			</tr>
-			<? if ($headers['details']) { ?>
+			<?php if ($headers['details']) { ?>
 			<tr>
 				<td colspan="100">
 				<table class="innertable">
@@ -46,7 +46,7 @@
 				
 				</td>
 			</tr>
-			<? } ?>
+			<?php } ?>
 			<?php } ?>
 		</tbody>
 	</table>

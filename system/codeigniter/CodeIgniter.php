@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2010, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -28,7 +28,7 @@
  */
 
 // CI Version
-define('CI_VERSION',	'1.7.2');
+define('CI_VERSION',	'1.7.3');
 
 /*
  * ------------------------------------------------------

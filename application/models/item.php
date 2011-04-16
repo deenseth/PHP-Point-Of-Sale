@@ -8,7 +8,6 @@ class Item extends Model
 	{
 		$this->db->from('items');
 		$this->db->where('item_id',$item_id);
-		$this->db->where('deleted',0);
 		$query = $this->db->get();
 
 		return ($query->num_rows()==1);
@@ -17,12 +16,21 @@ class Item extends Model
 	/*
 	Returns all the items
 	*/
-	function get_all()
+	function get_all($limit=10000, $offset=0)
 	{
 		$this->db->from('items');
 		$this->db->where('deleted',0);
 		$this->db->order_by("name", "asc");
+		$this->db->limit($limit);
+		$this->db->offset($offset);
 		return $this->db->get();
+	}
+	
+	function count_all()
+	{
+		$this->db->from('items');
+		$this->db->where('deleted',0);
+		return $this->db->count_all_results();
 	}
 
 	function get_all_filtered($low_inventory=0,$is_serialized=0,$no_description)
@@ -52,7 +60,6 @@ class Item extends Model
 	{
 		$this->db->from('items');
 		$this->db->where('item_id',$item_id);
-		$this->db->where('deleted',0);
 		
 		$query = $this->db->get();
 
@@ -84,7 +91,6 @@ class Item extends Model
 	{
 		$this->db->from('items');
 		$this->db->where('item_number',$item_number);
-		$this->db->where('deleted',0);
 
 		$query = $this->db->get();
 
@@ -103,7 +109,6 @@ class Item extends Model
 	{
 		$this->db->from('items');
 		$this->db->where_in('item_id',$item_ids);
-		$this->db->where('deleted',0);
 		$this->db->order_by("item", "asc");
 		return $this->db->get();
 	}

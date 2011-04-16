@@ -1,13 +1,13 @@
 <html>
     <body>
 
-        <h1><?=$title?></h1>
+        <h1><?php echo $title?></h1>
 
         <div id="chartdata">
-            <?=$chartHtml?>
+            <?php echo $chartHtml?>
         </div>
 
-        <p><?=$campaignText?></p>
+        <p><?php echo $campaignText?></p>
     </body>
 
 </html>

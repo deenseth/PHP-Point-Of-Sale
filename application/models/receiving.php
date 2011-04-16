@@ -80,7 +80,6 @@ class Receiving extends Model
 			return -1;
 		}
 
-
 		return $receiving_id;
 	}
 
@@ -96,6 +95,22 @@ class Receiving extends Model
 		$this->db->from('receivings');
 		$this->db->where('receiving_id',$receiving_id);
 		return $this->Supplier->get_info($this->db->get()->row()->supplier_id);
+	}
+	
+	//We create a temp table that allows us to do easy report/receiving queries
+	public function create_receivings_items_temp_table()
+	{
+		$this->db->query("CREATE TEMPORARY TABLE ".$this->db->dbprefix('receivings_items_temp')."
+		(SELECT date(receiving_time) as receiving_date, ".$this->db->dbprefix('receivings_items').".receiving_id, comment,payment_type, employee_id, 
+		".$this->db->dbprefix('items').".item_id, ".$this->db->dbprefix('receivings').".supplier_id, quantity_purchased, item_cost_price, item_unit_price,
+		discount_percent, (item_unit_price*quantity_purchased-item_unit_price*quantity_purchased*discount_percent/100) as subtotal,
+		".$this->db->dbprefix('receivings_items').".line as line, serialnumber, ".$this->db->dbprefix('receivings_items').".description as description,
+		ROUND((item_unit_price*quantity_purchased-item_unit_price*quantity_purchased*discount_percent/100),2) as total,
+		(item_unit_price*quantity_purchased-item_unit_price*quantity_purchased*discount_percent/100) - (item_cost_price*quantity_purchased) as profit
+		FROM ".$this->db->dbprefix('receivings_items')."
+		INNER JOIN ".$this->db->dbprefix('receivings')." ON  ".$this->db->dbprefix('receivings_items').'.receiving_id='.$this->db->dbprefix('receivings').'.receiving_id'."
+		INNER JOIN ".$this->db->dbprefix('items')." ON  ".$this->db->dbprefix('receivings_items').'.item_id='.$this->db->dbprefix('items').'.item_id'."
+		GROUP BY receiving_id, item_id, line)");
 	}
 
 

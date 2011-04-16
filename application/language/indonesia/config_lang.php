@@ -17,8 +17,13 @@ $lang['config_company_website_url']='Situs Perusahaan bukan URL yang benar(http:
 $lang['config_saved_successfully']='Konfigurasi berhasil disimpan';
 $lang['config_saved_unsuccessfully']='Konfigurasi tidak berhasil disimpan';
 $lang['config_return_policy_required']='Kebiajak retur wajib diisi';
-$lang['config_printe_after_sale']='Cetak bon setelah penjualan';
+$lang['config_print_after_sale']='Cetak bon setelah penjualan';
 $lang['config_language'] = 'Language';
 $lang['config_timezone'] = 'Timezone';
 $lang['config_mc_api_key'] = 'MailChimp API Key';
+$lang['config_enable_credit_card_processing'] = 'Integrated Credit Card Processing';
+$lang['config_authorize_net_api_login_id'] = 'Authorize.net API Login ID';
+$lang['config_authorize_net_transaction_key'] = 'Authorize.net Transaction Key';
+$lang['config_authorize_net_md5_hash'] = 'Authorize.net MD5 Hash';
+$lang['config_must_be_pci_compliant'] = 'You MUST be PCI compliant to accept integrated credit card payments';
 ?>

@@ -1,11 +1,11 @@
 <html>
     <body>
 
-        <h1><?=$title?></h1>
+        <h1><?php echo $title?></h1>
 
-        <img src="data:image/png;base64,<?=$png?>" />
+        <img src="data:image/png;base64,<?php echo $png?>" />
 
-        <p><?=$campaignText?></p>
+        <p><?php echo $campaignText?></p>
     </body>
 
 </html>

@@ -10,12 +10,12 @@ if($report_service->renderData['data']['export_excel'] == 1){
 ?>
 <div id="page_title" style="margin-bottom:8px;"><?php echo $report_service->renderData['data']['title'] ?></div>
 <div id="page_subtitle" style="margin-bottom:8px;"><?php echo $report_service->renderData['data']['subtitle'] ?></div>
-<?=$report_service->render()?>
-<?=$report_service->renderData['data']['export_excel'] ? '' : campaign_export_button()?>
-<?=$report_service->renderData['data']['add_to_group'] 
+<?php echo $report_service->render()?>
+<?php echo $report_service->renderData['data']['export_excel'] ? '' : campaign_export_button()?>
+<?php echo $report_service->renderData['data']['add_to_group'] 
     && !$report_service->renderData['data']['export_excel'] 
     ? add_to_group_button() : ''?>
-<?=$report_service->renderData['data']['export_excel'] 
+<?php echo $report_service->renderData['data']['export_excel'] 
         ? '' 
         :  repeatable_campaign_button($report_service->renderData['data']['report_name'], $report_service->renderData['data']['report_params']) ?>
 <div id="feedback_bar"></div>

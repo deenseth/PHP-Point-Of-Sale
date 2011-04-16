@@ -14,7 +14,6 @@ $lang['common_address_1']='Address 1';
 $lang['common_address_2']='Address 2';
 $lang['common_city']='City';
 $lang['common_state']='State';
-$lang['common_state']='State';
 $lang['common_zip']='Zip';
 $lang['common_country']='Country';
 $lang['common_comments']='Comments';
@@ -50,5 +49,5 @@ $lang['common_mailchimp_dashboard_rejected']='No MailChimp API key found. Please
 $lang['common_mailchimp_dashboard_lists']='List Management';
 $lang['common_mailchimp_dashboard_lists_helper']='Select a list to view your subscribers';
 $lang['common_mailchimp_dashboard_listbuttons']='Your Lists';
-
+$lang['common_address']='Address';
 ?>

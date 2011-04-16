@@ -242,7 +242,7 @@ else
 			if (isset($payments[$this->lang->line('sales_integrated_credit_card')]))
 			{	
 			?>
-			<form method="post" action="<?php echo AuthorizeNetDPM::LIVE_URL;?>" id="credit_card_form">
+			<form method="post" action="<?php echo AuthorizeNetDPM::SANDBOX_URL;?>" id="credit_card_form">
 			       
 			      <?php echo $sim->getHiddenFieldString();
 			    ?>

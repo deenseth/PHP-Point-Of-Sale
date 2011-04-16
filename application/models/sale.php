@@ -16,7 +16,15 @@ class Sale extends Model
 
 		return ($query->num_rows()==1);
 	}
-
+	
+	function update($sale_data, $sale_id)
+	{
+		$this->db->where('sale_id', $sale_id);
+		$success = $this->db->update('sales',$sale_data);
+		
+		return $success;
+	}
+	
 	function save ($items,$customer_id,$employee_id,$comment,$payments,$sale_id=false)
 	{
 		if(count($items)==0)
@@ -27,7 +35,7 @@ class Sale extends Model
 		$payment_types='';
 		foreach($payments as $payment_id=>$payment)
 		{
-			$payment_types=$payment_types.$payment['payment_type'].': '.to_currency($payment['payment_amount']).'<br>';
+			$payment_types=$payment_types.$payment['payment_type'].': '.to_currency($payment['payment_amount']).'<br />';
 		}
 
 		$sales_data = array(
@@ -50,8 +58,8 @@ class Sale extends Model
 			{
 				/* We have a gift card and we have to deduct the used value from the total value of the card. */
 				$splitpayment = explode( ':', $payment['payment_type'] );
-				$cur_giftcard_value = $this->getGiftcardValue( $splitpayment[1] );
-				$this->Giftcard->update( $splitpayment[1], $cur_giftcard_value - $payment['payment_amount'] );
+				$cur_giftcard_value = $this->Giftcard->get_giftcard_value( $splitpayment[1] );
+				$this->Giftcard->update_giftcard_value( $splitpayment[1], $cur_giftcard_value - $payment['payment_amount'] );
 			}
 
 			$sales_payments_data = array
@@ -125,6 +133,21 @@ class Sale extends Model
 		
 		return $sale_id;
 	}
+	
+	function delete($sale_id)
+	{
+		//Run these queries as a transaction, we want to make sure we do all or nothing
+		$this->db->trans_start();
+		
+		$this->db->delete('sales_payments', array('sale_id' => $sale_id)); 
+		$this->db->delete('sales_items_taxes', array('sale_id' => $sale_id)); 
+		$this->db->delete('sales_items', array('sale_id' => $sale_id)); 
+		$this->db->delete('sales', array('sale_id' => $sale_id)); 
+		
+		$this->db->trans_complete();
+				
+		return $this->db->trans_status();
+	}
 
 	function get_sale_items($sale_id)
 	{
@@ -180,8 +203,11 @@ class Sale extends Model
 		$this->db->query('UPDATE '.$this->db->dbprefix('sales_items_temp'). ' SET total=subtotal WHERE total IS NULL');
 	}
 	
-	public function getGiftcardValue( $giftcardNumber )
+	public function get_giftcard_value( $giftcardNumber )
 	{
+		if ( !$this->Giftcard->exists( $this->Giftcard->get_giftcard_id($giftcardNumber)))
+			return 0;
+		
 		$this->db->from('giftcards');
 		$this->db->where('giftcard_number',$giftcardNumber);
 		return $this->db->get()->row()->value;

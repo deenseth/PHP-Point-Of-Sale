@@ -1,10 +1,6 @@
 <div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
 <ul id="error_message_box"></ul>
 <?php
-echo form_open('giftcards/find_giftcard_info/'.$giftcard_info->giftcard_id,array('id'=>'giftcard_number_form'));
-?>
-<?php
-echo form_close();
 echo form_open('giftcards/save/'.$giftcard_info->giftcard_id,array('id'=>'giftcard_form'));
 ?>
 <fieldset id="giftcard_basic_info">
@@ -54,11 +50,6 @@ $(document).ready(function()
 	$('#giftcard_form').validate({
 		submitHandler:function(form)
 		{
-			/*
-			make sure the hidden field #giftcard_number gets set
-			to the visible scan_giftcard_number value
-			*/
-			$('#giftcard_number').val($('#scan_giftcard_number').val());
 			$(form).ajaxSubmit({
 			success:function(response)
 			{
@@ -83,7 +74,7 @@ $(document).ready(function()
 				required:true,
 				number:true
 			}
-   	},
+   		},
 		messages:
 		{
 			giftcard_number:

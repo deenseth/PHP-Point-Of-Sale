@@ -47,7 +47,7 @@ class Receiving_lib
 		$this->CI->session->set_userdata('recv_mode',$mode);
 	}
 
-	function add_item($item_id,$quantity=1,$discount=0,$price=null,$tax=null,$description=null,$serialnumber=null)
+	function add_item($item_id,$quantity=1,$discount=0,$price=null,$description=null,$serialnumber=null)
 	{
 		//make sure item exists in database.
 		if(!$this->CI->Item->exists($item_id))
@@ -153,6 +153,19 @@ class Receiving_lib
 
 		return false;
 	}
+	
+	function is_valid_item_kit($item_kit_id)
+	{
+		//KIT #
+		$pieces = explode(' ',$item_kit_id);
+
+		if(count($pieces)==2)
+		{
+			return $this->CI->Item_kit->exists($pieces[1]);
+		}
+
+		return false;
+	}
 
 	function return_entire_receiving($receipt_receiving_id)
 	{
@@ -165,9 +178,21 @@ class Receiving_lib
 
 		foreach($this->CI->Receiving->get_receiving_items($receiving_id)->result() as $row)
 		{
-			$this->add_item($row->item_id,-$row->quantity_purchased,$row->discount_percent,$row->item_unit_price,null,$row->description,$row->serialnumber);
+			$this->add_item($row->item_id,-$row->quantity_purchased,$row->discount_percent,$row->item_unit_price,$row->description,$row->serialnumber);
 		}
 		$this->set_supplier($this->CI->Receiving->get_supplier($receiving_id)->person_id);
+	}
+	
+	function add_item_kit($external_item_kit_id)
+	{
+		//KIT #
+		$pieces = explode(' ',$external_item_kit_id);
+		$item_kit_id = $pieces[1];
+		
+		foreach ($this->CI->Item_kit_items->get_info($item_kit_id) as $item_kit_item)
+		{
+			$this->add_item($item_kit_item['item_id'], $item_kit_item['quantity']);
+		}
 	}
 
 	function copy_entire_receiving($receiving_id)
@@ -177,7 +202,7 @@ class Receiving_lib
 
 		foreach($this->CI->Receiving->get_receiving_items($receiving_id)->result() as $row)
 		{
-			$this->add_item($row->item_id,$row->quantity_purchased,$row->discount_percent,$row->item_unit_price,null,$row->description,$row->serialnumber);
+			$this->add_item($row->item_id,$row->quantity_purchased,$row->discount_percent,$row->item_unit_price,$row->description,$row->serialnumber);
 		}
 		$this->set_supplier($this->CI->Receiving->get_supplier($receiving_id)->person_id);
 
@@ -212,40 +237,6 @@ class Receiving_lib
 		$this->delete_supplier();
 	}
 
-	function get_taxes()
-	{
-		$taxes = array();
-		foreach($this->get_cart() as $line=>$item)
-		{
-			$tax_info = $this->CI->Item_taxes->get_info($item['item_id']);
-
-			foreach($tax_info as $tax)
-			{
-				$name = $tax['percent'].'% ' . $tax['name'];
-				$tax_amount=($item['price']*$item['quantity']-$item['price']*$item['quantity']*$item['discount']/100)*(($tax['percent'])/100);
-
-
-				if (!isset($taxes[$name]))
-				{
-					$taxes[$name] = 0;
-				}
-				$taxes[$name] += $tax_amount;
-			}
-		}
-
-		return $taxes;
-	}
-
-	function get_subtotal()
-	{
-		$subtotal = 0;
-		foreach($this->get_cart() as $item)
-		{
-		    $subtotal+=($item['price']*$item['quantity']-$item['price']*$item['quantity']*$item['discount']/100);
-		}
-		return $subtotal;
-	}
-
 	function get_total()
 	{
 		$total = 0;
@@ -253,12 +244,7 @@ class Receiving_lib
 		{
             $total+=($item['price']*$item['quantity']-$item['price']*$item['quantity']*$item['discount']/100);
 		}
-
-		foreach($this->get_taxes() as $tax)
-		{
-			$total+=$tax;
-		}
-
+		
 		return $total;
 	}
 }

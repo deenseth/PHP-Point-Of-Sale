@@ -1,5 +1,5 @@
 <script src="<?php echo base_url();?>js/jsDatePick.jquery.min.1.3.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
-<script src="<?php echo base_url();?>js/date.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
+<script src="<?php echo base_url();?>js/easyDate.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
 <link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/jsDatePick_ltr.css" />
 
 <h3>Schedule Your Campaign</h3>

@@ -7,7 +7,7 @@ $this->load->view("partial/header");
 <script type="text/javascript">
 swfobject.embedSWF(
 "<?php echo base_url(); ?>open-flash-chart.swf", "chart",
-"775", "420", "9.0.0", "expressInstall.swf",
+"100%", "100%", "9.0.0", "expressInstall.swf",
 {"data-file":"<?php echo $data_file; ?>"} )
 </script>
 <?php echo campaign_export_script(true)?>

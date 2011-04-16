@@ -1,5 +1,6 @@
 <?php
 require_once ("secure_area.php");
+require_once (APPPATH."libraries/anet_php_sdk/AuthorizeNet.php");
 class Sales extends Secure_area
 {
 	function __construct()
@@ -16,6 +17,7 @@ class Sales extends Secure_area
 	function item_search()
 	{
 		$suggestions = $this->Item->get_item_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		$suggestions = array_merge($suggestions, $this->Item_kit->get_item_kit_search_suggestions($this->input->post('q'),$this->input->post('limit')));
 		echo implode("\n",$suggestions);
 	}
 
@@ -55,31 +57,36 @@ class Sales extends Secure_area
  			$this->_reload($data);
  			return;
 		}
-
+		
 		$payment_type=$this->input->post('payment_type');
 		if ( $payment_type == $this->lang->line('sales_giftcard') )
 		{
+			$payments = $this->sale_lib->get_payments();
 			$payment_type=$this->input->post('payment_type').':'.$payment_amount=$this->input->post('amount_tendered');
-			$cur_giftcard_value = $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') );
+			$current_payments_with_giftcard = isset($payments[$payment_type]) ? $payments[$payment_type]['payment_amount'] : 0;
+			$cur_giftcard_value = $this->Giftcard->get_giftcard_value( $this->input->post('amount_tendered') ) - $current_payments_with_giftcard;
 			if ( $cur_giftcard_value <= 0 )
 			{
-				$data['error']='Giftcard balance is '.to_currency( $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) ).' !';
+				$data['error']='Giftcard balance is '.to_currency( $this->Giftcard->get_giftcard_value( $this->input->post('amount_tendered') ) ).' !';
 				$this->_reload($data);
 				return;
 			}
-			elseif ( ( $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ) > 0 )
+			elseif ( ( $this->Giftcard->get_giftcard_value( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ) > 0 )
 			{
-				$data['warning']='Giftcard balance is '.to_currency( $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ).' !';
+				$data['warning']='Giftcard balance is '.to_currency( $this->Giftcard->get_giftcard_value( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ).' !';
 			}
-			$payment_amount=min( $this->sale_lib->get_total(), $this->Sale->getGiftcardValue( $this->input->post('amount_tendered') ) );
+			$payment_amount=min( $this->sale_lib->get_total(), $this->Giftcard->get_giftcard_value( $this->input->post('amount_tendered') ) );
 		}
 		else
+		{
 			$payment_amount=$this->input->post('amount_tendered');
+		}
 		
 		if( !$this->sale_lib->add_payment( $payment_type, $payment_amount ) )
 		{
 			$data['error']='Unable to Add Payment! Please try again!';
 		}
+		
 		$this->_reload($data);
 	}
 
@@ -94,19 +101,23 @@ class Sales extends Secure_area
 	{
 		$data=array();
 		$mode = $this->sale_lib->get_mode();
-		$item_id_or_number_or_receipt = $this->input->post("item");
+		$item_id_or_number_or_item_kit_or_receipt = $this->input->post("item");
 		$quantity = $mode=="sale" ? 1:-1;
 
-		if($this->sale_lib->is_valid_receipt($item_id_or_number_or_receipt) && $mode=='return')
+		if($this->sale_lib->is_valid_receipt($item_id_or_number_or_item_kit_or_receipt) && $mode=='return')
 		{
-			$this->sale_lib->return_entire_sale($item_id_or_number_or_receipt);
+			$this->sale_lib->return_entire_sale($item_id_or_number_or_item_kit_or_receipt);
 		}
-		elseif(!$this->sale_lib->add_item($item_id_or_number_or_receipt,$quantity))
+		elseif($this->sale_lib->is_valid_item_kit($item_id_or_number_or_item_kit_or_receipt))
+		{
+			$this->sale_lib->add_item_kit($item_id_or_number_or_item_kit_or_receipt);
+		}
+		elseif(!$this->sale_lib->add_item($item_id_or_number_or_item_kit_or_receipt,$quantity))
 		{
 			$data['error']=$this->lang->line('sales_unable_to_add_item');
 		}
 		
-		if($this->sale_lib->out_of_stock($item_id_or_number_or_receipt))
+		if($this->sale_lib->out_of_stock($item_id_or_number_or_item_kit_or_receipt))
 		{
 			$data['warning'] = $this->lang->line('sales_quantity_less_than_zero');
 		}
@@ -167,7 +178,7 @@ class Sales extends Secure_area
 		$data['transaction_time']= date('m/d/Y h:i:s a');
 		$customer_id=$this->sale_lib->get_customer();
 		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
-		$comment = $this->input->post('comment');
+		$comment = $this->input->post('comment') ? $this->input->post('comment') : $this->input->get('transaction_id');
 		$emp_info=$this->Employee->get_info($employee_id);
 		$payment_type = $this->input->post('payment_type');
 		$data['payment_type']=$this->input->post('payment_type');
@@ -219,8 +230,7 @@ class Sales extends Secure_area
 		$data['receipt_title']=$this->lang->line('sales_receipt');
 		$data['transaction_time']= date('m/d/Y h:i:s a', strtotime($sale_info['sale_time']));
 		$customer_id=$this->sale_lib->get_customer();
-		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
-		$emp_info=$this->Employee->get_info($employee_id);
+		$emp_info=$this->Employee->get_info($sale_info['employee_id']);
 		$data['payment_type']=$sale_info['payment_type'];
 		$data['amount_change']=to_currency($this->sale_lib->get_amount_due() * -1);
 		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
@@ -235,7 +245,65 @@ class Sales extends Secure_area
 		$this->sale_lib->clear_all();
 
 	}
+	
+	function edit($sale_id)
+	{
+		$data = array();
 
+		$data['customers'] = array('' => 'No Customer');
+		foreach ($this->Customer->get_all()->result() as $customer)
+		{
+			$data['customers'][$customer->person_id] = $customer->first_name . ' '. $customer->last_name;
+		}
+
+		$data['employees'] = array();
+		foreach ($this->Employee->get_all()->result() as $employee)
+		{
+			$data['employees'][$employee->person_id] = $employee->first_name . ' '. $employee->last_name;
+		}
+
+		$data['sale_info'] = $this->Sale->get_info($sale_id)->row_array();
+				
+		
+		$this->load->view('sales/edit', $data);
+	}
+	
+	function delete($sale_id)
+	{
+		$data = array();
+		
+		if ($this->Sale->delete($sale_id))
+		{
+			$data['success'] = true;
+		}
+		else
+		{
+			$data['success'] = false;
+		}
+		
+		$this->load->view('sales/delete', $data);
+		
+	}
+	
+	function save($sale_id)
+	{
+		$sale_data = array(
+			'sale_time' => date('Y-m-d', strtotime($this->input->post('date'))),
+			'customer_id' => $this->input->post('customer_id') ? $this->input->post('customer_id') : null,
+			'employee_id' => $this->input->post('employee_id'),
+			'comment' => $this->input->post('comment')
+		);
+		
+		if ($this->Sale->update($sale_data, $sale_id))
+		{
+			echo json_encode(array('success'=>true,'message'=>$this->lang->line('sales_successfully_updated')));
+		}
+		else
+		{
+			echo json_encode(array('success'=>false,'message'=>$this->lang->line('sales_unsuccessfully_updated')));
+		}
+	}
+	
 	function _reload($data=array())
 	{
 		$person_info = $this->Employee->get_logged_in_employee_info();
@@ -257,13 +325,45 @@ class Sales extends Secure_area
 			$this->lang->line('sales_debit') => $this->lang->line('sales_debit'),
 			$this->lang->line('sales_credit') => $this->lang->line('sales_credit')
 		);
+		
+		if ($this->Appconfig->get('enable_credit_card_processing'))
+		{
+			$data['payment_options'][$this->lang->line('sales_integrated_credit_card')] = $this->lang->line('sales_integrated_credit_card');
+		}
 
 		$customer_id=$this->sale_lib->get_customer();
 		if($customer_id!=-1)
 		{
 			$info=$this->Customer->get_info($customer_id);
 			$data['customer']=$info->first_name.' '.$info->last_name;
+			$data['customer_info'] = $info;
 		}
+		
+		if (isset($data['payments'][$this->lang->line('sales_integrated_credit_card')]))
+		{
+			$data['cc_amount'] = $data['payments'][$this->lang->line('sales_integrated_credit_card')]['payment_amount'];
+			$data['time'] = time();
+			$data['fp_sequence'] = $data['time'];
+			$data['fp'] = AuthorizeNetDPM::getFingerprint($this->config->item('authorize_net_api_login_id'), $this->config->item('authorize_net_transaction_key'), $data['cc_amount'], $data['fp_sequence'], $data['time']);
+			$data['sim'] = new AuthorizeNetSIM_Form(
+	            array(
+	            'x_amount'        => $data['cc_amount'],
+	            'x_fp_sequence'   => $data['fp_sequence'],
+	            'x_fp_hash'       => $data['fp'],
+	            'x_fp_timestamp'  => $data['time'],
+	            'x_relay_response'=> "TRUE",
+	            'x_relay_url'     => site_url('credit_card_receiver/index'),
+	            'x_login'         => $this->config->item('authorize_net_api_login_id'),
+	            'x_test_request'  => FALSE,
+	            )
+	        );
+		}
+		
+		if ($this->input->get('response_reason_text'))
+		{
+			$data['error'] = $this->input->get('response_reason_text');
+		}
+		
 		$this->load->view("sales/register",$data);
 	}
 
@@ -273,5 +373,63 @@ class Sales extends Secure_area
     	$this->_reload();
 
     }
+	
+	function suspend()
+	{
+		$data['cart']=$this->sale_lib->get_cart();
+		$data['subtotal']=$this->sale_lib->get_subtotal();
+		$data['taxes']=$this->sale_lib->get_taxes();
+		$data['total']=$this->sale_lib->get_total();
+		$data['receipt_title']=$this->lang->line('sales_receipt');
+		$data['transaction_time']= date('m/d/Y h:i:s a');
+		$customer_id=$this->sale_lib->get_customer();
+		$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
+		$comment = $this->input->post('comment');
+		$emp_info=$this->Employee->get_info($employee_id);
+		$payment_type = $this->input->post('payment_type');
+		$data['payment_type']=$this->input->post('payment_type');
+		//Alain Multiple payments
+		$data['payments']=$this->sale_lib->get_payments();
+		$data['amount_change']=to_currency($this->sale_lib->get_amount_due() * -1);
+		$data['employee']=$emp_info->first_name.' '.$emp_info->last_name;
+
+		if($customer_id!=-1)
+		{
+			$cust_info=$this->Customer->get_info($customer_id);
+			$data['customer']=$cust_info->first_name.' '.$cust_info->last_name;
+		}
+
+		$total_payments = 0;
+
+		foreach($data['payments'] as $payment)
+		{
+			$total_payments += $payment['payment_amount'];
+		}
+
+		//SAVE sale to database
+		$data['sale_id']='POS '.$this->Sale_suspended->save($data['cart'], $customer_id,$employee_id,$comment,$data['payments']);
+		if ($data['sale_id'] == 'POS -1')
+		{
+			$data['error_message'] = $this->lang->line('sales_transaction_failed');
+		}
+		$this->sale_lib->clear_all();
+		$this->_reload(array('success' => $this->lang->line('sales_successfully_suspended_sale')));
+	}
+	
+	function suspended()
+	{
+		$data = array();
+		$data['suspended_sales'] = $this->Sale_suspended->get_all()->result_array();
+		$this->load->view('sales/suspended', $data);
+	}
+	
+	function unsuspend()
+	{
+		$sale_id = $this->input->post('suspended_sale_id');
+		$this->sale_lib->clear_all();
+		$this->sale_lib->copy_entire_suspended_sale($sale_id);
+		$this->Sale_suspended->delete($sale_id);
+    	$this->_reload();
+	}
 }
 ?>

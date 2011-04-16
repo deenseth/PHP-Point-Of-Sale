@@ -10,9 +10,14 @@ class Items extends Secure_area implements iData_controller
 
 	function index()
 	{
-		$data['controller_name']=strtolower($this->uri->segment(1));
+		$config['base_url'] = site_url('?c=items&m=index');
+		$config['total_rows'] = $this->Item->count_all();
+		$config['per_page'] = '20'; 
+		$this->pagination->initialize($config);
+		
+		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_items_manage_table($this->Item->get_all(),$this);
+		$data['manage_table']=get_items_manage_table($this->Item->get_all($config['per_page'], $this->input->get('per_page')),$this);
 		$this->load->view('items/manage',$data);
 	}
 
@@ -26,7 +31,7 @@ class Items extends Secure_area implements iData_controller
 		$data['low_inventory']=$this->input->post('low_inventory');
 		$data['is_serialized']=$this->input->post('is_serialized');
 		$data['no_description']=$this->input->post('no_description');
-		$data['controller_name']=strtolower($this->uri->segment(1));
+		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
 		$data['manage_table']=get_items_manage_table($this->Item->get_all_filtered($low_inventory,$is_serialized,$no_description),$this);
 		$this->load->view('items/manage',$data);
@@ -53,7 +58,13 @@ class Items extends Secure_area implements iData_controller
 		$suggestions = $this->Item->get_search_suggestions($this->input->post('q'),$this->input->post('limit'));
 		echo implode("\n",$suggestions);
 	}
-
+	
+	function item_search()
+	{
+		$suggestions = $this->Item->get_item_search_suggestions($this->input->post('q'),$this->input->post('limit'));
+		echo implode("\n",$suggestions);
+	}
+	
 	/*
 	Gives search suggestions based on what is being searched for
 	*/
@@ -149,6 +160,7 @@ class Items extends Secure_area implements iData_controller
 		'unit_price'=>$this->input->post('unit_price'),
 		'quantity'=>$this->input->post('quantity'),
 		'reorder_level'=>$this->input->post('reorder_level'),
+		'location'=>$this->input->post('location'),
 		'allow_alt_description'=>$this->input->post('allow_alt_description'),
 		'is_serialized'=>$this->input->post('is_serialized')
 		);
@@ -224,7 +236,6 @@ class Items extends Secure_area implements iData_controller
 		{			
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_updating').' '.
 			$cur_item_info->name,'item_id'=>$item_id));
-			
 		}
 		else//failure
 		{	
@@ -289,109 +300,115 @@ class Items extends Secure_area implements iData_controller
 			echo json_encode(array('success'=>false,'message'=>$this->lang->line('items_cannot_be_deleted')));
 		}
 	}
-
-	/**
-	 * Display form: Import data from an excel file
-	 * @author: Nguyen OJB
-	 * @since: 10.1
-	 */
+	
+	function excel()
+	{
+		$data = file_get_contents("import_items.csv");
+		$name = 'import_items.csv';
+		force_download($name, $data);
+	}
+	
 	function excel_import()
 	{
 		$this->load->view("items/excel_import", null);
 	}
 
-	/**
-	 * Read data from excel file -> save it to databse
-	 * @author: Nguyen OJB
-	 * @since: 10.1
-	 */
 	function do_excel_import()
 	{
-		$msg = "do_excel_import";
-		$failCodes = null;
-		$successCode = null;
+		$msg = 'do_excel_import';
+		$failCodes = array();
 		if ($_FILES['file_path']['error']!=UPLOAD_ERR_OK)
 		{
 			$msg = $this->lang->line('items_excel_import_failed');
 			echo json_encode( array('success'=>false,'message'=>$msg) );
-			return ;
+			return;
 		}
 		else
 		{
-			$this->load->library('spreadsheetexcelreader');
-			$this->spreadsheetexcelreader->store_extended_info = false;
-			$success = $this->spreadsheetexcelreader->read($_FILES['file_path']['tmp_name']);
-
-			$rowCount = $this->spreadsheetexcelreader->rowcount(0);
-			if($rowCount > 2){
-				for($i = 3; $i<=$rowCount; $i++){
-					$item_code = $this->spreadsheetexcelreader->val($i, 'A');
-					$item_id = $this->Item->get_item_id($item_code);
+			if (($handle = fopen($_FILES['file_path']['tmp_name'], "r")) !== FALSE)
+			{
+				//Skip first row
+				fgetcsv($handle);
+				
+				$i=1;
+				while (($data = fgetcsv($handle)) !== FALSE) 
+				{
 					$item_data = array(
-					'name'			=>	$this->spreadsheetexcelreader->val($i, 'B'),
-					'description'	=>	$this->spreadsheetexcelreader->val($i, 'K'),
-					'category'		=>	$this->spreadsheetexcelreader->val($i, 'C'),
-					//'supplier_id'	=>	null,
-					'item_number'	=>	$this->spreadsheetexcelreader->val($i, 'A'),
-					'cost_price'	=>	$this->spreadsheetexcelreader->val($i, 'E'),
-					'unit_price'	=>	$this->spreadsheetexcelreader->val($i, 'F'),
-					'quantity'		=>	$this->spreadsheetexcelreader->val($i, 'I'),
-					'reorder_level'	=>	$this->spreadsheetexcelreader->val($i, 'J')
+					'name'			=>	$data[1],
+					'description'	=>	$data[12],
+					'category'		=>	$data[2],
+					'cost_price'	=>	$data[4],
+					'unit_price'	=>	$data[5],
+					'quantity'		=>	$data[10],
+					'reorder_level'	=>	$data[11],
+					'supplier_id'	=>  $this->Supplier->exists($data[3]) ? $data[3] : null,
+					'allow_alt_description'=> $data[13] != '' ? '1' : '0',
+					'is_serialized'=>$data[14] != '' ? '1' : '0'
 					);
-
-					if($this->Item->save($item_data,$item_id)) {
+					$item_number = $data[0];
+					
+					if ($item_number != "")
+					{
+						$item_data['item_number'] = $item_number;
+					}
+					
+					if($this->Item->save($item_data)) 
+					{
 						$items_taxes_data = null;
 						//tax 1
-						if( is_numeric($this->spreadsheetexcelreader->val($i, 'G')) ){
-							$items_taxes_data[] = array('name'=>'Sales Tax 1', 'percent'=>$this->spreadsheetexcelreader->val($i, 'G') );
+						if( is_numeric($data[7]) && $data[6]!='' )
+						{
+							$items_taxes_data[] = array('name'=>$data[6], 'percent'=>$data[7] );
 						}
 
-						//taxt 2
-						if( is_numeric($this->spreadsheetexcelreader->val($i, 'H')) ){
-							$items_taxes_data[] = array('name'=>'Sales Tax 2', 'percent'=>$this->spreadsheetexcelreader->val($i, 'H') );
+						//tax 2
+						if( is_numeric($data[9]) && $data[8]!='' )
+						{
+							$items_taxes_data[] = array('name'=>$data[8], 'percent'=>$data[9] );
 						}
 
 						// save tax values
-						if(count($items_taxes_data) > 0){
-							$this->Item_taxes->save($items_taxes_data, $item_id);
+						if(count($items_taxes_data) > 0)
+						{
+							$this->Item_taxes->save($items_taxes_data, $item_data['item_id']);
 						}
-						$successCode[] = $item_code;
 						
-						//Ramel Inventory Tracking
-						//update Inventory count details from Excel Import
-							$item_code = $this->spreadsheetexcelreader->val($i, 'A');
-							$item_id = $this->Item->get_item_id($item_code);
 							$employee_id=$this->Employee->get_logged_in_employee_info()->person_id;
 							$emp_info=$this->Employee->get_info($employee_id);
-							$comment ='Qty Excel Imported: means BEGIN/RESET/ACTUAL count';
+							$comment ='Qty CSV Imported';
 							$excel_data = array
 								(
-								'trans_items'=>$item_id,
+								'trans_items'=>$item_data['item_id'],
 								'trans_user'=>$employee_id,
 								'trans_comment'=>$comment,
-								'trans_inventory'=>$this->spreadsheetexcelreader->val($i, 'I')
+								'trans_inventory'=>$data[10]
 								);
 								$this->db->insert('inventory',$excel_data);
 						//------------------------------------------------Ramel
 					}
 					else//insert or update item failure
 					{
-						$failCodes[] = $item_code ;
+						$failCodes[] = $i;
 					}
 				}
-
-			} else {
-				// rowCount < 2
-				echo json_encode( array('success'=>true,'message'=>'Your upload file has no data or not in supported format.') );
+				
+				$i++;
+			}
+			else 
+			{
+				echo json_encode( array('success'=>false,'message'=>'Your upload file has no data or not in supported format.') );
 				return;
 			}
 		}
 
 		$success = true;
-		if(count($failCodes) > 1){
+		if(count($failCodes) > 1)
+		{
 			$msg = "Most items imported. But some were not, here is list of their CODE (" .count($failCodes) ."): ".implode(", ", $failCodes);
 			$success = false;
-		}else{
+		}
+		else
+		{
 			$msg = "Import items successful";
 		}
 

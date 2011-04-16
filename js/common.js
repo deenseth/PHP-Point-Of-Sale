@@ -48,4 +48,46 @@ function set_feedback(text, classname, keep_displayed)
 	{
 		$('#feedback_bar').css('opacity','0');
 	}
+
 }
+
+//keylisteners
+
+$(window).jkey('f1',function(){
+window.location = BASE_URL + '/customers/index';
+});
+
+
+$(window).jkey('f2',function(){
+window.location = BASE_URL + '/items/index';
+});
+
+
+$(window).jkey('f3',function(){
+window.location = BASE_URL + '/reports/index';
+});
+
+$(window).jkey('f4',function(){
+window.location = BASE_URL + '/suppliers/index';
+});
+
+$(window).jkey('f5',function(){
+window.location = BASE_URL + '/receivings/index';
+});
+
+
+$(window).jkey('f6',function(){
+window.location = BASE_URL + '/sales/index';
+});
+
+$(window).jkey('f7',function(){
+window.location = BASE_URL + '/employees/index';
+});
+
+$(window).jkey('f8',function(){
+window.location = BASE_URL + '/config/index';
+});
+
+$(window).jkey('f9',function(){
+window.location = BASE_URL + '/giftcards/index';
+});

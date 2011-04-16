@@ -10,11 +10,22 @@ if (isset($warning))
 {
 	echo "<div class='warning_mesage'>".$warning."</div>";
 }
+
+if (isset($success))
+{
+	echo "<div class='success_message'>".$success."</div>";
+}
 ?>
 <div id="register_wrapper">
 <?php echo form_open("sales/change_mode",array('id'=>'mode_form')); ?>
 	<span><?php echo $this->lang->line('sales_mode') ?></span>
 <?php echo form_dropdown('mode',$modes,$mode,'onchange="$(\'#mode_form\').submit();"'); ?>
+<div id="show_suspended_sales_button">
+	<?php echo anchor("sales/suspended/width:425",
+	"<div class='small_button'><span style='font-size:73%;'>".$this->lang->line('sales_suspended_sales')."</span></div>",
+	array('class'=>'thickbox none','title'=>$this->lang->line('sales_suspended_sales')));
+	?>
+</div>
 </form>
 <?php echo form_open("sales/add",array('id'=>'add_item_form')); ?>
 <label id="item_label" for="item">
@@ -64,14 +75,15 @@ if(count($cart)==0)
 }
 else
 {
-		foreach($cart as $line=>$item)
+	foreach(array_reverse($cart, true) as $line=>$item)
 	{
+		$cur_item_info = $this->Item->get_info($item['item_id']);
 		echo form_open("sales/edit_item/$line");
 	?>
 		<tr>
 		<td><?php echo anchor("sales/delete_item/$line",'['.$this->lang->line('common_delete').']');?></td>
 		<td><?php echo $item['item_number']; ?></td>
-		<td style="align:center;"><?php echo $item['name']; ?></td>
+		<td style="align:center;"><?php echo $item['name']; ?><br /> [<?php echo $cur_item_info->quantity; ?> in stock]</td>
 
 
 
@@ -146,6 +158,10 @@ else
         	if($item['is_serialized']==1)
         	{
         		echo form_input(array('name'=>'serialnumber','value'=>$item['serialnumber'],'size'=>'20'));
+			}
+			else
+			{
+				echo form_hidden('serialnumber', '');
 			}
 		?>
 		</td>
@@ -223,23 +239,87 @@ else
 		// Only show this part if there is at least one payment entered.
 		if(count($payments) > 0)
 		{
-		?>
+			if (isset($payments[$this->lang->line('sales_integrated_credit_card')]))
+			{	
+			?>
+			<form method="post" action="<?php echo AuthorizeNetDPM::LIVE_URL;?>" id="credit_card_form">
+			       
+			      <?php echo $sim->getHiddenFieldString();
+			    ?>
+			      <fieldset>
+			        <div>
+			          <label><?php echo $this->lang->line("sales_credit_card_number");?></label>
+			          <input type="text" class="text required creditcard" size="15" name="x_card_num" value=""></input>
+			        </div>
+			        <div>
+			          <label><?php echo $this->lang->line("sales_expiration");?></label>
+			          <input type="text" class="text required" size="4" name="x_exp_date" value=""></input>
+			        </div>
+			        <div>
+			          <label><?php echo $this->lang->line("sales_ccv");?></label>
+			          <input type="text" class="text required" size="4" name="x_card_code" value=""></input>
+			        </div>
+			      </fieldset>
+			      <fieldset>
+			        <div>
+			          <label><?php echo $this->lang->line("common_first_name");?></label>
+			          <input type="text" class="text required" size="15" name="x_first_name" value="<?php echo isset($customer_info->first_name) ? $customer_info->first_name : ''; ?>"></input>
+			        </div>
+			        <div>
+			          <label><?php echo $this->lang->line("common_last_name");?></label>
+			          <input type="text" class="text required" size="14" name="x_last_name" value="<?php echo isset($customer_info->last_name) ? $customer_info->last_name : ''; ?>"></input>
+			        </div>
+			      </fieldset>
+			      <fieldset>
+			        <div>
+			          <label><?php echo $this->lang->line("common_address");?></label>
+			          <input type="text" class="text required" size="26" name="x_address" value="<?php echo isset($customer_info->address_1) ? $customer_info->address_1 : ''; ?>"></input>
+			        </div>
+			        <div>
+			          <label><?php echo $this->lang->line("common_city");?></label>
+			          <input type="text" class="text required" size="15" name="x_city" value="<?php echo isset($customer_info->city) ? $customer_info->city : ''; ?>"></input>
+			        </div>
+			      </fieldset>
+			      <fieldset>
+			        <div>
+			          <label><?php echo $this->lang->line("common_state");?></label>
+			          <input type="text" class="text required" size="4" name="x_state" value="<?php echo isset($customer_info->state) ? $customer_info->state : ''; ?>"></input>
+			        </div>
+			        <div>
+			          <label><?php echo $this->lang->line("common_zip");?></label>
+			          <input type="text" class="text required" size="9" name="x_zip" value="<?php echo isset($customer_info->zip) ? $customer_info->zip : ''; ?>"></input>
+			        </div>
+			        <div>
+			          <label><?php echo $this->lang->line("common_country");?></label>
+			          <input type="text" class="text required" size="22" name="x_country" value="<?php echo isset($customer_info->country) ? $customer_info->country : ''; ?>"></input>
+			        </div>
+			      </fieldset>
+			    </form>	
+				
+			<?php	
+			}
+			?>
 			<div id="finish_sale">
 				<?php echo form_open("sales/complete",array('id'=>'finish_sale_form')); ?>
-				<label id="comment_label" for="comment"><?php echo $this->lang->line('common_comments'); ?>:</label>
-				<?php echo form_textarea(array('name'=>'comment','value'=>'','rows'=>'4','cols'=>'23'));?>
-				<br><br>
-
+				
+				<?php
+				if (!isset($payments[$this->lang->line('sales_integrated_credit_card')]))
+				{	
+				?>
+					<label id="comment_label" for="comment"><?php echo $this->lang->line('common_comments'); ?>:</label>
+					<?php echo form_textarea(array('name'=>'comment','value'=>'','rows'=>'4','cols'=>'23'));?>
+				<?php
+				}
+				?>
+				<br /><br />
 				<?php echo "<div class='small_button' id='finish_sale_button' style='float:left;margin-top:5px;'><span>".$this->lang->line('sales_complete_sale')."</span></div>";
+				echo "<div class='small_button' id='suspend_sale_button' style='float:right;margin-top:5px;'><span>".$this->lang->line('sales_suspend_sale')."</span></div>";
 				?>
 			</div>
 			</form>
 		<?php
 		}
 		?>
-
-
-
     <table width="100%"><tr>
     <td style="width:55%; "><div class="float_left"><?php echo 'Payments Total:' ?></div></td>
     <td style="width:45%; text-align:right;"><div class="float_left" style="text-align:right;font-weight:bold;"><?php echo to_currency($payments_total); ?></div></td>
@@ -260,12 +340,12 @@ else
 				<?php echo $this->lang->line('sales_payment').':   ';?>
 			</td>
 			<td>
-				<?php echo form_dropdown('payment_type',$payment_options,array(),'onchange="if (this.value==\''.$this->lang->line('sales_giftcard').'\') { document.getElementById(\'payment_value_card_number\').innerHTML=\''.$this->lang->line('sales_giftcard_number').'\'; document.getElementById(\'amount_tendered\').value=\'\'; document.getElementById(\'amount_tendered\').focus(); } else { document.getElementById(\'payment_value_card_number\').innerHTML=\''.$this->lang->line('sales_amount_tendered').'\'; }"');?>
+				<?php echo form_dropdown('payment_type',$payment_options,array(), 'id="payment_types"');?>
 			</td>
 			</tr>
 			<tr>
 			<td>
-				<span id="payment_value_card_number"><?php echo $this->lang->line('sales_amount_tendered').':   ';?></span>
+				<span id="amount_tendered_label"><?php echo $this->lang->line('sales_amount_tendered').': ';?></span>
 			</td>
 			<td>
 				<?php echo form_input(array('name'=>'amount_tendered','id'=>'amount_tendered','value'=>to_currency_no_money($amount_due),'size'=>'10'));	?>
@@ -289,8 +369,6 @@ else
 			<th style="width:11%;"><?php echo $this->lang->line('common_delete'); ?></th>
 			<th style="width:60%;"><?php echo 'Type'; ?></th>
 			<th style="width:18%;"><?php echo 'Amount'; ?></th>
-
-
 			</tr>
 			</thead>
 			<tbody id="payment_contents">
@@ -314,7 +392,7 @@ else
 				?>
 			</tbody>
 			</table>
-		    <br>
+		    <br />
 		<?php
 		}
 		?>
@@ -387,9 +465,30 @@ $(document).ready(function()
     {
     	if (confirm('<?php echo $this->lang->line("sales_confirm_finish_sale"); ?>'))
     	{
-    		$('#finish_sale_form').submit();
+			<?php if (isset($payments[$this->lang->line('sales_integrated_credit_card')]))
+			{
+			?>
+	    		$('#credit_card_form').submit();
+			<?php
+			}
+			else
+			{
+			?>
+    			$('#finish_sale_form').submit();
+			<?php
+			}
+			?>
     	}
     });
+
+	$("#suspend_sale_button").click(function()
+	{
+		if (confirm('<?php echo $this->lang->line("sales_confirm_suspend_sale"); ?>'))
+    	{
+			$('#finish_sale_form').attr('action', '<?php echo site_url("sales/suspend"); ?>');
+    		$('#finish_sale_form').submit();
+    	}
+	});
 
     $("#cancel_sale_button").click(function()
     {
@@ -404,6 +503,7 @@ $(document).ready(function()
 	   $('#add_payment_form').submit();
     });
 
+	$("#payment_types").change(checkPaymentTypeGiftcard).ready(checkPaymentTypeGiftcard)
 });
 
 function post_item_form_submit(response)
@@ -421,6 +521,20 @@ function post_person_form_submit(response)
 	{
 		$("#customer").attr("value",response.person_id);
 		$("#select_customer_form").submit();
+	}
+}
+
+function checkPaymentTypeGiftcard()
+{
+	if ($("#payment_types").val() == "<?php echo $this->lang->line('sales_giftcard'); ?>")
+	{
+		$("#amount_tendered_label").html("<?php echo $this->lang->line('sales_giftcard_number'); ?>");
+		$("#amount_tendered").val('');
+		$("#amount_tendered").focus();
+	}
+	else
+	{
+		$("#amount_tendered_label").html("<?php echo $this->lang->line('sales_amount_tendered'); ?>");		
 	}
 }
 

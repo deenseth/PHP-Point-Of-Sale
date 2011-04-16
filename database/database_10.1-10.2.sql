@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `phppos_sales_payments` (
   `payment_type` varchar(40) NOT NULL,
   `payment_amount` decimal(15,2) NOT NULL,
   PRIMARY KEY (`sale_id`,`payment_type`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ALTER TABLE `phppos_sales_payments`
   ADD CONSTRAINT `phppos_sales_payments_ibfk_1` FOREIGN KEY (`sale_id`) REFERENCES `phppos_sales` (`sale_id`);

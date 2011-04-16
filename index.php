@@ -13,6 +13,15 @@
 
 /*
 |---------------------------------------------------------------
+| AUTO DETECT LINE ENDINGS
+|---------------------------------------------------------------
+|
+| Make sure that php tries to detect line endings. This is important
+| when uploading .csv files created on the mac.
+*/
+ini_set('auto_detect_line_endings', true);
+/*
+|---------------------------------------------------------------
 | SYSTEM FOLDER NAME
 |---------------------------------------------------------------
 |

@@ -1,4 +1,6 @@
 <?php
+$lang['sales_giftcard_number']='Gift Card Number';
+$lang['sales_giftcard']='Gift Card';
 $lang['sales_register']='Sales Register';
 $lang['sales_mode']='Register Mode';
 $lang['sales_new_item'] = 'New Item';
@@ -45,9 +47,36 @@ $lang['sales_change_due'] = 'Change Due';
 $lang['sales_payment_not_cover_total'] = 'Payment Amount does not cover Total';
 $lang['sales_transaction_failed'] = 'Sales Transaction Failed';
 $lang['sales_must_enter_numeric'] = 'Must enter numeric value for amount tendered';
+$lang['sales_must_enter_numeric_giftcard'] = 'Must enter numeric value for giftcard number';
 $lang['sales_serial'] = 'Serial';
 $lang['sales_description_abbrv'] = 'Desc';
 $lang['sales_item_out_of_stock'] = 'Item is Out of Stock';
 $lang['sales_item_insufficient_of_stock'] = 'Item is Insufficient of Stock';
 $lang['sales_quantity_less_than_zero'] = 'Warning, Desired Quantity is Insufficient. You can still process the sale, but check your inventory';
+$lang['sales_successfully_updated'] = 'Sale sucessfully updated';
+$lang['sales_unsuccessfully_updated'] = 'Sale unsucessfully updated';
+$lang['sales_edit_sale'] = 'Edit Sale';
+$lang['sales_employee'] = 'Employee';
+$lang['sales_successfully_deleted'] = 'Sale sucessfully deleted';
+$lang['sales_unsuccessfully_deleted'] = 'Sale unsucessfully deleted';
+$lang['sales_delete_entire_sale'] = 'Delete entire sale';
+$lang['sales_delete_confirmation'] = 'Are you sure you want to delete this sale, this action cannot be undone';
+$lang['sales_date'] = 'Sale Date';
+$lang['sales_delete_successful'] = 'You have successfully deleted a sale';
+$lang['sales_delete_unsuccessful'] = 'You have unsuccessfully deleted a sale';
+$lang['sales_suspend_sale'] = 'Suspend Sale';
+$lang['sales_confirm_suspend_sale'] = 'Are you sure you want to suspend this sale?';
+$lang['sales_suspended_sales'] = 'Suspended Sales';
+$lang['sales_suspended_sale_id'] = 'Suspended Sale ID';
+$lang['sales_date'] = 'Date';
+$lang['sales_customer'] = 'Customer';
+$lang['sales_comments'] = 'Comments';
+$lang['sales_unsuspend_and_delete'] = 'Unsuspend and Delete';
+$lang['sales_unsuspend'] = 'Unsuspend';
+$lang['sales_successfully_suspended_sale'] = 'Your sale has been successfully suspended';
+$lang['sales_credit_card_number'] = "Credit Card Number";
+$lang['sales_expiration'] = 'Exp.';
+$lang['sales_ccv'] = 'CCV';
+$lang['sales_integrated_credit_card'] = 'Integrated Credit Card';
+
 ?>

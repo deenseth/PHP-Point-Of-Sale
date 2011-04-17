@@ -9,7 +9,7 @@ class Customers extends Person_controller
 	
 	function index()
 	{
-	        $data['mailchimp']=($this->config->item('mc_api_key') != null);
+		$data['mailchimp']=($this->config->item('mc_api_key') != null);
 		$config['base_url'] = site_url('?c=customers&m=index');
 		$config['total_rows'] = $this->Customer->count_all();
 		$config['per_page'] = '20'; 

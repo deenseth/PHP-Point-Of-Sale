@@ -314,7 +314,7 @@ class Mailchimpdash extends Secure_area
                          'generate_text'=>  true);
         
         $segmentOptions = array();
-        if ($group) {
+        if ($group && $group != 'null') {
             $ploded = explode('-', $group);
             $groupingID = array_shift($ploded);
             $groupName = implode('-', $ploded);
@@ -359,7 +359,8 @@ class Mailchimpdash extends Secure_area
                          'generate_text'=>  true);
         
         $segmentOptions = array();
-        if ($group) {
+        
+        if ($group && $group != 'null') {
             $ploded = explode('-', $group);
             $groupingID = array_shift($ploded);
             $groupName = implode('-', $ploded);

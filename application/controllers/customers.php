@@ -46,14 +46,17 @@ class Customers extends Person_controller
 	function view($customer_id=-1)
 	{
         $email=preg_replace('/.*email:([^\/]*)\/.*/', '$1', uri_string());
-		$data['person_info']=$customer_id == -1 ? $this->Customer->get_by_email($email) : $this->Customer->get_info($customer_id);
-		
-		if (!$data['person_info'] && $email) {
-		    if ($key = $this->config->item('mc_api_key')) {
-                $this->load->library('MailChimp', array($key) , 'MailChimp');
-                $data['person_info'] = $this->MailChimp->getPersonDataByEmail($email);
-		    }
-		}
+        if ($email != uri_string()) {
+		    $data['person_info']=$customer_id == -1 ? $this->Customer->get_by_email($email) : $this->Customer->get_info($customer_id);
+            if (!$data['person_info'] && $email) {
+    		    if ($key = $this->config->item('mc_api_key')) {
+                    $this->load->library('MailChimp', array($key) , 'MailChimp');
+                    $data['person_info'] = $this->MailChimp->getPersonDataByEmail($email);
+    		    }
+    		}
+        } else {
+            $data['person_info'] = $this->Customer->get_info($customer_id);
+        }
 		
 		$this->load->view("customers/form",$data);
 	}

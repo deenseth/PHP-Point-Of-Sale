@@ -78,12 +78,14 @@ class MailChimp extends MCAPI
                 $individual = array_shift($response['data']);
                 $merge_vars = $individual['merges'];
                 $groups = array();
-                foreach ($merge_vars['GROUPINGS'] as $grouping)
-                {
-                    if ($grouping['groups']) {
-                        foreach (explode(',', $grouping['groups']) as $group)
-                        {
-                            $groups[] = $grouping['name'].': '.$group;
+                if (isset($merge_vars['GROUPINGS'])){
+                    foreach ($merge_vars['GROUPINGS'] as $grouping)
+                    {
+                        if ($grouping['groups']) {
+                            foreach (explode(',', $grouping['groups']) as $group)
+                            {
+                                $groups[] = $grouping['name'].': '.$group;
+                            }
                         }
                     }
                 }
@@ -184,7 +186,7 @@ class MailChimp extends MCAPI
                 $merge_vars['GROUPINGS'] = array();
             }
             
-            if ($CI->input->post($list['name'])) {
+            if ($CI->input->post($list['id'])) {
                 $selected = true;
             } 
                 

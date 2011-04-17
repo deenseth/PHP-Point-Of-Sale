@@ -92,7 +92,7 @@ class Customers extends Person_controller
     			    if ($this->MailChimp->handleSubscriptionForPerson($customer_data['person_id'])) {
                         $subscriptionInfo = $this->lang->line('common_successful_subscription');
                     } else {
-                        $subscriptionInfo = $this->lang->line('common_unsuccessful_subscription');
+                        $subscriptionInfo = $this->lang->line('common_unsuccessful_subscription').': '.$this->MailChimp->errorMessage;
                     }
 			    }
 			    
@@ -112,7 +112,7 @@ class Customers extends Person_controller
                     if ($this->MailChimp->handleSubscriptionForPerson($customer_id, true)) {
                         $subscriptionInfo = $this->lang->line('common_successful_subscription');
                     } else {
-                        $subscriptionInfo = $this->lang->line('common_unsuccessful_subscription');
+                        $subscriptionInfo = $this->lang->line('common_unsuccessful_subscription').': '.$this->MailChimp->errorMessage;
                     }
                 }
 			    

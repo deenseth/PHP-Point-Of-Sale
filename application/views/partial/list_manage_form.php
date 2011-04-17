@@ -8,10 +8,11 @@ if ($key = $this->config->item('mc_api_key')) {
 }
 
 foreach ($lists as $list) { 
-$boxdata = array(  'name'        => $list['name'],
-                    'id'          => $list['name'],
-                    'value'       => $list['name'],
+$boxdata = array(  'name'        => $list['id'],
+                    'id'          => $list['id'],
+                    'value'       => $list['id'],
                     'checked'     => $CI->MailChimp->isEmailSubscribedToList($list['id'], $email),
+                    'label'		=> $list['name']
                     );
 ?>
 

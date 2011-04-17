@@ -11,4 +11,3 @@ INSERT INTO `phppos_modules` (`name_lang_key`, `desc_lang_key`, `sort`, `module_
 ('module_giftcards', 'module_giftcards_desc', 9, 'giftcards');
 
 INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES ('giftcards', 1);
-

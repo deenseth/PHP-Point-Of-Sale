@@ -38,5 +38,4 @@ $lang['common_welcome_message']= 'Bienvenido(a) a PHP Point Of Sale. ¡Haz click
 $lang['common_inv']='inv';
 $lang['common_det']='detalles';
 $lang['common_det']='details';
-$lang['common_address']= 'Dirección';
 ?>

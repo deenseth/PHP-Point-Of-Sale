@@ -65,7 +65,6 @@ $lang['sales_delete_confirmation'] = 'Are you sure you want to delete this sale,
 $lang['sales_date'] = 'Sale Date';
 $lang['sales_delete_successful'] = 'You have successfully deleted a sale';
 $lang['sales_delete_unsuccessful'] = 'You have unsuccessfully deleted a sale';
-$lang['sales_integrated_credit_card'] = 'Integrated Credit Card';
 $lang['sales_suspend_sale'] = 'Suspend Sale';
 $lang['sales_confirm_suspend_sale'] = 'Are you sure you want to suspend this sale?';
 $lang['sales_suspended_sales'] = 'Suspended Sales';
@@ -76,7 +75,4 @@ $lang['sales_comments'] = 'Comments';
 $lang['sales_unsuspend_and_delete'] = 'Unsuspend and Delete';
 $lang['sales_unsuspend'] = 'Unsuspend';
 $lang['sales_successfully_suspended_sale'] = 'Your sale has been successfully suspended';
-$lang['sales_credit_card_number'] = "Credit Card Number";
-$lang['sales_expiration'] = 'Exp.';
-$lang['sales_ccv'] = 'CCV';
 ?>

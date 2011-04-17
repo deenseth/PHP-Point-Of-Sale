@@ -58,22 +58,3 @@ ALTER TABLE `phppos_sales_suspended_items_taxes`
 
 ALTER TABLE `phppos_sales_suspended_payments`
   ADD CONSTRAINT `phppos_sales_suspended_payments_ibfk_1` FOREIGN KEY (`sale_id`) REFERENCES `phppos_sales_suspended` (`sale_id`);
-
-
-INSERT INTO `phppos_modules` (`name_lang_key`, `desc_lang_key`, `sort`, `module_id`) 
-VALUES ('module_mailchimp', 'module_mailchimp_desc', 20, 'mailchimpdash');
-
-CREATE TABLE IF NOT EXISTS `phppos_campaignbuilds` (
-    `campaign_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `report_type` VARCHAR(255) NOT NULL,
-    `report_params` MEDIUMTEXT,
-    `interval` ENUM('daily', 'weekly', 'monthly'),
-    `list_id` VARCHAR(255) NOT NULL,
-    `grouping_id` VARCHAR(255),
-    `grouping_value` VARCHAR(255),
-    `title` VARCHAR(255) NOT NULL,
-    `blurb` VARCHAR(255),
-    `from_email` VARCHAR(255) NOT NULL,
-    `from_name` VARCHAR(255) NOT NULL,
-    `to_name` VARCHAR(255) NOT NULL
-);

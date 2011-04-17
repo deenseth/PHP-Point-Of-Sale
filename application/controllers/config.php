@@ -42,10 +42,6 @@ class Config extends Secure_area
 		'language'=>$this->input->post('language'),
 		'timezone'=>$this->input->post('timezone'),
 		'mc_api_key'=>$validated_api_key,
-		'enable_credit_card_processing'=>$this->input->post('enable_credit_card_processing'),
-		'authorize_net_api_login_id'=>$this->input->post('authorize_net_api_login_id'),
-		'authorize_net_transaction_key'=>$this->input->post('authorize_net_transaction_key'),
-		'authorize_net_md5_hash'=>$this->input->post('authorize_net_md5_hash'),
 		'print_after_sale'=>$this->input->post('print_after_sale')	
 		);
 		

@@ -9,7 +9,8 @@ class Employees extends Person_controller
 	
 	function index()
 	{
-	        $data['mailchimp']=($this->config->item('mc_api_key') != null);
+	    $data['mailchimp']=($this->config->item('mc_api_key') != null);
+	    $data['controller_name'] = strtolower(get_class());
 		$config['base_url'] = site_url('?c=employees&m=index');
 		$config['total_rows'] = $this->Employee->count_all();
 		$config['per_page'] = '20'; 

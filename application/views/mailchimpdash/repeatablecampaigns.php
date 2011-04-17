@@ -30,7 +30,9 @@ function deleteCampaign(campaign_id)
 </script>
 <br/><br/>
 <h1>Repeatable Campaigns</h1>
-
+<?php if (!$daily && !$weekly && !$monthly) { ?>
+<h3>You do not have any campaigns scheduled.</h3><p>Campaigns are scheduled through your reports. Select a non-graphical report in the reports section to get started.</p>
+<?php } ?>
 <?php if ($daily) { ?>
 <div id="daily" class="campaigns">
 <h3>Daily Campaigns</h3>

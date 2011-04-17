@@ -48,14 +48,19 @@ class Suppliers extends Person_controller
 	function view($supplier_id=-1)
 	{
 	    $email=preg_replace('/.*email:([^\/]*)\/.*/', '$1', uri_string());
-		$data['person_info']=$supplier_id == -1 ? $this->Supplier->get_by_email($email) : $this->Supplier->get_info($supplier_id);
-		
-		if (!$data['person_info'] && $email) {
-		    if ($key = $this->config->item('mc_api_key')) {
-                $this->load->library('MailChimp', array($key) , 'MailChimp');
-                $data['person_info'] = $this->MailChimp->getPersonDataByEmail($email);
-		    }
-		}
+	    
+	    if ($email != uri_string()) {
+    		$data['person_info']=$supplier_id == -1 ? $this->Supplier->get_by_email($email) : $this->Supplier->get_info($supplier_id);
+    		
+    		if (!$data['person_info'] && $email) {
+    		    if ($key = $this->config->item('mc_api_key')) {
+                    $this->load->library('MailChimp', array($key) , 'MailChimp');
+                    $data['person_info'] = $this->MailChimp->getPersonDataByEmail($email);
+    		    }
+    		}
+	    } else {
+	        $data['person_info']= $this->Supplier->get_info($supplier_id);
+	    }
 		
 		$this->load->view("suppliers/form",$data);
 	}

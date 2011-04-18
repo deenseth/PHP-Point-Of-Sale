@@ -7,7 +7,6 @@ $lang['giftcards_value_required']='Giftcard Value is a required field';
 $lang['giftcards_number']='Giftcard Number must be a number';
 $lang['giftcards_value']='Giftcard Value must be a number';
 
-
 $lang['giftcards_retrive_giftcard_info']='Retrive Giftcard Info';
 $lang['giftcards_description']='Description';
 $lang['giftcards_amazon']='Amazon';
@@ -30,7 +29,6 @@ $lang['giftcards_tax_percent']='Tax Percent';
 $lang['giftcards_tax_percents']='Tax Percent(s)';
 $lang['giftcards_reorder_level']='Reorder Level';
 $lang['giftcards_quantity']='Quantity';
-$lang['giftcards_reorder_level']='Reorder Level';
 $lang['giftcards_no_giftcards_to_display']='No Giftcards to display';
 $lang['giftcards_bulk_edit']='Bulk Edit';
 $lang['giftcards_confirm_delete']='Are you sure you want to delete the selected giftcards?';
@@ -64,7 +62,7 @@ $lang['giftcards_quantity_required']='Quantity is a required field. Please Close
 $lang['giftcards_do_nothing'] = 'Do Nothing';
 $lang['giftcards_change_all_to_serialized'] = 'Change All To Serialized';
 $lang['giftcards_change_all_to_unserialized'] = 'Change All To Unserialized';
-$lang['giftcards_change_all_to_allow_alt_desc'] = ' Allow Alt Desc For All';
+$lang['giftcards_change_all_to_allow_alt_desc'] = 'Allow Alt Desc For All';
 $lang['giftcards_change_all_to_not_allow_allow_desc'] = 'Not Allow Alt Desc For All';
 $lang['giftcards_use_inventory_menu'] = 'Use Inv. Menu';
 $lang['giftcards_manually_editing_of_quantity'] = 'Manual Edit of Quantity';

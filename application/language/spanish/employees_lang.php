@@ -13,7 +13,7 @@ $lang['employees_cannot_be_deleted']='No se pudieron borrar empleados. Uno o má
 $lang['employees_username']='Usuario';
 $lang['employees_password']='Contraseña';
 $lang['employees_repeat_password']='Contraseña Otra Vez';
-$lang['employees_username_required']='Usuario es un campo requerido';
+$lang['employees_username_required']='Usuario es requerido';
 $lang['employees_username_minlength']='El Usuario debe tener, por lo menos, 5 caracteres';
 $lang['employees_password_required']='La Contraseña es requerida';
 $lang['employees_password_minlength']='La contraseña debe tener, por lo menos, 8 caracteres';
@@ -22,6 +22,6 @@ $lang['employees_basic_information']='Información Básica de Empleados';
 $lang['employees_login_info']='Información de Ingreso del Empleado';
 $lang['employees_permission_info']='Permisos y Acceso del Empleado';
 $lang['employees_permission_desc']='Activa las cajas debajo para permitir el acceso a los módulos';
-$lang['employees_error_updating_demo_admin'] = 'You can not change the demo admin user';
-$lang['employees_error_deleting_demo_admin'] = 'You can not delete the demo admin user';
+$lang['employees_error_updating_demo_admin'] = 'No puedes cambiar el usuario admin del demo';
+$lang['employees_error_deleting_demo_admin'] = 'No puedes borrar el usuario admin del demo';
 ?>

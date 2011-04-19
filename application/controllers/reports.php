@@ -155,7 +155,7 @@ class Reports extends Secure_area
 	//The actual graph data
 	function graphical_summary_suppliers_graph($start_date, $end_date, $sale_type)
 	{
-		$this->Service->graphical_summary_suppliers_graph($start_date, $end_date);
+		$this->Service->graphical_summary_suppliers_graph($start_date, $end_date, $sale_type);
 	}
 	
 	function graphical_summary_employees($start_date, $end_date, $sale_type)
@@ -195,7 +195,7 @@ class Reports extends Secure_area
 	//Graphical summary discounts report
 	function graphical_summary_discounts($start_date, $end_date, $sale_type)
 	{
-		$this->Service->graphical_summary_discounts($start_date, $end_date);
+		$this->Service->graphical_summary_discounts($start_date, $end_date, $sale_type);
 	}
 	
 	//The actual graph data

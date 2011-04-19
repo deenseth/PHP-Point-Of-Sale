@@ -258,7 +258,7 @@ class Report_Service
 
 		$data = array(
 			"title" => $this->CI->lang->line('reports_sales_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_sales_graph/$start_date/$end_date"),
+			"data_file" => site_url("reports/graphical_summary_sales_graph/$start_date/$end_date/$sale_type"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type))
 		);
@@ -296,7 +296,7 @@ class Report_Service
 
 		$data = array(
 			"title" => $this->CI->lang->line('reports_items_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_items_graph/$start_date/$end_date/$sale_type"),
+			"data_file" => site_url("reports/graphical_summary_items_graph/$start_date/$end_date/$sale_type"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type))
 		);
@@ -333,7 +333,7 @@ class Report_Service
 
 		$data = array(
 			"title" => $this->CI->lang->line('reports_categories_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_categories_graph/$start_date/$end_date/$sale_type"),
+			"data_file" => site_url("reports/graphical_summary_categories_graph/$start_date/$end_date/$sale_type"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type))
 		);
@@ -368,7 +368,7 @@ class Report_Service
 
 		$data = array(
 			"title" => $this->CI->lang->line('reports_suppliers_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_suppliers_graph/$start_date/$end_date/$sale_type"),
+			"data_file" => site_url("reports/graphical_summary_suppliers_graph/$start_date/$end_date/$sale_type"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type))
 		);
@@ -403,7 +403,7 @@ class Report_Service
 
 		$data = array(
 			"title" => $this->CI->lang->line('reports_employees_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_employees_graph/$start_date/$end_date/$sale_type"),
+			"data_file" => site_url("reports/graphical_summary_employees_graph/$start_date/$end_date/$sale_type"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type))
 		);
@@ -438,7 +438,7 @@ class Report_Service
 
 		$data = array(
 			"title" => $this->CI->lang->line('reports_taxes_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_taxes_graph/$start_date/$end_date/$sale_type"),
+			"data_file" => site_url("reports/graphical_summary_taxes_graph/$start_date/$end_date/$sale_type"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type))
 		);
@@ -473,7 +473,7 @@ class Report_Service
 
 		$data = array(
 			"title" => $this->CI->lang->line('reports_customers_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_customers_graph/$start_date/$end_date/$sale_type"),
+			"data_file" => site_url("reports/graphical_summary_customers_graph/$start_date/$end_date/$sale_type"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type))
 		);
@@ -510,7 +510,7 @@ class Report_Service
 
 		$data = array(
 			"title" => $this->CI->lang->line('reports_discounts_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_discounts_graph/$start_date/$end_date/$sale_type"),
+			"data_file" => site_url("reports/graphical_summary_discounts_graph/$start_date/$end_date/$sale_type"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type))
 		);
@@ -547,7 +547,7 @@ class Report_Service
 
 		$data = array(
 			"title" => $this->CI->lang->line('reports_payments_summary_report'),
-			"data_file" => site_urL("reports/graphical_summary_payments_graph/$start_date/$end_date/$sale_type"),
+			"data_file" => site_url("reports/graphical_summary_payments_graph/$start_date/$end_date/$sale_type"),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type))
 		);
@@ -726,8 +726,7 @@ class Report_Service
 	function detailed_receivings($start_date, $end_date, $sale_type, $export_excel=0)
 	{
 	    $this->CI->load->model('reports/Detailed_receivings');
-		$model = $this->Detailed_receivings;
-		
+		$model = $this->CI->Detailed_receivings;
 		$headers = $model->getDataColumns();
 		$report_data = $model->getData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type' => $sale_type));
 		
@@ -745,7 +744,7 @@ class Report_Service
 		}
 
 		$data = array(
-			"title" =>$this->lang->line('reports_detailed_receivings_report'),
+			"title" =>$this->CI->lang->line('reports_detailed_receivings_report'),
 			"subtitle" => date('m/d/Y', strtotime($start_date)) .'-'.date('m/d/Y', strtotime($end_date)),
 			"headers" => $model->getDataColumns(),
 			"summary_data" => $summary_data,

@@ -68,7 +68,7 @@ function campaignCreate()
     tableholder.makeCssInline();
     var htmlData = tableholder.html();
     
-    $.post('<?php echo base_url()?>/generatebasiccampaign',
+    $.post('<?php echo base_url()?>generatebasiccampaign',
             {title: $('#newcampaign-title-input').val(),
              chartHtml: htmlData,
              campaignText: $('#campaigntext').val(),

@@ -615,8 +615,8 @@ class Mailchimpdash extends Secure_area
         $params = unserialize($params_serialized);
         $sale = $params['sale_type'];
         unset($params['sale_type']);
-        $idPath = ($id = array_shift($params)) ? "{$id}/" : ''; 
-        $url = base_url().'index.php/reports/'.$interval.'/'.$report_type.'/'.$idPath.$sale;
+        $idPath = ($id = array_shift($params)) ? "{$id}/" : '0/'; 
+        $reporturl = base_url().'index.php/reports/'.$interval.'/'.$report_type.'/'.$idPath.$sale;
         
         $options = array('list_id'		=>    $this->input->post('listID'),
                          'subject'		=>    $this->input->post('title'),
@@ -636,10 +636,10 @@ class Mailchimpdash extends Secure_area
                                                         'value'=>$groupName));
         }        
         
-        $content = array('url'=>$url);
+        $content = array('url'=>$reporturl);
         
-        $typeOptions = array('url'=>$url.'/rss', 'schedule'=>$interval);
-
+        $typeOptions = array('url'=>$reporturl.'/rss', 'schedule'=>$interval);
+        
         if ($this->MailChimp->campaignCreate('rss', $options, $content, $segmentOptions, $typeOptions)) {
             echo json_encode(array('success'=>true, 'message'=>'Campaign successfully created'));
         } else {

@@ -50,4 +50,5 @@ $lang['common_mailchimp_dashboard_lists']='List Management';
 $lang['common_mailchimp_dashboard_lists_helper']='Select a list to view your subscribers';
 $lang['common_mailchimp_dashboard_listbuttons']='Your Lists';
 $lang['common_address']='Address';
+$lang['enable_builds']='Enable Phing Builds';
 ?>

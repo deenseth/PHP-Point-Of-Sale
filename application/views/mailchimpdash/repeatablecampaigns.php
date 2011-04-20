@@ -38,7 +38,7 @@ function deleteCampaign(campaign_id)
 <h3>Daily Campaigns</h3>
 
 <?php foreach ($daily as $campaign) { ?>
-	<?$this->load->view('partial/repeatablecampaign', array('campaign'=>$campaign))?>
+	<?php $this->load->view('partial/repeatablecampaign', array('campaign'=>$campaign))?>
 <?php } ?>
 
 </div>
@@ -49,7 +49,7 @@ function deleteCampaign(campaign_id)
 <h3>Weekly Campaigns</h3>
 
 <?php foreach ($weekly as $campaign) { ?>
-	<?$this->load->view('partial/repeatablecampaign', array('campaign'=>$campaign))?>
+	<?php $this->load->view('partial/repeatablecampaign', array('campaign'=>$campaign))?>
 <?php } ?>
 
 </div>
@@ -60,7 +60,7 @@ function deleteCampaign(campaign_id)
 <h3>Monthly Campaigns</h3>
 
 <?php foreach ($monthly as $campaign) { ?>
-	<?$this->load->view('partial/repeatablecampaign', array('campaign'=>$campaign))?>
+	<?php $this->load->view('partial/repeatablecampaign', array('campaign'=>$campaign))?>
 <?php } ?>
 
 </div>

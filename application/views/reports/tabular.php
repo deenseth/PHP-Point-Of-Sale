@@ -10,7 +10,7 @@ if($report_service->renderData['data']['export_excel'] == 1){
 ?>
 <?php echo $report_service->render()?>
 <div id="chimp-options">
-<?php echo $report_service->renderData['data']['export_excel'] ? '' : campaign_export_button().repeatable_campaign_button($report_service->renderData['data']['report_name'], $report_service->renderData['data']['report_params'])?>
+<?php echo $report_service->renderData['data']['export_excel'] ? '' : campaign_export_button().repeatable_campaign_button($report_service->renderData['data']['report_name'], $report_service->renderData['data']['report_params']).rss_campaign_button($report_service->renderData['data']['report_name'], $report_service->renderData['data']['report_params'])?>
 </div>
 <div id="feedback_bar"></div>
 <?php 

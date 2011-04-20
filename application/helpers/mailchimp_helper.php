@@ -196,3 +196,14 @@ function repeatable_campaign_button($report_name, $params=null)
         return '<div class="repeatable-campaign-wrapper"><a class="button pill" href="'.base_url().'index.php/mailchimpdash/repeatablecampaign/'.$report_name.'" onClick="thickit(this); return false;">Create Repeatable Campaign</a>'.$hiddenInput.'<div class="clear"><!-- --></div></div>';
     }
 }
+
+function rss_campaign_button($report_name, $params=null)
+{
+    $CI =& get_instance();
+    if (($key = $CI->Appconfig->get('mc_api_key'))) {
+        if ($params) {
+            $hiddenInput .= '<input id="reportparams" type="hidden" value=\''.$params.'\' />';
+        }
+        return '<div class="repeatable-campaign-wrapper"><a class="button pill" href="'.base_url().'index.php/mailchimpdash/rsscampaign/'.$report_name.'" onClick="thickit(this); return false;">Create RSS Campaign</a>'.$hiddenInput.'<div class="clear"><!-- --></div></div>';
+    }
+}

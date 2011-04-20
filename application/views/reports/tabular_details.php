@@ -16,8 +16,9 @@ if($report_service->renderData['data']['export_excel'] == 1){
     && !$report_service->renderData['data']['export_excel'] 
     ? add_to_group_button() : ''?>
 <?php echo $report_service->renderData['data']['export_excel'] 
-        ? '' 
-        :  repeatable_campaign_button($report_service->renderData['data']['report_name'], $report_service->renderData['data']['report_params']) ?>
+        ?  rss_campaign_button($report_service->renderData['data']['report_name'], $report_service->renderData['data']['report_params'])
+        :  repeatable_campaign_button($report_service->renderData['data']['report_name'], $report_service->renderData['data']['report_params'])
+            .rss_campaign_button($report_service->renderData['data']['report_name'], $report_service->renderData['data']['report_params']) ?>
 <div id="feedback_bar"></div>
 <?php 
 if($report_service->renderData['data']['export_excel'] == 1){

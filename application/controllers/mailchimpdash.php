@@ -600,5 +600,53 @@ class Mailchimpdash extends Secure_area
         }
     }
     
+    public function rsscampaign($report_name)
+    {
+        $data['lists'] = $this->MailChimp->listsWithGroups();
+        $data['report_name'] = $report_name;
+        $this->load->view('mailchimpdash/rsscampaign', $data);
+    }
+    
+    public function creatersscampaign()
+    {
+        $interval = $this->input->post('interval');
+        $report_type = $this->input->post('reportName');
+        $params_serialized = $this->input->post('reportParams');
+        $params = unserialize($params_serialized);
+        $sale = $params['sale_type'];
+        unset($params['sale_type']);
+        $idPath = ($id = array_shift($params)) ? "{$id}/" : ''; 
+        $url = base_url().'index.php/reports/'.$interval.'/'.$report_type.'/'.$idPath.$sale;
+        
+        $options = array('list_id'		=>    $this->input->post('listID'),
+                         'subject'		=>    $this->input->post('title'),
+                         'from_email'	=>    $this->input->post('fromEmail'),
+                         'from_name'	=>    $this->input->post('fromName'),
+                         'to_name'		=>    $this->input->post('toName'));
+                      
+        $group = $this->input->post('group');
+        if ($group && $group != 'null') {
+            $ploded = explode('-', $group);
+            $groupingID = array_shift($ploded);
+            $groupName = implode('-', $ploded);
+            
+            $segmentOptions['match'] = 'all';
+            $segmentOptions['conditions'] = array(array('field'=>'interests-'.$groupingID,
+                                                        'op'   =>'one',
+                                                        'value'=>$groupName));
+        }        
+        
+        $content = array('url'=>$url);
+        
+        $typeOptions = array('url'=>$url.'/rss', 'schedule'=>$interval);
+
+        if ($this->MailChimp->campaignCreate('rss', $options, $content, $segmentOptions, $typeOptions)) {
+            echo json_encode(array('success'=>true, 'message'=>'Campaign successfully created'));
+        } else {
+            echo json_encode(array('success'=>true, 'message'=>'Error: '.$this->MailChimp->errorMessage));
+        }
+                      
+    }
+    
 }
 ?>

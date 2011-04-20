@@ -25,9 +25,9 @@ $lang['module_config_desc']='Cambiar la configuración de la tienda';
 $lang['module_receivings']='Recibimientos';
 $lang['module_receivings_desc']='Procesar Órdenes de compra';
 
-$lang['module_giftcards']='Gift Cards';
-$lang['module_giftcards_desc']='Add, Update, Delete and Search gift cards';
+$lang['module_giftcards']='Tarjetas de Regalo';
+$lang['module_giftcards_desc']='Agregar, Actualizar, Borrar y Buscar Tarjetas de Regalo';
 
-$lang['module_item_kits']='Item Kits';
-$lang['module_item_kits_desc']='Add, Update, Delete and Search Item Kits';
+$lang['module_item_kits']='Kits de Artículos';
+$lang['module_item_kits_desc']='Agregar, Actualizar, Borrar y Buscar Kits de Artículos';
 ?>

@@ -12,6 +12,6 @@ $lang['suppliers_one_or_multiple']='proveedor(es)';
 $lang['suppliers_cannot_be_deleted']='No se pudo borrar a los proveedores seleccionados. Uno o más de los seleccionadostiene ventas.';
 $lang['suppliers_basic_information']='Información de Proveedores';
 $lang['suppliers_account_number']='Cuenta #';
-$lang['suppliers_company_name']='Company Name';
-$lang['suppliers_company_name_required'] = 'Company Name is a required field';
+$lang['suppliers_company_name']='Nombre de la Compañía';
+$lang['suppliers_company_name_required'] = 'Nombre de la Compañía es requerido';
 ?>

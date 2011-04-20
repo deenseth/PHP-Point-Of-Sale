@@ -29,6 +29,55 @@ class Reports extends Secure_area
 		return $data;
 	}
 	
+    function weekly($report,$sale_or_specific=null,$definitely_sale=null,$format='html')
+    {
+        $start_date = date('Y-m-d', strtotime('-1 week'));
+        $end_date = date('Y-m-d');
+        
+        if ($definitely_sale) {
+            $service = $this->Service->{$report}($start_date, $end_date, $sale_or_specific, $definitely_sale, ($format=='xls' ? 1 : 0));
+            $service->setFormat($format);
+            $service->loadWithView($this->get_view($report));
+        } else {
+            $service = $this->Service->{$report}($start_date, $end_date, $sale_or_specific, ($format=='xls' ? 1 : 0));
+            $service->setFormat($format);
+            $service->loadWithView($this->get_view($report));
+        }
+        
+    }
+    
+    function daily($report,$sale_type=null,$specific=null,$format='html')
+    {
+        $start_date = date('Y-m-d');
+        $end_date = date('Y-m-d');
+        
+        if ($specific) {
+            $service = $this->Service->{$report}($start_date, $end_date, $specific, $sale_type, ($format=='xls' ? 1 : 0));
+            $service->setFormat($format);
+            $service->loadWithView($this->get_view($report));
+        } else {
+            $service = $this->Service->{$report}($start_date, $end_date, $sale_type, ($format=='xls' ? 1 : 0));
+            $service->setFormat($format);
+            $service->loadWithView($this->get_view($report));
+        }
+    }
+    
+    function monthly($report,$sale_type=null,$specific=null,$format='html')
+    {
+        $start_date = date('Y-m-d', strtotime('-1 month'));
+        $end_date = date('Y-m-d');
+        
+        if ($specific) {
+            $service = $this->Service->{$report}($start_date, $end_date, $specific, $sale_type, ($format=='xls' ? 1 : 0));
+            $service->setFormat($format);
+            $service->loadWithView($this->get_view($report));
+        } else {
+            $service = $this->Service->{$report}($start_date, $end_date, $sale_type, ($format=='xls' ? 1 : 0));
+            $service->setFormat($format);
+            $service->loadWithView($this->get_view($report));
+        }
+    }
+	
 	//Input for reports that require only a date range and an export to excel. (see routes.php to see that all summary reports route here)
 	function date_input_excel_export()
 	{
@@ -315,5 +364,33 @@ class Reports extends Secure_area
 	    fclose($file);
 	    echo $fname;
 	}
+	
+	
+	function get_view($report)
+	{
+	    switch ($report) {
+	        case 'summary_sales':
+	        case 'summary_categories':
+	        case 'summary_customers':
+	        case 'summary_items':
+	        case 'summary_employees':
+	        case 'summary_discounts':
+            case 'summary_taxes':
+	        case 'summary_payments':
+	        case 'inventory_summary':
+	        case 'intentory_low':
+	            return 'reports/tabular';
+	        case 'specific_item':
+	        case 'specific_employee':
+	        case 'specific_customer':
+	        case 'detailed_sales':
+	        case 'detailed_receivings':
+	            //everything else is handled through the service
+	            return 'reports/tabular_details';
+	    }
+	    
+	    return null;
+	}
+	
 }
 ?>

@@ -42,6 +42,7 @@ class Config extends Secure_area
 		'language'=>$this->input->post('language'),
 		'timezone'=>$this->input->post('timezone'),
 		'mc_api_key'=>$validated_api_key,
+		'enable_builds'=>$this->input->post('enable_builds'),
 		'print_after_sale'=>$this->input->post('print_after_sale')	
 		);
 		

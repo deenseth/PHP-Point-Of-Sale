@@ -14,10 +14,12 @@
         <p><?php echo anchor(current_url().'/campaigns', 'Campaign Management')?></p>
         <div class="clear"><!--  --></div>
     </div>
+    <?php if ($phingenabled) { ?>
     <div class="dashboard-link">
         <?php echo anchor(current_url().'/repeatablecampaigns', '<img src="'.base_url().'/images/chimp_clock.gif" alt=""/>')?>
         <p><?php echo anchor(current_url().'/repeatablecampaigns', 'Repeatable Campaign Management')?></p>
         <div class="clear"><!--  --></div>
     </div>
+    <?php } ?>
 </div>
 <?php $this->load->view("partial/footer"); ?>

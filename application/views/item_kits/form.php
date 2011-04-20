@@ -43,6 +43,7 @@ echo form_open('item_kits/save/'.$item_kit_info->item_kit_id,array('id'=>'item_k
 
 <table id="item_kit_items">
 	<tr>
+		<th><?php echo $this->lang->line('common_delete');?></th>
 		<th><?php echo $this->lang->line('item_kits_item');?></th>
 		<th><?php echo $this->lang->line('item_kits_quantity');?></th>
 	</tr>
@@ -52,6 +53,7 @@ echo form_open('item_kits/save/'.$item_kit_info->item_kit_id,array('id'=>'item_k
 			<?php
 			$item_info = $this->Item->get_info($item_kit_item['item_id']);
 			?>
+			<td><a href="#" onclick='return deleteItemKitRow(this);'>X</a></td>
 			<td><?php echo $item_info->name; ?></td>
 			<td><input class='quantity' id='item_kit_item_<?php echo $item_kit_item['item_id'] ?>' type='text' size='3' name=item_kit_item[<?php echo $item_kit_item['item_id'] ?>] value='<?php echo $item_kit_item['quantity'] ?>'/></td>
 		</tr>
@@ -92,7 +94,7 @@ $("#item").result(function(event, data, formatted)
 	}
 	else
 	{
-		$("#item_kit_items").append("<tr><td>"+data[1]+"</td><td><input class='quantity' id='item_kit_item_"+data[0]+"' type='text' size='3' name=item_kit_item["+data[0]+"] value='1'/></td></tr>");
+		$("#item_kit_items").append("<tr><td><a href='#' onclick='return deleteItemKitRow(this);'>X</a></td><td>"+data[1]+"</td><td><input class='quantity' id='item_kit_item_"+data[0]+"' type='text' size='3' name=item_kit_item["+data[0]+"] value='1'/></td></tr>");
 	}
 });
 
@@ -127,4 +129,10 @@ $(document).ready(function()
 		}
 	});
 });
+
+function deleteItemKitRow(link)
+{
+	$(link).parent().parent().remove();
+	return false;
+}
 </script>

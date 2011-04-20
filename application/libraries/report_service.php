@@ -886,12 +886,15 @@ class Report_Service
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
 <channel>
+	<title>{$this->renderData['data']['title']}</title>
+	<description><![CDATA[ <html>{$cdata}</html> ]]></description>
+	<link>{$link}</link>
 	<item>
 		<title>{$this->renderData['data']['title']}</title>
 		<link>{$link}</link>
 		<guid>{$link}</guid>
 		<pubDate>{$pubDate}</pubDate>
-		<description>[CDATA[ <html>{$cdata}</html> ]]</description>
+		<description><![CDATA[ <html>{$cdata}</html> ]]></description>
 	</item>
 </channel>
 </rss>

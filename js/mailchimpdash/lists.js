@@ -1,9 +1,9 @@
-function listPage(listId, slice, cid)
+function listPage(listId, slice)
 {
 	var url = document.location.href.replace(/\/lists.*/, '/listsajax');
 	var lv = $('#lists-view');
 	var filters = getFilters();
-	lv.load(url, {listid: listId, start: slice, filters: filters, cid: cid});
+	lv.load(url, {listid: listId, start: slice, filters: filters});
 }
 
 var filters = '';

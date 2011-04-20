@@ -354,17 +354,7 @@ class Reports extends Secure_area
 	{
 		$data = array('report_service' => $this->Service->inventory_summary($export_excel));
 		$this->load->view('reports/tabular',$data);
-	}
-	
-	function export()
-	{
-	    $fname = time();
-	    $file = fopen('saved_charts/'.$fname.'.png', 'w');
-	    fwrite($file, base64_decode($_POST['chart']));
-	    fclose($file);
-	    echo $fname;
-	}
-	
+	}	
 	
 	function get_view($report)
 	{

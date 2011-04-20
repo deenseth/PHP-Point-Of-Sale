@@ -5,14 +5,9 @@ if($report_service->renderData['data']['export_excel'] == 1){
 	$this->load->view("partial/header_excel");
 }else{
 	$this->load->view("partial/header");
-	echo campaign_export_script();
 } 
 ?>
 <?php echo $report_service->render()?>
-<div id="chimp-options">
-<?php echo $report_service->renderData['data']['export_excel'] ? '' : campaign_export_button().repeatable_campaign_button($report_service->renderData['data']['report_name'], $report_service->renderData['data']['report_params']).rss_campaign_button($report_service->renderData['data']['report_name'], $report_service->renderData['data']['report_params'])?>
-</div>
-<div id="feedback_bar"></div>
 <?php 
 if($report_service->renderData['data']['export_excel'] == 1){
 	$this->load->view("partial/footer_excel");
@@ -24,7 +19,7 @@ if($report_service->renderData['data']['export_excel'] == 1){
 	header('Content-type: application/ms-excel');
 	header('Content-Disposition: attachment; filename='.$filename);
 	echo $content;
-	die();
+	exit();
 	
 }else{
 	$this->load->view("partial/footer"); 

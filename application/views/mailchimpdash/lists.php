@@ -5,11 +5,7 @@
 <script type='text/javascript'>
 $(document).ready(function(){
 	$('#lists-view').slideDown(1000, function() {
-		<?php if ($cid) { ?>
-		listPage('<?php echo $list_id?>', 0, '<?php echo $cid?>');
-		<?php } else { ?>
 	    listPage('<?php echo $list_id?>', 0);
-	    <?php } ?>
 	});
 });
 </script>

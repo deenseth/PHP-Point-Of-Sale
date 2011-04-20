@@ -246,19 +246,6 @@ echo form_open('config/save/',array('id'=>'config_form'));
    	</div>
 </div>
 <div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('enable_builds').':', 'enable_builds',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_checkbox(array(
-		'name'=>'enable_builds',
-		'id'=>'enable_builds',
-		'value'=>'enable_builds',
-		'checked'=>$this->config->item('enable_builds')));?>
-	</div>
-	<div class='form_field' style="height: 20px; padding-top: 5px;">
-		(Check only if you have <a href="http://phing.info">Phing</a> installed)
-   	</div>
-</div>
-<div class="field_row clearfix">	
 <?php echo form_label($this->lang->line('config_print_after_sale').':', 'print_after_sale',array('class'=>'wide')); ?>
 	<div class='form_field'>
 	<?php echo form_checkbox(array(

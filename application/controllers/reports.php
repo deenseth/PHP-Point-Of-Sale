@@ -46,33 +46,33 @@ class Reports extends Secure_area
         
     }
     
-    function daily($report,$sale_type=null,$specific=null,$format='html')
+    function daily($report,$sale_or_specific=null,$definitely_sale=null,$format='html')
     {
         $start_date = date('Y-m-d');
         $end_date = date('Y-m-d');
         
-        if ($specific) {
-            $service = $this->Service->{$report}($start_date, $end_date, $specific, $sale_type, ($format=='xls' ? 1 : 0));
+        if ($definitely_sale) {
+            $service = $this->Service->{$report}($start_date, $end_date, $sale_or_specific, $definitely_sale, ($format=='xls' ? 1 : 0));
             $service->setFormat($format);
             $service->loadWithView($this->get_view($report));
         } else {
-            $service = $this->Service->{$report}($start_date, $end_date, $sale_type, ($format=='xls' ? 1 : 0));
+            $service = $this->Service->{$report}($start_date, $end_date, $sale_or_specific, ($format=='xls' ? 1 : 0));
             $service->setFormat($format);
             $service->loadWithView($this->get_view($report));
         }
     }
     
-    function monthly($report,$sale_type=null,$specific=null,$format='html')
+    function monthly($report,$sale_or_specific=null,$definitely_sale=null,$format='html')
     {
         $start_date = date('Y-m-d', strtotime('-1 month'));
         $end_date = date('Y-m-d');
         
-        if ($specific) {
-            $service = $this->Service->{$report}($start_date, $end_date, $specific, $sale_type, ($format=='xls' ? 1 : 0));
+        if ($definitely_sale) {
+            $service = $this->Service->{$report}($start_date, $end_date, $sale_or_specific, $definitely_sale, ($format=='xls' ? 1 : 0));
             $service->setFormat($format);
             $service->loadWithView($this->get_view($report));
         } else {
-            $service = $this->Service->{$report}($start_date, $end_date, $sale_type, ($format=='xls' ? 1 : 0));
+            $service = $this->Service->{$report}($start_date, $end_date, $sale_or_specific, ($format=='xls' ? 1 : 0));
             $service->setFormat($format);
             $service->loadWithView($this->get_view($report));
         }

@@ -20,6 +20,17 @@ function getFilters()
 	return filters;
 }
 
+function post_person_form_submit(response)
+{
+    var dom = $('tr#person-'+response.person_id);
+    $.post( SITE_URL + '/mailchimpdash/update_email_row/' + response.person_id + '/' + $('#listid').val(), function(data){dom.replaceWith(data);});
+    if (response.success) {
+        set_feedback(response.message, 'success_message', false);
+    } else {
+        set_feedback(response.message, 'error_message', true);
+    }
+}
+
 function reloadFilters()
 {
 	var slice = $('#slice').val();

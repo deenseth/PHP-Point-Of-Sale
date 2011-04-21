@@ -12,7 +12,7 @@ function display_email_data($person, $list, $filters)
     if ($persontype !== 'Person') {
         return display_email_data_for_person($person, $persontype);
     } else {
-        $table_data_row='<tr>';
+        $table_data_row='<tr id="person-'.$person->person_id.'">';
         $table_data_row.='<td width="12%">'.character_limiter($person->last_name,13).'</td>';
         $table_data_row.='<td width="12%">'.character_limiter($person->first_name,13).'</td>';
         $table_data_row.='<td width="24%" class="email">'.mailto($person->email,character_limiter($person->email,22)).'</td>';
@@ -49,7 +49,7 @@ function display_email_data_for_person($person, $persontype)
             break;
     }
     
-    $table_data_row='<tr>';
+    $table_data_row='<tr id="person-'.$person->person_id.'">';
     $table_data_row.='<td width="13%">'.character_limiter($person->last_name,13).'</td>';
     $table_data_row.='<td width="13%">'.character_limiter($person->first_name,13).'</td>';
     $table_data_row.='<td width="24%" class="email">'.mailto($person->email,character_limiter($person->email,22)).'</td>';

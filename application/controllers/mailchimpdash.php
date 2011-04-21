@@ -106,5 +106,11 @@ class Mailchimpdash extends Secure_area
         }
     }
     
+    public function update_email_row($person_id, $list)
+    {
+        $person = $this->Person->get_info($person_id);
+        echo display_email_data($person, $list, false);
+    }
+    
 }
 ?>

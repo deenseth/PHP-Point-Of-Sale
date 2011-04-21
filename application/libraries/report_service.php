@@ -42,7 +42,7 @@ class Report_Service
 		    "report_name"  => __FUNCTION__
 		);
 		
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
     }
     
@@ -68,7 +68,7 @@ class Report_Service
 		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
     }
     
@@ -94,7 +94,7 @@ class Report_Service
 		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -120,7 +120,7 @@ class Report_Service
 		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -146,7 +146,7 @@ class Report_Service
 		    "report_name"  => __FUNCTION__
 		);
 		
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -172,7 +172,7 @@ class Report_Service
 		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -198,7 +198,7 @@ class Report_Service
 		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -224,7 +224,7 @@ class Report_Service
 		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -250,7 +250,7 @@ class Report_Service
 		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
     
@@ -613,7 +613,7 @@ class Report_Service
 		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_details_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -650,7 +650,7 @@ class Report_Service
 		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_details_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -682,7 +682,7 @@ class Report_Service
 		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_details_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -718,7 +718,7 @@ class Report_Service
 		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_details_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -752,7 +752,7 @@ class Report_Service
 			"export_excel" => $export_excel
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_details_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -777,7 +777,7 @@ class Report_Service
 		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 	}
 	
     function inventory_summary($export_excel=0)
@@ -801,39 +801,13 @@ class Report_Service
 		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
-	
-	
-    /**
-     * Sets the option to suppress echo and return HTML.
-     * 
-     * @param bool $val
-     */
-    public function setSuppressEcho($val)
-    {
-        $this->_suppressEcho = $val;
-    }
-    
-    /**
-     * We want the option to retain the HTML from the helper instead of echoing it out.
-     * @param string $html
-     */
-    private function _display($html)
-    {
-        if ($this->_suppressEcho) {
-            return $html;
-        } else {
-            echo $html;
-            return true;
-        }
-    }
-    
+	    
     public function render()
     {
-        $this->_suppressEcho = true;
-        return $this->_display($this->CI->load->view($this->renderData['script'], $this->renderData['data'], true));
+        return $this->CI->load->view($this->renderData['view'], $this->renderData['data'], true);
     }
     
     public function setFormat($format)
@@ -841,13 +815,9 @@ class Report_Service
         $this->format = $format;
     }
     
-    public function loadWithView($view=null)
+    public function loadWithView($view)
     {
-        if ($view === null) {
-            $this->render();
-        } else {
-            $data = array('report_service'=>$this);
-            $this->CI->load->view($view,$data);
-        }
+    	$data = array('report_service'=>$this);
+    	$this->CI->load->view($view,$data);
     }    
 }

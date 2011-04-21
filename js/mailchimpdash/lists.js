@@ -1,9 +1,8 @@
 function listPage(listId, slice)
 {
-	var url = document.location.href.replace(/\/lists.*/, '/listsajax');
 	var lv = $('#lists-view');
 	var filters = getFilters();
-	lv.load(url, {listid: listId, start: slice, filters: filters});
+	lv.load( SITE_URL + '/mailchimpdash/listsajax', {listid: listId, start: slice, filters: filters});
 }
 
 var filters = '';

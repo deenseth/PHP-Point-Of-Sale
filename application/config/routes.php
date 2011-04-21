@@ -56,7 +56,6 @@ $route['reports/detailed_receivings'] = "reports/date_input";
 $route['reports/(specific_:any)/(:any)/(:any)/(:any)'] = "reports/$1/$2/$3/$4";
 $route['reports/specific_customer'] = "reports/specific_customer_input";
 $route['reports/specific_employee'] = "reports/specific_employee_input";
-$route['reports/specific_item'] = "reports/specific_item_input";
 
 $route['scaffolding_trigger'] = "";
 

@@ -37,7 +37,6 @@
 			<li><a href="<?php echo site_url('reports/detailed_receivings');?>"><?php echo $this->lang->line('reports_receivings'); ?></a></li>
 			<li><a href="<?php echo site_url('reports/specific_customer');?>"><?php echo $this->lang->line('reports_customer'); ?></a></li>
 			<li><a href="<?php echo site_url('reports/specific_employee');?>"><?php echo $this->lang->line('reports_employee'); ?></a></li>
-			<li><a href="<?php echo site_url('reports/specific_item');?>"><?php echo $this->lang->line('reports_items'); ?></a></li>
 		</ul>
 	
 	</li>

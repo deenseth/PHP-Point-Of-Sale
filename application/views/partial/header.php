@@ -8,7 +8,10 @@
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/phppos.css" />
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/css3buttons.css" />
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/phppos_print.css"  media="print"/>
-	<script>BASE_URL = '<?php echo site_url(); ?>';</script>
+	<script type="text/javascript"> 
+	SITE_URL = '<?php echo site_url(); ?>';
+	BASE_URL = '<?php echo base_url(); ?>';
+	</script>
 	<script src="<?php echo base_url();?>js/jquery-1.2.6.min.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
 	<script src="<?php echo base_url();?>js/jquery.color.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
 	<script src="<?php echo base_url();?>js/jquery.metadata.js" type="text/javascript" language="javascript" charset="UTF-8"></script>

@@ -16,9 +16,7 @@
 		<h3>Integration Perks</h3>
 		<p>Integrate your point of sale solution with MailChimp to take advantage of the following:</p>
 		<ul>
-		    <li><b>Intelligent list management:</b> Build lists based on your customers, vendors, and employees.</li>
-		    <li><b>Marketing segmentation:</b> Communicate directly individuals who bought a specific item!</li>
-		    <li><b>Integrated reporting:</b> View applicable reports where you're looking for them -- in your own point of sale.</li>
+		    <li><b>Intelligent list management:</b> Build lists based on your customers, suppliers, and employees.</li>
 		</ul>
 		
 		<h3>How To Use</h3>

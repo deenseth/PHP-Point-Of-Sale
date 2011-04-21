@@ -50,6 +50,7 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
         $data['personids']=explode(',', preg_replace('/.*personids:([\d,]+).*/', '$1', uri_string()));
         $data['removeAjaxUrl']=site_url(strtolower($this->uri->segment(1)).'/listremoveajax');
         $data['addAjaxUrl']=site_url(strtolower($this->uri->segment(1)).'/listaddajax');
+        $data['controller_name'] = get_class();
         
         $this->load->view("people/list_manage",$data);
     }
@@ -59,14 +60,15 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
      */
     function listremoveajax()
     {
-        if ($key = $this->config->item('mc_api_key')) {
+        if ($key = $this->Appconfig->get('mc_api_key')) {
             $this->load->library('MailChimp', array($key) , 'MailChimp');
             $data['lists']=$this->MailChimp->lists();
         } else {
-            echo '0:You don\'t have a MailChimp API registered.';
+            // not likely to encounter -- functionality hidden behind key
+            return;
         }
         
-        $lists = $this->MailChimp->listsWithGroupings();
+        $lists = $this->MailChimp->listsWithGroups();
         
         $removed = 0;
         $unremoved = 0;
@@ -84,7 +86,7 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
                 $individual = array_shift($response['data']);
                 $merge_vars = $individual['merges'];
                 
-                if ($this->input->post($list['name'])) {
+                if ($this->input->post($list['id'])) {
                     if ($this->MailChimp->listUnsubscribe($list['id'], $person->email, null, 'html', false)) {
                         $removed++;
                     } else {
@@ -143,7 +145,7 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
         $s = $removed > 1 ? 's':'';
         $removedText = $removed > 0 ? "{$removed} Removal{$s}." : '';
         $unremovedText = $unremoved > 0 ? "{$unremoved} Unsuccessful." : '';
-        echo "1:{$removedText} {$unremovedText}"; 
+        echo json_encode(array('success'=>(!$this->errorMessage), 'message'=>"{$removedText} {$unremovedText} {$this->errorMessage}", 'personid'=>json_encode($this->input->post('personid'))));
     }
     
    /*
@@ -156,7 +158,8 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
             $this->load->library('MailChimp', array($key) , 'MailChimp');
             $data['lists']=$this->MailChimp->lists();
         } else {
-            echo '0:You don\'t have a MailChimp API registered.';
+            // not likely to encounter -- functionality hidden behind key
+            return;
         }
         
         $lists = $this->MailChimp->listsWithGroups();
@@ -177,7 +180,7 @@ abstract class Person_controller extends Secure_area implements iPerson_controll
         $s = $added > 1 ? 's':'';
         $addedText = $added > 0 ? "{$added} Addition{$s}." : '';
         $unaddedText = $unadded > 0 ? "{$unadded} Unsuccessful." : '';
-        echo "1:{$addedText} {$unaddedText}"; 
+        echo json_encode(array('success'=>(!$this->errorMessage), 'message'=>"{$addedText} {$unaddedText} {$this->errorMessage}", 'personid'=>json_encode($this->input->post('personid'))));
     }
 		
 }

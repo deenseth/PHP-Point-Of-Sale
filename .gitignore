@@ -4,4 +4,3 @@ application/config/database.php
 .buildpath
 .settings
 .project
-saved_charts/*.png

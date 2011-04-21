@@ -39,11 +39,10 @@ class Report_Service
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type' => $sale_type)),
 			"export_excel" => $export_excel,
-		    "report_name"  => __FUNCTION__,
-	        'report_params'=> serialize(array('sale_type'=>$sale_type))
+		    "report_name"  => __FUNCTION__
 		);
 		
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
     }
     
@@ -66,11 +65,10 @@ class Report_Service
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type)),
 			"export_excel" => $export_excel,
-		    "report_name"  => __FUNCTION__,
-	        'report_params'=> serialize(array('sale_type'=>$sale_type))
+		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
     }
     
@@ -93,11 +91,10 @@ class Report_Service
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type)),
 			"export_excel" => $export_excel,
-		    "report_name"  => __FUNCTION__,
-	        'report_params'=> serialize(array('sale_type'=>$sale_type))
+		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -120,11 +117,10 @@ class Report_Service
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type)),
 			"export_excel" => $export_excel,
-		    "report_name"  => __FUNCTION__,
-	        'report_params'=> serialize(array('sale_type'=>$sale_type))
+		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -147,11 +143,10 @@ class Report_Service
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type)),
 			"export_excel" => $export_excel,
-		    "report_name"  => __FUNCTION__,
-	        'report_params'=> serialize(array('sale_type'=>$sale_type))
+		    "report_name"  => __FUNCTION__
 		);
 		
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -174,11 +169,10 @@ class Report_Service
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type)),
 			"export_excel" => $export_excel,
-		    "report_name"  => __FUNCTION__,
-	        'report_params'=> serialize(array('sale_type'=>$sale_type))
+		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -201,11 +195,10 @@ class Report_Service
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type)),
 			"export_excel" => $export_excel,
-		    "report_name"  => __FUNCTION__,
-	        'report_params'=> serialize(array('sale_type'=>$sale_type))
+		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -228,11 +221,10 @@ class Report_Service
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type)),
 			"export_excel" => $export_excel,
-		    "report_name"  => __FUNCTION__,
-	        'report_params'=> serialize(array('sale_type'=>$sale_type))
+		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -255,11 +247,10 @@ class Report_Service
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type)),
 			"export_excel" => $export_excel,
-		    "report_name"  => __FUNCTION__,
-	        'report_params'=> serialize(array('sale_type'=>$sale_type))
+		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
     
@@ -619,12 +610,10 @@ class Report_Service
 			"details_data" => $details_data,
 			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'customer_id' =>$customer_id, 'sale_type'=>$sale_type)),
 			"export_excel" => $export_excel,
-		    'report_params'       => serialize(array('customer_id'=>$customer_id, 'sale_type'=>$sale_type)),
-		    "report_name"  => __FUNCTION__,
-	        'report_params'=> serialize(array('sale_type'=>$sale_type))
+		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_details_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -658,12 +647,10 @@ class Report_Service
 			"details_data" => $details_data,
 			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'employee_id' =>$employee_id, 'sale_type'=>$sale_type)),
 			"export_excel" => $export_excel,
-			'report_params'       => serialize(array('employee_id'=>$employee_id, 'sale_type'=>$sale_type)),
-		    "report_name"  => __FUNCTION__,
-	        'report_params'=> serialize(array('employee_id'=>$employee_id, 'sale_type'=>$sale_type))
+		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_details_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -692,12 +679,10 @@ class Report_Service
 			"summary_data" => $summary_data,
 			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date,'item_id'=>$item->item_id)),
 			"export_excel" => $export_excel,
-		    "report_name"  => __FUNCTION__,
-		    'report_params'       => serialize(array('item_id'=>$item_id, 'sale_type'=>$sale_type)),
-		    "add_to_group" => $add
+		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_details_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -730,11 +715,10 @@ class Report_Service
 			"details_data" => $details_data,
 			"overall_summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type)),
 			"export_excel" => $export_excel,
-		    "report_name"  => __FUNCTION__,
-	        'report_params'=> serialize(array('sale_type'=>$sale_type))
+		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_details_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -768,7 +752,7 @@ class Report_Service
 			"export_excel" => $export_excel
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_details_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_details_report', 'data'=>$data);
 		return $this;
 	}
 	
@@ -790,11 +774,10 @@ class Report_Service
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array()),
 			"export_excel" => $export_excel,
-		    "report_name"  => __FUNCTION__,
-	        'report_params'=> serialize(array('sale_type'=>$sale_type))
+		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 	}
 	
     function inventory_summary($export_excel=0)
@@ -815,43 +798,16 @@ class Report_Service
 			"data" => $tabular_data,
 			"summary_data" => $model->getSummaryData(array()),
 			"export_excel" => $export_excel,
-		    "report_name"  => __FUNCTION__,
-	        'report_params'=> serialize(array('sale_type'=>$sale_type))
+		    "report_name"  => __FUNCTION__
 		);
 
-		$this->renderData = array('script'=>'partial/tabular_report', 'data'=>$data);
+		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
-	
-	
-    /**
-     * Sets the option to suppress echo and return HTML.
-     * 
-     * @param bool $val
-     */
-    public function setSuppressEcho($val)
-    {
-        $this->_suppressEcho = $val;
-    }
-    
-    /**
-     * We want the option to retain the HTML from the helper instead of echoing it out.
-     * @param string $html
-     */
-    private function _display($html)
-    {
-        if ($this->_suppressEcho) {
-            return $html;
-        } else {
-            echo $html;
-            return true;
-        }
-    }
-    
+	    
     public function render()
     {
-        $this->_suppressEcho = true;
-        return $this->_display($this->CI->load->view($this->renderData['script'], $this->renderData['data'], true));
+        return $this->CI->load->view($this->renderData['view'], $this->renderData['data'], true);
     }
     
     public function setFormat($format)
@@ -859,47 +815,9 @@ class Report_Service
         $this->format = $format;
     }
     
-    public function loadWithView($view=null)
+    public function loadWithView($view)
     {
-        if ($this->format == 'rss') {
-            $this->displayRSS();
-            return;
-        }
-        
-        
-        if ($view === null) {
-            $this->render();
-        } else {
-            $data = array('report_service'=>$this);
-            $this->CI->load->view($view,$data);
-        }
-    }
-    
-    
-    public function displayRSS()
-    {
-        //header("Content-Type: application/rss+xml");
-        $link = str_replace('/rss', '', current_url());
-        $pubDate = date(DATE_RFC822);
-        $cdata = $this->render();
-        $rss = <<<ENDRSS
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0">
-<channel>
-	<title>{$this->renderData['data']['title']}</title>
-	<description><![CDATA[ <html>{$cdata}</html> ]]></description>
-	<link>{$link}</link>
-	<item>
-		<title>{$this->renderData['data']['title']}</title>
-		<link>{$link}</link>
-		<guid>{$link}</guid>
-		<pubDate>{$pubDate}</pubDate>
-		<description><![CDATA[ <html>{$cdata}</html> ]]></description>
-	</item>
-</channel>
-</rss>
-ENDRSS;
-        echo $rss;
-    }
-    
+    	$data = array('report_service'=>$this);
+    	$this->CI->load->view($view,$data);
+    }    
 }

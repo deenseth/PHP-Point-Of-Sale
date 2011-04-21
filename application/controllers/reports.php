@@ -29,50 +29,50 @@ class Reports extends Secure_area
 		return $data;
 	}
 	
-    function weekly($report,$sale_or_specific=null,$definitely_sale=null,$format='html')
+    function weekly($report,$sale_type=null,$specific_input=null,$format='html')
     {
         $start_date = date('Y-m-d', strtotime('-1 week'));
         $end_date = date('Y-m-d');
         
-        if ($definitely_sale) {
-            $service = $this->Service->{$report}($start_date, $end_date, $sale_or_specific, $definitely_sale, ($format=='xls' ? 1 : 0));
+        if ($specific_input) {
+            $service = $this->Service->{$report}($start_date, $end_date, $specific_input, $sale_type, ($format=='xls' ? 1 : 0));
             $service->setFormat($format);
             $service->loadWithView($this->get_view($report));
         } else {
-            $service = $this->Service->{$report}($start_date, $end_date, $sale_or_specific, ($format=='xls' ? 1 : 0));
+            $service = $this->Service->{$report}($start_date, $end_date, $sale_type, ($format=='xls' ? 1 : 0));
             $service->setFormat($format);
             $service->loadWithView($this->get_view($report));
         }
         
     }
     
-    function daily($report,$sale_or_specific=null,$definitely_sale=null,$format='html')
+    function daily($report,$sale_type=null,$specific_input=null,$format='html')
     {
         $start_date = date('Y-m-d');
         $end_date = date('Y-m-d');
         
-        if ($definitely_sale) {
-            $service = $this->Service->{$report}($start_date, $end_date, $sale_or_specific, $definitely_sale, ($format=='xls' ? 1 : 0));
+        if ($specific_input) {
+            $service = $this->Service->{$report}($start_date, $end_date, $specific_input, $sale_type, ($format=='xls' ? 1 : 0));
             $service->setFormat($format);
             $service->loadWithView($this->get_view($report));
         } else {
-            $service = $this->Service->{$report}($start_date, $end_date, $sale_or_specific, ($format=='xls' ? 1 : 0));
+            $service = $this->Service->{$report}($start_date, $end_date, $sale_type, ($format=='xls' ? 1 : 0));
             $service->setFormat($format);
             $service->loadWithView($this->get_view($report));
         }
     }
     
-    function monthly($report,$sale_or_specific=null,$definitely_sale=null,$format='html')
+    function monthly($report,$sale_type=null,$specific_input=null,$format='html')
     {
         $start_date = date('Y-m-d', strtotime('-1 month'));
         $end_date = date('Y-m-d');
         
-        if ($definitely_sale) {
-            $service = $this->Service->{$report}($start_date, $end_date, $sale_or_specific, $definitely_sale, ($format=='xls' ? 1 : 0));
+        if ($specific_input) {
+            $service = $this->Service->{$report}($start_date, $end_date, $specific_input, $sale_type, ($format=='xls' ? 1 : 0));
             $service->setFormat($format);
             $service->loadWithView($this->get_view($report));
         } else {
-            $service = $this->Service->{$report}($start_date, $end_date, $sale_or_specific, ($format=='xls' ? 1 : 0));
+            $service = $this->Service->{$report}($start_date, $end_date, $sale_type, ($format=='xls' ? 1 : 0));
             $service->setFormat($format);
             $service->loadWithView($this->get_view($report));
         }
@@ -88,7 +88,6 @@ class Reports extends Secure_area
 	//Summary sales report
 	function summary_sales($start_date, $end_date, $sale_type, $export_excel=0)
 	{
-
         $data = array('report_service' => $this->Service->summary_sales($start_date, $end_date, $sale_type, $export_excel));
 		$this->load->view('reports/tabular',$data);
 	}
@@ -354,17 +353,7 @@ class Reports extends Secure_area
 	{
 		$data = array('report_service' => $this->Service->inventory_summary($export_excel));
 		$this->load->view('reports/tabular',$data);
-	}
-	
-	function export()
-	{
-	    $fname = time();
-	    $file = fopen('saved_charts/'.$fname.'.png', 'w');
-	    fwrite($file, base64_decode($_POST['chart']));
-	    fclose($file);
-	    echo $fname;
-	}
-	
+	}	
 	
 	function get_view($report)
 	{

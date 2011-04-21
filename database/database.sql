@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 16, 2011 at 04:24 PM
+-- Generation Time: Apr 20, 2011 at 09:31 PM
 -- Server version: 5.1.54
 -- PHP Version: 5.3.3
 
@@ -37,33 +37,6 @@ INSERT INTO `phppos_app_config` (`key`, `value`) VALUES
 ('return_policy', 'Test'),
 ('timezone', 'America/New_York'),
 ('website', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `phppos_campaignbuilds`
---
-
-CREATE TABLE `phppos_campaignbuilds` (
-  `campaign_id` int(11) NOT NULL AUTO_INCREMENT,
-  `report_type` varchar(255) NOT NULL,
-  `report_params` mediumtext,
-  `interval` enum('daily','weekly','monthly') DEFAULT NULL,
-  `list_id` varchar(255) NOT NULL,
-  `grouping_id` varchar(255) DEFAULT NULL,
-  `grouping_value` varchar(255) DEFAULT NULL,
-  `title` varchar(255) NOT NULL,
-  `blurb` varchar(255) DEFAULT NULL,
-  `from_email` varchar(255) NOT NULL,
-  `from_name` varchar(255) NOT NULL,
-  `to_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`campaign_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `phppos_campaignbuilds`
---
-
 
 -- --------------------------------------------------------
 

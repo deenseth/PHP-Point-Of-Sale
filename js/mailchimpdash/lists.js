@@ -1,9 +1,8 @@
-function listPage(listId, slice, cid)
+function listPage(listId, slice)
 {
-	var url = document.location.href.replace(/\/lists.*/, '/listsajax');
 	var lv = $('#lists-view');
 	var filters = getFilters();
-	lv.load(url, {listid: listId, start: slice, filters: filters, cid: cid});
+	lv.load( SITE_URL + '/mailchimpdash/listsajax', {listid: listId, start: slice, filters: filters});
 }
 
 var filters = '';
@@ -34,11 +33,7 @@ $(document).ready(function(){
 	
 	$('#lists-buttons .button').click(function(){
 		
-		var id = $(this).attr('id').replace(/button_/, '');
-		
-		var url = document.location.href.replace(/#/, '') + 'ajax';
-		
-		var imageurl = document.location.href.replace(/index\.php\/mailchimpdash\/lists/, '');
+		var id = $(this).attr('id').replace(/button_/, '');		
 		
 		var lv = $('#lists-view');
 		
@@ -51,7 +46,7 @@ $(document).ready(function(){
 		} else {
 			
 			lv.slideUp(1000, function() {
-				lv.html('<div id="lists-loading"><img id="lists-loading" src="'+imageurl+'images/spinner_small.gif" /></div>');
+				lv.html('<div id="lists-loading"><img id="lists-loading" src="'+BASE_URL+'images/spinner_small.gif" /></div>');
 				listPage(id, 0)
 				lv.slideDown(1000);
 			});
@@ -71,8 +66,7 @@ function listremove(obj)
 {
 	var emailval = $(obj).parent('td').parent('tr').find('td.email a').attr('href').replace(/mailto:/, '');
 	var listidval = $('#listid').val();
-	var url = document.location.href.replace(/mailchimpdash.*/, 'mailchimpdash/listremoveajax');
-	$.post(url,
+	$.post(SITE_URL + '/mailchimpdash/listremoveajax',
 			{email: emailval, 
 			 listid: listidval 
 			},

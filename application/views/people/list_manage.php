@@ -1,4 +1,21 @@
 <script type="text/javascript">
+function post_manage_person()
+{
+    if(jQuery.inArray(response.person_id,get_visible_checkbox_ids()) != -1)
+    {
+    	update_row(response.person_id,'<?php echo
+        site_url("$controller_name/get_row")?>');    
+    }
+    else //refresh entire table
+    {
+    	do_search(true,function()
+    	{
+    		//highlight new row
+    		highlight_row(response.person_id);
+    	});
+    }
+}
+
 
 function listadd_submit()
 {
@@ -17,20 +34,35 @@ function listadd_submit()
     $.ajax({url: '<?php echo $addAjaxUrl?>', 
             data: $('#listmanage-form').serialize(),
             type: 'POST',
-            success: function(data) {
-                  returneddata = data.split(':');
-                  if (returneddata[0] == '0') {
-                	  set_feedback(returneddata[1], 'error_message', false);
+            success: function(response) {
+                  if (typeof(response) != 'object') {
+                      var data = JSON.parse(response);
                   } else {
-                	  set_feedback(returneddata[1], 'success_message', false);
+                      var data = response;
                   }
+                  if (data.success) {
+                      set_feedback(data.message, 'success_message', false);
+                  } else {
+                      set_feedback(data.message, 'error_message', true);
+                  }
+                  post_person_form_submit(data);
                   $("#TB_imageOff").unbind("click");
                   $("#TB_closeWindowButton").unbind("click");
                   $("#TB_window").fadeOut("fast",function(){$('#TB_window,#TB_overlay,#TB_HideSelect').trigger("unload").unbind().remove();});
                   $("#TB_load").remove();
               },
-            error: function(data) {
-            	  set_feedback('Unable to add! (Unknown Error)', 'error_message', false);
+            error: function(response) {
+                    if (typeof(response) != 'object') {
+                        var data = JSON.parse(response);
+                    } else {
+                        var data = response;
+                    }
+                    if (data.success) {
+                        set_feedback(data.message, 'success_message', false);
+                    } else {
+                        set_feedback(data.message, 'error_message', true);
+                    }
+                    post_person_form_submit(data);
             	  $("#TB_imageOff").unbind("click");
           	      $("#TB_closeWindowButton").unbind("click");
         	      $("#TB_window").fadeOut("fast",function(){$('#TB_window,#TB_overlay,#TB_HideSelect').trigger("unload").unbind().remove();});
@@ -56,20 +88,34 @@ function listremove_submit()
     $.ajax({url: '<?php echo $removeAjaxUrl?>', 
             data: $('#listmanage-form').serialize(),
             type: 'POST',
-            success: function(data) {
-                  returneddata = data.split(':');
-                  if (returneddata[0] == '0') {
-                      set_feedback(returneddata[1], 'error_message', false);
+            success: function(response) {
+                  if (typeof(response) != 'object') {
+                      var data = JSON.parse(response);
                   } else {
-                      set_feedback(returneddata[1], 'success_message', false);
+                      var data = response;
                   }
+                  if (data.success) {
+                      set_feedback(data.message, 'success_message', false);
+                  } else {
+                      set_feedback(data.message, 'error_message', true);
+                  }
+                  post_person_form_submit(data);
                   $("#TB_imageOff").unbind("click");
                   $("#TB_closeWindowButton").unbind("click");
                   $("#TB_window").fadeOut("fast",function(){$('#TB_window,#TB_overlay,#TB_HideSelect').trigger("unload").unbind().remove();});
                   $("#TB_load").remove();
               },
-            error: function(data) {
-                  set_feedback('Unable to add! (Unknown Error)', 'error_message', false);
+            error: function(response) {
+                    if (typeof(response) != 'object') {
+                        var data = JSON.parse(response);
+                    } else {
+                        var data = response;
+                    }
+                    if (data.success) {
+                        set_feedback(data.message, 'success_message', false);
+                    } else {
+                        set_feedback(data.message, 'error_message', true);
+                    }
                   $("#TB_imageOff").unbind("click");
                   $("#TB_closeWindowButton").unbind("click");
                   $("#TB_window").fadeOut("fast",function(){$('#TB_window,#TB_overlay,#TB_HideSelect').trigger("unload").unbind().remove();});

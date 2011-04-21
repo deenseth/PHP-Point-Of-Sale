@@ -861,45 +861,11 @@ class Report_Service
     
     public function loadWithView($view=null)
     {
-        if ($this->format == 'rss') {
-            $this->displayRSS();
-            return;
-        }
-        
-        
         if ($view === null) {
             $this->render();
         } else {
             $data = array('report_service'=>$this);
             $this->CI->load->view($view,$data);
         }
-    }
-    
-    
-    public function displayRSS()
-    {
-        //header("Content-Type: application/rss+xml");
-        $link = str_replace('/rss', '', current_url());
-        $pubDate = date(DATE_RFC822);
-        $cdata = $this->render();
-        $rss = <<<ENDRSS
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0">
-<channel>
-	<title>{$this->renderData['data']['title']}</title>
-	<description><![CDATA[ <html>{$cdata}</html> ]]></description>
-	<link>{$link}</link>
-	<item>
-		<title>{$this->renderData['data']['title']}</title>
-		<link>{$link}</link>
-		<guid>{$link}</guid>
-		<pubDate>{$pubDate}</pubDate>
-		<description><![CDATA[ <html>{$cdata}</html> ]]></description>
-	</item>
-</channel>
-</rss>
-ENDRSS;
-        echo $rss;
-    }
-    
+    }    
 }

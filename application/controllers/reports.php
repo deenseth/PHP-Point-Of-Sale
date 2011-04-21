@@ -88,7 +88,6 @@ class Reports extends Secure_area
 	//Summary sales report
 	function summary_sales($start_date, $end_date, $sale_type, $export_excel=0)
 	{
-
         $data = array('report_service' => $this->Service->summary_sales($start_date, $end_date, $sale_type, $export_excel));
 		$this->load->view('reports/tabular',$data);
 	}

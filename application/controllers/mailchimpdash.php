@@ -15,7 +15,7 @@ class Mailchimpdash extends Secure_area
 
     public function index()
     {
-        $this->load->view("mailchimpdash/index",array('phingenabled'=>$this->Appconfig->get('enable_builds')));
+        $this->load->view("mailchimpdash/index");
     }
     
     public function lists($list_id = null, $filter = null)

@@ -64,6 +64,16 @@ foreach($all_modules->result() as $module)
 }
 ?>
 </ul>
+
+<style type="text/css">
+#list-manage-form-wrapper .list-groups {
+    float: right;
+    width: 180px;
+}s
+</style>
+
+<?php echo $this->load->view('partial/list_manage_form_wrapper.php', array('email'=>$person_info->email))?>
+
 <?php
 echo form_submit(array(
 	'name'=>'submit',

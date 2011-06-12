@@ -1,3 +1,13 @@
+function thickit(dom)
+{
+	var t = dom.title || dom.name || null;
+	var a = dom.href || dom.alt;
+	var g = dom.rel || false;
+	tb_show(t,a,g);
+	dom.blur();
+	return false;
+}
+
 function get_dimensions() 
 {
 	var dims = {width:0,height:0};
@@ -38,45 +48,46 @@ function set_feedback(text, classname, keep_displayed)
 	{
 		$('#feedback_bar').css('opacity','0');
 	}
+
 }
 
 //keylisteners
 
 $(window).jkey('f1',function(){
-window.location = BASE_URL + '/customers/index';
+window.location =  SITE_URL + '/customers/index';
 });
 
 
 $(window).jkey('f2',function(){
-window.location = BASE_URL + '/items/index';
+window.location =  SITE_URL + '/items/index';
 });
 
 
 $(window).jkey('f3',function(){
-window.location = BASE_URL + '/reports/index';
+window.location =  SITE_URL + '/reports/index';
 });
 
 $(window).jkey('f4',function(){
-window.location = BASE_URL + '/suppliers/index';
+window.location =  SITE_URL + '/suppliers/index';
 });
 
 $(window).jkey('f5',function(){
-window.location = BASE_URL + '/receivings/index';
+window.location =  SITE_URL + '/receivings/index';
 });
 
 
 $(window).jkey('f6',function(){
-window.location = BASE_URL + '/sales/index';
+window.location =  SITE_URL + '/sales/index';
 });
 
 $(window).jkey('f7',function(){
-window.location = BASE_URL + '/employees/index';
+window.location =  SITE_URL + '/employees/index';
 });
 
 $(window).jkey('f8',function(){
-window.location = BASE_URL + '/config/index';
+window.location =  SITE_URL + '/config/index';
 });
 
 $(window).jkey('f9',function(){
-window.location = BASE_URL + '/giftcards/index';
+window.location =  SITE_URL + '/giftcards/index';
 });

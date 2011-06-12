@@ -1,0 +1,124 @@
+#lists{
+	margin: 25px 0;
+}
+
+#lists #lists-buttons, #lists-options{
+	background: #cccccc;
+	border: 1px solid #dddd22;
+	padding: 10px 10px 0 10px;
+}
+
+#lists-options {
+	font-size: 16px;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+#lists #lists-buttons legend, #lists-options legend{
+	background-color: #ffffff;
+	border: 1px solid #333333;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 2px 5px;
+}
+
+#lists #lists-buttons a.button
+{
+	margin: 0 15px 15px 0;
+}
+
+#lists #lists-view{
+	background-color:#f7f7f7;
+	border: 1px solid #cccccc;
+	display: none;
+	margin-top: 15px;
+	padding: 10px;
+}
+
+#lists-loading{
+	text-align: center;
+}
+
+#lists-members{
+	border-collapse: collapse;
+}
+
+#lists-members tr{
+	border-bottom: 1px solid #333333;
+}
+
+#lists-members th{
+	text-align: center;
+}
+
+#lists-members th.actions{
+    padding-right: 10px;
+	text-align: right;
+}
+
+#lists-members td{
+	border-bottom: 1px solid #333333;
+	padding: 7px 5px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#lists-members td.action{
+	text-align: right;
+}
+
+#lists-members{
+	width: 860px;
+}
+
+#lists-nav-buttons{
+	margin-top: 10px;
+}
+
+#lists-nav-buttons .button{
+	font-size: 14px;
+	width: 100px;
+}
+
+#lists-nav-buttons-info{
+	float: left;
+	font-size: 10px;
+	margin: 0 auto;
+	padding-top: 10px;
+	text-align: center;
+	width: 600px;
+}
+
+#nav-button-prev{
+	float: left;
+}
+
+#nav-button-next{
+	border-left: 1px solid #CACACA;
+	float: right;
+	text-align: right;
+}
+
+#lists-options div{
+	width: 175px;
+}
+
+#lists-options-customers-wrapper{
+	float: left;
+}
+
+#lists-options-suppliers-wrapper{
+	float: left;
+	margin-left: 50px;
+}
+
+#lists-options-employees-wrapper{
+    float: left;
+    margin-left: 50px;
+}
+
+
+#lists-options-persons-wrapper{
+	float: right;
+}

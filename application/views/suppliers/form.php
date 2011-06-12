@@ -28,6 +28,9 @@ echo form_open('suppliers/save/'.$person_info->person_id,array('id'=>'supplier_f
 	);?>
 	</div>
 </div>
+
+<?php echo $this->load->view('partial/list_manage_form_wrapper.php', array('email'=>$person_info->email))?>
+
 <?php
 echo form_submit(array(
 	'name'=>'submit',

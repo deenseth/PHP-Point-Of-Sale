@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 08, 2011 at 04:27 PM
+-- Generation Time: Apr 20, 2011 at 09:31 PM
 -- Server version: 5.1.54
 -- PHP Version: 5.3.3
 
@@ -236,6 +236,7 @@ INSERT INTO `phppos_modules` (`name_lang_key`, `desc_lang_key`, `sort`, `module_
 ('module_giftcards', 'module_giftcards_desc', 90, 'giftcards'),
 ('module_items', 'module_items_desc', 20, 'items'),
 ('module_item_kits', 'module_item_kits_desc', 30, 'item_kits'),
+('module_mailchimp', 'module_mailchimp_desc', 91, 'mailchimpdash'),
 ('module_receivings', 'module_receivings_desc', 60, 'receivings'),
 ('module_reports', 'module_reports_desc', 50, 'reports'),
 ('module_sales', 'module_sales_desc', 70, 'sales'),
@@ -294,10 +295,12 @@ INSERT INTO `phppos_permissions` (`module_id`, `person_id`) VALUES
 ('giftcards', 1),
 ('items', 1),
 ('item_kits', 1),
+('mailchimpdash', 1),
 ('receivings', 1),
 ('reports', 1),
 ('sales', 1),
-('suppliers', 1);
+('suppliers', 1),
+('giftcards', 1);
 -- --------------------------------------------------------
 
 --
@@ -600,7 +603,7 @@ ALTER TABLE `phppos_items_taxes`
 --
 ALTER TABLE `phppos_item_kit_items`
   ADD CONSTRAINT `phppos_item_kit_items_ibfk_1` FOREIGN KEY (`item_kit_id`) REFERENCES `phppos_item_kits` (`item_kit_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `phppos_item_kit_items_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `phppos_items` (`item_id`)  ON DELETE CASCADE;
+  ADD CONSTRAINT `phppos_item_kit_items_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `phppos_items` (`item_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `phppos_permissions`

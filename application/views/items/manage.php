@@ -58,33 +58,6 @@ function init_table_sorting()
 	}
 }
 
-function post_item_form_submit(response)
-{
-	if(!response.success)
-	{
-		set_feedback(response.message,'error_message',true);
-	}
-	else
-	{
-		//This is an update, just update one row
-		if(jQuery.inArray(response.item_id,get_visible_checkbox_ids()) != -1)
-		{
-			update_row(response.item_id,'<?php echo site_url("$controller_name/get_row")?>');
-			set_feedback(response.message,'success_message',false);
-
-		}
-		else //refresh entire table
-		{
-			do_search(true,function()
-			{
-				//highlight new row
-				hightlight_row(response.item_id);
-				set_feedback(response.message,'success_message',false);
-			});
-		}
-	}
-}
-
 function post_bulk_form_submit(response)
 {
 	if(!response.success)
@@ -122,18 +95,28 @@ function show_hide_search_filter(search_filter_section, switchImgTag) {
 
 </script>
 
-<div id="title_bar">
-	<div id="title" class="float_left"><?php echo $this->lang->line('common_list_of').' '.$this->lang->line('module_'.$controller_name); ?></div>
-	<div id="new_button">
-		<?php echo anchor("$controller_name/view/-1/width:$form_width",
-		"<div class='big_button' style='float: left;'><span>".$this->lang->line($controller_name.'_new')."</span></div>",
-		array('class'=>'thickbox none','title'=>$this->lang->line($controller_name.'_new')));
-		?>
-		<?php echo anchor("$controller_name/excel_import/width:$form_width",
-		"<div class='big_button' style='float: left;'><span>Excel Import</span></div>",
-		array('class'=>'thickbox none','title'=>'Import Items from Excel'));
-		?>
+
+<h1 id="title"><?php echo $this->lang->line('common_list_of').' '.$this->lang->line('module_'.$controller_name); ?></h1>
+<hr>
+<div class="actions">
+	<div class="search-box">
+		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
+		<?php echo form_open("$controller_name/search",array('id'=>'search_form')); ?>
+		<input type="text" name ='search' id='search'/>
+		</form>
 	</div>
+	<div id="new_button" class="btn-group">
+		<?php echo anchor("$controller_name/view/-1", $this->lang->line($controller_name.'_new'),
+		array('class'=>'btn btn-success','title'=>$this->lang->line($controller_name.'_new')));
+		?>
+		<?php echo anchor("$controller_name/bulk_edit/width:$form_width",$this->lang->line("items_bulk_edit"),array('class'=>'btn btn-default', 'id'=>'bulk_edit','title'=>$this->lang->line('items_edit_multiple_items'))); ?>
+		<?php echo anchor("$controller_name/generate_barcodes",$this->lang->line("items_generate_barcodes"),array('class'=>'btn btn-default','id'=>'generate_barcodes', 'target' =>'_blank','title'=>$this->lang->line('items_generate_barcodes'))); ?>
+		<?php echo anchor("$controller_name/excel_import", "Excel Import",
+		array('class'=>'btn btn-default','title'=>'Import Items from Excel'));
+		?>
+		<?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('class'=>'btn btn-danger','id'=>'delete')); ?>
+	</div>
+	<br style="clear:both" />
 </div>
 
 <div id="titleTextImg" style="background-color:#EEEEEE;height:20px;position:relative;">
@@ -154,23 +137,10 @@ function show_hide_search_filter(search_filter_section, switchImgTag) {
 	<input type="hidden" name="search_section_state" id="search_section_state" value="<?php echo isset($search_section_state)?  ( ($search_section_state)? 'block' : 'none') : 'none';?>" />
 	</form>
 </div>
-<?php echo $this->pagination->create_links();?>
-<div id="table_action_header">
-	<ul>
-		<li class="float_left"><span><?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('id'=>'delete')); ?></span></li>
-		<li class="float_left"><span><?php echo anchor("$controller_name/bulk_edit/width:$form_width",$this->lang->line("items_bulk_edit"),array('id'=>'bulk_edit','title'=>$this->lang->line('items_edit_multiple_items'))); ?></span></li>
-		<li class="float_left"><span><?php echo anchor("$controller_name/generate_barcodes",$this->lang->line("items_generate_barcodes"),array('id'=>'generate_barcodes', 'target' =>'_blank','title'=>$this->lang->line('items_generate_barcodes'))); ?></span></li>
-		<li class="float_right">
-		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
-		<?php echo form_open("$controller_name/search",array('id'=>'search_form')); ?>
-		<input type="text" name ='search' id='search'/>
-		</form>
-		</li>
-	</ul>
-</div>
 
 <div id="table_holder">
-<?php echo $manage_table; ?>
+	<?php echo $manage_table; ?>
 </div>
+<?php echo $this->pagination->create_links();?>
 <div id="feedback_bar"></div>
 <?php $this->load->view("partial/footer"); ?>

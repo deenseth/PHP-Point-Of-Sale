@@ -23,11 +23,9 @@ function enable_search(suggest_url,confirm_search_message)
     	$(this).attr('value','');
     });
 
-    $("#search").autocomplete(suggest_url,{max:100,delay:10, selectFirst: false});
-    $("#search").result(function(event, data, formatted)
-    {
-		do_search(true);
-    });
+    $("#search").autocomplete({source:suggest_url, delay:10, response:function(event, ui){
+    	do_search(true);
+    }})
     
 	$('#search_form').submit(function(event)
 	{
@@ -191,8 +189,7 @@ function enable_bulk_edit(none_selected_message)
 		event.preventDefault();
 		if($("#sortable_table tbody :checkbox:checked").length >0)
 		{
-			tb_show($(this).attr('title'),$(this).attr('href'),false);
-			$(this).blur();
+			window.location.href = $(this).attr('href');
 		}
 		else
 		{

@@ -1,3 +1,4 @@
+<?php $this->load->view("partial/header"); ?>
 <div id="required_fields_message"><?php echo $this->lang->line('items_edit_fields_you_want_to_update'); ?></div>
 <ul id="error_message_box"></ul>
 <?php
@@ -242,3 +243,4 @@ $(document).ready(function()
 	});
 });
 </script>
+<?php $this->load->view("partial/footer"); ?>

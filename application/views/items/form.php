@@ -1,3 +1,4 @@
+<?php $this->load->view("partial/header"); ?>
 <div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
 <ul id="error_message_box"></ul>
 <?php
@@ -200,9 +201,8 @@ echo form_close();
 //validation and submit handling
 $(document).ready(function()
 {
-	$("#category").autocomplete("<?php echo site_url('items/suggest_category');?>",{max:100,minChars:0,delay:10});
-    $("#category").result(function(event, data, formatted){});
-	$("#category").search();
+	$("#category").autocomplete({source:"<?php echo site_url('items/suggest_category');?>", delay:10, minLength:0});
+	$("#category").autocomplete("search", "");
 
 
 	$('#item_form').validate({
@@ -216,7 +216,6 @@ $(document).ready(function()
 			$(form).ajaxSubmit({
 			success:function(response)
 			{
-				tb_remove();
 				post_item_form_submit(response);
 			},
 			dataType:'json'
@@ -289,4 +288,32 @@ $(document).ready(function()
 		}
 	});
 });
+
+function post_item_form_submit(response)
+{
+	if(!response.success)
+	{
+		set_feedback(response.message,'error_message',true);
+	}
+	else
+	{
+		//This is an update, just update one row
+		if(jQuery.inArray(response.item_id,get_visible_checkbox_ids()) != -1)
+		{
+			update_row(response.item_id,'<?php echo site_url("$controller_name/get_row")?>');
+			set_feedback(response.message,'success_message',false);
+
+		}
+		else //refresh entire table
+		{
+			do_search(true,function()
+			{
+				//highlight new row
+				hightlight_row(response.item_id);
+				set_feedback(response.message,'success_message',false);
+			});
+		}
+	}
+}
 </script>
+<?php $this->load->view("partial/footer"); ?>

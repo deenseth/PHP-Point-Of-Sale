@@ -9,7 +9,7 @@
 				<div class="row">
 					<?php for($i=0; $i < count($rows[$j]); $i++) { 
 						$module = $rows[$j][$i]; ?>
-						<div class="col-xs-6 col-sm-4">
+						<div class="col-xs-6 col-sm-4 dashboard-icon">
 							<a href="<?php echo site_url("$module->module_id");?>">
 							<img src="<?php echo base_url().'images/menubar/'.$module->module_id.'.png';?>" border="0" alt="Menubar Image" /></a><br />
 							<a href="<?php echo site_url("$module->module_id");?>"><?php echo $this->lang->line("module_".$module->module_id) ?></a>

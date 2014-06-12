@@ -1,3 +1,4 @@
+<?php $this->load->view("partial/header"); ?>
 <?php
 echo form_open('items/save_inventory/'.$item_info->item_id,array('id'=>'item_form'));
 ?>
@@ -112,3 +113,4 @@ foreach($this->Inventory->get_inventory_data_for_item($item_info->item_id)->resu
 }
 ?>
 </table>
+<?php $this->load->view("partial/footer"); ?>

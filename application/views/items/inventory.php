@@ -1,3 +1,4 @@
+<?php $this->load->view("partial/header"); ?>
 <div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
 <ul id="error_message_box"></ul>
 <?php
@@ -155,3 +156,4 @@ $(document).ready(function()
 	});
 });
 </script>
+<?php $this->load->view("partial/footer"); ?>

@@ -49,7 +49,6 @@ $(document).ready(function()
 			$(form).ajaxSubmit({
 			success:function(response)
 			{
-				tb_remove();
 				post_person_form_submit(response);
 			},
 			dataType:'json'

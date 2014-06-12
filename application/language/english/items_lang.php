@@ -1,5 +1,5 @@
 <?php
-$lang['items_item_number']='UPC/EAN/ISBN';
+$lang['items_item_number']='SKU';
 $lang['items_retrive_item_info']='Retrive Item Info';
 $lang['items_description']='Description';
 $lang['items_amazon']='Amazon';
@@ -14,14 +14,14 @@ $lang['items_item']='Item';
 $lang['items_edit_multiple_items']='Editing Multiple Items';
 $lang['items_name']='Item Name';
 $lang['items_category']='Category';
-$lang['items_cost_price']='Cost Price';
-$lang['items_unit_price']='Unit Price';
+$lang['items_cost_price']='Cost';
+$lang['items_unit_price']='Price';
 $lang['items_tax_1']='Tax 1';
 $lang['items_tax_2']='Tax 2';
 $lang['items_sales_tax_1'] = 'Sales Tax';
 $lang['items_sales_tax_2'] = 'Sales Tax 2';
-$lang['items_tax_percent']='Tax Percent';
-$lang['items_tax_percents']='Tax Percent(s)';
+$lang['items_tax_percent']='Tax';
+$lang['items_tax_percents']='Tax(s)';
 $lang['items_reorder_level']='Reorder Level';
 $lang['items_quantity']='Quantity';
 $lang['items_reorder_level']='Reorder Level';

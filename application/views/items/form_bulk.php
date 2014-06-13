@@ -1,163 +1,181 @@
-	<?php $this->load->view("partial/header"); ?>
-<div id="required_fields_message"><?php echo $this->lang->line('items_edit_fields_you_want_to_update'); ?></div>
+<?php $this->load->view("partial/header"); ?>
 <ul id="error_message_box"></ul>
 <?php
 echo form_open('items/bulk_update/',array('id'=>'item_form'));
 ?>
 <fieldset id="item_basic_info">
-<legend><?php echo $this->lang->line("items_basic_information"); ?></legend>
 
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_name').':', 'name',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'name',
-		'id'=>'name')
-	);?>
-	</div>
-</div>
-
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_category').':', 'category',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'category',
-		'id'=>'category')
-	);?>
-	</div>
-</div>
-
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_supplier').':', 'supplier',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_dropdown('supplier_id', $suppliers, '');?>
-	</div>
-</div>
-
-
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_cost_price').':', 'cost_price',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'cost_price',
-		'size'=>'8',
-		'id'=>'cost_price')
-	);?>
-	</div>
-</div>
-
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_unit_price').':', 'unit_price',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'unit_price',
-		'size'=>'8',
-		'id'=>'unit_price')
-	);?>
-	</div>
-</div>
-
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_tax_1').':', 'tax_percent_1',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'tax_names[]',
-		'id'=>'tax_name_1',
-		'size'=>'8',
-		'value'=> isset($item_tax_info[0]['name']) ? $item_tax_info[0]['name'] : $this->lang->line('items_sales_tax'))
-	);?>
-	</div>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'tax_percents[]',
-		'id'=>'tax_percent_name_1',
-		'size'=>'3',
-		'value'=> isset($item_tax_info[0]['percent']) ? $item_tax_info[0]['percent'] : '')
-	);?>
-	%
-	</div>
-</div>
-
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_tax_2').':', 'tax_percent_2',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'tax_names[]',
-		'id'=>'tax_name_2',
-		'size'=>'8',
-		'value'=> isset($item_tax_info[1]['name']) ? $item_tax_info[1]['name'] : '')
-	);?>
-	</div>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'tax_percents[]',
-		'id'=>'tax_percent_name_2',
-		'size'=>'3',
-		'value'=> isset($item_tax_info[1]['percent']) ? $item_tax_info[1]['percent'] : '')
-	);?>
-	%
-	</div>
-</div>
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_reorder_level').':', 'reorder_level',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'reorder_level',
-		'id'=>'reorder_level')
-	);?>
-	</div>
-</div>
-
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_location').':', 'location',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'location',
-		'id'=>'location')
-	);?>
-	</div>
-</div>
-
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('items_description').':', 'description',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_textarea(array(
-		'name'=>'description',
-		'id'=>'description',
-		'rows'=>'5',
-		'cols'=>'17')		
-	);?>
-	</div>
-</div>
-
-<div class="field_row clearfix">
-
-<?php echo form_label($this->lang->line('items_allow_alt_desciption').':', 'allow_alt_description',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_dropdown('allow_alt_description', $allow_alt_desciption_choices);?>
-
+	<div class="form-group">
+		<?php echo form_label($this->lang->line('items_name'), 'name' ,array('class'=>'required')); ?>
+			<?php echo form_input(array(
+				'class'=>'form-control',
+				'placeholder'=>$this->lang->line('items_name'),
+				'name'=>'name',
+				'id'=>'name'
+			));?>
 	</div>
 
-</div>
-
-
-
-<div class="field_row clearfix">
-
-<?php echo form_label($this->lang->line('items_is_serialized').':', 'is_serialized',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_dropdown('is_serialized', $serialization_choices);?>
-
+	<div class="form-group">
+		<?php echo form_label($this->lang->line('items_category'), 'category' ,array('class'=>'required')); ?>
+		<?php echo form_input(array(
+			'class'=>'form-control',
+			'placeholder'=>$this->lang->line('items_category'),
+			'name'=>'category',
+			'id'=>'category'
+		));?>
 	</div>
 
-</div>
+	<div class="form-group">
+		<?php echo form_label($this->lang->line('items_supplier'), 'supplier_id'); ?>
+		<?php echo form_dropdown('supplier_id', $suppliers, $selected_supplier, 'class="selectpicker"  data-width="100%"');?>
+	</div>
+
+	<div class="form-group">
+		<?php echo form_label($this->lang->line('items_cost_price'), 'cost_price' ,array('class'=>'required')); ?>
+		<?php echo form_input(array(
+			'class'=>'form-control',
+			'placeholder'=>$this->lang->line('items_cost_price'),
+			'name'=>'cost_price',
+			'size'=>'8',
+			'id'=>'cost_price'
+		));?>
+	</div>
+
+	<div class="form-group">
+		<?php echo form_label($this->lang->line('items_unit_price'), 'unit_price' ,array('class'=>'required')); ?>
+		<?php echo form_input(array(
+			'class'=>'form-control',
+			'placeholder'=>$this->lang->line('items_unit_price'),
+			'name'=>'unit_price',
+			'size'=>'8',
+			'id'=>'unit_price'
+		));?>
+	</div>
+
+	<div class="form-group">
+		<?php echo form_label($this->lang->line('items_tax_1'), 'tax_names[]'); ?>
+		<div class="row">
+		  	<div class="col-lg-6">
+				<?php echo form_input(array(
+					'class'=>'form-control',
+					'placeholder'=>$this->lang->line('items_tax_1'),
+					'name'=>'tax_names[]',
+					'id'=>'tax_name_1',
+					'size'=>'8'
+				));?>
+			</div>
+			<div class="col-lg-6">
+				<div class="input-group">
+					<?php echo form_input(array(
+						'class'=>'form-control',
+						'placeholder'=>$this->lang->line('items_percent'),
+						'name'=>'tax_percents[]',
+						'id'=>'tax_percent_name_1'
+					));?>
+					<span class="input-group-addon">%</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<?php echo form_label($this->lang->line('items_tax_2'), 'tax_names[]'); ?>
+		<div class="row">
+		  	<div class="col-lg-6">
+				<?php echo form_input(array(
+					'class'=>'form-control',
+					'placeholder'=>$this->lang->line('items_tax_2'),
+					'name'=>'tax_names[]',
+					'id'=>'tax_name_2',
+					'size'=>'8'
+				));?>
+			</div>
+			<div class="col-lg-6">
+				<div class="input-group">
+					<?php echo form_input(array(
+						'class'=>'form-control',
+						'placeholder'=>$this->lang->line('items_percent'),
+						'name'=>'tax_percents[]',
+						'id'=>'tax_percent_name_2',
+						'type'=>'text',
+						'size'=>'3'
+					));?>
+					<span class="input-group-addon">%</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<?php echo form_label($this->lang->line('items_quantity'), 'quantity' ,array('class'=>'required')); ?>
+		<?php echo form_input(array(
+			'class'=>'form-control',
+			'placeholder'=>$this->lang->line('items_quantity'),
+			'name'=>'quantity',
+			'id'=>'quantity'
+		));?>
+	</div>
+
+	<div class="form-group">
+		<?php echo form_label($this->lang->line('items_reorder_level'), 'reorder_level', array('class'=>'required')); ?>
+		<?php echo form_input(array(
+			'class'=>'form-control',
+			'placeholder'=>$this->lang->line('items_reorder_level'),
+			'name'=>'reorder_level',
+			'id'=>'reorder_level'
+		));?>
+	</div>
+
+	<div class="form-group">
+		<?php echo form_label($this->lang->line('items_location'), 'location'); ?>
+		<?php echo form_input(array(
+			'class'=>'form-control',
+			'placeholder'=>$this->lang->line('items_location'),
+			'name'=>'location',
+			'id'=>'location'
+		));?>
+	</div>
+
+	<div class="form-group">
+		<?php echo form_label($this->lang->line('items_description'), 'description'); ?>
+		<?php echo form_textarea(array(
+			'class'=>'form-control',
+			'placeholder'=>$this->lang->line('items_description'),
+			'name'=>'description',
+			'id'=>'description',
+			'rows'=>'5',
+			'cols'=>'17'
+		));?>
+	</div>
+
+	<div class="form-group">
+		<?php echo form_label($this->lang->line('items_allow_alt_desciption'), 'allow_alt_description'); ?>
+		<?php echo form_checkbox(array(
+			'class'=>'form-control',
+			'placeholder'=>$this->lang->line('items_allow_alt_desciption'),
+			'name'=>'allow_alt_description',
+			'id'=>'allow_alt_description',
+			'checked'=>($item_info->allow_alt_description)? 1  :0)
+		);?>
+	</div>
+
+	<div class="form-group">
+		<?php echo form_label($this->lang->line('items_is_serialized'), 'is_serialized'); ?>
+		<?php echo form_checkbox(array(
+			'class'=>'form-control',
+			'placeholder'=>$this->lang->line('items_is_serialized'),
+			'name'=>'is_serialized',
+			'id'=>'is_serialized',
+			'checked'=>($item_info->is_serialized)? 1 : 0)
+		);?>
+	</div>
 
 <?php
 echo form_submit(array(
 	'name'=>'submit',
 	'id'=>'submit',
 	'value'=>$this->lang->line('common_submit'),
-	'class'=>'submit_button float_right')
+	'class'=>'btn btn-primary float_right')
 );
 ?>
 </fieldset>
@@ -169,6 +187,8 @@ echo form_close();
 //validation and submit handling
 $(document).ready(function()
 {	
+	$('.selectpicker').selectpicker();
+
 	$("#category").autocomplete({source:"<?php echo site_url('items/suggest_category');?>", delay:10, minLength:0});
 	$("#category").autocomplete("search", "");
 	
@@ -178,7 +198,10 @@ $(document).ready(function()
 			if(confirm("<?php echo $this->lang->line('items_confirm_bulk_edit') ?>"))
 			{
 				//Get the selected ids and create hidden fields to send with ajax submit.
-				var selected_item_ids=get_selected_values();
+				//var selected_item_ids=get_selected_values();
+				//TODO: Maybe PHP should handle this?
+				var selected_item_ids = JSON.parse(window.localStorage.getItem("selected_values"));
+				window.localStorage.removeItem('selected_values');
 				for(k=0;k<selected_item_ids.length;k++)
 				{
 					$(form).append("<input type='hidden' name='item_ids[]' value='"+selected_item_ids[k]+"' />");

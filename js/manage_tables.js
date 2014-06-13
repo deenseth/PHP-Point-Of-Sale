@@ -189,6 +189,7 @@ function enable_bulk_edit(none_selected_message)
 		event.preventDefault();
 		if($("#sortable_table tbody :checkbox:checked").length >0)
 		{
+			window.localStorage.setItem('selected_values', JSON.stringify(get_selected_values()));
 			window.location.href = $(this).attr('href');
 		}
 		else
@@ -207,7 +208,7 @@ function enable_select_all()
 
 	$('#select_all').click(function()
 	{
-		if($(this).attr('checked'))
+		if($(this).is(':checked'))
 		{	
 			$("#sortable_table tbody :checkbox").each(function()
 			{

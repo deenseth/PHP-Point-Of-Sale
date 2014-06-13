@@ -58,23 +58,6 @@ function init_table_sorting()
 	}
 }
 
-function post_bulk_form_submit(response)
-{
-	if(!response.success)
-	{
-		set_feedback(response.message,'error_message',true);
-	}
-	else
-	{
-		var selected_item_ids=get_selected_values();
-		for(k=0;k<selected_item_ids.length;k++)
-		{
-			update_row(selected_item_ids[k],'<?php echo site_url("$controller_name/get_row")?>');
-		}
-		set_feedback(response.message,'success_message',false);
-	}
-}
-
 function show_hide_search_filter(search_filter_section, switchImgTag) {
         var ele = document.getElementById(search_filter_section);
         var imageEle = document.getElementById(switchImgTag);
@@ -109,7 +92,7 @@ function show_hide_search_filter(search_filter_section, switchImgTag) {
 		<?php echo anchor("$controller_name/view/-1", $this->lang->line($controller_name.'_new'),
 		array('class'=>'btn btn-success','title'=>$this->lang->line($controller_name.'_new')));
 		?>
-		<?php echo anchor("$controller_name/bulk_edit/width:$form_width",$this->lang->line("items_bulk_edit"),array('class'=>'btn btn-default', 'id'=>'bulk_edit','title'=>$this->lang->line('items_edit_multiple_items'))); ?>
+		<?php echo anchor("$controller_name/bulk_edit",$this->lang->line("items_bulk_edit"),array('class'=>'btn btn-default', 'id'=>'bulk_edit','title'=>$this->lang->line('items_edit_multiple_items'))); ?>
 		<?php echo anchor("$controller_name/generate_barcodes",$this->lang->line("items_generate_barcodes"),array('class'=>'btn btn-default','id'=>'generate_barcodes', 'target' =>'_blank','title'=>$this->lang->line('items_generate_barcodes'))); ?>
 		<?php echo anchor("$controller_name/excel_import", "Excel Import",
 		array('class'=>'btn btn-default','title'=>'Import Items from Excel'));

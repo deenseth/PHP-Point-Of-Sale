@@ -1,3 +1,13 @@
+$(document).ready(function()
+{
+	var message = JSON.parse(window.localStorage.getItem("message"));
+	if(message != null)
+	{
+		set_feedback(message.text, message.type, false);
+		window.localStorage.removeItem("message")
+	}
+});
+
 function thickit(dom)
 {
 	var t = dom.title || dom.name || null;
@@ -29,26 +39,25 @@ function get_dimensions()
   return dims;
 }
 
-function set_feedback(text, classname, keep_displayed)
+function set_feedback(text, type, keep_displayed)
 {
-	if(text!='')
+	if(!keep_displayed)
 	{
-		$('#feedback_bar').removeClass();
-		$('#feedback_bar').addClass(classname);
-		$('#feedback_bar').text(text);
-		$('#feedback_bar').css('opacity','1');
-
-		if(!keep_displayed)
-		{
-			$('#feedback_bar').fadeTo(5000, 1);
-			$('#feedback_bar').fadeTo("fast",0);
+		toastr.options = {
+		  "extendedTimeOut": "1000"
 		}
 	}
-	else
-	{
-		$('#feedback_bar').css('opacity','0');
-	}
 
+	if(type == 'success')
+	{
+		toastr.success(text);
+	}else if(type == 'error'){
+		toastr.error(text);
+	}else if(type == 'warning'){
+		toastr.warning(text);
+	}else{
+		toastr.info(text);
+	}
 }
 
 //keylisteners

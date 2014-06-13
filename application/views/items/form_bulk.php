@@ -1,4 +1,4 @@
-<?php $this->load->view("partial/header"); ?>
+	<?php $this->load->view("partial/header"); ?>
 <div id="required_fields_message"><?php echo $this->lang->line('items_edit_fields_you_want_to_update'); ?></div>
 <ul id="error_message_box"></ul>
 <?php
@@ -169,11 +169,8 @@ echo form_close();
 //validation and submit handling
 $(document).ready(function()
 {	
-	$("#category").autocomplete("<?php echo site_url('items/suggest_category');?>",{max:100,minChars:0,delay:10});
-    $("#category").result(function(event, data, formatted)
-    {
-    });
-	$("#category").search();
+	$("#category").autocomplete({source:"<?php echo site_url('items/suggest_category');?>", delay:10, minLength:0});
+	$("#category").autocomplete("search", "");
 	
 	$('#item_form').validate({
 		submitHandler:function(form)
@@ -191,7 +188,6 @@ $(document).ready(function()
 				$(form).ajaxSubmit({
 				success:function(response)
 				{
-					tb_remove();
 					post_bulk_form_submit(response);
 				},
 				dataType:'json'
@@ -241,6 +237,20 @@ $(document).ready(function()
 
 		}
 	});
+
+	function post_bulk_form_submit(response)
+	{
+		if(!response.success)
+		{
+			set_feedback(response.message,'error',true);
+		}
+		else
+		{
+			var message = {'text': response.message, 'type': 'success'};
+			window.localStorage.setItem("message", JSON.stringify(message));
+			window.location.href = '<?php echo site_url("items")?>';
+		}
+	}
 });
 </script>
 <?php $this->load->view("partial/footer"); ?>

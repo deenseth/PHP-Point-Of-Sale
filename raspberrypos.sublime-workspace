@@ -1,0 +1,300 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"mar",
+				"margin"
+			],
+			[
+				"ma",
+				"margin-bottom"
+			],
+			[
+				"in",
+				"inline"
+			],
+			[
+				"res",
+				"response"
+			],
+			[
+				"fu",
+				"function"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"mod",
+				"modules"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 27.0,
+		"selected_items":
+		[
+		],
+		"width": 440.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/shaunkutch/Downloads/blue/style.css",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/config/config.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/libraries/ofc-library/open-flash-chart-object.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/import_customers.csv",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/items/form.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/libraries/Pagination.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/tables.css",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/js/thickbox.js",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/scaffolding/Scaffolding.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/js/manage_tables.js",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/items/form_bulk.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/items/inventory.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/js/jquery.validate.min.js",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/items.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/items/excel_import.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/items/count_details.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/helpers/table_helper.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/libraries/Validation.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/language/english/validation_lang.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/js/jquery.autocomplete.js",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/config/autoload.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/autocomplete.css",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/item_kits/form.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/giftcards/form.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/employees/form.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/customers/form.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/partial/footer.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/home.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/import_items.csv",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/item_taxes.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/index.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/thickbox.css",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/libraries/ofc-library/ofc_title.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/customers.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/partial/header.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/fonts/glyphicons-halflings-regular.svg",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/helpers/active_helper.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/libraries/Ftp.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/home.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/partial/header_excel.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/secure_area.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/module.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/index.html",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/app/routes.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/app/config/app.php",
+		"/Users/shaunkutch/Downloads/foodland.txt",
+		"/Users/shaunkutch/Downloads/ePOS-Device_API_UM_E_Sample/DeviceControlScript_Sample/Scanner_Generic.js",
+		"/Users/shaunkutch/Downloads/ePOS-Device_API_UM_E_Sample/DeviceControlScript_Sample/Keyboard_Generic.js",
+		"/Users/shaunkutch/Documents/WIP/Printer/pos/EntryTerminal/devicesetting.js",
+		"/Users/shaunkutch/Desktop/pma/PaymentActivity.xml",
+		"/Users/shaunkutch/Desktop/pma/com.crittercism.usersettings.xml",
+		"/Users/shaunkutch/Desktop/pma/com.crittercism.crashes.xml",
+		"/Users/shaunkutch/Desktop/foodland.txt",
+		"/Users/shaunkutch/Documents/WIP/Android/Foodland/foodlandkey.jks"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"tables",
+			"full_tag_open",
+			"$config",
+			"post_item_form_submit",
+			"tb_remove",
+			"tickBox",
+			"tb_show",
+			"width:$width",
+			"width",
+			"360",
+			"width:360",
+			"thickbox",
+			"view",
+			"items/view",
+			"edit",
+			"msie",
+			"do_search",
+			"enable_search",
+			"autocomplete",
+			"enable_search",
+			"suggest",
+			"customers/suggest",
+			"get_allowed_modules",
+			"database.php.tmpl",
+			"cash",
+			"tuid"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "raspberrypos.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"conf",
+				"application/config/config.php"
+			],
+			[
+				"tables",
+				"css/tables.css"
+			],
+			[
+				"validate",
+				"js/jquery.validate.min.js"
+			],
+			[
+				"auto",
+				"js/jquery.autocomplete.js"
+			],
+			[
+				"form",
+				"application/views/items/form.php"
+			],
+			[
+				"items",
+				"application/controllers/items.php"
+			],
+			[
+				"tick",
+				"js/thickbox.js"
+			],
+			[
+				"header",
+				"application/views/partial/header.php"
+			],
+			[
+				"footer",
+				"application/views/partial/footer.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 266.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -1,20 +1,22 @@
+<?php $this->load->view("partial/header"); ?>
 <?php
 echo form_open_multipart('customers/do_excel_import/',array('id'=>'item_form'));
 ?>
-<div id="required_fields_message">Max import data from execel sheet</div>
+<h1>Import</h1>
+<hr>
 <ul id="error_message_box"></ul>
 <b><a href="<?php echo site_url('customers/excel'); ?>">Download Import Excel Template (CSV)</a></b>
 <fieldset id="item_basic_info">
-<legend>Import</legend>
-
-<div class="field_row clearfix">	
-<?php echo form_label('File path:', 'name',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_upload(array(
-		'name'=>'file_path',
-		'id'=>'file_path',
-		'value'=>'')
-	);?>
+<div class="form-group">		
+<?php echo form_label('File path', 'name',array('class'=>'wide')); ?>
+	<div class="panel panel-default">
+  		<div class="panel-body">
+			<?php echo form_upload(array(
+				'name'=>'file_path',
+				'id'=>'file_path',
+				'value'=>'')
+			);?>
+		</div>
 	</div>
 </div>
 
@@ -23,7 +25,7 @@ echo form_submit(array(
 	'name'=>'submitf',
 	'id'=>'submitf',
 	'value'=>$this->lang->line('common_submit'),
-	'class'=>'submit_button float_right')
+	'class'=>'btn btn-primary float_right')
 );
 ?>
 </fieldset>
@@ -61,3 +63,5 @@ $(document).ready(function()
 	});
 });
 </script>
+<div id="feedback_bar"></div>
+<?php $this->load->view("partial/footer"); ?>

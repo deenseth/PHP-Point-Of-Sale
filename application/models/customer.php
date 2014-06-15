@@ -191,13 +191,13 @@ class Customer extends Person
 	*/
 	function get_customer_search_suggestions($term, $limit=25)
 	{
+		$term = strtolower($term);
 		$suggestions = array();
 		$this->db->from('customers');
 		$this->db->join('people','customers.person_id=people.person_id');
-		$this->db->where('deleted',0);
-		$this->db->like('first_name', $term);
-		$this->db->or_like('last_name', $term);
-		$this->db->or_like('account_number', $term);
+		$this->db->where("(first_name LIKE '%".$this->db->escape_like_str($term)."%' or 
+		last_name LIKE '%".$this->db->escape_like_str($term)."%' or 
+		CONCAT(`first_name`,' ',`last_name`) LIKE '%".$this->db->escape_like_str($term)."%') and deleted = 0");
 		$this->db->order_by("last_name", "asc");
 		$this->db->limit($limit);
 		$by_name = $this->db->get();

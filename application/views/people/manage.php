@@ -38,11 +38,11 @@ function init_table_sorting()
 		</form>
 	</div>
 	<div id="new_button" class="btn-group">
-		<?php echo anchor("$controller_name/view/-1", $this->lang->line($controller_name.'_new'), array('class'=>'btn btn-default','title'=>$this->lang->line($controller_name.'_new')));?>
+		<?php echo anchor("$controller_name/view/-1", $this->lang->line($controller_name.'_new'), array('class'=>'btn btn-success','title'=>$this->lang->line($controller_name.'_new')));?>
 		<?php if ($controller_name =='customers') {?>
 			<?php echo anchor("$controller_name/excel_import", "Excel Import", array('class'=>'btn btn-default','title'=>'Import Items from Excel'));?>	
 		<?php } ?>
-		<?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('class'=>'btn btn-default','id'=>'delete')); ?>
+		<?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('class'=>'btn btn-danger','id'=>'delete')); ?>
 	</div>
 	<br style="clear:both" />
 </div>

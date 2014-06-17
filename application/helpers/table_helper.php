@@ -170,7 +170,7 @@ function get_supplier_data_row($supplier,$controller)
         $table_data_row.='<td width="20%">'.mailto($supplier->email,character_limiter($supplier->email,22)).'</td>';
         $table_data_row.='<td width="13%" class="email-lists">'.$CI->MailChimp->tableListing($supplier->email).'</td>';
         $table_data_row.='<td width="15%">'.character_limiter($supplier->phone_number,13).'</td>';      
-        $table_data_row.='<td width="5%">'.anchor($controller_name."/view/$supplier->person_id/", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';      
+        $table_data_row.='<td width="5%">'.anchor($controller_name."/view/$supplier->person_id/", $CI->lang->line('common_edit'),array('class'=>'btn btn-default','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';      
 	} else {
 		$table_data_row.="<td width='5%'><input type='checkbox' id='person_$supplier->person_id' value='".$supplier->person_id."'/></td>";
 		$table_data_row.='<td width="17%">'.character_limiter($supplier->company_name,13).'</td>';
@@ -178,7 +178,7 @@ function get_supplier_data_row($supplier,$controller)
 		$table_data_row.='<td width="17%">'.character_limiter($supplier->first_name,13).'</td>';
 		$table_data_row.='<td width="22%">'.mailto($supplier->email,character_limiter($supplier->email,22)).'</td>';
 		$table_data_row.='<td width="17%">'.character_limiter($supplier->phone_number,13).'</td>';		
-		$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$supplier->person_id/", $CI->lang->line('common_edit'),array('class'=>'thickbox','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
+		$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$supplier->person_id/", $CI->lang->line('common_edit'),array('class'=>'btn btn-default','title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
 	}
 	
 	$table_data_row.='</tr>';
@@ -327,7 +327,7 @@ function get_giftcard_data_row($giftcard,$controller)
 	$table_data_row.="<td width='3%'><input type='checkbox' id='giftcard_$giftcard->giftcard_id' value='".$giftcard->giftcard_id."'/></td>";
 	$table_data_row.='<td width="15%">'.$giftcard->giftcard_number.'</td>';
 	$table_data_row.='<td width="20%">'.to_currency($giftcard->value).'</td>';
-	$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$giftcard->giftcard_id/", $CI->lang->line('common_edit'),array('title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
+	$table_data_row.='<td width="5%">'.anchor($controller_name."/view/$giftcard->giftcard_id/", $CI->lang->line('common_edit'),array('class'=>'btn btn-default float_right', 'title'=>$CI->lang->line($controller_name.'_update'))).'</td>';		
 	
 	$table_data_row.='</tr>';
 	return $table_data_row;

@@ -27,60 +27,30 @@ function init_table_sorting()
 		});
 	}
 }
-
-function post_giftcard_form_submit(response)
-{
-	if(!response.success)
-	{
-		set_feedback(response.message,'error_message',true);
-	}
-	else
-	{
-		//This is an update, just update one row
-		if(jQuery.inArray(response.giftcard_id,get_visible_checkbox_ids()) != -1)
-		{
-			update_row(response.giftcard_id,'<?php echo site_url("$controller_name/get_row")?>');
-			set_feedback(response.message,'success_message',false);
-
-		}
-		else //refresh entire table
-		{
-			do_search(true,function()
-			{
-				//highlight new row
-				hightlight_row(response.giftcard_id);
-				set_feedback(response.message,'success_message',false);
-			});
-		}
-	}
-}
-
 </script>
 
-<div id="title_bar">
-	<div id="title" class="float_left"><?php echo $this->lang->line('common_list_of').' '.$this->lang->line('module_'.$controller_name); ?></div>
-	<div id="new_button">
-		<?php echo anchor("$controller_name/view/-1/width:$form_width",
-		"<div class='big_button' style='float: left;'><span>".$this->lang->line($controller_name.'_new')."</span></div>",
-		array('class'=>'thickbox none','title'=>$this->lang->line($controller_name.'_new')));
-		?>
-	</div>
-</div>
-<?php echo $this->pagination->create_links();?>
-<div id="table_action_header">
-	<ul>
-		<li class="float_left"><span><?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('id'=>'delete')); ?></span></li>
-		<li class="float_right">
+<h1 id="title"><?php echo $this->lang->line('common_list_of').' '.$this->lang->line('module_'.$controller_name); ?></h1>
+<hr>
+<div class="actions">
+	<div class="search-box">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
 		<?php echo form_open("$controller_name/search",array('id'=>'search_form')); ?>
 		<input type="text" name ='search' id='search'/>
 		</form>
-		</li>
-	</ul>
+	</div>
+	<div id="new_button" class="btn-group">
+		<?php echo anchor("$controller_name/view/-1", $this->lang->line($controller_name.'_new'), array('class'=>'btn btn-success','title'=>$this->lang->line($controller_name.'_new')));?>
+		<?php if ($controller_name =='customers') {?>
+			<?php echo anchor("$controller_name/excel_import", "Excel Import", array('class'=>'btn btn-default','title'=>'Import Items from Excel'));?>	
+		<?php } ?>
+		<?php echo anchor("$controller_name/delete",$this->lang->line("common_delete"),array('class'=>'btn btn-danger','id'=>'delete')); ?>
+	</div>
+	<br style="clear:both" />
 </div>
 
 <div id="table_holder">
-<?php echo $manage_table; ?>
+	<?php echo $manage_table; ?>
 </div>
+<?php echo $this->pagination->create_links();?>
 <div id="feedback_bar"></div>
 <?php $this->load->view("partial/footer"); ?>

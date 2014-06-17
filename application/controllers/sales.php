@@ -15,15 +15,31 @@ class Sales extends Secure_area
 
 	function item_search()
 	{
-		$suggestions = $this->Item->get_item_search_suggestions($this->input->post('q'),$this->input->post('limit'));
-		$suggestions = array_merge($suggestions, $this->Item_kit->get_item_kit_search_suggestions($this->input->post('q'),$this->input->post('limit')));
-		echo implode("\n",$suggestions);
+		$items = $this->Item->get_item_search_suggestions($this->input->post('term'),$this->input->post('limit'));
+		$suggestions = array();
+		foreach($items as $item)
+		{
+			$renderItem = array();
+			$renderItem["label"] = $item->name . " | " . $item->item_number;
+			$renderItem["value"] = $item->item_number;
+			$suggestions[] = $renderItem;
+		}
+		//$suggestions = array_merge($suggestions, $this->Item_kit->get_item_kit_search_suggestions($this->input->post('q'),$this->input->post('limit')));
+		echo json_encode($suggestions);
 	}
 
 	function customer_search()
 	{
-		$suggestions = $this->Customer->get_customer_search_suggestions($this->input->post('q'),$this->input->post('limit'));
-		echo implode("\n",$suggestions);
+		$customers = $this->Customer->get_customer_search_suggestions($this->input->post('term'), $this->input->post('limit'));
+		$suggestions = array();
+		foreach($customers as $customer)
+		{
+			$renderItem = array();
+			$renderItem["label"] = $customer->last_name . " " . $customer->first_name . " | " . $customer->account_number;
+			$renderItem["value"] = $customer->account_number	;
+			$suggestions[] = $renderItem;
+		}
+		echo json_encode($suggestions);
 	}
 
 	function select_customer()

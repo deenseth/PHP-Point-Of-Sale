@@ -1,33 +1,31 @@
-<div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
+<?php $this->load->view("partial/header"); ?>
+<h1><?php echo $this->lang->line("giftcards_basic_information"); ?></h1>
+<hr>
 <ul id="error_message_box"></ul>
 <?php
 echo form_open('giftcards/save/'.$giftcard_info->giftcard_id,array('id'=>'giftcard_form'));
 ?>
 <fieldset id="giftcard_basic_info">
-<legend><?php echo $this->lang->line("giftcards_basic_information"); ?></legend>
-
-<div class="field_row clearfix">
-<?php echo form_label($this->lang->line('giftcards_giftcard_number').':', 'name',array('class'=>'required wide')); ?>
-	<div class='form_field'>
+<div class="form-group">
+<?php echo form_label($this->lang->line('giftcards_giftcard_number'), 'name',array('class'=>'required wide')); ?>
 	<?php echo form_input(array(
+		'class'=>'form-control',
 		'name'=>'giftcard_number',
 		'size'=>'8',
 		'id'=>'giftcard_number',
 		'value'=>$giftcard_info->giftcard_number)
 	);?>
-	</div>
 </div>
 
-<div class="field_row clearfix">
-<?php echo form_label($this->lang->line('giftcards_card_value').':', 'name',array('class'=>'required wide')); ?>
-	<div class='form_field'>
+<div class="form-group">
+<?php echo form_label($this->lang->line('giftcards_card_value')	, 'name',array('class'=>'required wide')); ?>
 	<?php echo form_input(array(
+		'class'=>'form-control',
 		'name'=>'value',
 		'size'=>'8',
 		'id'=>'value',
 		'value'=>$giftcard_info->value)
 	);?>
-	</div>
 </div>
 
 <?php
@@ -35,7 +33,7 @@ echo form_submit(array(
 	'name'=>'submit',
 	'id'=>'submit',
 	'value'=>$this->lang->line('common_submit'),
-	'class'=>'submit_button float_right')
+	'class'=>'btn btn-primary float_right')
 );
 ?>
 </fieldset>
@@ -53,7 +51,6 @@ $(document).ready(function()
 			$(form).ajaxSubmit({
 			success:function(response)
 			{
-				tb_remove();
 				post_giftcard_form_submit(response);
 			},
 			dataType:'json'
@@ -89,5 +86,21 @@ $(document).ready(function()
 			}
 		}
 	});
+
+	function post_giftcard_form_submit(response)
+	{
+		if(!response.success)
+		{
+			set_feedback(response.message,'error',true);
+		}
+		else
+		{
+			var message = {'text': response.message, 'type': 'success'};
+			window.localStorage.setItem("message", JSON.stringify(message));
+			window.location.href = '<?php echo site_url("giftcards")?>';
+		}
+	}
 });
 </script>
+<div id="feedback_bar"></div>
+<?php $this->load->view("partial/footer"); ?>

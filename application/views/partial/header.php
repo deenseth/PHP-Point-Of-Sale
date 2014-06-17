@@ -4,11 +4,11 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<base href="<?php echo base_url();?>" />
-	<title><?php echo $this->config->item('company').' -- '.$this->lang->line('common_powered_by').' PHP Point Of Sale' ?></title>
+	<title><?php echo $this->config->item('company') ?></title>
+	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/phppos.css" />
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/bootstrap.css" />
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/bootstrap-select.css" />
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/bootstrap-theme.css" />
-	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/phppos.css" />
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/css3buttons.css" />
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/phppos_print.css"  media="print"/>
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/toastr.css" />

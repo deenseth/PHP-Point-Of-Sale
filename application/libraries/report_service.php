@@ -266,7 +266,9 @@ class Report_Service
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type))
 		);
 
-		$this->_display($this->CI->load->view("reports/graphical",$data,true));
+		//$this->_display($this->CI->load->view("reports/graphical",$data,true));
+		$this->renderData = array('view'=>'reports/graphical', 'data'=>$data);
+		return $this;
 	}
 	
     function graphical_summary_sales_graph($start_date, $end_date, $sale_type)

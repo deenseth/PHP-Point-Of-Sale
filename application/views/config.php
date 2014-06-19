@@ -1,137 +1,149 @@
 <?php $this->load->view("partial/header"); ?>
-<div id="page_title"><?php echo $this->lang->line('module_config'); ?></div>
-<?php
-echo form_open('config/save/',array('id'=>'config_form'));
-?>
-<div id="config_wrapper">
-<fieldset id="config_info">
-<div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
+<h1><?php echo $this->lang->line('module_config'); ?></h1>
+<hr>
+<?php echo form_open('config/save/', array('id'=>'config_form')); ?>
 <ul id="error_message_box"></ul>
-<legend><?php echo $this->lang->line("config_info"); ?></legend>
 
-<div class="field_row clearfix">	
+<div class="form-group">	
 <?php echo form_label($this->lang->line('config_company').':', 'company',array('class'=>'wide required')); ?>
-	<div class='form_field'>
+	
 	<?php echo form_input(array(
+		'class'=>'form-control',
 		'name'=>'company',
 		'id'=>'company',
 		'value'=>$this->config->item('company')));?>
-	</div>
 </div>
 
-<div class="field_row clearfix">	
+<div class="form-group">	
 <?php echo form_label($this->lang->line('config_address').':', 'address',array('class'=>'wide required')); ?>
-	<div class='form_field'>
+	
 	<?php echo form_textarea(array(
+		'class'=>'form-control',
 		'name'=>'address',
 		'id'=>'address',
 		'rows'=>4,
 		'cols'=>17,
 		'value'=>$this->config->item('address')));?>
-	</div>
 </div>
 
-<div class="field_row clearfix">	
+<div class="form-group">	
 <?php echo form_label($this->lang->line('config_phone').':', 'phone',array('class'=>'wide required')); ?>
-	<div class='form_field'>
+	
 	<?php echo form_input(array(
+		'class'=>'form-control',
 		'name'=>'phone',
 		'id'=>'phone',
 		'value'=>$this->config->item('phone')));?>
+</div>
+
+<div class="form-group">	
+	<?php echo form_label($this->lang->line('config_default_tax_rate_1').':', 'default_tax_1_rate',array('class'=>'wide required')); ?>
+	<div class="row">
+		<div class="col-lg-6">
+			<?php echo form_input(array(
+				'class'=>'form-control',
+				'name'=>'default_tax_1_name',
+				'id'=>'default_tax_1_name',
+				'size'=>'10',
+				'value'=>$this->config->item('default_tax_1_name')!==FALSE ? $this->config->item('default_tax_1_name') : $this->lang->line('items_sales_tax_1')));?>
+		</div>
+		<div class="col-lg-6">
+			<div class="input-group">
+				<?php echo form_input(array(
+					'class'=>'form-control',
+					'name'=>'default_tax_1_rate',
+					'id'=>'default_tax_1_rate',
+					'size'=>'4',
+					'placeholder'=>$this->lang->line('items_percent'),
+					'value'=>$this->config->item('default_tax_1_rate')));?>
+				<span class="input-group-addon">%</span>
+			</div>
+		</div>
 	</div>
 </div>
 
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('config_default_tax_rate_1').':', 'default_tax_1_rate',array('class'=>'wide required')); ?>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'default_tax_1_name',
-		'id'=>'default_tax_1_name',
-		'size'=>'10',
-		'value'=>$this->config->item('default_tax_1_name')!==FALSE ? $this->config->item('default_tax_1_name') : $this->lang->line('items_sales_tax_1')));?>
-		
-	<?php echo form_input(array(
-		'name'=>'default_tax_1_rate',
-		'id'=>'default_tax_1_rate',
-		'size'=>'4',
-		'value'=>$this->config->item('default_tax_1_rate')));?>%
-	</div>
-</div>
-
-<div class="field_row clearfix">	
+<div class="form-group">	
 <?php echo form_label($this->lang->line('config_default_tax_rate_2').':', 'default_tax_1_rate',array('class'=>'wide')); ?>
-	<div class='form_field'>
-	<?php echo form_input(array(
-		'name'=>'default_tax_2_name',
-		'id'=>'default_tax_2_name',
-		'size'=>'10',
-		'value'=>$this->config->item('default_tax_2_name')!==FALSE ? $this->config->item('default_tax_2_name') : $this->lang->line('items_sales_tax_2')));?>
-		
-	<?php echo form_input(array(
-		'name'=>'default_tax_2_rate',
-		'id'=>'default_tax_2_rate',
-		'size'=>'4',
-		'value'=>$this->config->item('default_tax_2_rate')));?>%
+	<div class="row">
+		<div class="col-lg-6">
+			<?php echo form_input(array(
+				'class'=>'form-control',
+				'name'=>'default_tax_2_name',
+				'id'=>'default_tax_2_name',
+				'size'=>'10',
+				'value'=>$this->config->item('default_tax_2_name')!==FALSE ? $this->config->item('default_tax_2_name') : $this->lang->line('items_sales_tax_2')));?>
+	</div>
+	<div class="col-lg-6">
+			<div class="input-group">
+			<?php echo form_input(array(
+				'class'=>'form-control',
+				'name'=>'default_tax_2_rate',
+				'id'=>'default_tax_2_rate',
+				'size'=>'4',
+				'placeholder'=>$this->lang->line('items_percent'),
+				'value'=>$this->config->item('default_tax_2_rate')));?>
+				<span class="input-group-addon">%</span>
+			</div>
+		</div>	
 	</div>
 </div>
 
-<div class="field_row clearfix">	
+<div class="form-group">	
 <?php echo form_label($this->lang->line('common_email').':', 'email',array('class'=>'wide')); ?>
-	<div class='form_field'>
+	
 	<?php echo form_input(array(
+		'class'=>'form-control',
 		'name'=>'email',
 		'id'=>'email',
 		'value'=>$this->config->item('email')));?>
-	</div>
 </div>
 
 
-<div class="field_row clearfix">	
+<div class="form-group">	
 <?php echo form_label($this->lang->line('config_fax').':', 'fax',array('class'=>'wide')); ?>
-	<div class='form_field'>
+	
 	<?php echo form_input(array(
+		'class'=>'form-control',
 		'name'=>'fax',
 		'id'=>'fax',
 		'value'=>$this->config->item('fax')));?>
-	</div>
 </div>
 
-<div class="field_row clearfix">	
+<div class="form-group">	
 <?php echo form_label($this->lang->line('config_website').':', 'website',array('class'=>'wide')); ?>
-	<div class='form_field'>
+	
 	<?php echo form_input(array(
+		'class'=>'form-control',
 		'name'=>'website',
 		'id'=>'website',
 		'value'=>$this->config->item('website')));?>
-	</div>
 </div>
 
-<div class="field_row clearfix">	
+<div class="form-group">	
 <?php echo form_label($this->lang->line('common_return_policy').':', 'return_policy',array('class'=>'wide required')); ?>
-	<div class='form_field'>
+	
 	<?php echo form_textarea(array(
+		'class'=>'form-control',
 		'name'=>'return_policy',
 		'id'=>'return_policy',
 		'rows'=>'4',
 		'cols'=>'17',
 		'value'=>$this->config->item('return_policy')));?>
-	</div>
 </div>
 
-<div class="field_row clearfix">	
+<div class="form-group">	
 <?php echo form_label($this->lang->line('config_language').':', 'language',array('class'=>'wide required')); ?>
-	<div class='form_field'>
+	
 	<?php echo form_dropdown('language', array(
 		'english'  => 'English',
 		'indonesia'    => 'Indonesia',
-		'spanish'   => 'Spanish'), $this->config->item('language'));
-		?>
-	</div>
+		'spanish'   => 'Spanish'), $this->config->item('language')); ?>
+
 </div>
 
-<div class="field_row clearfix">	
+<div class="form-group">	
 <?php echo form_label($this->lang->line('config_timezone').':', 'timezone',array('class'=>'wide required')); ?>
-	<div class='form_field'>
+	
 	<?php echo form_dropdown('timezone', 
 	 array(
 		'Pacific/Midway'=>'(GMT-11:00) Midway Island, Samoa',
@@ -226,34 +238,16 @@ echo form_open('config/save/',array('id'=>'config_form'));
 		'Pacific/Kiritimati'=>'(GMT+14:00) Kiritimati'
 		), $this->config->item('timezone') ? $this->config->item('timezone') : date_default_timezone_get());
 		?>
-	</div>
 </div>
 
-<div class="field_row clearfix">
-
-<?php echo form_label('<a href="http://admin.mailchimp.com/account/api-key-popup" target="_blank">'
-			  .$this->lang->line('config_mc_api_key').'</a>:', 
-			  'mc_api_key', 
-			  array('class'=>'wide')); ?>
-      <div class='form_field'>
-      <?php echo form_input(array(
-		'name'=>'mc_api_key',
-		'id'=>'mc_api_key',
-		'value'=>$this->config->item('mc_api_key')));?>
-	</div>
-	<div class='form_field' style="height: 20px; padding-top: 5px;">
-		<a href="index.php/config/mailchimpinfo" target="_blank">Learn More</a>
-   	</div>
-</div>
-<div class="field_row clearfix">	
+<div class="form-group">	
 <?php echo form_label($this->lang->line('config_print_after_sale').':', 'print_after_sale',array('class'=>'wide')); ?>
-	<div class='form_field'>
+	
 	<?php echo form_checkbox(array(
 		'name'=>'print_after_sale',
 		'id'=>'print_after_sale',
 		'value'=>'print_after_sale',
 		'checked'=>$this->config->item('print_after_sale')));?>
-	</div>
 </div>
 
 
@@ -262,11 +256,10 @@ echo form_submit(array(
 	'name'=>'submit',
 	'id'=>'submit',
 	'value'=>$this->lang->line('common_submit'),
-	'class'=>'submit_button float_right')
+	'class'=>'btn btn-primary float_right')
 );
 ?>
-</fieldset>
-</div>
+
 <?php
 echo form_close();
 ?>

@@ -9,3 +9,29 @@
 .customer-input{
 	display: inline;
 }
+.new-customer, .new-item {
+	margin-left: 10px;
+}
+.or-new{
+	width: 100%;
+	text-align: center;;
+}
+.totals td {
+    padding: 10px;
+}
+.mode-dropdown{
+	padding-right: 10px;
+}
+.table.item-table{
+	margin-bottom: 0px;
+}
+#amount_tendered{
+	width: 100%;
+}
+.payment-type{
+	padding-left: 10px;
+}
+#sales-add-payment{
+	margin-top: 10px;
+	margin-bottom: 20px;
+}

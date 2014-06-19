@@ -19,7 +19,7 @@ $lang['module_reports_desc']='View and generate reports';
 $lang['module_items']='Items';
 $lang['module_items_desc']='Add, Update, Delete, and Search items';
 
-$lang['module_config']='Store Config';
+$lang['module_config']='Settings';
 $lang['module_config_desc']='Change the store\'s configuration';
 
 $lang['module_receivings']='Receivings';

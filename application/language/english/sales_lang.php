@@ -7,6 +7,8 @@ $lang['sales_new_item'] = 'New Item';
 $lang['sales_item_name'] = 'Item Name';
 $lang['sales_item_number'] = 'Item #';
 $lang['sales_new_customer'] = 'Add New Customer';
+$lang['select_customer'] = 'Select Customer';
+$lang['remove_customer'] = 'Remove Customer';
 $lang['sales_customer'] = 'Customer';
 $lang['sales_no_items_in_cart']='There are no items in the cart';
 $lang['sales_total']='Total';
@@ -75,4 +77,7 @@ $lang['sales_comments'] = 'Comments';
 $lang['sales_unsuspend_and_delete'] = 'Unsuspend and Delete';
 $lang['sales_unsuspend'] = 'Unsuspend';
 $lang['sales_successfully_suspended_sale'] = 'Your sale has been successfully suspended';
+$lang['payments'] = 'Payments';
+$lang['totals'] = 'Totals';
+$lang['items'] = 'Items';
 ?>

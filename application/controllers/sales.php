@@ -10,7 +10,7 @@ class Sales extends Secure_area
 
 	function index()
 	{
-		$this->_reload();
+		$this->load_register();
 	}
 
 	function item_search()
@@ -46,14 +46,14 @@ class Sales extends Secure_area
 	{
 		$customer_id = $this->input->post("customer");
 		$this->sale_lib->set_customer($customer_id);
-		$this->_reload();
+		$this->load_register_content();
 	}
 
 	function change_mode()
 	{
 		$mode = $this->input->post("mode");
 		$this->sale_lib->set_mode($mode);
-		$this->_reload();
+		$this->load_register_content();
 	}
 
 	//Alain Multiple Payments
@@ -69,7 +69,7 @@ class Sales extends Secure_area
 			else
 				$data['error']=$this->lang->line('sales_must_enter_numeric');
 				
- 			$this->_reload($data);
+ 			$this->load_register_content($data);
  			return;
 		}
 		
@@ -83,7 +83,7 @@ class Sales extends Secure_area
 			if ( $cur_giftcard_value <= 0 )
 			{
 				$data['error']='Giftcard balance is '.to_currency( $this->Giftcard->get_giftcard_value( $this->input->post('amount_tendered') ) ).' !';
-				$this->_reload($data);
+				$this->load_register_content($data);
 				return;
 			}
 			elseif ( ( $this->Giftcard->get_giftcard_value( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ) > 0 )
@@ -102,14 +102,14 @@ class Sales extends Secure_area
 			$data['error']='Unable to Add Payment! Please try again!';
 		}
 		
-		$this->_reload($data);
+		$this->load_register_content($data);
 	}
 
 	//Alain Multiple Payments
 	function delete_payment($payment_id)
 	{
 		$this->sale_lib->delete_payment($payment_id);
-		$this->_reload();
+		$this->load_register_content();
 	}
 
 	function add()
@@ -136,7 +136,7 @@ class Sales extends Secure_area
 		{
 			$data['warning'] = $this->lang->line('sales_quantity_less_than_zero');
 		}
-		$this->_reload($data);
+		$this->load_register_content($data);
 	}
 
 	function edit_item($line)
@@ -168,19 +168,19 @@ class Sales extends Secure_area
 		}
 
 
-		$this->_reload($data);
+		$this->load_register_content($data);
 	}
 
 	function delete_item($item_number)
 	{
 		$this->sale_lib->delete_item($item_number);
-		$this->_reload();
+		$this->load_register_content();
 	}
 
 	function delete_customer()
 	{
 		$this->sale_lib->delete_customer();
-		$this->_reload();
+		$this->load_register_content();
 	}
 
 	function complete()
@@ -219,7 +219,7 @@ class Sales extends Secure_area
 		if ( ( $this->sale_lib->get_mode() == 'sale' ) && ( ( to_currency_no_money( $data['total'] ) - $total_payments ) > 1e-6 ) )
 		{
 			$data['error'] = $this->lang->line('sales_payment_not_cover_total');
-			$this->_reload($data);
+			$this->load_register_content($data);
 			return false;
 		}
 
@@ -318,8 +318,8 @@ class Sales extends Secure_area
 			echo json_encode(array('success'=>false,'message'=>$this->lang->line('sales_unsuccessfully_updated')));
 		}
 	}
-	
-	function _reload($data=array())
+
+	function prepare_data()
 	{
 		$person_info = $this->Employee->get_logged_in_employee_info();
 		$data['cart']=$this->sale_lib->get_cart();
@@ -347,13 +347,26 @@ class Sales extends Secure_area
 			$info=$this->Customer->get_info($customer_id);
 			$data['customer']=$info->first_name.' '.$info->last_name;
 		}
+
+		return $data;
+	}
+	
+	function load_register($data=array())
+	{
+		$data = $this->prepare_data();
 		$this->load->view("sales/register",$data);
+	}
+
+	function load_register_content($data=array())
+	{
+		$data = $this->prepare_data();
+		$this->load->view("sales/register_content",$data);
 	}
 
     function cancel_sale()
     {
     	$this->sale_lib->clear_all();
-    	$this->_reload();
+    	$this->load_register_content();
 
     }
 	
@@ -396,7 +409,7 @@ class Sales extends Secure_area
 			$data['error_message'] = $this->lang->line('sales_transaction_failed');
 		}
 		$this->sale_lib->clear_all();
-		$this->_reload(array('success' => $this->lang->line('sales_successfully_suspended_sale')));
+		$this->load_register_content(array('success' => $this->lang->line('sales_successfully_suspended_sale')));
 	}
 	
 	function suspended()
@@ -412,7 +425,7 @@ class Sales extends Secure_area
 		$this->sale_lib->clear_all();
 		$this->sale_lib->copy_entire_suspended_sale($sale_id);
 		$this->Sale_suspended->delete($sale_id);
-    	$this->_reload();
+    	$this->load_register();
 	}
 }
 ?>

@@ -55,16 +55,12 @@ html {
 			<a class="navbar-brand" href="#"><?php echo $this->config->item('company'); ?></a>
 		</div>
 		<div class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-				<?php foreach($allowed_modules->result() as $module) { ?>
-					<li class="<?php echo active_link($module->module_id); ?>"><a href="<?php echo site_url("$module->module_id");?>"><?php echo $this->lang->line("module_".$module->module_id) ?></a></li>
-				<?php } ?>
-			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<!--<li><?php // date('F d, Y h:i a') ?></li>-->
-				<li><?php echo anchor("home/logout",$this->lang->line("common_logout")); ?></li>
+				<?php /* <li><?php echo date('F d, Y h:i a') ?></li> */ ?>
+				<li><a href="<?php echo site_url("config");?>"><span class="glyphicon glyphicon-cog"></span> <?php echo $this->lang->line("module_config") ?></a></li>
+				<li><a href="<?php echo site_url("home/logout");?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->lang->line("common_logout") ?></a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>
 </div>
-<div class="container">
+<div id="content" class="container">

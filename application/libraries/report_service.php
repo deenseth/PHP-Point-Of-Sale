@@ -266,8 +266,7 @@ class Report_Service
 			"summary_data" => $model->getSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date, 'sale_type'=>$sale_type))
 		);
 
-		//$this->_display($this->CI->load->view("reports/graphical",$data,true));
-		$this->renderData = array('view'=>'reports/graphical', 'data'=>$data);
+		$this->_display($this->CI->load->view("reports/graphical",$data,true));
 		return $this;
 	}
 	
@@ -806,6 +805,30 @@ class Report_Service
 		$this->renderData = array('view'=>'partial/tabular_report', 'data'=>$data);
 		return $this;
 	}
+
+	 /**
+     * Sets the option to suppress echo and return HTML.
+     * 
+     * @param bool $val
+     */
+    public function setSuppressEcho($val)
+    {
+        $this->_suppressEcho = $val;
+    }
+    
+    /**
+     * We want the option to retain the HTML from the helper instead of echoing it out.
+     * @param string $html
+     */
+    private function _display($html)
+    {
+        if ($this->_suppressEcho) {
+            return $html;
+        } else {
+            echo $html;
+            return true;
+        }
+    }
 	    
     public function render()
     {
@@ -821,5 +844,7 @@ class Report_Service
     {
     	$data = array('report_service'=>$this);
     	$this->CI->load->view($view,$data);
-    }    
+    }
+
+
 }

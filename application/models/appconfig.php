@@ -50,14 +50,15 @@ class Appconfig extends Model
 	function batch_save($data)
 	{
 		$success=true;
-		var_dump($data);
-		exit;
+		
 		//Run these queries as a transaction, we want to make sure we do all or nothing
 		$this->db->trans_start();
 		foreach($data as $key=>$value)
 		{
 			if(!$this->save($key,$value))
 			{
+				var_dump($key);
+				exit;
 				$success=false;
 				break;
 			}

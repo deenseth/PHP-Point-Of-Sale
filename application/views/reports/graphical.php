@@ -1,8 +1,11 @@
 <?php
 $this->load->view("partial/header");
 ?>
-<div id="page_title" style="margin-bottom:8px;"><?php echo $title ?></div>
-<div id="page_subtitle" style="margin-bottom:8px;"><?php echo $subtitle ?></div>
+<h1>
+	<?php echo $title ?>
+	<small><?php echo $subtitle ?></small>
+</h1>
+<hr>
 <div style="text-align: center;">
 <script type="text/javascript">
 swfobject.embedSWF(
@@ -14,11 +17,11 @@ swfobject.embedSWF(
 <div id="chart_wrapper">
 	<div id="chart"></div>
 </div>
-<div id="report_summary">
-<?php foreach($summary_data as $name=>$value) { ?>
-	<div class="summary_row"><?php echo $this->lang->line('reports_'.$name). ': '.to_currency($value); ?></div>
-<?php }?>
-</div>
+<ul class="list-group">
+	<?php foreach($summary_data as $name=>$value) { ?>
+	<li class="list-group-item"><?php echo $this->lang->line('reports_'.$name). ': '.to_currency($value); ?></li>
+	<?php }?>
+</ul>
 <div id="feedback_bar"></div>
 <?php
 $this->load->view("partial/footer"); 

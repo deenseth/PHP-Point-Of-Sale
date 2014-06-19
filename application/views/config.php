@@ -277,11 +277,11 @@ $(document).ready(function()
 			{
 				if(response.success)
 				{
-					set_feedback(response.message,'success_message',false);		
+					set_feedback(response.message,'success',false);		
 				}
 				else
 				{
-					set_feedback(response.message,'error_message',true);		
+					set_feedback(response.message,'error',true);		
 				}
 			},
 			dataType:'json'

@@ -146,6 +146,7 @@ class Sales extends Secure_area
 		$this->form_validation->set_rules('price', 'lang:items_price', 'required|numeric');
 		$this->form_validation->set_rules('quantity', 'lang:items_quantity', 'required|numeric');
 
+        $description = $this->input->post("description");
         $serialnumber = $this->input->post("serialnumber");
 		$price = $this->input->post("price");
 		$quantity = $this->input->post("quantity");
@@ -154,7 +155,7 @@ class Sales extends Secure_area
 
 		if ($this->form_validation->run() != FALSE)
 		{
-			$this->sale_lib->edit_item($line,$serialnumber,$quantity,$discount,$price);
+			$this->sale_lib->edit_item($line,$description,$serialnumber,$quantity,$discount,$price);
 		}
 		else
 		{

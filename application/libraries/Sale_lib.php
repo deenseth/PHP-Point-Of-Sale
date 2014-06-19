@@ -271,15 +271,31 @@ class Sale_lib
 		return -1;
 	}
 
-	function edit_item($line,$serialnumber,$quantity,$discount,$price)
+	function edit_item($line,$description,$serialnumber,$quantity,$discount,$price)
 	{
 		$items = $this->get_cart();
 		if(isset($items[$line]))
 		{
-			$items[$line]['serialnumber'] = $serialnumber;
-			$items[$line]['quantity'] = $quantity;
-			$items[$line]['discount'] = $discount;
-			$items[$line]['price'] = $price;
+			if(isset($description))
+			{
+				$items[$line]['description'] = $description;
+			}
+			if(isset($serialnumber))
+			{
+				$items[$line]['serialnumber'] = $serialnumber;
+			}
+			if(isset($quantity))
+			{
+				$items[$line]['quantity'] = $quantity;
+			}
+			if(isset($discount))
+			{
+				$items[$line]['discount'] = $discount;
+			}
+			if(isset($price))
+			{
+				$items[$line]['price'] = $price;
+			}
 			$this->set_cart($items);
 		}
 

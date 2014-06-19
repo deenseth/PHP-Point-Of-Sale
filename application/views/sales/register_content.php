@@ -66,36 +66,29 @@ if (isset($success))
 									<td><?php echo $item['item_number']; ?></td>
 									<td style="align:center;"><?php echo $item['name']; ?><br /> [<?php echo $cur_item_info->quantity; ?> in stock]</td>
 
-									<?php if ($items_module_allowed)
-									{
-										?>
-										<td><?php echo form_input(array('name'=>'price','value'=>$item['price'],'size'=>'6'));?></td>
-										<?php
-									}
-									else
-									{
-										?>
+									<?php if ($items_module_allowed) { ?>
+										<td>
+											<?php echo form_open("sales/edit_item/$line", array('id'=>'edit-iten-' . $line, 'class'=>'content-form')); ?>
+												<?php echo form_input(array('name'=>'price','value'=>$item['price'],'size'=>'6'));?>
+											</form>
+										</td>
+									<?php } else { ?>
 										<td><?php echo $item['price']; ?></td>
-										<?php echo form_hidden('price',$item['price']); ?>
-										<?php
-									}
-									?>
-
+									<?php } ?>
 									<td>
-										<?php
-										if($item['is_serialized']==1)
-										{
+										<?php if($item['is_serialized']==1) {
 											echo $item['quantity'];
-											echo form_hidden('quantity',$item['quantity']);
-										}
-										else
-										{
-											echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2'));
-										}
-										?>
+										} else { ?>
+											<?php echo form_open("sales/edit_item/$line", array('id'=>'edit-iten-' . $line, 'class'=>'content-form')); ?>
+												<?php echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2')); ?>
+											</form>
+										<?php } ?>
 									</td>
-
-									<td><?php echo form_input(array('name'=>'discount','value'=>$item['discount'],'size'=>'3'));?></td>
+									<td>
+										<?php echo form_open("sales/edit_item/$line", array('id'=>'edit-iten-' . $line, 'class'=>'content-form')); ?>
+											<?php echo form_input(array('name'=>'discount','value'=>$item['discount'],'size'=>'3'));?>
+										</form>
+									</td>
 									<td><?php echo to_currency($item['price']*$item['quantity']-$item['price']*$item['quantity']*$item['discount']/100); ?></td>
 								</tr>
 							<?php } ?>

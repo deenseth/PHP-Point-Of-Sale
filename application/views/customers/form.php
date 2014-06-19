@@ -22,8 +22,6 @@ echo form_open('customers/save/'.$person_info->person_id,array('id'=>'customer_f
 	<?php echo form_checkbox('taxable', '1', $person_info->taxable == '' ? TRUE : (boolean)$person_info->taxable);?>
 </div>
 
-<?php echo $this->load->view('partial/list_manage_form_wrapper.php', array('email'=>$person_info->email))?>
-
 <?php
 echo form_submit(array(
 	'name'=>'submit',

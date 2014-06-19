@@ -36,7 +36,6 @@ if (isset($success))
 				</tbody>
 			</table>
 			<br/>
-			<?php /* echo anchor("sales/suspended", $this->lang->line('sales_suspended_sales'), array('class'=>'btn btn-primary','title'=>$this->lang->line('sales_suspended_sales'))); */ ?>
 			<div class="table-responsive">
 				<table id="register" class="item-table table table-striped table-bordered">
 					<thead>
@@ -68,7 +67,7 @@ if (isset($success))
 
 									<?php if ($items_module_allowed) { ?>
 										<td>
-											<?php echo form_open("sales/edit_item/$line", array('id'=>'edit-iten-' . $line, 'class'=>'content-form')); ?>
+											<?php echo form_open("sales/edit_item/$line", array('id'=>'edit-iten-' . $line, 'class'=>'content-form edit-item')); ?>
 												<?php echo form_input(array('name'=>'price','value'=>$item['price'],'size'=>'6'));?>
 											</form>
 										</td>
@@ -79,13 +78,13 @@ if (isset($success))
 										<?php if($item['is_serialized']==1) {
 											echo $item['quantity'];
 										} else { ?>
-											<?php echo form_open("sales/edit_item/$line", array('id'=>'edit-iten-' . $line, 'class'=>'content-form')); ?>
+											<?php echo form_open("sales/edit_item/$line", array('id'=>'edit-iten-' . $line, 'class'=>'content-form edit-item')); ?>
 												<?php echo form_input(array('name'=>'quantity','value'=>$item['quantity'],'size'=>'2')); ?>
 											</form>
 										<?php } ?>
 									</td>
 									<td>
-										<?php echo form_open("sales/edit_item/$line", array('id'=>'edit-iten-' . $line, 'class'=>'content-form')); ?>
+										<?php echo form_open("sales/edit_item/$line", array('id'=>'edit-iten-' . $line, 'class'=>'content-form edit-item')); ?>
 											<?php echo form_input(array('name'=>'discount','value'=>$item['discount'],'size'=>'3'));?>
 										</form>
 									</td>
@@ -98,6 +97,7 @@ if (isset($success))
 			</div>
 		</div>
 	</div>
+	<?php echo anchor("sales/suspended", $this->lang->line('sales_suspended_sales'), array('class'=>'btn btn-primary','title'=>$this->lang->line('sales_suspended_sales'))); ?>
 </div>
 
 <div class="col-md-3 sale_register_rightbox">

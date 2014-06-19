@@ -36,6 +36,10 @@ function init()
 		});
 	});
 
+	$( ".edit-item" ).change(function() {
+  		$(this).closest("form").submit();
+	});
+
 	$('.selectpicker').selectpicker();
 
 	$("#item").autocomplete({source: function (request, response) {

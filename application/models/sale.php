@@ -1,5 +1,5 @@
 <?php
-class Sale extends Model
+class Sale extends CI_Model
 {
 	public function get_info($sale_id)
 	{

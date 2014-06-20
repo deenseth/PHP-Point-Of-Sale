@@ -1,5 +1,5 @@
 <?php
-class Appconfig extends Model 
+class Appconfig extends CI_Model 
 {
 	
 	function exists($key)

@@ -1,5 +1,5 @@
 <?php
-class Person extends Model 
+class Person extends CI_Model 
 {
 	/*Determines whether the given person exists*/
 	function exists($person_id)

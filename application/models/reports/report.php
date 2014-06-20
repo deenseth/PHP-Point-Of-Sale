@@ -1,5 +1,5 @@
 <?php
-abstract class Report extends Model 
+abstract class Report extends CI_Model 
 {
 	function __construct()
 	{

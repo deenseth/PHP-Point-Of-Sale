@@ -39,8 +39,8 @@
 | routes must come before any wildcard or regular expression routes.
 |
 */
-
 $route['default_controller'] = "login";
+
 $route['no_access/(:any)'] = "no_access/index/$1";
 $route['reports/(summary_:any)/(:any)/(:any)'] = "reports/$1/$2/$3";
 $route['reports/summary_:any'] = "reports/date_input_excel_export";

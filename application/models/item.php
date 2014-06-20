@@ -1,5 +1,5 @@
 <?php
-class Item extends Model
+class Item extends CI_Model
 {
 	/*
 	Determines if a given item_id is an item

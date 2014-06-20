@@ -1,5 +1,5 @@
 <?php
-class Receiving extends Model
+class Receiving extends CI_Model
 {
 	public function get_info($receiving_id)
 	{

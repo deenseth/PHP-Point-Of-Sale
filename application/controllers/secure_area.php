@@ -1,5 +1,5 @@
 <?php
-class Secure_area extends Controller 
+class Secure_area extends CI_Controller 
 {
 	/*
 	Controllers that are considered secure extend Secure_area, optionally a $module_id can

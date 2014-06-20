@@ -267,5 +267,15 @@ class Item extends CI_Model
 
 		return $this->db->get();
 	}
+
+	/*
+	Deletes one item
+	*/
+	function clear_sync()
+	{
+		$this->db->where('category', 'Remote Inventory');
+		$this->db->delete('items');
+		return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
+	}
 }
 ?>

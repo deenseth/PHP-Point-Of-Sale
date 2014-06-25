@@ -1,22 +1,28 @@
 <?php $this->load->view("partial/header"); ?>
-<h1><?php echo $this->lang->line('common_welcome_message'); ?></h1>
+<?php 
+
+	$icons = array('customers'=>'group', 
+		'items'=>'cube', 
+		'item_kits'=>'cubes', 
+		'suppliers'=>'truck', 
+		'reports'=>'bar-chart-o', 
+		'receivings'=>'inbox', 
+		'sales'=>'shopping-cart', 
+		'employees'=>'user',
+		'giftcards'=>'credit-card',
+		'config'=>'cogs');
+
+?>
 <div class="panel panel-default">
-	<div class="panel-body">
-		<?php 
-		$modules = $allowed_modules->result();
-		$rows = array_chunk($modules, 3); ?>
-		<? for($j=0; $j < count($rows); $j++) {  ?>
-				<div class="row">
-					<?php for($i=0; $i < count($rows[$j]); $i++) { 
-						$module = $rows[$j][$i]; ?>
-						<div class="col-xs-6 col-sm-4 dashboard-icon">
-							<a href="<?php echo site_url("$module->module_id");?>">
-							<img src="<?php echo base_url().'images/menubar/'.$module->module_id.'.png';?>" border="0" alt="Menubar Image" /></a><br />
-							<a href="<?php echo site_url("$module->module_id");?>"><?php echo $this->lang->line("module_".$module->module_id) ?></a>
-						</div>
-					<?php } ?>
-				</div>
+	<ul class="list-group">
+		<?php foreach($allowed_modules->result() as $module) {  ?>
+
+			<a class="list-group-item" href="<?php echo site_url("$module->module_id");?>">
+				<i class="launch-icon fa fa-<?php echo isset($icons[$module->module_id]) ? $icons[$module->module_id] : ''; ?> fa-3x"></i>
+				<h4><?php echo $this->lang->line("module_".$module->module_id) ?></h4>
+				<?php echo $this->lang->line('module_'.$module->module_id.'_desc');?>	
+			</a>
 		<?php } ?>
-	</div>
+	</ul>
 </div>
 <?php $this->load->view("partial/footer"); ?>

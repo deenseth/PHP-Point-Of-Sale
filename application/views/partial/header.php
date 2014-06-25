@@ -12,6 +12,7 @@
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/css3buttons.css" />
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/phppos_print.css"  media="print"/>
 	<link rel="stylesheet" rev="stylesheet" href="<?php echo base_url();?>css/toastr.css" />
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 	<script type="text/javascript"> 
 	SITE_URL = '<?php echo site_url(); ?>';
 	BASE_URL = '<?php echo base_url(); ?>';

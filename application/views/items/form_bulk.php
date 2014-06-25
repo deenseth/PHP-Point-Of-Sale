@@ -155,7 +155,7 @@ echo form_open('items/bulk_update/',array('id'=>'item_form'));
 			'placeholder'=>$this->lang->line('items_allow_alt_desciption'),
 			'name'=>'allow_alt_description',
 			'id'=>'allow_alt_description',
-			'checked'=>($item_info->allow_alt_description)? 1  :0)
+			'checked'=>isset($item_info->allow_alt_description)? 1  :0)
 		);?>
 	</div>
 
@@ -166,7 +166,7 @@ echo form_open('items/bulk_update/',array('id'=>'item_form'));
 			'placeholder'=>$this->lang->line('items_is_serialized'),
 			'name'=>'is_serialized',
 			'id'=>'is_serialized',
-			'checked'=>($item_info->is_serialized)? 1 : 0)
+			'checked'=>isset($item_info->is_serialized)? 1 : 0)
 		);?>
 	</div>
 

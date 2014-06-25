@@ -11,7 +11,7 @@ require_once (APPPATH."libraries/ofc-library/open-flash-chart.php");
 
 class Report_Service
 {
-    
+    public $_suppressEcho = false;
     public $format = 'html';
     
     function __construct()

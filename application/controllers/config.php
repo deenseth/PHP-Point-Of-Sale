@@ -39,11 +39,11 @@ class Config extends Secure_area
 		
 		if($_SERVER['HTTP_HOST'] !='demo.phppointofsale.com' && $this->Appconfig->batch_save($batch_save_data))
 		{
-			echo json_encode(array('success'=>true,'message'=>$mc_message . $this->lang->line('config_saved_successfully')));
+			echo json_encode(array('success'=>true,'message'=>$this->lang->line('config_saved_successfully')));
 		}
 		else
 		{
-			echo json_encode(array('success'=>false,'message'=>$mc_message . $this->lang->line('config_saved_unsuccessfully')));
+			echo json_encode(array('success'=>false,'message'=>$this->lang->line('config_saved_unsuccessfully')));
 		}
 	}
 }

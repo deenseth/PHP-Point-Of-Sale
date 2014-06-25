@@ -75,8 +75,6 @@ function do_search(show_feedback,on_complete)
 			on_complete();
 				
 		$('#spinner').hide();
-		//re-init elements in new table, as table tbody children were replaced
-		tb_init('#sortable_table a.thickbox');
 		update_sortable_table();	
 		enable_row_selection();		
 		$('#sortable_table tbody :checkbox').click(checkbox_click);

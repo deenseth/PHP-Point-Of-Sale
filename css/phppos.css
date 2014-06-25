@@ -23,7 +23,6 @@ a.none
 	text-decoration:none;
 }
 
-
 #content_area_wrapper
 {
 	position:relative;
@@ -156,6 +155,12 @@ a.none
 }
 .actions{
 	margin-bottom: 10px;
+}
+
+.launch-icon{
+	float: left;
+	padding: 10px;
+	margin-right: 10px;
 }
 
 .ui-helper-hidden-accessible { display:none; }

@@ -95,23 +95,23 @@ if (isset($success))
 					</tbody>
 				</table>
 			</div>
+			<br/>
+			<?php echo anchor("sales/suspended", $this->lang->line('sales_suspended_sales'), array('class'=>'btn btn-primary','title'=>$this->lang->line('sales_suspended_sales'))); ?>
+			<?php if(count($cart) > 0) { ?>
+	  			<div class="btn-group btn-group right">
+	  				<div class='btn btn-warning' id='suspend_sale_button'><?php echo $this->lang->line('sales_suspend_sale') ?></div>
+	  				<div class='btn btn-danger' id='cancel_sale_button'><?php echo $this->lang->line('sales_cancel_sale'); ?></div>
+	  			</div>
+	  			<?php echo form_open("sales/cancel_sale",array('id'=>'cancel_sale_form', 'class'=>'content-form')); ?></form>
+	  			<?php echo form_open("sales/suspend",array('id'=>'suspend_sale_form', 'class'=>'content-form')); ?></form>
+  			<?php } ?>	
 		</div>
 	</div>
-	<?php echo anchor("sales/suspended", $this->lang->line('sales_suspended_sales'), array('class'=>'btn btn-primary','title'=>$this->lang->line('sales_suspended_sales'))); ?>
 </div>
 
 <div class="col-md-3 sale_register_rightbox">
 	<div class="panel panel-default">
   		<div class="panel-body">
-  			<?php if(count($cart) > 0) { ?>
-	  			<?php echo form_open("sales/cancel_sale",array('id'=>'cancel_sale_form', 'class'=>'content-form')); ?></form>
-	  			<?php echo form_open("sales/suspend",array('id'=>'suspend_sale_form', 'class'=>'content-form')); ?></form>
-	  			<div class="btn-group btn-group-justified">
-	  				<div class='btn btn-warning' id='suspend_sale_button'><?php echo $this->lang->line('sales_suspend_sale') ?></div>
-	  				<div class='btn btn-danger' id='cancel_sale_button'><?php echo $this->lang->line('sales_cancel_sale'); ?></div>
-	  			</div>
-  				<hr>
-  			<?php } ?>	
 				<?php if(isset($customer)) { ?>
 					<table width="100%">
 						<tbody>

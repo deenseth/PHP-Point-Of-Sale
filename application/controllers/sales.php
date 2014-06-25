@@ -36,7 +36,7 @@ class Sales extends Secure_area
 		{
 			$renderItem = array();
 			$renderItem["label"] = $customer->last_name . " " . $customer->first_name . " | " . $customer->account_number;
-			$renderItem["value"] = $customer->account_number	;
+			$renderItem["value"] = $customer->account_number;
 			$suggestions[] = $renderItem;
 		}
 		echo json_encode($suggestions);

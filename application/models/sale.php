@@ -25,7 +25,7 @@ class Sale extends CI_Model
 		return $success;
 	}
 	
-	function save ($items,$customer_id,$employee_id,$comment,$payments,$sale_id=false)
+	function save($items,$customer_id,$employee_id,$comment,$payments,$sale_id=false)
 	{
 		if(count($items)==0)
 			return -1;
@@ -149,6 +149,16 @@ class Sale extends CI_Model
 		return $this->db->trans_status();
 	}
 
+	function get_sale_items_after($timestamp)
+	{
+		$this->db->select('sales_items.item_id, items.item_number, quantity_purchased, sale_time');
+		$this->db->from('sales_items');
+		$this->db->join('sales', 'sales_items.sale_id = sales.sale_id');
+		$this->db->join('items', 'sales_items.item_id = items.item_id');
+		$this->db->where('sale_time >= "'. $timestamp .'"');
+		return $this->db->get()->result();
+	}
+
 	function get_sale_items($sale_id)
 	{
 		$this->db->from('sales_items');
@@ -173,6 +183,7 @@ class Sale extends CI_Model
 	//We create a temp table that allows us to do easy report/sales queries
 	public function create_sales_items_temp_table()
 	{
+		$this->db->query("DROP TABLE IF EXISTS ".$this->db->dbprefix('sales_items_temp'));
 		$this->db->query("CREATE TEMPORARY TABLE ".$this->db->dbprefix('sales_items_temp')."
 		(SELECT date(sale_time) as sale_date, ".$this->db->dbprefix('sales_items').".sale_id, comment,payment_type, customer_id, employee_id, 
 		".$this->db->dbprefix('items').".item_id, supplier_id, quantity_purchased, item_cost_price, item_unit_price, SUM(percent) as item_tax_percent,

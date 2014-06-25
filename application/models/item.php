@@ -132,10 +132,20 @@ class Item extends CI_Model
 		return $this->db->update('items',$item_data);
 	}
 
+	function save_multiple($item_data)
+	{
+		$this->db->insert_batch('items', $item_data); 
+	}
+
+	function update_multiple_by_index($item_data, $index)
+	{
+		$this->db->update_batch('items', $item_data, $index);
+	}
+
 	/*
 	Updates multiple items at once
 	*/
-	function update_multiple($item_data,$item_ids)
+	function update_multiple($item_data, $item_ids)
 	{
 		$this->db->where_in('item_id',$item_ids);
 		return $this->db->update('items',$item_data);
@@ -208,16 +218,17 @@ class Item extends CI_Model
 
 	}
 
-	function get_item_search_suggestions($search,$limit=25)
+	function get_item_search_suggestions($search,$limit)
 	{
+		$limit = isset($limit)? $limit : 25;
 		$suggestions = array();
 
 		$this->db->from('items');
 		$this->db->where("(name LIKE '%".$this->db->escape_like_str($search)."%' or 
 		item_number LIKE '%".$this->db->escape_like_str($search)."%') and deleted=0");
 		$this->db->order_by("name", "asc");
-		$by_name = $this->db->get();
 		$this->db->limit($limit);
+		$by_name = $this->db->get();
 		foreach($by_name->result() as $row)
 		{
 			$suggestions[]=$row;
@@ -266,16 +277,6 @@ class Item extends CI_Model
 		$this->db->order_by("category", "asc");
 
 		return $this->db->get();
-	}
-
-	/*
-	Deletes one item
-	*/
-	function clear_sync()
-	{
-		$this->db->where('category', 'Remote Inventory');
-		$this->db->delete('items');
-		return ($this->db->affected_rows() > 0) ? TRUE : FALSE;
 	}
 }
 ?>

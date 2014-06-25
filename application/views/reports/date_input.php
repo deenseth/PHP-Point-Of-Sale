@@ -48,7 +48,7 @@ $(document).ready(function()
 	{		
 		var sale_type = $("#sale_type").val();
 		
-		if ($("#simple_radio").attr('checked'))
+		if ($("#simple_radio").is(':checked'))
 		{
 			window.location = window.location+'/'+$("#report_date_range_simple option:selected").val() + '/' + sale_type;
 		}

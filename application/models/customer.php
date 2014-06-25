@@ -190,8 +190,9 @@ class Customer extends Person
 	/*
 	Get search suggestions to find customers
 	*/
-	function get_customer_search_suggestions($term, $limit=25)
+	function get_customer_search_suggestions($term, $limit)
 	{
+		$limit = isset($limit)? $limit : 25;
 		$term = strtolower($term);
 		$suggestions = array();
 		$this->db->from('customers');

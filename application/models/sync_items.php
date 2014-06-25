@@ -2,12 +2,26 @@
 class Sync_items extends CI_Model
 {
 	/*
-	Deletes one item
+	Mark last sync time
 	*/
-	function clear_sync()
+	function save_sync_time()
 	{
-		$this->db->where('category', 'Remote Inventory');
-		return $this->db->update('items', array('deleted' => 1));
+		$this->db->set('sync_time', 'NOW()', FALSE); 
+		$this->db->insert('sync');
+	}
+
+	function get_last_sync()
+	{	
+		$this->db->from('sync');
+		$this->db->select('sync_time');
+		$this->db->order_by('id', 'desc');
+		$this->db->limit(1);
+		$query = $this->db->get();
+
+		if($query->num_rows()==1)
+		{
+			return $query->row()->sync_time;
+		}
 	}
 }
 ?>

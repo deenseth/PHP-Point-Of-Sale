@@ -12,12 +12,14 @@ class Giftcards extends Secure_area implements iData_controller
 	{
 		$config['base_url'] = site_url('?c=giftcards&m=index');
 		$config['total_rows'] = $this->Giftcard->count_all();
-		$config['per_page'] = '20'; 
+		$config['per_page'] = '20';
+		$config["uri_segment"] = 3;
 		$this->pagination->initialize($config);
 		
 		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_giftcards_manage_table($this->Giftcard->get_all($config['per_page'], $this->input->get('per_page')),$this);
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$data['manage_table']=get_giftcards_manage_table($this->Giftcard->get_all($config['per_page'], $page),$this);
 		$this->load->view('giftcards/manage',$data);
 	}
 

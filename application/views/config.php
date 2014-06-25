@@ -273,19 +273,21 @@ $(document).ready(function()
 		submitHandler:function(form)
 		{
 			$(form).ajaxSubmit({
-			success:function(response)
-			{
-				if(response.success)
+				success:function(response)
 				{
-					set_feedback(response.message,'success',false);		
-				}
-				else
-				{
-					set_feedback(response.message,'error',true);		
-				}
-			},
-			dataType:'json'
-		});
+					if(response.success)
+					{
+						var message = {'text': response.message, 'type': 'success'};
+						window.localStorage.setItem("message", JSON.stringify(message));
+						window.location.href = '<?php echo site_url("home")?>';	
+					}
+					else
+					{
+						set_feedback(response.message,'error',true);		
+					}
+				},
+				dataType:'json'
+			});
 
 		},
 		errorLabelContainer: "#error_message_box",

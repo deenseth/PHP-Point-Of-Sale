@@ -15,7 +15,7 @@ class Items extends Secure_area implements iData_controller
 		$config['per_page'] = '20';
 		$config["uri_segment"] = 3;
 		$this->pagination->initialize($config);
-		
+		$data['search'] = '';
 		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -49,7 +49,7 @@ class Items extends Secure_area implements iData_controller
 	{
 		$search=$this->input->post('search');
 		$data['controller_name']=strtolower(get_class());
-		$data['form_width']=$this->get_form_width();
+		$data['search'] = $search;
 		$data['manage_table']=get_items_manage_table($this->Item->search($search),$this);
 		$this->load->view('items/manage',$data);
 	}

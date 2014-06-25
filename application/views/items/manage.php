@@ -48,7 +48,7 @@ $(document).ready(function()
 	<div class="search-box">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
 		<?php echo form_open("$controller_name/search",array('id'=>'search_form')); ?>
-		<input type="text" name ='search' id='search'/>
+		<input type="text" name ='search' value="<?php echo $search; ?>" id='search'/>
 		</form>
 	</div>
 	<div id="new_button" class="btn-group">

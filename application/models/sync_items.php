@@ -1,6 +1,15 @@
 <?php
 class Sync_items extends CI_Model
 {
+	private $client;
+	private $session;
+
+	function __construct() {
+    	$client = new SoapClient('https://local.fairytale-boutique.com/api/v2_soap?wsdl=1');
+    	//get a session token
+    	$session = $client->login('raspberrypos', '99kXNM3zrNPr');
+   	}
+
 	/*
 	Mark last sync time
 	*/

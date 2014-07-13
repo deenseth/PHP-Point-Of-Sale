@@ -12,6 +12,12 @@ $(document).ready(function()
 
 function init()
 {
+
+	if(message != null)
+	{
+		alert(message.text);
+	}
+
 	$(".content-form").submit(function(event){
 		event.preventDefault();
 		$.ajax({

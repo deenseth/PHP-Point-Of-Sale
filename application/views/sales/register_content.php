@@ -1,19 +1,25 @@
-<?php
-if(isset($error))
-{
-	echo "<div class='error_message'>".$error."</div>";
-}
-
-if (isset($warning))
-{
-	echo "<div class='warning_mesage'>".$warning."</div>";
-}
-
-if (isset($success))
-{
-	echo "<div class='success_message'>".$success."</div>";
-}
+<script type="text/javascript">
+<?php 
+	if(isset($error)) { 
+   		$message['type'] = 'error';
+   		$message['text'] = $error;
+	} 
+	if (isset($warning)) {
+   		$message['type'] = 'warning';
+   		$message['text'] = $warning;
+	} 
+	if (isset($success)) {
+   		$message['type'] = 'success';
+   		$message['text'] = $success;
+	} 
+	if(isset($message))
+	{
+		echo 'var message=' . json_encode($message) . ';';
+	}else{
+		echo 'var message=null';
+	}
 ?>
+</script>
 <div class="row"></div>
 <div class="col-md-9 sale_register_leftbox">
 	<div class="panel panel-default">

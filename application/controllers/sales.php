@@ -135,6 +135,7 @@ class Sales extends Secure_area
 		if($this->sale_lib->out_of_stock($item_id_or_number_or_item_kit_or_receipt))
 		{
 			$data['warning'] = $this->lang->line('sales_quantity_less_than_zero');
+
 		}
 		$this->load_register_content($data);
 	}
@@ -307,7 +308,7 @@ class Sales extends Secure_area
 		}
 	}
 
-	function prepare_data()
+	function prepare_data($data=array())
 	{
 		$person_info = $this->Employee->get_logged_in_employee_info();
 		$data['cart']=$this->sale_lib->get_cart();
@@ -341,13 +342,13 @@ class Sales extends Secure_area
 	
 	function load_register($data=array())
 	{
-		$data = $this->prepare_data();
+		$data = $this->prepare_data($data);
 		$this->load->view("sales/register",$data);
 	}
 
 	function load_register_content($data=array())
 	{
-		$data = $this->prepare_data();
+		$data = $this->prepare_data($data);
 		$this->load->view("sales/register_content",$data);
 	}
 

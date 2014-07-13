@@ -10,12 +10,12 @@ class Giftcards extends Secure_area implements iData_controller
 
 	function index()
 	{
-		$config['base_url'] = site_url('?c=giftcards&m=index');
+		$config['base_url'] = site_url('/gitcards/index/');
 		$config['total_rows'] = $this->Giftcard->count_all();
 		$config['per_page'] = '20';
 		$config["uri_segment"] = 3;
 		$this->pagination->initialize($config);
-		
+		$data['search'] = '';
 		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -26,8 +26,10 @@ class Giftcards extends Secure_area implements iData_controller
 	function search()
 	{
 		$search=$this->input->post('search');
-		$data_rows=get_giftcards_manage_table_data_rows($this->Giftcard->search($search),$this);
-		echo $data_rows;
+		$data['controller_name']=strtolower(get_class());
+		$data['search'] = $search;
+		$data['manage_table']=get_giftcards_manage_table($this->Giftcard->search($search),$this);
+		$this->load->view('giftcards/manage',$data);
 	}
 
 	/*

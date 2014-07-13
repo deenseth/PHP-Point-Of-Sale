@@ -4,16 +4,100 @@
 		"selected_items":
 		[
 			[
+				"Json",
+				"json_encode"
+			],
+			[
+				"new",
+				"new_qty"
+			],
+			[
+				"sto",
+				"stock_item"
+			],
+			[
+				"item",
+				"item_number"
+			],
+			[
+				"JS",
+				"json_encode"
+			],
+			[
+				"sync",
+				"sync_time"
+			],
+			[
+				"Sync",
+				"Sync_items"
+			],
+			[
+				"for",
+				"foreach	foreach …"
+			],
+			[
+				"pa",
+				"padding"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"jso",
+				"json_encode"
+			],
+			[
+				"is_nu",
+				"is_numeric"
+			],
+			[
+				"is_i",
+				"is_int"
+			],
+			[
+				"var",
+				"var_dump"
+			],
+			[
+				"padd",
+				"padding-left"
+			],
+			[
+				"mar",
+				"margin-right"
+			],
+			[
+				"ma",
+				"margin-right"
+			],
+			[
+				"btn",
+				"btn-primary"
+			],
+			[
+				"margin",
+				"margin-left"
+			],
+			[
+				"bt",
+				"btn-primary"
+			],
+			[
+				"content",
+				"content-form"
+			],
+			[
+				"form-",
+				"form-control"
+			],
+			[
 				"ex",
 				"exit"
 			],
 			[
 				"cu",
 				"customers"
-			],
-			[
-				"btn",
-				"btn-default"
 			],
 			[
 				"pri",
@@ -30,18 +114,6 @@
 			[
 				"wid",
 				"window"
-			],
-			[
-				"item",
-				"item_number"
-			],
-			[
-				"mar",
-				"margin"
-			],
-			[
-				"ma",
-				"margin-bottom"
 			],
 			[
 				"in",
@@ -67,62 +139,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "application/controllers/reports.php",
-			"settings":
-			{
-				"buffer_size": 13363,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "application/views/reports/listing.php",
-			"settings":
-			{
-				"buffer_size": 4872,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "application/views/sales/register.php",
-			"settings":
-			{
-				"buffer_size": 12787,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "application/controllers/sales.php",
-			"settings":
-			{
-				"buffer_size": 13521,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "application/libraries/Sale_lib.php",
-			"settings":
-			{
-				"buffer_size": 10777,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "application/models/item.php",
-			"settings":
-			{
-				"buffer_size": 5668,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "application/models/customer.php",
-			"settings":
-			{
-				"buffer_size": 6410,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -151,43 +167,119 @@
 	},
 	"file_history":
 	[
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/customer.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/sales.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/items/form.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/sale_suspended.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/language/english/sales_lang.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/sales/register_content.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/sales/register.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/js/common.js",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/items/manage.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/libraries/Image_lib.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/language/english/sales_lang.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/language/english/form_validation_lang.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/sale_suspended.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/libraries/Sale_lib.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/sync.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/register.css",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/suppliers/manage.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/items.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/partial/tabular_report.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/partial/tabular_details_report.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/item_kits/manage.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/item_kits.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/js/manage_tables.js",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/libraries/report_service.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/helpers/table_helper.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/giftcards/manage.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/employees.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/giftcards.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/mailchimpinfo.css",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/suppliers.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/sales/suspended.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/people/manage.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/customer.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/customers.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/config/routes.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/barcode_sheet.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/barcode.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/sales/receipt.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/item.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/home.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/home.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/config.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/sale.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/employee.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/editsale.css",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/sync.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/sync_items.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/reports/summary_payments.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/reports/summary_items.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/item_taxes.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/items/form_bulk.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/giftcard.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/config/pagination.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/config/autoload.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/js/jquery.autocomplete.js",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/autocomplete.css",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/phppos.css",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/partial/header.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/config/routes.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/libraries/report_service.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/items/manage.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/config.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/config/hooks.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/index.html",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/reports/report.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/receiving.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/reports/date_input.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/reports/summary_sales.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/reports.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/item_kit_items.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/inventory.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/config/database.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/core/Loader.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/config/config.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/login.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/secure_area.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/hooks/load_config.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/libraries/User_agent.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/languagecheck.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/partial/footer.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/appconfig.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/login.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/index.html",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/module.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/item_kit.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/person.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/barcode.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/no_access.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/database/database.sql",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/datepicker.css",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/database/DB_active_rec.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/index.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/database/drivers/mysql/mysql_driver.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/database/drivers/mysqli/mysqli_driver.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/index.html",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/language/english/common_lang.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/general.css",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/customers/form.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/language/english/employees_lang.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/employees/form.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/partial/list_manage_form_wrapper.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/customers/excel_import.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/login.css",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/reports/graphical.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/reports/date_input_excel_export.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/language/english/module_lang.php",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/js/scroll-sneak.js",
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/reports/listing.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/giftcards/form.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/giftcards/manage.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/people/manage.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/helpers/table_helper.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/suppliers/manage.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/suppliers/form.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/libraries/Table.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/tables.css",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/customers/form.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/customers/excel_import.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/libraries/Output.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/reports.css",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/README.txt",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/people/form_basic_info.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/js/manage_tables.js",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/customers.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/item.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/items.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/items/inventory.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/items/count_details.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/items/form_bulk.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/js/common.js",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/language/english/items_lang.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/config/config.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/item_kits/manage.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/phppos_print.css",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/helpers/path_helper.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/language/english/giftcards_lang.php",
@@ -201,37 +293,8 @@
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/items/excel_import.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/libraries/Validation.php",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/language/english/validation_lang.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/js/jquery.autocomplete.js",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/config/autoload.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/autocomplete.css",
 		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/item_kits/form.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/employees/form.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/partial/footer.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/home.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/import_items.csv",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/item_taxes.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/index.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/css/thickbox.css",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/libraries/ofc-library/ofc_title.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/fonts/glyphicons-halflings-regular.svg",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/helpers/active_helper.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/system/libraries/Ftp.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/home.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/views/partial/header_excel.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/controllers/secure_area.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/models/module.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/application/index.html",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/app/routes.php",
-		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/app/config/app.php",
-		"/Users/shaunkutch/Downloads/foodland.txt",
-		"/Users/shaunkutch/Downloads/ePOS-Device_API_UM_E_Sample/DeviceControlScript_Sample/Scanner_Generic.js",
-		"/Users/shaunkutch/Downloads/ePOS-Device_API_UM_E_Sample/DeviceControlScript_Sample/Keyboard_Generic.js",
-		"/Users/shaunkutch/Documents/WIP/Printer/pos/EntryTerminal/devicesetting.js",
-		"/Users/shaunkutch/Desktop/pma/PaymentActivity.xml",
-		"/Users/shaunkutch/Desktop/pma/com.crittercism.usersettings.xml",
-		"/Users/shaunkutch/Desktop/pma/com.crittercism.crashes.xml",
-		"/Users/shaunkutch/Desktop/foodland.txt",
-		"/Users/shaunkutch/Documents/WIP/Android/Foodland/foodlandkey.jks"
+		"/Users/shaunkutch/Documents/WIP/Web/RaspberryPOS/import_items.csv"
 	],
 	"find":
 	{
@@ -250,6 +313,117 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"set_feedback",
+			"load_register",
+			"prepare_data",
+			"load_register_content",
+			"set_feedback",
+			"innertable",
+			"summary_sales",
+			"enable_delete",
+			"warning",
+			"<table",
+			"get_giftcards_manage_table",
+			"comment",
+			"suspend_sale_button",
+			"generate_barcodes",
+			"barcode",
+			"generate_barcodes",
+			"customer_search",
+			"get_customer_search_suggestions",
+			"do_search",
+			"customer_search",
+			"get_sale_items",
+			"sale_time",
+			"sales_items",
+			"update_multiple",
+			"items_taxes",
+			"selected_supplier",
+			"$this->pagination->initialize",
+			"get_item_data_row",
+			"get_items_manage_table_data_rows",
+			"get_items_manage_table",
+			"item_form",
+			"post_item_form_submit",
+			"config_form",
+			"create_receivings_items_temp_table",
+			"create_sales_items_temp_table",
+			"sales_items_temp",
+			"phppos_sales_items_temp",
+			"create_receivings_items_temp_table",
+			"create_sales_items_temp_table",
+			"_suppressEcho",
+			"save",
+			"language",
+			"Languagecheck",
+			"language",
+			"lang->load",
+			"appconfig",
+			"item_info",
+			"$this->load->vars",
+			"$this->load->vars();",
+			"item_info",
+			"parent::Controller()",
+			"extends Model",
+			"is_logged_in",
+			"extends Controller",
+			"Controller",
+			"mysql_escape_string",
+			"set_cart",
+			"form_open",
+			"form_hidden",
+			"quantity",
+			"common_welcome_message",
+			"common_you_are_using_phppos",
+			"employees_error_adding_updating",
+			"Error adding/updating employee",
+			"\"Error adding/updating employee Shaun Kutch\"",
+			"post_person_form_submit",
+			"employees_repeat_password",
+			"form_submit",
+			"embedSWF",
+			"report_date_range_label",
+			"_display",
+			"graphical_summary_sales",
+			"mc_api_key",
+			"post_item_form_submit",
+			"form_close",
+			"batch_save",
+			"<div class='form_field'>",
+			"field_row clearfix",
+			" <?",
+			"Store Config",
+			"Store",
+			"sm",
+			"form_dropdown",
+			"width",
+			"form_input",
+			"or",
+			"common_delete",
+			"sales_new_customer",
+			"load_content",
+			"_reload",
+			"success_message",
+			".success_message",
+			"suspend",
+			"form_open",
+			"anchor",
+			"trash",
+			"sales/register",
+			"_reload",
+			"form_dropdown",
+			"quantity",
+			"cancel_sale_button",
+			"suspend_sale_button",
+			"sales_add_payment",
+			"sales_start_typing_customer_name",
+			"Select Customer",
+			"New Costomer",
+			"sales_start_typing_customer_name",
+			"col-md-9",
+			"sales_find_or_scan_item",
+			"Find/Scan Item",
+			"item_label",
 			"edit",
 			"get_customer",
 			"post_item_form_submit",
@@ -266,56 +440,7 @@
 			"edite",
 			"'class'=>'form-control'",
 			".':'",
-			"<div class='form_field'>",
-			"<div class=\"field_row clearfix\">",
-			"post_item_form_submit",
-			"hidden",
-			"get_selected_values",
-			"enable_bulk_edit",
-			"bulk_edit\n",
-			"bulk_edit",
-			"bulk",
-			"bulk_update",
-			"set_feedback",
-			"bulk",
-			"post_item_form_submit",
-			"set_feedback",
-			"feedback",
-			"set_feedback",
-			"update_row",
-			"post_item_form_submit",
-			"items_quantity_required",
-			"Please Close ( X ) to cancel",
-			"giftcards_quantity_required",
-			"Please Close ( X ) to cancel",
-			"percent",
-			"items_tax_1",
-			"tables",
-			"full_tag_open",
-			"$config",
-			"post_item_form_submit",
-			"tb_remove",
-			"tickBox",
-			"tb_show",
-			"width:$width",
-			"width",
-			"360",
-			"width:360",
-			"thickbox",
-			"view",
-			"items/view",
-			"edit",
-			"msie",
-			"do_search",
-			"enable_search",
-			"autocomplete",
-			"enable_search",
-			"suggest",
-			"customers/suggest",
-			"get_allowed_modules",
-			"database.php.tmpl",
-			"cash",
-			"tuid"
+			"<div class='form_field'>"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -323,6 +448,12 @@
 		"regex": false,
 		"replace_history":
 		[
+			"extends CI_Model",
+			"extends CI_Controller",
+			"",
+			"form-group",
+			"load_register_content",
+			"load_content",
 			"<li class=\"list-group-item\">",
 			"'class'=>'form-control',",
 			"",
@@ -338,211 +469,8 @@
 	"groups":
 	[
 		{
-			"selected": 2,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "application/controllers/reports.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 13363,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "application/views/reports/listing.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4872,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4732,
-								4732
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 155.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "application/views/sales/register.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12787,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								10365,
-								10365
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 4371.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "application/controllers/sales.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 13521,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								11296,
-								11304
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 4772.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "application/libraries/Sale_lib.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10777,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2300,
-								2312
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1446.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "application/models/item.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5668,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4831,
-								4831
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 3097.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "application/models/customer.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6410,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1127,
-								1127
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 422.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -552,7 +480,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 31.0
 	},
 	"layout":
 	{
@@ -593,20 +521,104 @@
 		"selected_items":
 		[
 			[
-				"sale",
-				"application/libraries/Sale_lib.php"
+				"regis",
+				"application/views/sales/register.php"
 			],
 			[
-				"sale_lib",
-				"application/libraries/Sale_lib.php"
+				"sales_li",
+				"system/libraries/Image_lib.php"
+			],
+			[
+				"sales",
+				"application/controllers/sales.php"
+			],
+			[
+				"register",
+				"application/views/sales/register_content.php"
+			],
+			[
+				"manage_table",
+				"js/manage_tables.js"
+			],
+			[
+				"reg",
+				"application/views/sales/register.php"
+			],
+			[
+				"syn",
+				"application/controllers/sync.php"
+			],
+			[
+				"route",
+				"application/config/routes.php"
+			],
+			[
+				"auto",
+				"application/config/autoload.php"
+			],
+			[
+				"header",
+				"application/views/partial/header.php"
+			],
+			[
+				"home",
+				"application/views/home.php"
+			],
+			[
+				"report_service",
+				"application/libraries/report_service.php"
+			],
+			[
+				"sync",
+				"application/models/sync.php"
+			],
+			[
+				"data",
+				"application/config/database.php"
+			],
+			[
+				"loader",
+				"system/core/Loader.php"
+			],
+			[
+				"footer",
+				"application/views/partial/footer.php"
+			],
+			[
+				"rout",
+				"application/config/routes.php"
+			],
+			[
+				"index",
+				"index.php"
+			],
+			[
+				"he",
+				"application/views/partial/header.php"
+			],
+			[
+				"gener",
+				"css/general.css"
+			],
+			[
+				"php",
+				"css/phppos.css"
+			],
+			[
+				"login",
+				"application/views/login.php"
 			],
 			[
 				"head",
 				"application/views/partial/header.php"
 			],
 			[
-				"route",
-				"application/config/routes.php"
+				"sale",
+				"application/libraries/Sale_lib.php"
+			],
+			[
+				"sale_lib",
+				"application/libraries/Sale_lib.php"
 			],
 			[
 				"table",
@@ -629,14 +641,6 @@
 				"js/common.js"
 			],
 			[
-				"header",
-				"application/views/partial/header.php"
-			],
-			[
-				"php",
-				"css/phppos.css"
-			],
-			[
 				"conf",
 				"application/config/config.php"
 			],
@@ -649,20 +653,12 @@
 				"js/jquery.validate.min.js"
 			],
 			[
-				"auto",
-				"js/jquery.autocomplete.js"
-			],
-			[
 				"form",
 				"application/views/items/form.php"
 			],
 			[
 				"tick",
 				"js/thickbox.js"
-			],
-			[
-				"footer",
-				"application/views/partial/footer.php"
 			]
 		],
 		"width": 0.0
@@ -677,11 +673,11 @@
 	},
 	"select_symbol":
 	{
-		"height": 392.0,
+		"height": 27.0,
 		"selected_items":
 		[
 		],
-		"width": 392.0
+		"width": 395.0
 	},
 	"settings":
 	{
@@ -690,7 +686,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 252.0,
+	"side_bar_width": 270.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

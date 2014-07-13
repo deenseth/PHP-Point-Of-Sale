@@ -5,7 +5,7 @@ Gets the html table to manage people.
 function get_people_manage_table($people,$controller)
 {
 	$CI =& get_instance();
-	$table='<table class="tablesorter table" id="sortable_table">';
+	$table='<table class="tablesorter table table-striped table-bordered" id="sortable_table">';
 	
 	
 	if ($key = $CI->config->item('mc_api_key')) {
@@ -51,7 +51,7 @@ function get_people_manage_table_data_rows($people,$controller)
 	
 	if($people->num_rows()==0)
 	{
-		$table_data_rows.="<tr><td colspan='6'><div class='warning_message' style='padding:7px;'>".$CI->lang->line('common_no_persons_to_display')."</div></tr></tr>";
+		$table_data_rows.="<tr><td colspan='6' class='warning' style='text-align:center;'><b>".$CI->lang->line('common_no_persons_to_display')."</b></tr></tr>";
 	}
 	
 	return $table_data_rows;
@@ -98,7 +98,7 @@ Gets the html table to manage suppliers.
 function get_supplier_manage_table($suppliers,$controller)
 {
 	$CI =& get_instance();
-	$table='<table class="tablesorter table" id="sortable_table">';
+	$table='<table class="tablesorter table table-striped table-bordered" id="sortable_table">';
 	
 	if ($key = $CI->config->item('mc_api_key')) {
 		$headers = array('<input type="checkbox" id="select_all" />',
@@ -145,7 +145,7 @@ function get_supplier_manage_table_data_rows($suppliers,$controller)
 	
 	if($suppliers->num_rows()==0)
 	{
-		$table_data_rows.="<tr><td colspan='7'><div class='warning_message' style='padding:7px;'>".$CI->lang->line('common_no_persons_to_display')."</div></tr></tr>";
+		$table_data_rows.="<tr><td colspan='7' class='warning' style='text-align:center;'><b>".$CI->lang->line('common_no_persons_to_display')."</b></tr></tr>";
 	}
 	
 	return $table_data_rows;
@@ -192,7 +192,7 @@ Gets the html table to manage items.
 function get_items_manage_table($items,$controller)
 {
 	$CI =& get_instance();
-	$table='<table class="tablesorter table" id="sortable_table">';
+	$table='<table class="tablesorter table table-striped table-bordered" id="sortable_table">';
 	
 	$headers = array('<input type="checkbox" id="select_all" />', 
 	$CI->lang->line('items_item_number'),
@@ -231,7 +231,7 @@ function get_items_manage_table_data_rows($items,$controller)
 	
 	if($items->num_rows()==0)
 	{
-		$table_data_rows.="<tr><td colspan='11'><div class='warning_message' style='padding:7px;'>".$CI->lang->line('items_no_items_to_display')."</div></tr></tr>";
+		$table_data_rows.="<tr><td colspan='11' class='warning' style='text-align:center;'><b>".$CI->lang->line('items_no_items_to_display')."</b></tr></tr>";
 	}
 	
 	return $table_data_rows;
@@ -277,7 +277,7 @@ function get_giftcards_manage_table( $giftcards, $controller )
 {
 	$CI =& get_instance();
 	
-	$table='<table class="tablesorter table" id="sortable_table">';
+	$table='<table class="tablesorter table table-striped table-bordered" id="sortable_table">';
 	
 	$headers = array('<input type="checkbox" id="select_all" />', 
 	$CI->lang->line('giftcards_giftcard_number'),
@@ -311,7 +311,7 @@ function get_giftcards_manage_table_data_rows( $giftcards, $controller )
 	
 	if($giftcards->num_rows()==0)
 	{
-		$table_data_rows.="<tr><td colspan='11'><div class='warning_message' style='padding:7px;'>".$CI->lang->line('giftcards_no_giftcards_to_display')."</div></tr></tr>";
+		$table_data_rows.="<tr><td colspan='11' class='warning' style='text-align:center;'><b>".$CI->lang->line('giftcards_no_giftcards_to_display')."</b></tr></tr>";
 	}
 	
 	return $table_data_rows;
@@ -340,7 +340,7 @@ function get_item_kits_manage_table( $item_kits, $controller )
 {
 	$CI =& get_instance();
 	
-	$table='<table class="tablesorter table" id="sortable_table">';
+	$table='<table class="tablesorter table table-striped table-bordered" id="sortable_table">';
 	
 	$headers = array('<input type="checkbox" id="select_all" />', 
 	$CI->lang->line('item_kits_name'),
@@ -374,7 +374,7 @@ function get_item_kits_manage_table_data_rows( $item_kits, $controller )
 	
 	if($item_kits->num_rows()==0)
 	{
-		$table_data_rows.="<tr><td colspan='11'><div class='warning_message' style='padding:7px;'>".$CI->lang->line('item_kits_no_item_kits_to_display')."</div></tr></tr>";
+		$table_data_rows.="<tr><td colspan='11' class='warning' style='text-align:center;'><b>".$CI->lang->line('item_kits_no_item_kits_to_display')."</b></tr></tr>";
 	}
 	
 	return $table_data_rows;

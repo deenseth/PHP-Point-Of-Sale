@@ -44,7 +44,7 @@ function set_feedback(text, type, keep_displayed)
 	if(!keep_displayed)
 	{
 		toastr.options = {
-		  "extendedTimeOut": "1000"
+		  "extendedTimeOut": "1000",
 		}
 	}
 

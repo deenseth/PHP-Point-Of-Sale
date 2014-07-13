@@ -16,6 +16,7 @@ class Sync extends CI_Controller
 		$items_sold = $this->Sale->get_sale_items_after($last_sync);
 		//Update inventory on remote server
 		foreach ($items_sold as $sold_item) {
+			$this->log("Updating remote inventory for: " . $sold_item->item_number);
 			$stock_item = $client->catalogInventoryStockItemList($session, array($sold_item->item_number));
 			$qty = $stock_item[0]->qty;
 			$new_qty = $qty - $sold_item->quantity_purchased;
@@ -23,6 +24,9 @@ class Sync extends CI_Controller
 				'qty' => $new_qty
 			));
 		}
+
+		//Save the timestamp so we know the last sync time
+		$this->Sync_items->save_sync_time();
 
 		//Get all products on remote server
 		$list = $client->catalogProductList($session);
@@ -47,13 +51,13 @@ class Sync extends CI_Controller
 		  	if(isset($product->name)){
 		  		$item_data['name'] = $product->name;
 		  	}else{
-		  		$this->logError('Name cannot be empty');
+		  		$this->log('Name cannot be empty');
 		  		continue;
 		  	}
 		  	if(isset($product->sku)){
 		  		$item_data['item_number'] = $product->sku;
 		  	}else{
-		  		$this->logError('sku cannot be empty');
+		  		$this->log('sku cannot be empty');
 		  		continue;
 		  	}
 		  	if(isset($cost)){
@@ -64,13 +68,13 @@ class Sync extends CI_Controller
 		  	if(isset($price)){
 		  		$item_data['unit_price'] = $price;
 		  	}else{
-		  		$this->logError('price cannot be empty');
+		  		$this->log('price cannot be empty');
 		  		continue;
 		  	}
 		  	if(isset($productInventory[0]->qty)){
 		  		$item_data['quantity'] = $productInventory[0]->qty;
 		  	}else{
-		  		$this->logError('Quantity cannot be empty');
+		  		$this->log('Quantity cannot be empty');
 		  		continue;
 		  	}
 		  	$item_data['description'] = isset($product->description)? $product->description : '';
@@ -89,6 +93,8 @@ class Sync extends CI_Controller
 	  		}else{
 	  			$add_data[] = $item_data;
 	  		}
+
+	  		$this->log("Processing: " . $item_data['item_id'] . " " . $item_data['name'] . " " . $item_data['item_number']);
 		}
 
 		//If we have items that need to be updated
@@ -108,61 +114,13 @@ class Sync extends CI_Controller
 			$items_taxes_data[] = array('name'=>'DEFAULT TAX', 'percent'=>10);
 			$this->Item_taxes->save_multiple($items_taxes_data, $tax_ids);
 		}
-		//Save the timestamp so we know when the 
-		$this->Sync_items->save_sync_time();
+
+		$this->log("Items now synced");
 	}
 
-	function logError($message)
+	function log($message)
 	{
-		echo $message;
-	}
-
-	function save($item_data, $item_id)
-	{
-		if($this->Item->save($item_data, $item_id))
-		{
-			//New item
-			if($item_id==-1)
-			{
-				var_dump($item_data);
-				exit();
-				echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_adding').' '.
-				$item_data['name'],'item_id'=>$item_data['item_id']));
-				$item_id = $item_data['item_id'];
-			}
-			else //previous item
-			{
-				echo json_encode(array('success'=>true,'message'=>$this->lang->line('items_successful_updating').' '.
-				$item_data['name'],'item_id'=>$item_id));
-			}
-			
-			$inv_data = array
-			(
-				'trans_date'=>date('Y-m-d H:i:s'),
-				'trans_items'=>$item_id,
-				'trans_user'=>1,
-				'trans_comment'=>'Item synced from remote inventory',
-				'trans_inventory'=>$item_data['quantity']
-			);
-			$this->Inventory->insert($inv_data);
-			$items_taxes_data = array();
-			$tax_names[] = 'DEFAULT TAX';
-			$tax_percents[] = 10;
-			for($k=0;$k<count($tax_percents);$k++)
-			{
-				if (is_numeric($tax_percents[$k]))
-				{
-					$items_taxes_data[] = array('name'=>$tax_names[$k], 'percent'=>$tax_percents[$k] );
-				}
-			}
-			$this->Item_taxes->save($items_taxes_data, $item_id);
-		}
-		else//failure
-		{
-			echo json_encode(array('success'=>false,'message'=>$this->lang->line('items_error_adding_updating').' '.
-			$item_data['name'],'item_id'=>-1));
-		}
-
+		echo $message . "\r\n";
 	}
 }
 ?>

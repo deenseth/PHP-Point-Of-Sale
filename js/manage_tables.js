@@ -156,14 +156,7 @@ function do_delete(url)
 		{
 			$(selected_rows).each(function(index, dom)
 			{
-				$(this).find("td").animate({backgroundColor:"green"},1200,"linear")
-				.end().animate({opacity:0},1200,"linear",function()
-				{
-					$(this).remove();
-					//Re-init sortable table as we removed a row
-					update_sortable_table();
-					
-				});
+				$(this).find("td").remove();
 			});	
 			set_feedback(response.message,'success_message',false);	
 		}

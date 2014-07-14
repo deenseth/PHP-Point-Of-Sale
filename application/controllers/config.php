@@ -19,7 +19,6 @@ class Config extends Secure_area
 		
 	function save()
 	{
-
 		$batch_save_data=array(
 		'company'=>$this->input->post('company'),
 		'address'=>$this->input->post('address'),
@@ -36,6 +35,16 @@ class Config extends Secure_area
 		'timezone'=>$this->input->post('timezone'),
 		'print_after_sale'=>$this->input->post('print_after_sale')	
 		);
+
+		if ($key = $this->input->post('mc_api_key')) {
+			$this->load->library('MailChimp',  array('api_key'=>$key), 'MailChimp');
+			$success = ($this->MailChimp->ping() === "Everything's Chimpy!");
+			$mc_message =  $success ? 'Connected to MailChimp! ' 
+			                        : "Unable to connect to MailChimp. Please check your connection and your API key. ";
+            $validated_api_key = $success ? $this->input->post('mc_api_key') : '';
+
+            $batch_save_data['mc_api_key'] = $validated_api_key;
+		}
 		
 		if($_SERVER['HTTP_HOST'] !='demo.phppointofsale.com' && $this->Appconfig->batch_save($batch_save_data))
 		{

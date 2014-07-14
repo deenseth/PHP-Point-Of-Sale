@@ -46,7 +46,7 @@ class Config extends Secure_area
             $batch_save_data['mc_api_key'] = $validated_api_key;
 		}
 		
-		if($_SERVER['HTTP_HOST'] !='demo.phppointofsale.com' && $this->Appconfig->batch_save($batch_save_data))
+		if($this->Appconfig->batch_save($batch_save_data))
 		{
 			echo json_encode(array('success'=>true,'message'=>$this->lang->line('config_saved_successfully')));
 		}

@@ -5,7 +5,7 @@
 <ul id="error_message_box"></ul>
 
 <div class="form-group">	
-<?php echo form_label($this->lang->line('config_company').':', 'company',array('class'=>'wide required')); ?>
+<?php echo form_label($this->lang->line('config_company'), 'company',array('class'=>'wide required')); ?>
 	
 	<?php echo form_input(array(
 		'class'=>'form-control',
@@ -15,7 +15,7 @@
 </div>
 
 <div class="form-group">	
-<?php echo form_label($this->lang->line('config_address').':', 'address',array('class'=>'wide required')); ?>
+<?php echo form_label($this->lang->line('config_address'), 'address',array('class'=>'wide required')); ?>
 	
 	<?php echo form_textarea(array(
 		'class'=>'form-control',
@@ -27,7 +27,7 @@
 </div>
 
 <div class="form-group">	
-<?php echo form_label($this->lang->line('config_phone').':', 'phone',array('class'=>'wide required')); ?>
+<?php echo form_label($this->lang->line('config_phone'), 'phone',array('class'=>'wide required')); ?>
 	
 	<?php echo form_input(array(
 		'class'=>'form-control',
@@ -37,7 +37,7 @@
 </div>
 
 <div class="form-group">	
-	<?php echo form_label($this->lang->line('config_default_tax_rate_1').':', 'default_tax_1_rate',array('class'=>'wide required')); ?>
+	<?php echo form_label($this->lang->line('config_default_tax_rate_1'), 'default_tax_1_rate',array('class'=>'wide required')); ?>
 	<div class="row">
 		<div class="col-lg-6">
 			<?php echo form_input(array(
@@ -63,7 +63,7 @@
 </div>
 
 <div class="form-group">	
-<?php echo form_label($this->lang->line('config_default_tax_rate_2').':', 'default_tax_1_rate',array('class'=>'wide')); ?>
+<?php echo form_label($this->lang->line('config_default_tax_rate_2'), 'default_tax_1_rate',array('class'=>'wide')); ?>
 	<div class="row">
 		<div class="col-lg-6">
 			<?php echo form_input(array(
@@ -89,7 +89,7 @@
 </div>
 
 <div class="form-group">	
-<?php echo form_label($this->lang->line('common_email').':', 'email',array('class'=>'wide')); ?>
+<?php echo form_label($this->lang->line('common_email'), 'email',array('class'=>'wide')); ?>
 	
 	<?php echo form_input(array(
 		'class'=>'form-control',
@@ -100,7 +100,7 @@
 
 
 <div class="form-group">	
-<?php echo form_label($this->lang->line('config_fax').':', 'fax',array('class'=>'wide')); ?>
+<?php echo form_label($this->lang->line('config_fax'), 'fax',array('class'=>'wide')); ?>
 	
 	<?php echo form_input(array(
 		'class'=>'form-control',
@@ -110,7 +110,7 @@
 </div>
 
 <div class="form-group">	
-<?php echo form_label($this->lang->line('config_website').':', 'website',array('class'=>'wide')); ?>
+<?php echo form_label($this->lang->line('config_website'), 'website',array('class'=>'wide')); ?>
 	
 	<?php echo form_input(array(
 		'class'=>'form-control',
@@ -119,8 +119,17 @@
 		'value'=>$this->config->item('website')));?>
 </div>
 
+<div class="form-group">
+<?php echo form_label($this->lang->line('config_mc_api_key'), 'mc_api_key', array('class'=>'wide')); ?>
+    <?php echo form_input(array(
+      	'class'=>'form-control',
+		'name'=>'mc_api_key',
+		'id'=>'mc_api_key',
+		'value'=>$this->config->item('mc_api_key')));?>
+</div>
+
 <div class="form-group">	
-<?php echo form_label($this->lang->line('common_return_policy').':', 'return_policy',array('class'=>'wide required')); ?>
+<?php echo form_label($this->lang->line('common_return_policy'), 'return_policy',array('class'=>'wide required')); ?>
 	
 	<?php echo form_textarea(array(
 		'class'=>'form-control',
@@ -132,7 +141,7 @@
 </div>
 
 <div class="form-group">	
-<?php echo form_label($this->lang->line('config_language').':', 'language',array('class'=>'wide required')); ?>
+<?php echo form_label($this->lang->line('config_language'), 'language',array('class'=>'wide required')); ?>
 	
 	<?php echo form_dropdown('language', array(
 		'english'  => 'English',
@@ -142,7 +151,7 @@
 </div>
 
 <div class="form-group">	
-<?php echo form_label($this->lang->line('config_timezone').':', 'timezone',array('class'=>'wide required')); ?>
+<?php echo form_label($this->lang->line('config_timezone'), 'timezone',array('class'=>'wide required')); ?>
 	
 	<?php echo form_dropdown('timezone', 
 	 array(
@@ -241,7 +250,7 @@
 </div>
 
 <div class="form-group">	
-<?php echo form_label($this->lang->line('config_print_after_sale').':', 'print_after_sale',array('class'=>'wide')); ?>
+<?php echo form_label($this->lang->line('config_print_after_sale'), 'print_after_sale',array('class'=>'wide')); ?>
 	
 	<?php echo form_checkbox(array(
 		'name'=>'print_after_sale',
@@ -249,7 +258,6 @@
 		'value'=>'print_after_sale',
 		'checked'=>$this->config->item('print_after_sale')));?>
 </div>
-
 
 <?php 
 echo form_submit(array(

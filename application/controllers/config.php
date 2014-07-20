@@ -36,6 +36,18 @@ class Config extends Secure_area
 		'print_after_sale'=>$this->input->post('print_after_sale')	
 		);
 
+		if ($this->input->post('magento_soap_user')) {
+			$batch_save_data['magento_soap_user'] = $this->input->post('magento_soap_user');
+		}else{
+			$batch_save_data['magento_soap_user'] = '';
+		}
+
+		if ($this->input->post('magento_soap_key')) {
+			$batch_save_data['magento_soap_key'] = $this->input->post('magento_soap_key');
+		}else{
+			$batch_save_data['magento_soap_key'] = '';
+		}
+
 		if ($key = $this->input->post('mc_api_key')) {
 			$this->load->library('MailChimp',  array('api_key'=>$key), 'MailChimp');
 			$success = ($this->MailChimp->ping() === "Everything's Chimpy!");

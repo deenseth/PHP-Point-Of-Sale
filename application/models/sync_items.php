@@ -3,14 +3,22 @@ class Sync_items extends CI_Model
 {
 	private $client;
 	private $session;
+	private $isCLI;
 
-	function __construct() {
-		try {
-	    	$this->client = new SoapClient('https://local.fairytale-boutique.com/api/v2_soap?wsdl=1');
-	    	//get a session token
-	    	$this->session = $this->client->login('raspberrypos', '99kXNM3zrNPr');
-	    } catch (SoapFault $fault) {
-			$this->log("SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})");
+   	function __construct()
+   	{
+   		if($this->Appconfig->get('website') && $this->Appconfig->get('magento_soap_user') && $this->Appconfig->get('magento_soap_key'))
+		{
+			try {
+				$api_username = $this->Appconfig->get('magento_soap_user');
+				$api_key = $this->Appconfig->get('magento_soap_key');
+				$api_url = $this->Appconfig->get('website') . '/api/v2_soap?wsdl=1';
+		    	$this->client = new SoapClient($api_url);
+		    	//get a session token
+		    	$this->session = $this->client->login($api_username, $api_key);
+		    } catch (SoapFault $fault) {
+				$this->log("SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})");
+			}
 		}
    	}
 
@@ -43,6 +51,7 @@ class Sync_items extends CI_Model
 
    	function sync_inventory()
    	{
+
    		try {
 	   		//Get all products on remote server
 			$list = $this->client->catalogProductList($this->session);
@@ -162,7 +171,12 @@ class Sync_items extends CI_Model
 
 	function log($message)
 	{
-		echo $message . "\r\n";
+		if(is_cli())
+      	{
+			echo $message . "\r\n";
+		}else{
+			log_message('info', $message);
+		}
 	}
 }
 ?>

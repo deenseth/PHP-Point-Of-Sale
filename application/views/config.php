@@ -120,6 +120,24 @@
 </div>
 
 <div class="form-group">
+<?php echo form_label($this->lang->line('config_magento_soap_user'), 'magento_soap_user', array('class'=>'wide')); ?>
+    <?php echo form_input(array(
+      	'class'=>'form-control',
+		'name'=>'magento_soap_user',
+		'id'=>'magento_soap_user',
+		'value'=>$this->config->item('magento_soap_user')));?>
+</div>
+
+<div class="form-group">
+<?php echo form_label($this->lang->line('config_magento_soap_key'), 'magento_soap_key', array('class'=>'wide')); ?>
+    <?php echo form_input(array(
+      	'class'=>'form-control',
+		'name'=>'magento_soap_key',
+		'id'=>'magento_soap_key',
+		'value'=>$this->config->item('magento_soap_key')));?>
+</div>
+
+<div class="form-group">
 <?php echo form_label($this->lang->line('config_mc_api_key'), 'mc_api_key', array('class'=>'wide')); ?>
     <?php echo form_input(array(
       	'class'=>'form-control',

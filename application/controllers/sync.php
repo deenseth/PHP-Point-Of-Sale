@@ -4,8 +4,9 @@ class Sync extends CI_Controller
 
 	function index()
 	{
-		$this->Sync_items->sync_sales();
-		$this->Sync_items->sync_inventory();
+		$isCLI = ($this->input->is_cli_request())? true : false;
+		$this->Sync_items->sync_sales($isCLI);
+		$this->Sync_items->sync_inventory($isCLI);
 	}
 }
 ?>

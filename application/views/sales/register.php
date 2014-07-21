@@ -46,6 +46,10 @@ function init()
   		$(this).closest("form").submit();
 	});
 
+	$("#mode_form").change(function(){
+		$(this).closest("form").submit();
+	});
+
 	$('.selectpicker').selectpicker();
 
 	$("#item").autocomplete({source: function (request, response) {
@@ -86,7 +90,7 @@ function init()
 
 	$('#item').focus();
 
-	 $("#sales-add-payment").click(function()
+	$("#sales-add-payment").click(function()
     {
     	$('#add_payment_form').submit();
     });

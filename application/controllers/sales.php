@@ -221,6 +221,8 @@ class Sales extends Secure_area
 		$this->load->view("sales/receipt",$data);
 		$this->sale_lib->clear_all();
 
+		$this->Receipt->print_receipt($data);
+
 		//Sync sales to the remote server
 		$this->Sync_items->sync_sales();
 	}

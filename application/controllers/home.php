@@ -4,7 +4,7 @@ class Home extends Secure_area
 {
 	function __construct()
 	{
-		parent::__construct();	
+		parent::__construct();
 	}
 	
 	function index()
@@ -14,7 +14,15 @@ class Home extends Secure_area
 	
 	function logout()
 	{
-		$this->Employee->logout();
+		$this->load->model('reports/Detailed_sales');
+
+		$start_date = date('Y-m-d') . " 00:00:00";
+		$end_date = date('Y-m-d H:i:s');
+
+		$data['sales_totals'] = $this->Detailed_sales->getTypeSummaryData(array('start_date'=>$start_date, 'end_date'=>$end_date));
+
+		$this->load->view("close", $data);
+		//$this->Employee->logout();
 	}
 }
 ?>

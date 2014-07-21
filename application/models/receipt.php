@@ -2,73 +2,74 @@
 class Receipt extends CI_Model
 {
 
+	private $receipt_path;
+
 	function __construct()
 	{
+		$this->receipt_path = APPPATH.'/tmp/receipt.txt';
 		$this->load->helper('printer_helper');
 		$this->load->helper('file');
 	}
 
-	function print_receipt($id, $products, $totals, $tenders)
+	function print_receipt($data)
 	{
 		$today = date("F j, Y, g:i a");  
 
 		$message = init();
 		$message .= center();
 		$message .= header_style();
-		$message .= "Fairytale";
-		$message .= new_line();
+		$message .= $this->Appconfig->get('company');
 		$message .= reset_styles();
-		$message .= "Fashion Boutique";
 		$message .= new_line();
 		$message .= new_line();
-		$message .= "www.fairytale-boutique.com";
+		$message .= $this->Appconfig->get('website');
 		$message .= new_line();
-		$message .= "319 East 2nd st. Suite #114";
+		$message .= $this->Appconfig->get('address');
 		$message .= new_line();
-		$message .="Los Angeles, CA 90012";
-		$message .= new_line();
-		$message .= "(213) 680-1032";
+		$message .= $this->Appconfig->get('phone');
 		$message .= new_line();
 		$message .= new_line();
 		$message .= $today;
 		$message .= new_line();
 		$message .= new_line();
-		$message .= "Sale #".$id;
+		$message .= "Sale #".$data['sale_id'];
 		$message .= new_line();
 		$message .= new_line();
 		$message .= left();
 
-		foreach($products as $product)
+		foreach($data['cart'] as $product)
 		{
 			$message .= $product["name"] . " ";
-			$message .= "$".$product["price"] . " x" . $product["qty"];
+			$message .= to_currency($product["price"]) . " x" . $product["quantity"];
 			$message .= new_line();
+			if($product['discount'] > 0)
+			{
+				$message .= "Discount: ". $product['discount'] . "%";
+			}
 		}
 		$message .= new_line();
-		$message .= "Sub Total: $". $totals['subtotal'];
-		if($totals['discount'] > 0)
+		$message .= "Sub Total: ". to_currency($data['subtotal']);
+		$message .= new_line();
+		foreach($data['taxes'] as $tax)
 		{
-			$message .= new_line();
-			$message .= "Discount: ". $totals['discount'];
+			$message .= "Tax: ". to_currency($tax);
 		}
-		$message .= new_line();
-		$message .= "Tax: $". $totals['tax'];
 		$message .= new_line();
 		$message .= "=======================";
 		$message .= new_line();
 		$message .= total_style();
-		$message .= "Total: $". $totals['total'];
+		$message .= "Total: ". to_currency($data['total']);
 		$message .= reset_styles();
 		$message .= new_line();
 		$message .= new_line();
-		foreach($tenders as $tender)
+		foreach($data['payments'] as $payment)
 		{
-			$message .= ucfirst($tender['type']) . ": "; 
-			$message .= "$".$tender['amount'];
+			$message .= ucfirst($payment['payment_type']) . ": "; 
+			$message .= to_currency($payment['payment_amount']);
 			$message .= new_line();
 		}
 		$message .= new_line();
-		$message .= "Change: $". $totals['change'];
+		$message .= "Change: ". $data['amount_change'];
 		$message .= new_line();
 		$message .= new_line();
 		$message .= new_line();
@@ -79,14 +80,14 @@ class Receipt extends CI_Model
 		$message .= new_line();
 		$message .= new_line();
 
-		writereceipt($message);
-		//sendreceipt();
+		$this->write_receipt($message);
+		//$this->send_receipt($receipt_path);
 	}
 
 
-	function writereceipt($message)
+	function write_receipt($message)
 	{
-		if (!write_file('./tmp/receipt.txt', $message))
+		if (!write_file($this->receipt_path, $message))
 		{
 		     log_message('error', 'Unable to write the file');
 		}else{
@@ -94,9 +95,9 @@ class Receipt extends CI_Model
 		}
 	}
 
-	function sendreceipt()
+	function send_receipt($path)
 	{
-		shell_exec("cat /var/www/pos/temp/receipt.txt > /dev/usb/lp0");
+		shell_exec("cat ".$this->receipt_path." > /dev/usb/lp0");
 	}
 }
 ?>

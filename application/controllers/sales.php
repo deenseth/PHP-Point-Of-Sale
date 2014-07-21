@@ -174,6 +174,7 @@ class Sales extends Secure_area
 
 	function complete()
 	{
+		$data['is_transaction'] = true;
 		$data['cart']=$this->sale_lib->get_cart();
 		$data['subtotal']=$this->sale_lib->get_subtotal();
 		$data['taxes']=$this->sale_lib->get_taxes();

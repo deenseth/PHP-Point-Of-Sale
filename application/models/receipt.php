@@ -81,9 +81,44 @@ class Receipt extends CI_Model
 		$message .= new_line();
 
 		$this->write_receipt($message);
-		//$this->send_receipt($receipt_path);
+		$this->send_receipt();
 	}
 
+	function print_totals($data)	
+	{
+		$today = date("F j, Y, g:i a"); 
+		$message = init();
+		$message .= $today;
+		$message .= new_line();
+		$message .= new_line();
+		
+		$finalTotal = 0;
+
+		foreach($data['summary_data'] as $summary)
+		{
+			$message .= "Sale #" . " POS " .$summary['sale_id'] . " | " . to_currency($summary["subtotal"]) . " | " . to_currency($summary["tax"]) . " | " . to_currency($summary["total"]);
+			$message .= new_line();
+		}
+		$message .= new_line();
+		foreach($data['sales_totals'] as $sales_total) {
+			$finalTotal += $sales_total['total'];
+			$message .= $sales_total['payment_type']. ': '.to_currency($sales_total['total']);
+			$message .= new_line();
+		}
+	    $message .= "Total: " . to_currency($finalTotal);
+	    $message .= new_line();
+	    $message .= new_line();
+	    $message .= new_line();
+	    $message .= new_line();
+	    $message .= new_line();
+	    $message .= open_drawer();
+	    $message .= new_line();
+	    $message .= new_line();
+
+		$this->write_receipt($message);
+		$this->send_receipt();
+		redirect('home/close');
+	}
 
 	function write_receipt($message)
 	{
@@ -95,7 +130,7 @@ class Receipt extends CI_Model
 		}
 	}
 
-	function send_receipt($path)
+	function send_receipt()
 	{
 		shell_exec("cat ".$this->receipt_path." > /dev/usb/lp0");
 	}

@@ -104,6 +104,9 @@ if (isset($error_message))
 	<?php echo "<img src='index.php/barcode?barcode=$sale_id&text=$sale_id&width=250&height=50' />"; ?>
 	</div>
 </div>
+<?php if(isset($is_transaction) && $is_transaction){ ?>
+	<a href="<?php echo site_url("sales"); ?>" class="btn btn-primary btn-lg btn-block"><?php echo $this->lang->line('sales_new_sale'); ?></a>
+<? } ?>
 <?php $this->load->view("partial/footer"); ?>
 
 <?php if ($this->Appconfig->get('print_after_sale'))

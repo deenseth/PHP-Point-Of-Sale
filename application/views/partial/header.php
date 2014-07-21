@@ -59,7 +59,7 @@ html {
 			<ul class="nav navbar-nav navbar-right">
 				<?php /* <li><?php echo date('F d, Y h:i a') ?></li> */ ?>
 				<li><a href="<?php echo site_url("config");?>"><span class="glyphicon glyphicon-cog"></span> <?php echo $this->lang->line("module_config") ?></a></li>
-				<li><a href="<?php echo site_url("home/logout");?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->lang->line("common_logout") ?></a></li>
+				<li><a href="<?php echo site_url("home/close");?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo $this->lang->line("common_logout") ?></a></li>
 			</ul>
 		</div><!--/.nav-collapse -->
 	</div>

@@ -28,7 +28,7 @@
 				<tbody>
 					<tr>
 						<td style="width:10%;">
-							<?php echo form_open("sales/change_mode",array('id'=>'mode_form', 'class'=>'form-inline')); ?>
+							<?php echo form_open("sales/change_mode",array('id'=>'mode_form', 'class'=>'content-form')); ?>
 								<?php echo form_dropdown('mode', $modes, $mode,'class="selectpicker mode-dropdown" data-width="100%"'); ?>
 							</form>
 						</td>

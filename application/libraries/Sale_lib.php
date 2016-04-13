@@ -276,11 +276,29 @@ class Sale_lib
 		$items = $this->get_cart();
 		if(isset($items[$line]))
 		{
-			$items[$line]['description'] = $description;
-			$items[$line]['serialnumber'] = $serialnumber;
-			$items[$line]['quantity'] = $quantity;
-			$items[$line]['discount'] = $discount;
-			$items[$line]['price'] = $price;
+			if($description)
+			{
+				$items[$line]['description'] = $description;
+			}
+			if($serialnumber)
+			{
+				$items[$line]['serialnumber'] = $serialnumber;
+			}
+			if($quantity)
+			{
+				$items[$line]['quantity'] = $quantity;
+			}
+			//Can be set to zero.
+			if(is_numeric($discount))
+			{
+				$items[$line]['discount'] = $discount;
+			}
+			//Can be set to zero.
+			if(is_numeric($price))
+			{
+				$items[$line]['price'] = $price;
+			}
+
 			$this->set_cart($items);
 		}
 

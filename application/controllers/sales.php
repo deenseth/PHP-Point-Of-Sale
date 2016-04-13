@@ -10,34 +10,50 @@ class Sales extends Secure_area
 
 	function index()
 	{
-		$this->_reload();
+		$this->load_register();
 	}
 
 	function item_search()
 	{
-		$suggestions = $this->Item->get_item_search_suggestions($this->input->post('q'),$this->input->post('limit'));
-		$suggestions = array_merge($suggestions, $this->Item_kit->get_item_kit_search_suggestions($this->input->post('q'),$this->input->post('limit')));
-		echo implode("\n",$suggestions);
+		$items = $this->Item->get_item_search_suggestions($this->input->post('term'),$this->input->post('limit'));
+		$suggestions = array();
+		foreach($items as $item)
+		{
+			$renderItem = array();
+			$renderItem["label"] = $item->name . " | " . $item->item_number;
+			$renderItem["value"] = $item->item_number;
+			$suggestions[] = $renderItem;
+		}
+		//$suggestions = array_merge($suggestions, $this->Item_kit->get_item_kit_search_suggestions($this->input->post('q'),$this->input->post('limit')));
+		echo json_encode($suggestions);
 	}
 
 	function customer_search()
 	{
-		$suggestions = $this->Customer->get_customer_search_suggestions($this->input->post('q'),$this->input->post('limit'));
-		echo implode("\n",$suggestions);
+		$customers = $this->Customer->get_customer_search_suggestions($this->input->post('term'), $this->input->post('limit'));
+		$suggestions = array();
+		foreach($customers as $customer)
+		{
+			$renderItem = array();
+			$renderItem["label"] = $customer->last_name . " " . $customer->first_name . " | " . $customer->account_number;
+			$renderItem["value"] = $customer->account_number;
+			$suggestions[] = $renderItem;
+		}
+		echo json_encode($suggestions);
 	}
 
 	function select_customer()
 	{
 		$customer_id = $this->input->post("customer");
 		$this->sale_lib->set_customer($customer_id);
-		$this->_reload();
+		$this->load_register_content();
 	}
 
 	function change_mode()
 	{
 		$mode = $this->input->post("mode");
 		$this->sale_lib->set_mode($mode);
-		$this->_reload();
+		$this->load_register_content();
 	}
 
 	//Alain Multiple Payments
@@ -53,7 +69,7 @@ class Sales extends Secure_area
 			else
 				$data['error']=$this->lang->line('sales_must_enter_numeric');
 				
- 			$this->_reload($data);
+ 			$this->load_register_content($data);
  			return;
 		}
 		
@@ -67,7 +83,7 @@ class Sales extends Secure_area
 			if ( $cur_giftcard_value <= 0 )
 			{
 				$data['error']='Giftcard balance is '.to_currency( $this->Giftcard->get_giftcard_value( $this->input->post('amount_tendered') ) ).' !';
-				$this->_reload($data);
+				$this->load_register_content($data);
 				return;
 			}
 			elseif ( ( $this->Giftcard->get_giftcard_value( $this->input->post('amount_tendered') ) - $this->sale_lib->get_total() ) > 0 )
@@ -86,14 +102,14 @@ class Sales extends Secure_area
 			$data['error']='Unable to Add Payment! Please try again!';
 		}
 		
-		$this->_reload($data);
+		$this->load_register_content($data);
 	}
 
 	//Alain Multiple Payments
 	function delete_payment($payment_id)
 	{
 		$this->sale_lib->delete_payment($payment_id);
-		$this->_reload();
+		$this->load_register_content();
 	}
 
 	function add()
@@ -119,16 +135,14 @@ class Sales extends Secure_area
 		if($this->sale_lib->out_of_stock($item_id_or_number_or_item_kit_or_receipt))
 		{
 			$data['warning'] = $this->lang->line('sales_quantity_less_than_zero');
+
 		}
-		$this->_reload($data);
+		$this->load_register_content($data);
 	}
 
 	function edit_item($line)
 	{
 		$data= array();
-
-		$this->form_validation->set_rules('price', 'lang:items_price', 'required|numeric');
-		$this->form_validation->set_rules('quantity', 'lang:items_quantity', 'required|numeric');
 
         $description = $this->input->post("description");
         $serialnumber = $this->input->post("serialnumber");
@@ -136,39 +150,31 @@ class Sales extends Secure_area
 		$quantity = $this->input->post("quantity");
 		$discount = $this->input->post("discount");
 
-
-		if ($this->form_validation->run() != FALSE)
-		{
-			$this->sale_lib->edit_item($line,$description,$serialnumber,$quantity,$discount,$price);
-		}
-		else
-		{
-			$data['error']=$this->lang->line('sales_error_editing_item');
-		}
+		$this->sale_lib->edit_item($line,$description,$serialnumber,$quantity,$discount,$price);
 		
 		if($this->sale_lib->out_of_stock($this->sale_lib->get_item_id($line)))
 		{
 			$data['warning'] = $this->lang->line('sales_quantity_less_than_zero');
 		}
 
-
-		$this->_reload($data);
+		$this->load_register_content($data);
 	}
 
 	function delete_item($item_number)
 	{
 		$this->sale_lib->delete_item($item_number);
-		$this->_reload();
+		$this->load_register_content();
 	}
 
 	function delete_customer()
 	{
 		$this->sale_lib->delete_customer();
-		$this->_reload();
+		$this->load_register_content();
 	}
 
 	function complete()
 	{
+		$data['is_transaction'] = true;
 		$data['cart']=$this->sale_lib->get_cart();
 		$data['subtotal']=$this->sale_lib->get_subtotal();
 		$data['taxes']=$this->sale_lib->get_taxes();
@@ -203,7 +209,7 @@ class Sales extends Secure_area
 		if ( ( $this->sale_lib->get_mode() == 'sale' ) && ( ( to_currency_no_money( $data['total'] ) - $total_payments ) > 1e-6 ) )
 		{
 			$data['error'] = $this->lang->line('sales_payment_not_cover_total');
-			$this->_reload($data);
+			$this->load_register_content($data);
 			return false;
 		}
 
@@ -215,6 +221,11 @@ class Sales extends Secure_area
 		}
 		$this->load->view("sales/receipt",$data);
 		$this->sale_lib->clear_all();
+
+		$this->Receipt->print_receipt($data);
+
+		//Sync sales to the remote server
+		$this->Sync_items->sync_sales();
 	}
 
 	function receipt($sale_id)
@@ -302,8 +313,8 @@ class Sales extends Secure_area
 			echo json_encode(array('success'=>false,'message'=>$this->lang->line('sales_unsuccessfully_updated')));
 		}
 	}
-	
-	function _reload($data=array())
+
+	function prepare_data($data=array())
 	{
 		$person_info = $this->Employee->get_logged_in_employee_info();
 		$data['cart']=$this->sale_lib->get_cart();
@@ -331,13 +342,26 @@ class Sales extends Secure_area
 			$info=$this->Customer->get_info($customer_id);
 			$data['customer']=$info->first_name.' '.$info->last_name;
 		}
+
+		return $data;
+	}
+	
+	function load_register($data=array())
+	{
+		$data = $this->prepare_data($data);
 		$this->load->view("sales/register",$data);
+	}
+
+	function load_register_content($data=array())
+	{
+		$data = $this->prepare_data($data);
+		$this->load->view("sales/register_content",$data);
 	}
 
     function cancel_sale()
     {
     	$this->sale_lib->clear_all();
-    	$this->_reload();
+    	$this->load_register_content();
 
     }
 	
@@ -380,7 +404,7 @@ class Sales extends Secure_area
 			$data['error_message'] = $this->lang->line('sales_transaction_failed');
 		}
 		$this->sale_lib->clear_all();
-		$this->_reload(array('success' => $this->lang->line('sales_successfully_suspended_sale')));
+		$this->load_register_content(array('success' => $this->lang->line('sales_successfully_suspended_sale')));
 	}
 	
 	function suspended()
@@ -396,7 +420,7 @@ class Sales extends Secure_area
 		$this->sale_lib->clear_all();
 		$this->sale_lib->copy_entire_suspended_sale($sale_id);
 		$this->Sale_suspended->delete($sale_id);
-    	$this->_reload();
+    	$this->load_register();
 	}
 }
 ?>

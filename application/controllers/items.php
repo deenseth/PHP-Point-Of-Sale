@@ -10,14 +10,16 @@ class Items extends Secure_area implements iData_controller
 
 	function index()
 	{
-		$config['base_url'] = site_url('?c=items&m=index');
+		$config['base_url'] = site_url('/items/index/');
 		$config['total_rows'] = $this->Item->count_all();
-		$config['per_page'] = '20'; 
+		$config['per_page'] = '20';
+		$config["uri_segment"] = 3;
 		$this->pagination->initialize($config);
-		
+		$data['search'] = '';
 		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_items_manage_table($this->Item->get_all($config['per_page'], $this->input->get('per_page')),$this);
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$data['manage_table']=get_items_manage_table($this->Item->get_all($config['per_page'], $page), $this);
 		$this->load->view('items/manage',$data);
 	}
 
@@ -46,8 +48,10 @@ class Items extends Secure_area implements iData_controller
 	function search()
 	{
 		$search=$this->input->post('search');
-		$data_rows=get_items_manage_table_data_rows($this->Item->search($search),$this);
-		echo $data_rows;
+		$data['controller_name']=strtolower(get_class());
+		$data['search'] = $search;
+		$data['manage_table']=get_items_manage_table($this->Item->search($search),$this);
+		$this->load->view('items/manage',$data);
 	}
 
 	/*
@@ -115,7 +119,7 @@ class Items extends Secure_area implements iData_controller
 	{
 		$result = array();
 
-		$item_ids = explode(',', $item_ids);
+		$item_ids = explode('-', $item_ids);
 		foreach ($item_ids as $item_id)
 		{
 			$item_info = $this->Item->get_info($item_id);
@@ -136,6 +140,7 @@ class Items extends Secure_area implements iData_controller
 			$suppliers[$row['person_id']] = $row['first_name'] .' '. $row['last_name'];
 		}
 		$data['suppliers'] = $suppliers;
+		$data['selected_supplier'] = "";
 		$data['allow_alt_desciption_choices'] = array(
 			''=>$this->lang->line('items_do_nothing'), 
 			1 =>$this->lang->line('items_change_all_to_allow_alt_desc'),
@@ -155,7 +160,7 @@ class Items extends Secure_area implements iData_controller
 		'description'=>$this->input->post('description'),
 		'category'=>$this->input->post('category'),
 		'supplier_id'=>$this->input->post('supplier_id')=='' ? null:$this->input->post('supplier_id'),
-		'item_number'=>$this->input->post('item_number')=='' ? null:$this->input->post('item_number'),
+		'item_number'=>$this->input->post('item_number'),
 		'cost_price'=>$this->input->post('cost_price'),
 		'unit_price'=>$this->input->post('unit_price'),
 		'quantity'=>$this->input->post('quantity'),
@@ -257,7 +262,7 @@ class Items extends Secure_area implements iData_controller
 			{
 				$item_data["$key"]=$value == '' ? null : $value;
 			}
-			elseif($value!='' and !(in_array($key, array('item_ids', 'tax_names', 'tax_percents'))))
+			elseif($value!='' and !(in_array($key, array('item_ids', 'tax_names', 'tax_percents', 'submit'))))
 			{
 				$item_data["$key"]=$value;
 			}

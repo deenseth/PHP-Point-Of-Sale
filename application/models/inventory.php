@@ -1,5 +1,5 @@
 <?php
-class Inventory extends Model 
+class Inventory extends CI_Model 
 {	
 	function insert($inventory_data)
 	{

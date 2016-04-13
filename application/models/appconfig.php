@@ -1,5 +1,5 @@
 <?php
-class Appconfig extends Model 
+class Appconfig extends CI_Model 
 {
 	
 	function exists($key)
@@ -57,6 +57,8 @@ class Appconfig extends Model
 		{
 			if(!$this->save($key,$value))
 			{
+				var_dump($key);
+				exit;
 				$success=false;
 				break;
 			}

@@ -1,6 +1,6 @@
 <?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
 // ---------------------------------------------------------------------
-class Languagecheck extends Controller {
+class Languagecheck extends CI_Controller {
 
 	/*
 	 * use this language as comparison reference.
@@ -17,7 +17,7 @@ class Languagecheck extends Controller {
 	 */
 	function Languagecheck()
 	{
-		parent::Controller();
+		parent::__construct();
 	}
 
 	// -----------------------------------------------------------------

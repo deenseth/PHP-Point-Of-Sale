@@ -64,5 +64,16 @@ class Detailed_sales extends Report
 		
 		return $this->db->get()->row_array();
 	}
+
+	public function getTypeSummaryData($inputs)
+	{
+		$this->db->select('sales_payments.payment_type, sum(phppos_sales_payments.payment_amount) as total');
+		$this->db->from('sales');
+		$this->db->join('sales_payments', 'sales_payments.sale_id = sales.sale_id');
+		$this->db->where('sale_time BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
+		$this->db->group_by('payment_type');
+
+		return $this->db->get()->result_array();
+	}
 }
 ?>

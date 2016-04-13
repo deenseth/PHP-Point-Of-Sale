@@ -11,13 +11,15 @@ class Employees extends Person_controller
 	{
 	    $data['mailchimp']=($this->config->item('mc_api_key') != null);
 	    $data['controller_name'] = strtolower(get_class());
-		$config['base_url'] = site_url('?c=employees&m=index');
+		$config['base_url'] = site_url('/employees/index/');
 		$config['total_rows'] = $this->Employee->count_all();
-		$config['per_page'] = '20'; 
+		$config['per_page'] = '20';
+		$config["uri_segment"] = 3;
 		$this->pagination->initialize($config);
-
+		$data['search'] = '';
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_people_manage_table($this->Employee->get_all($config['per_page'], $this->input->get('per_page')),$this);
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$data['manage_table']=get_people_manage_table($this->Employee->get_all($config['per_page'], $page),$this);
 		$this->load->view('people/manage',$data);
 	}
 	
@@ -27,8 +29,10 @@ class Employees extends Person_controller
 	function search()
 	{
 		$search=$this->input->post('search');
-		$data_rows=get_people_manage_table_data_rows($this->Employee->search($search),$this);
-		echo $data_rows;
+		$data['search'] = $search;
+		$data['controller_name'] = strtolower(get_class());
+		$data['manage_table']=get_people_manage_table($this->Employee->search($search),$this);
+		$this->load->view('people/manage',$data);
 	}
 	
 	/*

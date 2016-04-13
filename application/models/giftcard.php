@@ -1,5 +1,5 @@
 <?php
-class Giftcard extends Model
+class Giftcard extends CI_Model
 {
 	/*
 	Determines if a given giftcard_id is an giftcard

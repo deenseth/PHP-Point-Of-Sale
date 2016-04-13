@@ -23,11 +23,9 @@ function enable_search(suggest_url,confirm_search_message)
     	$(this).attr('value','');
     });
 
-    $("#search").autocomplete(suggest_url,{max:100,delay:10, selectFirst: false});
-    $("#search").result(function(event, data, formatted)
-    {
-		do_search(true);
-    });
+    $("#search").autocomplete({source:suggest_url, delay:10, response:function(event, ui){
+    	do_search(true);
+    }})
     
 	$('#search_form').submit(function(event)
 	{
@@ -77,8 +75,6 @@ function do_search(show_feedback,on_complete)
 			on_complete();
 				
 		$('#spinner').hide();
-		//re-init elements in new table, as table tbody children were replaced
-		tb_init('#sortable_table a.thickbox');
 		update_sortable_table();	
 		enable_row_selection();		
 		$('#sortable_table tbody :checkbox').click(checkbox_click);
@@ -160,14 +156,7 @@ function do_delete(url)
 		{
 			$(selected_rows).each(function(index, dom)
 			{
-				$(this).find("td").animate({backgroundColor:"green"},1200,"linear")
-				.end().animate({opacity:0},1200,"linear",function()
-				{
-					$(this).remove();
-					//Re-init sortable table as we removed a row
-					update_sortable_table();
-					
-				});
+				$(this).find("td").remove();
 			});	
 			set_feedback(response.message,'success_message',false);	
 		}
@@ -191,8 +180,8 @@ function enable_bulk_edit(none_selected_message)
 		event.preventDefault();
 		if($("#sortable_table tbody :checkbox:checked").length >0)
 		{
-			tb_show($(this).attr('title'),$(this).attr('href'),false);
-			$(this).blur();
+			window.localStorage.setItem('selected_values', JSON.stringify(get_selected_values()));
+			window.location.href = $(this).attr('href');
 		}
 		else
 		{
@@ -210,7 +199,7 @@ function enable_select_all()
 
 	$('#select_all').click(function()
 	{
-		if($(this).attr('checked'))
+		if($(this).is(':checked'))
 		{	
 			$("#sortable_table tbody :checkbox").each(function()
 			{

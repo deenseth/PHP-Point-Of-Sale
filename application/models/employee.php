@@ -82,7 +82,7 @@ class Employee extends Person
 	/*
 	Inserts or updates an employee
 	*/
-	function save(&$person_data, &$employee_data,&$permission_data,$employee_id=false)
+	function save($person_data, $employee_data, $permission_data, $employee_id=false)
 	{
 		$success=false;
 		

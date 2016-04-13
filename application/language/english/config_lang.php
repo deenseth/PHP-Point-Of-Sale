@@ -21,4 +21,6 @@ $lang['config_print_after_sale']='Print receipt after sale';
 $lang['config_language'] = 'Language';
 $lang['config_timezone'] = 'Timezone';
 $lang['config_mc_api_key'] = 'MailChimp API Key';
+$lang['config_magento_soap_user'] = 'Magento SOAP Username';
+$lang['config_magento_soap_key'] = 'Magento SOAP Key';
 ?>

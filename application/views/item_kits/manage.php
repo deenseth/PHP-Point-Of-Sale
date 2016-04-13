@@ -6,7 +6,6 @@ $(document).ready(function()
     enable_select_all();
     enable_checkboxes();
     enable_row_selection();
-    enable_search('<?php echo site_url("$controller_name/suggest")?>','<?php echo $this->lang->line("common_confirm_search")?>');
     enable_delete('<?php echo $this->lang->line($controller_name."_confirm_delete")?>','<?php echo $this->lang->line($controller_name."_none_selected")?>');
 	
 	$('#generate_barcodes').click(function()
@@ -18,7 +17,7 @@ $(document).ready(function()
     		return false;
     	}
 
-    	$(this).attr('href','index.php/item_kits/generate_barcodes/'+selected.join(','));
+    	$(this).attr('href','index.php/item_kits/generate_barcodes/'+selected.join('-'));
     });
     
 });
@@ -86,7 +85,7 @@ function post_item_kit_form_submit(response)
 		<li class="float_right">
 		<img src='<?php echo base_url()?>images/spinner_small.gif' alt='spinner' id='spinner' />
 		<?php echo form_open("$controller_name/search",array('id'=>'search_form')); ?>
-		<input type="text" name ='search' id='search'/>
+		<input type="text" name ='search' id='search' value="<?php echo $search; ?>" />
 		</form>
 		</li>
 	</ul>

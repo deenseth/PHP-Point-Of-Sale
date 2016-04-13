@@ -38,11 +38,12 @@ class Customer extends Person
 	/*
 	Gets information about a particular customer
 	*/
-	function get_info($customer_id)
+	function get_info($id)
 	{
 		$this->db->from('customers');	
 		$this->db->join('people', 'people.person_id = customers.person_id');
-		$this->db->where('customers.person_id',$customer_id);
+		$this->db->where('customers.person_id',$id);
+		$this->db->or_where('customers.account_number',$id);
 		$query = $this->db->get();
 		
 		if($query->num_rows()==1)
@@ -189,38 +190,25 @@ class Customer extends Person
 	/*
 	Get search suggestions to find customers
 	*/
-	function get_customer_search_suggestions($search,$limit=25)
+	function get_customer_search_suggestions($term, $limit)
 	{
+		$limit = isset($limit)? $limit : 25;
+		$term = strtolower($term);
 		$suggestions = array();
-		
 		$this->db->from('customers');
-		$this->db->join('people','customers.person_id=people.person_id');	
-		$this->db->where("(first_name LIKE '%".$this->db->escape_like_str($search)."%' or 
-		last_name LIKE '%".$this->db->escape_like_str($search)."%' or 
-		CONCAT(`first_name`,' ',`last_name`) LIKE '%".$this->db->escape_like_str($search)."%') and deleted=0");
-		$this->db->order_by("last_name", "asc");		
+		$this->db->join('people','customers.person_id=people.person_id');
+		$this->db->where("(first_name LIKE '%".$this->db->escape_like_str($term)."%' or 
+		last_name LIKE '%".$this->db->escape_like_str($term)."%' or 
+		CONCAT(`first_name`,' ',`last_name`) LIKE '%".$this->db->escape_like_str($term)."%' or account_number
+		LIKE '%".$this->db->escape_like_str($term)."%') and deleted = 0");
+		$this->db->order_by("last_name", "asc");
+		$this->db->limit($limit);
 		$by_name = $this->db->get();
 		foreach($by_name->result() as $row)
 		{
-			$suggestions[]=$row->person_id.'|'.$row->first_name.' '.$row->last_name;		
-		}
-		
-		$this->db->from('customers');
-		$this->db->join('people','customers.person_id=people.person_id');	
-		$this->db->where('deleted',0);		
-		$this->db->like("account_number",$search);
-		$this->db->order_by("account_number", "asc");		
-		$by_account_number = $this->db->get();
-		foreach($by_account_number->result() as $row)
-		{
-			$suggestions[]=$row->person_id.'|'.$row->account_number;
+			$suggestions[]=$row;		
 		}
 
-		//only return $limit suggestions
-		if(count($suggestions > $limit))
-		{
-			$suggestions = array_slice($suggestions, 0,$limit);
-		}
 		return $suggestions;
 
 	}

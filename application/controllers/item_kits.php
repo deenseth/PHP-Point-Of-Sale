@@ -10,22 +10,26 @@ class Item_kits extends Secure_area implements iData_controller
 
 	function index()
 	{
-		$config['base_url'] = site_url('?c=item_kits&m=index');
+		$config['base_url'] = site_url('/item_kits/index/');
 		$config['total_rows'] = $this->Item_kit->count_all();
-		$config['per_page'] = '20'; 
+		$config['per_page'] = '20';
+		$config["uri_segment"] = 3;
 		$this->pagination->initialize($config);
-		
+		$data['search'] = '';
 		$data['controller_name']=strtolower(get_class());
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_item_kits_manage_table( $this->Item_kit->get_all($config['per_page'], $this->input->get('per_page')),$this);
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$data['manage_table']=get_item_kits_manage_table( $this->Item_kit->get_all($config['per_page'], $page),$this);
 		$this->load->view('item_kits/manage',$data);
 	}
 
 	function search()
 	{
 		$search=$this->input->post('search');
-		$data_rows=get_item_kits_manage_table_data_rows($this->Item_kit->search($search),$this);
-		echo $data_rows;
+		$data['search'] = $search;
+		$data['controller_name']=strtolower(get_class());
+		$data['manage_table'] = get_item_kits_manage_table($this->Item_kit->search($search),$this);
+		$this->load->view('item_kits/manage',$data);
 	}
 
 	/*

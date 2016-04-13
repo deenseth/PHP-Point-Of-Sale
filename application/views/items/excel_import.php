@@ -1,3 +1,4 @@
+<?php $this->load->view("partial/header"); ?>
 <?php
 echo form_open_multipart('items/do_excel_import/',array('id'=>'item_form'));
 ?>
@@ -61,3 +62,4 @@ $(document).ready(function()
 	});
 });
 </script>
+<?php $this->load->view("partial/footer"); ?>

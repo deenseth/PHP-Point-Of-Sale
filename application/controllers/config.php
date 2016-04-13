@@ -19,14 +19,6 @@ class Config extends Secure_area
 		
 	function save()
 	{
-		if ($key = $this->input->post('mc_api_key')) {
-			$this->load->library('MailChimp',  array('api_key'=>$key), 'MailChimp');
-			$success = ($this->MailChimp->ping() === "Everything's Chimpy!");
-			$mc_message =  $success ? 'Connected to MailChimp! ' 
-			                        : "Unable to connect to MailChimp. Please check your connection and your API key. ";
-            $validated_api_key = $success ? $this->input->post('mc_api_key') : '';
-		}
-
 		$batch_save_data=array(
 		'company'=>$this->input->post('company'),
 		'address'=>$this->input->post('address'),
@@ -41,17 +33,38 @@ class Config extends Secure_area
 		'return_policy'=>$this->input->post('return_policy'),
 		'language'=>$this->input->post('language'),
 		'timezone'=>$this->input->post('timezone'),
-		'mc_api_key'=>$validated_api_key,
 		'print_after_sale'=>$this->input->post('print_after_sale')	
 		);
+
+		if ($this->input->post('magento_soap_user')) {
+			$batch_save_data['magento_soap_user'] = $this->input->post('magento_soap_user');
+		}else{
+			$batch_save_data['magento_soap_user'] = '';
+		}
+
+		if ($this->input->post('magento_soap_key')) {
+			$batch_save_data['magento_soap_key'] = $this->input->post('magento_soap_key');
+		}else{
+			$batch_save_data['magento_soap_key'] = '';
+		}
+
+		if ($key = $this->input->post('mc_api_key')) {
+			$this->load->library('MailChimp',  array('api_key'=>$key), 'MailChimp');
+			$success = ($this->MailChimp->ping() === "Everything's Chimpy!");
+			$mc_message =  $success ? 'Connected to MailChimp! ' 
+			                        : "Unable to connect to MailChimp. Please check your connection and your API key. ";
+            $validated_api_key = $success ? $this->input->post('mc_api_key') : '';
+
+            $batch_save_data['mc_api_key'] = $validated_api_key;
+		}
 		
-		if($_SERVER['HTTP_HOST'] !='demo.phppointofsale.com' && $this->Appconfig->batch_save($batch_save_data))
+		if($this->Appconfig->batch_save($batch_save_data))
 		{
-			echo json_encode(array('success'=>true,'message'=>$mc_message . $this->lang->line('config_saved_successfully')));
+			echo json_encode(array('success'=>true,'message'=>$this->lang->line('config_saved_successfully')));
 		}
 		else
 		{
-			echo json_encode(array('success'=>false,'message'=>$mc_message . $this->lang->line('config_saved_unsuccessfully')));
+			echo json_encode(array('success'=>false,'message'=>$this->lang->line('config_saved_unsuccessfully')));
 		}
 	}
 }

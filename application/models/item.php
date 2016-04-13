@@ -1,5 +1,5 @@
 <?php
-class Item extends Model
+class Item extends CI_Model
 {
 	/*
 	Determines if a given item_id is an item
@@ -132,10 +132,20 @@ class Item extends Model
 		return $this->db->update('items',$item_data);
 	}
 
+	function save_multiple($item_data)
+	{
+		$this->db->insert_batch('items', $item_data); 
+	}
+
+	function update_multiple_by_index($item_data, $index)
+	{
+		$this->db->update_batch('items', $item_data, $index);
+	}
+
 	/*
 	Updates multiple items at once
 	*/
-	function update_multiple($item_data,$item_ids)
+	function update_multiple($item_data, $item_ids)
 	{
 		$this->db->where_in('item_id',$item_ids);
 		return $this->db->update('items',$item_data);
@@ -208,34 +218,20 @@ class Item extends Model
 
 	}
 
-	function get_item_search_suggestions($search,$limit=25)
+	function get_item_search_suggestions($search,$limit)
 	{
+		$limit = isset($limit)? $limit : 25;
 		$suggestions = array();
 
 		$this->db->from('items');
-		$this->db->where('deleted',0);
-		$this->db->like('name', $search);
+		$this->db->where("(name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		item_number LIKE '%".$this->db->escape_like_str($search)."%') and deleted=0");
 		$this->db->order_by("name", "asc");
+		$this->db->limit($limit);
 		$by_name = $this->db->get();
 		foreach($by_name->result() as $row)
 		{
-			$suggestions[]=$row->item_id.'|'.$row->name;
-		}
-
-		$this->db->from('items');
-		$this->db->where('deleted',0);
-		$this->db->like('item_number', $search);
-		$this->db->order_by("item_number", "asc");
-		$by_item_number = $this->db->get();
-		foreach($by_item_number->result() as $row)
-		{
-			$suggestions[]=$row->item_id.'|'.$row->item_number;
-		}
-
-		//only return $limit suggestions
-		if(count($suggestions > $limit))
-		{
-			$suggestions = array_slice($suggestions, 0,$limit);
+			$suggestions[]=$row;
 		}
 		return $suggestions;
 

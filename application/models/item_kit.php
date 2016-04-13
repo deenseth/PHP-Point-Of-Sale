@@ -1,5 +1,5 @@
 <?php
-class Item_kit extends Model
+class Item_kit extends CI_Model
 {
 	/*
 	Determines if a given item_id is an item kit

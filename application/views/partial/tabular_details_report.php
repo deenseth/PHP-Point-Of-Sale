@@ -1,5 +1,5 @@
 <div id="table_holder">
-	<table class="tablesorter report" id="sortable_table">
+	<table class="tablesorter report table table-bordered table-striped" id="sortable_table">
 		<thead>
 			<tr>
 				<?php if ($headers['details']) { ?>
@@ -23,7 +23,7 @@
 			<?php if ($headers['details']) { ?>
 			<tr>
 				<td colspan="100">
-				<table class="innertable">
+				<table class="innertable table">
 					<thead>
 						<tr>
 							<?php foreach ($headers['details'] as $header) { ?>
@@ -51,8 +51,8 @@
 		</tbody>
 	</table>
 </div>
-<div id="report_summary">
+<ul class="list-group">	
 <?php foreach($overall_summary_data as $name=>$value) { ?>
-	<div class="summary_row"><?php echo $this->lang->line('reports_'.$name). ': '.to_currency($value); ?></div>
+	<li class="list-group-item"><?php echo $this->lang->line('reports_'.$name). ': '.to_currency($value); ?></li>
 <?php }?>
-</div>
+</ul>

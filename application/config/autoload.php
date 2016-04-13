@@ -52,7 +52,7 @@ $autoload['libraries'] = array('database','session','form_validation','session',
 */
 
 //sale
-$autoload['helper'] = array('form','url','table','mailchimp','text','currency', 'html','download');
+$autoload['helper'] = array('form','url','table','mailchimp','text','currency','html','download','active','language');
 
 
 /*
@@ -108,7 +108,7 @@ $autoload['language'] = array('common', 'config', 'customers', 'employees', 'err
 |
 */
 
-$autoload['model'] = array('Appconfig','Person','Customer','Employee','Module','Item', 'Item_taxes', 'Sale', 'Sale_suspended', 'Supplier','Inventory','Receiving','Giftcard', 'Item_kit', 'Item_kit_items');
+$autoload['model'] = array('Appconfig','Sync_items','Person','Customer','Employee','Module','Item', 'Item_taxes', 'Sale', 'Sale_suspended', 'Supplier','Inventory','Receiving','Giftcard', 'Item_kit', 'Item_kit_items','Receipt');
 
 
 /*

@@ -22,4 +22,6 @@ $lang['employees_basic_information']='Employee Basic Information';
 $lang['employees_login_info']='Employee Login Info';
 $lang['employees_permission_info']='Employee Permissions and Access';
 $lang['employees_permission_desc']='Check the boxes below to grant access to modules';
+$lang['employees_error_updating_demo_admin'] = 'You can not change the demo admin user';
+$lang['employees_error_deleting_demo_admin'] = 'You can not delete the demo admin user';
 ?>

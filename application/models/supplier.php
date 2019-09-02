@@ -17,12 +17,22 @@ class Supplier extends Person
 	/*
 	Returns all the suppliers
 	*/
-	function get_all()
+	function get_all($limit=10000, $offset=0)
 	{
 		$this->db->from('suppliers');
 		$this->db->join('people','suppliers.person_id=people.person_id');			
+		$this->db->where('deleted', 0);
 		$this->db->order_by("last_name", "asc");
+		$this->db->limit($limit);
+		$this->db->offset($offset);
 		return $this->db->get();		
+	}
+	
+	function count_all()
+	{
+		$this->db->from('suppliers');
+		$this->db->where('deleted',0);
+		return $this->db->count_all_results();
 	}
 	
 	/*
@@ -102,20 +112,8 @@ class Supplier extends Person
 	*/
 	function delete($supplier_id)
 	{
-		$success=false;
-		
-		//Run these queries as a transaction, we want to make sure we do all or nothing
-		$this->db->trans_start();
-		
-		//delete from customers table
-		if($this->db->delete('suppliers', array('person_id' => $supplier_id)))
-		{
-			//delete from Person table
-			$success = parent::delete($supplier_id);
-		}
-		
-		$this->db->trans_complete();		
-		return $success;
+		$this->db->where('person_id', $supplier_id);
+		return $this->db->update('suppliers', array('deleted' => 1));
 	}
 	
 	/*
@@ -123,19 +121,8 @@ class Supplier extends Person
 	*/
 	function delete_list($supplier_ids)
 	{
-		$success=false;
-
-		//Run these queries as a transaction, we want to make sure we do all or nothing
-		$this->db->trans_start();
-
 		$this->db->where_in('person_id',$supplier_ids);
-		if ($this->db->delete('suppliers'))
-		{
-			$success = parent::delete_list($supplier_ids);
-		}
-		
-		$this->db->trans_complete();		
-		return $success;
+		return $this->db->update('suppliers', array('deleted' => 1));
  	}
  	
  	/*
@@ -147,9 +134,21 @@ class Supplier extends Person
 		
 		$this->db->from('suppliers');
 		$this->db->join('people','suppliers.person_id=people.person_id');	
-		$this->db->like('first_name', $search); 
-		$this->db->or_like('last_name', $search);
-		$this->db->or_like("CONCAT(`first_name`,' ',`last_name`)",$search);		
+		$this->db->where('deleted', 0);
+		$this->db->like("company_name",$search);
+		$this->db->order_by("company_name", "asc");		
+		$by_company_name = $this->db->get();
+		foreach($by_company_name->result() as $row)
+		{
+			$suggestions[]=$row->company_name;		
+		}
+
+		
+		$this->db->from('suppliers');
+		$this->db->join('people','suppliers.person_id=people.person_id');	
+		$this->db->where("(first_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		last_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		CONCAT(`first_name`,' ',`last_name`) LIKE '%".$this->db->escape_like_str($search)."%') and deleted=0");
 		$this->db->order_by("last_name", "asc");		
 		$by_name = $this->db->get();
 		foreach($by_name->result() as $row)
@@ -159,6 +158,7 @@ class Supplier extends Person
 		
 		$this->db->from('suppliers');
 		$this->db->join('people','suppliers.person_id=people.person_id');	
+		$this->db->where('deleted', 0);
 		$this->db->like("email",$search);
 		$this->db->order_by("email", "asc");		
 		$by_email = $this->db->get();
@@ -169,6 +169,7 @@ class Supplier extends Person
 
 		$this->db->from('suppliers');
 		$this->db->join('people','suppliers.person_id=people.person_id');	
+		$this->db->where('deleted', 0);
 		$this->db->like("phone_number",$search);
 		$this->db->order_by("phone_number", "asc");		
 		$by_phone = $this->db->get();
@@ -179,6 +180,7 @@ class Supplier extends Person
 		
 		$this->db->from('suppliers');
 		$this->db->join('people','suppliers.person_id=people.person_id');	
+		$this->db->where('deleted', 0);
 		$this->db->like("account_number",$search);
 		$this->db->order_by("account_number", "asc");		
 		$by_account_number = $this->db->get();
@@ -205,9 +207,21 @@ class Supplier extends Person
 		
 		$this->db->from('suppliers');
 		$this->db->join('people','suppliers.person_id=people.person_id');	
-		$this->db->like('first_name', $search); 
-		$this->db->or_like('last_name', $search);
-		$this->db->or_like("CONCAT(`first_name`,' ',`last_name`)",$search);		
+		$this->db->where('deleted', 0);
+		$this->db->like("company_name",$search);
+		$this->db->order_by("company_name", "asc");		
+		$by_company_name = $this->db->get();
+		foreach($by_company_name->result() as $row)
+		{
+			$suggestions[]=$row->person_id.'|'.$row->company_name;		
+		}
+
+
+		$this->db->from('suppliers');
+		$this->db->join('people','suppliers.person_id=people.person_id');	
+		$this->db->where("(first_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		last_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		CONCAT(`first_name`,' ',`last_name`) LIKE '%".$this->db->escape_like_str($search)."%') and deleted=0");
 		$this->db->order_by("last_name", "asc");		
 		$by_name = $this->db->get();
 		foreach($by_name->result() as $row)
@@ -229,13 +243,14 @@ class Supplier extends Person
 	function search($search)
 	{
 		$this->db->from('suppliers');
-		$this->db->join('people','suppliers.person_id=people.person_id');		
-		$this->db->like('first_name', $search);
-		$this->db->or_like('last_name', $search); 
-		$this->db->or_like('email', $search); 
-		$this->db->or_like('phone_number', $search);
-		$this->db->or_like('account_number', $search);
-		$this->db->or_like("CONCAT(`first_name`,' ',`last_name`)",$search);
+		$this->db->join('people','suppliers.person_id=people.person_id');
+		$this->db->where("(first_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		last_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		company_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		email LIKE '%".$this->db->escape_like_str($search)."%' or 
+		phone_number LIKE '%".$this->db->escape_like_str($search)."%' or 
+		account_number LIKE '%".$this->db->escape_like_str($search)."%' or 
+		CONCAT(`first_name`,' ',`last_name`) LIKE '%".$this->db->escape_like_str($search)."%') and deleted=0");		
 		$this->db->order_by("last_name", "asc");
 		
 		return $this->db->get();	

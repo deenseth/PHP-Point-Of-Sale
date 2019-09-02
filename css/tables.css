@@ -44,7 +44,6 @@
 #table_holder
 {
 	position:relative;
-	margin-bottom:50px;
 }
 
 table.tablesorter 
@@ -123,4 +122,24 @@ table.innertable thead tr th
 table.innertable tbody tr td 
 {
 	background-color: #DDD;
+}
+
+td.email-lists
+{
+	font-size: 10px;
+	overflow: hidden;
+}
+
+td.email-lists ul{
+	min-height: 25px;
+	height: 25px;
+}
+
+td.email-lists ul li{
+	list-style-position: inside;
+}
+
+td.email-lists ul li ul{
+	height: auto;
+	margin-left: 5px;
 }

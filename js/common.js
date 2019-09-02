@@ -1,3 +1,23 @@
+$(document).ready(function()
+{
+	var message = JSON.parse(window.localStorage.getItem("message"));
+	if(message != null)
+	{
+		set_feedback(message.text, message.type, false);
+		window.localStorage.removeItem("message")
+	}
+});
+
+function thickit(dom)
+{
+	var t = dom.title || dom.name || null;
+	var a = dom.href || dom.alt;
+	var g = dom.rel || false;
+	tb_show(t,a,g);
+	dom.blur();
+	return false;
+}
+
 function get_dimensions() 
 {
 	var dims = {width:0,height:0};
@@ -19,23 +39,64 @@ function get_dimensions()
   return dims;
 }
 
-function set_feedback(text, classname, keep_displayed)
+function set_feedback(text, type, keep_displayed)
 {
-	if(text!='')
+	if(!keep_displayed)
 	{
-		$('#feedback_bar').removeClass();
-		$('#feedback_bar').addClass(classname);
-		$('#feedback_bar').text(text);
-		$('#feedback_bar').css('opacity','1');
-
-		if(!keep_displayed)
-		{
-			$('#feedback_bar').fadeTo(5000, 1);
-			$('#feedback_bar').fadeTo("fast",0);
+		toastr.options = {
+		  "extendedTimeOut": "1000",
 		}
 	}
-	else
+
+	if(type == 'success')
 	{
-		$('#feedback_bar').css('opacity','0');
+		toastr.success(text);
+	}else if(type == 'error'){
+		toastr.error(text);
+	}else if(type == 'warning'){
+		toastr.warning(text);
+	}else{
+		toastr.info(text);
 	}
 }
+
+//keylisteners
+
+$(window).jkey('f1',function(){
+window.location =  SITE_URL + '/customers/index';
+});
+
+
+$(window).jkey('f2',function(){
+window.location =  SITE_URL + '/items/index';
+});
+
+
+$(window).jkey('f3',function(){
+window.location =  SITE_URL + '/reports/index';
+});
+
+$(window).jkey('f4',function(){
+window.location =  SITE_URL + '/suppliers/index';
+});
+
+$(window).jkey('f5',function(){
+window.location =  SITE_URL + '/receivings/index';
+});
+
+
+$(window).jkey('f6',function(){
+window.location =  SITE_URL + '/sales/index';
+});
+
+$(window).jkey('f7',function(){
+window.location =  SITE_URL + '/employees/index';
+});
+
+$(window).jkey('f8',function(){
+window.location =  SITE_URL + '/config/index';
+});
+
+$(window).jkey('f9',function(){
+window.location =  SITE_URL + '/giftcards/index';
+});

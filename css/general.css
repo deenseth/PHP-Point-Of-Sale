@@ -6,7 +6,6 @@
 .field_row label 
 {
 	float:left;
-	width:100px;
 	text-align:left;
 	line-height:2.3;
 }
@@ -42,6 +41,13 @@ label.required
 	border: 2px solid #ddd;
 }
 
+.delete_button 
+{
+	padding: 5px;
+	color: #fff;
+	background-color: #ea4729;
+	border: 2px solid #ddd;
+}
 .small_button
 {
 	position:relative;
@@ -111,6 +117,14 @@ label.required
 	font-weight:bold;
 }
 
+.warning_mesage
+{
+	text-align:center;
+	background-color:#FBEC5D;
+	border:1px solid #da3232;
+	font-weight:bold;
+}
+
 .success_message
 {
 	text-align:center;
@@ -122,6 +136,7 @@ label.required
 input
 {
 	font-family:arial;
+	padding: 3px;
 }
 
 .clearfix:after 
@@ -136,3 +151,8 @@ input
 .clearfix { display: inline-block; }
 html[xmlns] .clearfix {	display: block; }
 * html .clearfix { height: 1%; }
+
+.clear{
+   float: none;
+   clear: both;
+}

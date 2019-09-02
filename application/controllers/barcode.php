@@ -1,5 +1,5 @@
 <?php
-class Barcode extends Controller 
+class Barcode extends CI_Controller 
 {
 	function __construct()
 	{

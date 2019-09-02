@@ -1,8 +1,7 @@
+<?php $this->load->view("partial/header"); ?>
 <?php
 echo form_open('employees/save/'.$person_info->person_id,array('id'=>'employee_form'));
 ?>
-<div id="required_fields_message"><?php echo $this->lang->line('common_fields_required_message'); ?></div>
-<ul id="error_message_box"></ul>
 <fieldset id="employee_basic_info">
 <legend><?php echo $this->lang->line("employees_basic_information"); ?></legend>
 <?php $this->load->view("people/form_basic_info"); ?>
@@ -10,73 +9,62 @@ echo form_open('employees/save/'.$person_info->person_id,array('id'=>'employee_f
 
 <fieldset id="employee_login_info">
 <legend><?php echo $this->lang->line("employees_login_info"); ?></legend>
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('employees_username').':', 'username',array('class'=>'required')); ?>
-	<div class='form_field'>
+<div class="form-group">	
+<?php echo form_label($this->lang->line('employees_username'), 'username',array('class'=>'required')); ?>
 	<?php echo form_input(array(
+		'class'=>'form-control',
 		'name'=>'username',
 		'id'=>'username',
 		'value'=>$person_info->username));?>
-	</div>
 </div>
 
 <?php
 $password_label_attributes = $person_info->person_id == "" ? array('class'=>'required'):array();
 ?>
 
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('employees_password').':', 'password',$password_label_attributes); ?>
-	<div class='form_field'>
+<div class="form-group">	
+<?php echo form_label($this->lang->line('employees_password'), 'password', $password_label_attributes); ?>
 	<?php echo form_password(array(
+		'class'=>'form-control',
 		'name'=>'password',
 		'id'=>'password'
 	));?>
-	</div>
 </div>
 
 
-<div class="field_row clearfix">	
-<?php echo form_label($this->lang->line('employees_repeat_password').':', 'repeat_password',$password_label_attributes); ?>
-	<div class='form_field'>
+<div class="form-group">	
+<?php echo form_label($this->lang->line('employees_repeat_password'), 'repeat_password', $password_label_attributes); ?>
 	<?php echo form_password(array(
+		'class'=>'form-control',
 		'name'=>'repeat_password',
 		'id'=>'repeat_password'
 	));?>
-	</div>
 </div>
 </fieldset>
 
 <fieldset id="employee_permission_info">
 <legend><?php echo $this->lang->line("employees_permission_info"); ?></legend>
-<p><?php echo $this->lang->line("employees_permission_desc"); ?></p>
 
-<ul id="permission_list">
-<?php
-foreach($all_modules->result() as $module)
-{
-?>
-<li>	
-<?php echo form_checkbox("permissions[]",$module->module_id,$this->Employee->has_permission($module->module_id,$person_info->person_id)); ?>
-<span class="medium"><?php echo $this->lang->line('module_'.$module->module_id);?>:</span>
-<span class="small"><?php echo $this->lang->line('module_'.$module->module_id.'_desc');?></span>
-</li>
-<?php
-}
-?>
+<ul id="permission_list" class="list-group">
+	<?php foreach($all_modules->result() as $module) { ?>
+		<li class="list-group-item">	
+			<?php echo form_checkbox("permissions[]",$module->module_id,$this->Employee->has_permission($module->module_id,$person_info->person_id)); ?>
+			<span class="medium"><?php echo $this->lang->line('module_'.$module->module_id);?>:</span>
+			<span class="small"><?php echo $this->lang->line('module_'.$module->module_id.'_desc');?></span>
+		</li>
+	<?php } ?>
 </ul>
+
 <?php
 echo form_submit(array(
 	'name'=>'submit',
 	'id'=>'submit',
 	'value'=>$this->lang->line('common_submit'),
-	'class'=>'submit_button float_right')
-);
+	'class'=>'btn btn-primary float_right')
+);?>
 
-?>
 </fieldset>
-<?php 
-echo form_close();
-?>
+<?php echo form_close(); ?>
 <script type='text/javascript'>
 
 //validation and submit handling
@@ -88,7 +76,6 @@ $(document).ready(function()
 			$(form).ajaxSubmit({
 			success:function(response)
 			{
-				tb_remove();
 				post_person_form_submit(response);
 			},
 			dataType:'json'
@@ -154,5 +141,21 @@ $(document).ready(function()
      		email: "<?php echo $this->lang->line('common_email_invalid_format'); ?>"
 		}
 	});
+
+	function post_person_form_submit(response)
+	{
+		if(!response.success)
+		{
+			set_feedback(response.message,'error_message',true);	
+		}
+		else
+		{
+			var message = {'text': response.message, 'type': 'success'};
+			window.localStorage.setItem("message", JSON.stringify(message));
+			window.location.href = '<?php echo site_url("employees")?>';	
+		}
+	}
 });
 </script>
+<div id="feedback_bar"></div>
+<?php $this->load->view("partial/footer"); ?>

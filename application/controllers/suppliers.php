@@ -9,10 +9,20 @@ class Suppliers extends Person_controller
 	
 	function index()
 	{
-		$data['controller_name']=strtolower($this->uri->segment(1));
+	        $data['mailchimp']=($this->config->item('mc_api_key') != null);
+
+		$config['base_url'] = site_url('?c=suppliers&m=index');
+		$config['total_rows'] = $this->Supplier->count_all();
+		$config['per_page'] = '20';
+		$config["uri_segment"] = 3;
+		$this->pagination->initialize($config);
+		$data['search'] = '';
+		$data['controller_name']=strtolower(get_class());
+
 		$data['form_width']=$this->get_form_width();
-		$data['manage_table']=get_people_manage_table($this->Supplier->get_all(),$this);
-		$this->load->view('people/manage',$data);
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$data['manage_table']=get_supplier_manage_table($this->Supplier->get_all($config['per_page'], $page),$this);
+		$this->load->view('suppliers/manage',$data);
 	}
 	
 	/*
@@ -21,8 +31,10 @@ class Suppliers extends Person_controller
 	function search()
 	{
 		$search=$this->input->post('search');
-		$data_rows=get_people_manage_table_data_rows($this->Supplier->search($search),$this);
-		echo $data_rows;
+		$data['search'] = $search;
+		$data['controller_name']=strtolower(get_class());
+		$data['manage_table']=get_supplier_manage_table($this->Supplier->search($search),$this);
+		$this->load->view('suppliers/manage',$data);
 	}
 	
 	/*
@@ -39,7 +51,21 @@ class Suppliers extends Person_controller
 	*/
 	function view($supplier_id=-1)
 	{
-		$data['person_info']=$this->Supplier->get_info($supplier_id);
+	    $email=preg_replace('/.*email:([^\/]*)\/.*/', '$1', uri_string());
+	    
+	    if ($email != uri_string()) {
+    		$data['person_info']=$supplier_id == -1 ? $this->Supplier->get_by_email($email) : $this->Supplier->get_info($supplier_id);
+    		
+    		if (!$data['person_info'] && $email) {
+    		    if ($key = $this->config->item('mc_api_key')) {
+                    $this->load->library('MailChimp', array($key) , 'MailChimp');
+                    $data['person_info'] = $this->MailChimp->getPersonDataByEmail($email);
+    		    }
+    		}
+	    } else {
+	        $data['person_info']= $this->Supplier->get_info($supplier_id);
+	    }
+		
 		$this->load->view("suppliers/form",$data);
 	}
 	
@@ -62,6 +88,7 @@ class Suppliers extends Person_controller
 		'comments'=>$this->input->post('comments')
 		);
 		$supplier_data=array(
+		'company_name'=>$this->input->post('company_name'),
 		'account_number'=>$this->input->post('account_number')=='' ? null:$this->input->post('account_number'),
 		);
 		if($this->Supplier->save($person_data,$supplier_data,$supplier_id))
@@ -69,19 +96,47 @@ class Suppliers extends Person_controller
 			//New supplier
 			if($supplier_id==-1)
 			{
-				echo json_encode(array('success'=>true,'message'=>$this->lang->line('suppliers_successful_adding').' '.
-				$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>$supplier_data['person_id']));
+			    $subscriptionInfo = '';
+                if ($key = $this->config->item('mc_api_key')) {
+                    $this->load->library('MailChimp', array($key) , 'MailChimp');
+                    
+                    if ($this->MailChimp->handleSubscriptionForPerson($supplier_data['person_id'])) {
+                        $subscriptionInfo = $this->lang->line('common_successful_subscription');
+                    } else {
+                        $subscriptionInfo = $this->lang->line('common_unsuccessful_subscription');
+                    }
+                }
+			    
+				echo json_encode(array('success'=>true,
+				                       'message'=>$this->lang->line('suppliers_successful_adding').' '.
+				                                  $supplier_data['company_name'].'. '.
+				                                  $subscriptionInfo,
+                                       'person_id'=>$supplier_data['person_id']));
 			}
 			else //previous supplier
 			{
-				echo json_encode(array('success'=>true,'message'=>$this->lang->line('suppliers_successful_updating').' '.
-				$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>$supplier_id));
+		        $subscriptionInfo = '';
+                if ($key = $this->config->item('mc_api_key')) {
+                    $this->load->library('MailChimp', array($key) , 'MailChimp');
+                    
+                    if ($this->MailChimp->handleSubscriptionForPerson($supplier_id, true)) {
+                        $subscriptionInfo = $this->lang->line('common_successful_subscription');
+                    } else {
+                        $subscriptionInfo = $this->lang->line('common_unsuccessful_subscription');
+                    }
+                }
+			    
+				echo json_encode(array('success'=>true,
+				                       'message'=>$this->lang->line('suppliers_successful_updating').' '.
+				                                  $supplier_data['company_name'].'. '.
+				                                  $subscriptionInfo,
+	                                   'person_id'=>$supplier_id));
 			}
 		}
 		else//failure
 		{	
 			echo json_encode(array('success'=>false,'message'=>$this->lang->line('suppliers_error_adding_updating').' '.
-			$person_data['first_name'].' '.$person_data['last_name'],'person_id'=>-1));
+			$supplier_data['company_name'],'person_id'=>-1));
 		}
 	}
 	
@@ -101,6 +156,16 @@ class Suppliers extends Person_controller
 		{
 			echo json_encode(array('success'=>false,'message'=>$this->lang->line('suppliers_cannot_be_deleted')));
 		}
+	}
+	
+	/*
+	Gets one row for a supplier manage table. This is called using AJAX to update one row.
+	*/
+	function get_row()
+	{
+		$person_id = $this->input->post('row_id');
+		$data_row=get_supplier_data_row($this->Supplier->get_info($person_id),$this);
+		echo $data_row;
 	}
 	
 	/*

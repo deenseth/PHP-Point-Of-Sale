@@ -78,6 +78,24 @@
 {
 	margin-bottom:7px;
 	margin-left:20px;
-	color:red;
-	
+	color:red;	
+}
+#item_kit_items_title
+{
+	text-align: center;
+}
+#item_kit_items
+{
+	width: 100%;
+}
+
+#item_kit_items th
+{
+	text-align: center;
+	font-weight: bold;
+}
+
+#item_kit_items td
+{
+	text-align: center;
 }

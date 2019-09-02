@@ -17,22 +17,33 @@ class Customer extends Person
 	/*
 	Returns all the customers
 	*/
-	function get_all()
+	function get_all($limit=10000, $offset=0)
 	{
 		$this->db->from('customers');
 		$this->db->join('people','customers.person_id=people.person_id');			
+		$this->db->where('deleted',0);
 		$this->db->order_by("last_name", "asc");
+		$this->db->limit($limit);
+		$this->db->offset($offset);
 		return $this->db->get();		
+	}
+	
+	function count_all()
+	{
+		$this->db->from('customers');
+		$this->db->where('deleted',0);
+		return $this->db->count_all_results();
 	}
 	
 	/*
 	Gets information about a particular customer
 	*/
-	function get_info($customer_id)
+	function get_info($id)
 	{
 		$this->db->from('customers');	
 		$this->db->join('people', 'people.person_id = customers.person_id');
-		$this->db->where('customers.person_id',$customer_id);
+		$this->db->where('customers.person_id',$id);
+		$this->db->or_where('customers.account_number',$id);
 		$query = $this->db->get();
 		
 		if($query->num_rows()==1)
@@ -102,20 +113,8 @@ class Customer extends Person
 	*/
 	function delete($customer_id)
 	{
-		$success=false;
-		
-		//Run these queries as a transaction, we want to make sure we do all or nothing
-		$this->db->trans_start();
-		
-		//delete from customers table
-		if($this->db->delete('customers', array('person_id' => $customer_id)))
-		{
-			//delete from Person table
-			$success = parent::delete($customer_id);
-		}
-		
-		$this->db->trans_complete();		
-		return $success;
+		$this->db->where('person_id', $customer_id);
+		return $this->db->update('customers', array('deleted' => 1));
 	}
 	
 	/*
@@ -123,19 +122,8 @@ class Customer extends Person
 	*/
 	function delete_list($customer_ids)
 	{
-		$success=false;
-
-		//Run these queries as a transaction, we want to make sure we do all or nothing
-		$this->db->trans_start();
-
 		$this->db->where_in('person_id',$customer_ids);
-		if ($this->db->delete('customers'))
-		{
-			$success = parent::delete_list($customer_ids);
-		}
-		
-		$this->db->trans_complete();		
-		return $success;
+		return $this->db->update('customers', array('deleted' => 1));
  	}
  	
  	/*
@@ -147,9 +135,9 @@ class Customer extends Person
 		
 		$this->db->from('customers');
 		$this->db->join('people','customers.person_id=people.person_id');	
-		$this->db->like('first_name', $search); 
-		$this->db->or_like('last_name', $search);
-		$this->db->or_like("CONCAT(`first_name`,' ',`last_name`)",$search);		
+		$this->db->where("(first_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		last_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		CONCAT(`first_name`,' ',`last_name`) LIKE '%".$this->db->escape_like_str($search)."%') and deleted=0");
 		$this->db->order_by("last_name", "asc");		
 		$by_name = $this->db->get();
 		foreach($by_name->result() as $row)
@@ -159,6 +147,7 @@ class Customer extends Person
 		
 		$this->db->from('customers');
 		$this->db->join('people','customers.person_id=people.person_id');	
+		$this->db->where('deleted',0);		
 		$this->db->like("email",$search);
 		$this->db->order_by("email", "asc");		
 		$by_email = $this->db->get();
@@ -169,6 +158,7 @@ class Customer extends Person
 
 		$this->db->from('customers');
 		$this->db->join('people','customers.person_id=people.person_id');	
+		$this->db->where('deleted',0);		
 		$this->db->like("phone_number",$search);
 		$this->db->order_by("phone_number", "asc");		
 		$by_phone = $this->db->get();
@@ -179,6 +169,7 @@ class Customer extends Person
 		
 		$this->db->from('customers');
 		$this->db->join('people','customers.person_id=people.person_id');	
+		$this->db->where('deleted',0);		
 		$this->db->like("account_number",$search);
 		$this->db->order_by("account_number", "asc");		
 		$by_account_number = $this->db->get();
@@ -199,27 +190,25 @@ class Customer extends Person
 	/*
 	Get search suggestions to find customers
 	*/
-	function get_customer_search_suggestions($search,$limit=25)
+	function get_customer_search_suggestions($term, $limit)
 	{
+		$limit = isset($limit)? $limit : 25;
+		$term = strtolower($term);
 		$suggestions = array();
-		
 		$this->db->from('customers');
-		$this->db->join('people','customers.person_id=people.person_id');	
-		$this->db->like('first_name', $search); 
-		$this->db->or_like('last_name', $search);
-		$this->db->or_like("CONCAT(`first_name`,' ',`last_name`)",$search);		
-		$this->db->order_by("last_name", "asc");		
+		$this->db->join('people','customers.person_id=people.person_id');
+		$this->db->where("(first_name LIKE '%".$this->db->escape_like_str($term)."%' or 
+		last_name LIKE '%".$this->db->escape_like_str($term)."%' or 
+		CONCAT(`first_name`,' ',`last_name`) LIKE '%".$this->db->escape_like_str($term)."%' or account_number
+		LIKE '%".$this->db->escape_like_str($term)."%') and deleted = 0");
+		$this->db->order_by("last_name", "asc");
+		$this->db->limit($limit);
 		$by_name = $this->db->get();
 		foreach($by_name->result() as $row)
 		{
-			$suggestions[]=$row->person_id.'|'.$row->first_name.' '.$row->last_name;		
+			$suggestions[]=$row;		
 		}
-		
-		//only return $limit suggestions
-		if(count($suggestions > $limit))
-		{
-			$suggestions = array_slice($suggestions, 0,$limit);
-		}
+
 		return $suggestions;
 
 	}
@@ -230,12 +219,12 @@ class Customer extends Person
 	{
 		$this->db->from('customers');
 		$this->db->join('people','customers.person_id=people.person_id');		
-		$this->db->like('first_name', $search);
-		$this->db->or_like('last_name', $search); 
-		$this->db->or_like('email', $search); 
-		$this->db->or_like('phone_number', $search);
-		$this->db->or_like('account_number', $search);
-		$this->db->or_like("CONCAT(`first_name`,' ',`last_name`)",$search);
+		$this->db->where("(first_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		last_name LIKE '%".$this->db->escape_like_str($search)."%' or 
+		email LIKE '%".$this->db->escape_like_str($search)."%' or 
+		phone_number LIKE '%".$this->db->escape_like_str($search)."%' or 
+		account_number LIKE '%".$this->db->escape_like_str($search)."%' or 
+		CONCAT(`first_name`,' ',`last_name`) LIKE '%".$this->db->escape_like_str($search)."%') and deleted=0");		
 		$this->db->order_by("last_name", "asc");
 		
 		return $this->db->get();	

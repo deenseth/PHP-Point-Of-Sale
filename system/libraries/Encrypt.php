@@ -2,11 +2,11 @@
 /**
  * CodeIgniter
  *
- * An open source application development framework for PHP 4.3.2 or newer
+ * An open source application development framework for PHP 5.1.6 or newer
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -18,7 +18,7 @@
 /**
  * CodeIgniter Encryption Class
  *
- * Provides two-way keyed encoding using XOR Hashing and Mcrypt
+ * Provides two-way keyed encoding using Mcrypt
  *
  * @package		CodeIgniter
  * @subpackage	Libraries
@@ -41,10 +41,16 @@ class CI_Encrypt {
 	 * Simply determines whether the mcrypt library exists.
 	 *
 	 */
-	function CI_Encrypt()
+	public function __construct()
 	{
 		$this->CI =& get_instance();
 		$this->_mcrypt_exists = ( ! function_exists('mcrypt_encrypt')) ? FALSE : TRUE;
+
+		if ($this->_mcrypt_exists === FALSE)
+		{
+			show_error('The Encrypt library requires the Mcrypt extension.');
+		}
+
 		log_message('debug', "Encrypt Class Initialized");
 	}
 
@@ -72,7 +78,7 @@ class CI_Encrypt {
 			$CI =& get_instance();
 			$key = $CI->config->item('encryption_key');
 
-			if ($key === FALSE)
+			if ($key == FALSE)
 			{
 				show_error('In order to use the encryption class requires that you set an encryption key in your config file.');
 			}
@@ -103,10 +109,10 @@ class CI_Encrypt {
 	 * Encodes the message string using bitwise XOR encoding.
 	 * The key is combined with a random hash, and then it
 	 * too gets converted using XOR. The whole thing is then run
-	 * through mcrypt (if supported) using the randomized key.
-	 * The end result is a double-encrypted message string
-	 * that is randomized with each call to this function,
-	 * even if the supplied message and key are the same.
+	 * through mcrypt using the randomized key. The end result
+	 * is a double-encrypted message string that is randomized
+	 * with each call to this function, even if the supplied
+	 * message and key are the same.
 	 *
 	 * @access	public
 	 * @param	string	the string to encode
@@ -116,12 +122,8 @@ class CI_Encrypt {
 	function encode($string, $key = '')
 	{
 		$key = $this->get_key($key);
-		$enc = $this->_xor_encode($string, $key);
-		
-		if ($this->_mcrypt_exists === TRUE)
-		{
-			$enc = $this->mcrypt_encode($enc, $key);
-		}
+		$enc = $this->mcrypt_encode($string, $key);
+
 		return base64_encode($enc);
 	}
 
@@ -140,7 +142,7 @@ class CI_Encrypt {
 	function decode($string, $key = '')
 	{
 		$key = $this->get_key($key);
-		
+
 		if (preg_match('/[^a-zA-Z0-9\/\+=]/', $string))
 		{
 			return FALSE;
@@ -148,47 +150,61 @@ class CI_Encrypt {
 
 		$dec = base64_decode($string);
 
-		if ($this->_mcrypt_exists === TRUE)
+		if (($dec = $this->mcrypt_decode($dec, $key)) === FALSE)
 		{
-			if (($dec = $this->mcrypt_decode($dec, $key)) === FALSE)
-			{
-				return FALSE;
-			}
+			return FALSE;
 		}
 
-		return $this->_xor_decode($dec, $key);
+		return $dec;
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
-	 * XOR Encode
+	 * Encode from Legacy
 	 *
-	 * Takes a plain-text string and key as input and generates an
-	 * encoded bit-string using XOR
+	 * Takes an encoded string from the original Encryption class algorithms and
+	 * returns a newly encoded string using the improved method added in 2.0.0
+	 * This allows for backwards compatibility and a method to transition to the
+	 * new encryption algorithms.
 	 *
-	 * @access	private
+	 * For more details, see http://codeigniter.com/user_guide/installation/upgrade_200.html#encryption
+	 *
+	 * @access	public
 	 * @param	string
+	 * @param	int		(mcrypt mode constant)
 	 * @param	string
 	 * @return	string
 	 */
-	function _xor_encode($string, $key)
+	function encode_from_legacy($string, $legacy_mode = MCRYPT_MODE_ECB, $key = '')
 	{
-		$rand = '';
-		while (strlen($rand) < 32)
+		// decode it first
+		// set mode temporarily to what it was when string was encoded with the legacy
+		// algorithm - typically MCRYPT_MODE_ECB
+		$current_mode = $this->_get_mode();
+		$this->set_mode($legacy_mode);
+
+		$key = $this->get_key($key);
+
+		if (preg_match('/[^a-zA-Z0-9\/\+=]/', $string))
 		{
-			$rand .= mt_rand(0, mt_getrandmax());
+			return FALSE;
 		}
 
-		$rand = $this->hash($rand);
+		$dec = base64_decode($string);
 
-		$enc = '';
-		for ($i = 0; $i < strlen($string); $i++)
-		{			
-			$enc .= substr($rand, ($i % strlen($rand)), 1).(substr($rand, ($i % strlen($rand)), 1) ^ substr($string, $i, 1));
+		if (($dec = $this->mcrypt_decode($dec, $key)) === FALSE)
+		{
+			return FALSE;
 		}
 
-		return $this->_xor_merge($enc, $key);
+		$dec = $this->_xor_decode($dec, $key);
+
+		// set the mcrypt mode back to what it should be, typically MCRYPT_MODE_CBC
+		$this->set_mode($current_mode);
+
+		// and re-encode
+		return base64_encode($this->mcrypt_encode($dec, $key));
 	}
 
 	// --------------------------------------------------------------------
@@ -347,7 +363,7 @@ class CI_Encrypt {
 			{
 				$temp = $temp + 256;
 			}
-			
+
 			$str .= chr($temp);
 		}
 
@@ -355,7 +371,7 @@ class CI_Encrypt {
 	}
 
 	// --------------------------------------------------------------------
-	
+
 	/**
 	 * Set the Mcrypt Cipher
 	 *
@@ -412,9 +428,9 @@ class CI_Encrypt {
 	{
 		if ($this->_mcrypt_mode == '')
 		{
-			$this->_mcrypt_mode = MCRYPT_MODE_ECB;
+			$this->_mcrypt_mode = MCRYPT_MODE_CBC;
 		}
-		
+
 		return $this->_mcrypt_mode;
 	}
 
@@ -440,7 +456,7 @@ class CI_Encrypt {
 	 * @access	public
 	 * @param	string
 	 * @return	string
-	 */	
+	 */
 	function hash($str)
 	{
 		return ($this->_hash_type == 'sha1') ? $this->sha1($str) : md5($str);
@@ -461,7 +477,7 @@ class CI_Encrypt {
 		{
 			if ( ! function_exists('mhash'))
 			{
-				require_once(BASEPATH.'libraries/Sha1'.EXT);
+				require_once(BASEPATH.'libraries/Sha1.php');
 				$SH = new CI_SHA;
 				return $SH->generate($str);
 			}

@@ -1,5 +1,5 @@
 <?php
-class Person extends Model 
+class Person extends CI_Model 
 {
 	/*Determines whether the given person exists*/
 	function exists($person_id)
@@ -12,11 +12,20 @@ class Person extends Model
 	}
 	
 	/*Gets all people*/
-	function get_all()
+	function get_all($limit=10000, $offset=0)
 	{
 		$this->db->from('people');
 		$this->db->order_by("last_name", "asc");
+		$this->db->limit($limit);
+		$this->db->offset($offset);
 		return $this->db->get();		
+	}
+	
+	function count_all()
+	{
+		$this->db->from('people');
+		$this->db->where('deleted',0);
+		return $this->db->count_all_results();
 	}
 	
 	/*
@@ -77,21 +86,55 @@ class Person extends Model
 	}
 	
 	/*
-	Deletes one Person
+	Deletes one Person (doesn't actually do anything)
 	*/
 	function delete($person_id)
 	{
-		return $this->db->delete('people', array('person_id' => $person_id)); 
+		return true;; 
 	}
 	
 	/*
-	Deletes a list of people
+	Deletes a list of people (doesn't actually do anything)
 	*/
 	function delete_list($person_ids)
 	{	
-		$this->db->where_in('person_id',$person_ids);
-		return $this->db->delete('people');		
+		return true;	
  	}
-	
+ 	
+ 	/*
+ 	Gets a person by email address
+ 	 */
+ 	function get_by_email($email)
+ 	{
+ 	    $this->db->from('people');
+        $this->db->where('email',$email);
+        if ($result = $this->db->get()) {
+            return $result->row();
+        }      
+ 	}
+ 	
+ 	/*
+ 	Determines the type of person
+ 	 */
+ 	function get_person_type($id)
+ 	{
+ 	    $customer = $this->Customer->get_info($id);
+ 	    if ($customer->person_id != '') {
+ 	        return 'Customer';
+ 	    }
+ 	    
+        $supplier = $this->Supplier->get_info($id);
+ 	    if ($supplier->person_id != '') {
+ 	        return 'Supplier';
+ 	    }
+ 	    
+        $employee = $this->Employee->get_info($id);
+ 	    if ($employee->person_id != '') {
+ 	        return 'Employee';
+ 	    }
+ 	     
+        return 'Person';
+ 	  
+ 	}   
 }
 ?>

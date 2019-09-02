@@ -16,7 +16,7 @@
 {
 	position:relative;
 	margin:0 auto;
-	width:775px;
+	width:875px;
 	text-align:left;
 }
 
@@ -64,11 +64,10 @@
 #menubar_navigation
 {
 	position:relative;
-	width:72%;
+	width:82%;
 	left:200px;
 	top:8px;
 	height:45%;
-
 }
 
 #menubar_footer

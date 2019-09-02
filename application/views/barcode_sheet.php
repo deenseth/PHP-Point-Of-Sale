@@ -18,7 +18,7 @@ foreach($items as $item)
 	{
 		echo '</tr><tr>';
 	}
-	echo "<td><img src='index.php?c=barcode&barcode=$barcode&text=$text&width=256' /></td>";
+	echo "<td><img src='/index.php/barcode?barcode=$barcode&text=$text&width=256&height=100' /></td>";
 	$count++;
 }
 ?>

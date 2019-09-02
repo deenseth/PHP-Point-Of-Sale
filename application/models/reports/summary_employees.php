@@ -19,6 +19,14 @@ class Summary_employees extends Report
 		$this->db->join('employees', 'employees.person_id = sales_items_temp.employee_id');
 		$this->db->join('people', 'employees.person_id = people.person_id');
 		$this->db->where('sale_date BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
+		if ($inputs['sale_type'] == 'sales')
+		{
+			$this->db->where('quantity_purchased > 0');
+		}
+		elseif ($inputs['sale_type'] == 'returns')
+		{
+			$this->db->where('quantity_purchased < 0');
+		}
 		$this->db->group_by('employee_id');
 		$this->db->order_by('last_name');
 
@@ -32,7 +40,15 @@ class Summary_employees extends Report
 		$this->db->join('employees', 'employees.person_id = sales_items_temp.employee_id');
 		$this->db->join('people', 'employees.person_id = people.person_id');
 		$this->db->where('sale_date BETWEEN "'. $inputs['start_date']. '" and "'. $inputs['end_date'].'"');
-
+		if ($inputs['sale_type'] == 'sales')
+		{
+			$this->db->where('quantity_purchased > 0');
+		}
+		elseif ($inputs['sale_type'] == 'returns')
+		{
+			$this->db->where('quantity_purchased < 0');
+		}
+		
 		return $this->db->get()->row_array();
 	}
 }

@@ -63,3 +63,25 @@ function get_years()
 	
 	return $years;
 }
+
+function get_random_colors($how_many)
+{
+	$colors = array();
+	
+	for($k=0;$k<$how_many;$k++)
+	{
+		$colors[] = '#'.random_color();
+	}
+	
+	return $colors;
+}
+
+function random_color()
+{
+    mt_srand((double)microtime()*1000000);
+    $c = '';
+    while(strlen($c)<6){
+        $c .= sprintf("%02X", mt_rand(0, 255));
+    }
+    return $c;
+}
